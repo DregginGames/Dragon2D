@@ -1,0 +1,5 @@
+AC_INIT([Dragon2D], [0.1])
+AM_INIT_AUTOMAKE
+AC_PROG_CXX
+AC_CONFIG_FILES(Makefile source/Makefile)
+AC_OUTPUT

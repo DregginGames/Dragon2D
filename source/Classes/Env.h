@@ -44,9 +44,15 @@ private:
 
 	//var: settings. Contains all the settings, in order of the files
 	std::map<std::string, SettingFile> settings;
+
+	//var: window - SDL Window of this env.
+	SDL_Window *	window;
+	//var: glContext - GLContext of this env. 
+	SDL_GLContext	context;
+
 };
 
-//class: SettingFile
+//class: ;
 //note: Class for reading settings from files
 class SettingFile
 {
@@ -64,6 +70,10 @@ public:
 	//note: Saves the settings to the file. 
 	//warning: Destroys the comments in the given file
 	void 		Save();
+
+	//operator [std::string]
+	//note: returns string of the setting requested
+	std::string& operator[](std::string key);
 
 private:
 	//function: _Load() 

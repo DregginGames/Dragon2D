@@ -48,12 +48,63 @@ Env::Env(int argc, char** argv)
 	gameInitName+="GameInit.txt";
 	settings.insert(std::make_pair(gameInitName, SettingFile(gameInitName)));
 	
-	//create window and stuff 
+	//fire up SDL
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+		throw EnvException("Cannot Initialize SDL2!");
+	}
+
+	//shall the window be fullscreem?
+	bool isFullscreen = false;
+	if (settings["cfg/settings.cfg"]["isFullscreen"] == std::string("true")) {
+		isFullscreen = true;
+	}
+	
+	int width = stoi(settings["cfg/settings.cfg"]["width"]);
+	int height = stoi(settings["cfg/settings.cfg"]["height"]);
+
+	//try out some opengl-configs and fire up the window
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+	
+	window = SDL_CreateWindow(settings[gameInitName]["title"].c_str(),
+		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		width, height,
+		SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | (isFullscreen ? SDL_WINDOW_FULLSCREEN : 0));
+	if (!window) {
+		//try somethin else: other  depth buffer size
+		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+		window = SDL_CreateWindow(settings[gameInitName]["title"].c_str(),
+			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+			width, height,
+			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | (isFullscreen ? SDL_WINDOW_FULLSCREEN : 0));
+		if (!window) {
+			throw EnvException("Cannot create window!");
+		}
+	}
+
+	//Fire up glew and the context!
+	context = SDL_GL_CreateContext(window);
+	if (!context) {
+		throw EnvException("Cannot create context!");
+	}
+
+	//check if we use vsync
+	if (settings["cfg/settings.cfg"]["isVsync"] == std::string("true")) {
+		SDL_GL_SetSwapInterval(1);
+	}
+
+	//from here, opengl is working!
+
 }
 
 Env::~Env()
 {
-
+	SDL_GL_DeleteContext(context);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 }
 
 //Setting stuff
@@ -84,5 +135,17 @@ void SettingFile::_Load()
 	
 }
 
-
+void SettingFile::Reload()
+{
+	_Load();
 }
+
+std::string& SettingFile::operator[](std::string key)
+{
+	return settings[key];
+}
+
+
+
+
+} //namespace Dragon2D

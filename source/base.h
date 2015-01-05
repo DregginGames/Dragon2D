@@ -9,9 +9,13 @@
 #include <exception>
 #include <regex>
 #include <fstream>
+#include <strstream>
 
 //Not-So-Standart lib includes
 #include <SDL/SDL.h>
+
+#include <GL/glew.h>
+#include <glm/glm.hpp>
 
 namespace Dragon2D {
 //Standart definitions, macros and classes 

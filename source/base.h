@@ -12,7 +12,7 @@
 #include <strstream>
 
 //Not-So-Standart lib includes
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>

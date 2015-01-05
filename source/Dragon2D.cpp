@@ -1,8 +1,9 @@
 #include "Dragon2D.h"
+#include "./Classes/Env.h"
 
 
 int main(int argc, char**argv)
 {
-	std::cout << "nabend " << std::endl;
+	Dragon2D::Env EngineEnv(argc, argv);
 	return 0;
 }

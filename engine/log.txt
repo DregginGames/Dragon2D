@@ -1,0 +1,12 @@
+Starting Init of the ENV
+Loading Settings
+Starting SDL
+Opening Window
+Init OpenGL
+Init glew
+Init Sound (sdl_mixer)
+Done!
+Init ResourceManager
+Loading Db files...
+Filling dbs with the info in the files...
+Done!

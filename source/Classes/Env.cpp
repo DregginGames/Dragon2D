@@ -6,7 +6,10 @@
 namespace Dragon2D {
 
 
-Env* Env::ActiveEnv = nullptr;
+Env*			Env::ActiveEnv = nullptr;
+std::ostream	Env::streamOut( NULL );
+std::ostream	Env::streamOutError ( NULL );
+std::ofstream	Env::logfile;
 Env::Env() 
 {
 	//does nothin
@@ -20,47 +23,84 @@ Env::Env(int argc, char** argv)
 	}
 	ActiveEnv = this;
 	
+	//outputstreams 
+	//Normally we want to write to the logfile, but if that isn't possible well write to stdfoo
+	try {
+		logfile.open("log.txt", std::ios::out);
+		streamOut.rdbuf(logfile.rdbuf());
+		streamOutError.rdbuf(logfile.rdbuf());
+	}
+	catch (std::exception e) {
+		std::cerr << "Cannot Open logfile, will write to stdout and strerr!" << std::endl;
+		streamOut.rdbuf(std::cout.rdbuf());
+		streamOutError.rdbuf(std::cerr.rdbuf());
+	}
+	
+
 	//Defualt the arguments
 	isDebug = false;
 	gamepath = "./";
-	
-	//Parse the input arguments 
-	for(int i = 1;i<argc;i++) {
-		std::string arg(argv[i]);
-		std::string argparam("");
-		if(i+1<argc) {
-			argparam = std::string(argv[i+1]);
-		}
+	engineInitName = "cfg/settings.cfg";
 
-		if (arg==std::string("-d")) {
-			isDebug = true;
-		} 
-		else {
-			gamepath = arg;
+	try {
+		//Parse the input arguments 
+		for (int i = 1; i < argc; i++) {
+			std::string arg(argv[i]);
+			std::string argparam("");
+			if (i + 1 < argc) {
+				argparam = std::string(argv[i + 1]);
+			}
+			//-d setting enables debug, so text is written directly to the console
+			if (arg == std::string("-d")) {
+				isDebug = true;
+			}
+			//-c sets a custom path to an engine settings file
+			if (arg == std::string("-c")) {
+				engineInitName = argparam;
+				i++;
+			}
+			//otherwise we assume that the stuff is the games path
+			else {
+				gamepath = arg;
+			}
 		}
 	}
+	catch (std::exception e) {
+		throw EnvException("Cannot Parse Arguments! Syntax is \"Dragon2D [options] <gamepath> [options]\"");
+	}
+	
+	if (isDebug) {
+		//In case we're debugging we want stuff directly on the console!
+		streamOut.rdbuf(std::cout.rdbuf());
+		streamOutError.rdbuf(std::cerr.rdbuf());
+	}
 
+	Out() << "Starting Init of the ENV" << std::endl;
+
+	Out() << "Loading Settings" << std::endl;
 	//read in the engine setting file
-	settings.insert(std::make_pair(std::string("cfg/settings.cfg"), SettingFile("cfg/settings.cfg")));
+	settings.insert(std::make_pair(std::string(engineInitName), SettingFile(engineInitName)));
 
 	//read in the game setting file
-	std::string gameInitName(gamepath);
+	gameInitName = gamepath;
 	gameInitName+="GameInit.txt";
 	settings.insert(std::make_pair(gameInitName, SettingFile(gameInitName)));
 	
+	Out() << "Starting SDL" << std::endl;
 	//fire up SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		throw EnvException("Cannot Initialize SDL2!");
 	}
 
+	Out() << "Opening Window" << std::endl;
 	//shall the window be fullscreem?
 	bool isFullscreen = false;
-	if (settings["cfg/settings.cfg"]["isFullscreen"] == std::string("true")) {
+	if (settings[engineInitName]["isFullscreen"] == std::string("true")) {
 		isFullscreen = true;
 	}
 	
-	int width = stoi(settings["cfg/settings.cfg"]["width"]);
-	int height = stoi(settings["cfg/settings.cfg"]["height"]);
+	int width = stoi(settings[engineInitName]["width"]);
+	int height = stoi(settings[engineInitName]["height"]);
 
 	//try out some opengl-configs and fire up the window
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -85,6 +125,7 @@ Env::Env(int argc, char** argv)
 		}
 	}
 
+	Out() << "Init OpenGL" << std::endl;
 	//Fire up glew and the context!
 	context = SDL_GL_CreateContext(window);
 	if (!context) {
@@ -92,20 +133,128 @@ Env::Env(int argc, char** argv)
 	}
 
 	//check if we use vsync
-	if (settings["cfg/settings.cfg"]["isVsync"] == std::string("true")) {
+	if (settings[engineInitName]["isVsync"] == std::string("true")) {
 		SDL_GL_SetSwapInterval(1);
 	}
 
+	Out() << "Init glew" << std::endl;
 	//from here, opengl is working!
+	//But we need glew for the fancy shader stuff, so
+	GLenum err = glewInit();
+	if (GLEW_OK != err) {
+		std::string glewError = (char*)(glewGetErrorString(err));
+		throw EnvException((std::string("Cannot Init glew: ") + glewError).c_str());
+	}
 
+	Out() << "Init Sound (sdl_mixer)" << std::endl;
+	//Next is sound. We use SDL_mixer.
+	int mixerInitFlags = 0;
+	if (settings[engineInitName]["requestMP3"] == std::string("true")) {
+		mixerInitFlags |= MIX_INIT_MP3;
+	}
+	if (settings[engineInitName]["requestOGG"] == std::string("true")) {
+		mixerInitFlags |= MIX_INIT_OGG;
+	}
+	if (settings[engineInitName]["requestMOD"] == std::string("true")) {
+		mixerInitFlags |= MIX_INIT_MOD;
+	}
+	if (settings[engineInitName]["requestFLAC"] == std::string("true")) {
+		mixerInitFlags |= MIX_INIT_FLAC;
+	}
+	int inittedMixerFlags = Mix_Init(mixerInitFlags);
+	//Hope that all modes were supported, but dont think that it will always work!
+	if (mixerInitFlags != inittedMixerFlags) {
+		//aand the bad thing happend
+		throw EnvException("Could not Load all mixer modules. Did you include all libs for the requested modes?");
+	}
+
+	Out() << "Done!" << std::endl;
+	//yay
 }
 
 Env::~Env()
 {
+	Mix_Quit();
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
+	ActiveEnv = nullptr;
 }
+
+Env& Env::GetActiveEnv()
+{
+	_CheckEnv();
+	return *ActiveEnv;
+}
+
+void Env::_CheckEnv()
+{
+	if (ActiveEnv == nullptr) {
+		throw EnvException("Tried to call Env function without initialise the Env!");
+	}
+}
+
+bool Env::IsDebugEnv() 
+{
+	_CheckEnv();
+	return ActiveEnv->isDebug;
+}
+
+const std::string Env::GetGamepath() 
+{
+	_CheckEnv();
+	return ActiveEnv->gamepath;
+}
+
+void Env::SwapBuffers()
+{
+	_CheckEnv();
+	SDL_GL_SwapWindow(ActiveEnv->window);
+}
+
+void Env::ClearFramebuffer(bool colorbuffer, bool depthbuffer)
+{
+	_CheckEnv();
+	glClear((colorbuffer ? GL_COLOR_BUFFER_BIT : 0) | (depthbuffer ? GL_DEPTH_BUFFER_BIT : 0));
+}
+
+std::fstream Env::Gamefile(std::string file, std::ios_base::openmode mode)
+{
+	_CheckEnv();
+	return std::fstream(ActiveEnv->GetGamepath() + file, mode);
+}
+
+std::fstream Env::Enginefile(std::string file, std::ios_base::openmode mode)
+{
+	_CheckEnv();
+	return std::fstream(file, mode);
+}
+
+SettingFile& Env::Setting(std::string file)
+{
+	_CheckEnv();
+	std::map<std::string, SettingFile>::iterator pos;
+	if ((pos = ActiveEnv->settings.find(file)) == ActiveEnv->settings.end()) {
+		ActiveEnv->settings.insert(std::make_pair(file, SettingFile(file)));
+		return ActiveEnv->settings[file];
+	}
+	else {
+		return pos->second;
+	}
+}
+
+std::ostream& Env::Out()
+{
+	//dont check env since the streams are static
+	return streamOut;
+}
+
+std::ostream& Env::Err()
+{
+	//dont check env since the streams are static
+	return streamOutError;
+}
+
 
 //Setting stuff
 
@@ -123,8 +272,11 @@ SettingFile::SettingFile(std::string settingFile)
 void SettingFile::_Load()
 {
 	std::fstream infile(inFile.c_str(),std::ios::in);
+	if (!infile.is_open()) {
+		throw EnvException("Cannot open a settings file!");
+	}
 	std::string infileString((std::istreambuf_iterator<char>(infile)),std::istreambuf_iterator<char>());
-
+	
 	std::regex e("\\s*(\\w*[\\w\\d]*)\\s*=\\s*([\\w\\d ]*)\\s*\n*");
 	std::smatch m;
 	std::string s(infileString);
@@ -148,4 +300,4 @@ std::string& SettingFile::operator[](std::string key)
 
 
 
-} //namespace Dragon2D
+}; //namespace Dragon2D

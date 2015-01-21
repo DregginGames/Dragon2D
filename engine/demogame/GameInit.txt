@@ -4,4 +4,3 @@ title2 = Used for development
 
 #some config settings not fixed to the engine
 debug = true
-

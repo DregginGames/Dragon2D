@@ -103,7 +103,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;openGL32.lib;glew32.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_image.lib</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -117,7 +117,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;openGL32.lib;glew32.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_image.lib</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -135,7 +135,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;openGL32.lib;glew32.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_image.lib</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -153,19 +153,24 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;openGL32.lib;glew32.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_image.lib</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\base.h" />
+    <ClInclude Include="..\..\source\Classes\Audio.h" />
     <ClInclude Include="..\..\source\Classes\BaseClass.h" />
     <ClInclude Include="..\..\source\Classes\Env.h" />
+    <ClInclude Include="..\..\source\Classes\GameManager.h" />
+    <ClInclude Include="..\..\source\Classes\ResourceManager.h" />
     <ClInclude Include="..\..\source\Dragon2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\Classes\BaseClass.cpp" />
     <ClCompile Include="..\..\source\Classes\Env.cpp" />
+    <ClCompile Include="..\..\source\Classes\GameManager.cpp" />
+    <ClCompile Include="..\..\source\Classes\ResourceManager.cpp" />
     <ClCompile Include="..\..\source\Dragon2D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

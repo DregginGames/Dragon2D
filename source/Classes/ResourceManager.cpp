@@ -68,18 +68,154 @@ ResourceManager::~ResourceManager()
 
 void ResourceManager::RequestAudioResource(std::string name)
 {
-	auto res = audioResources.find(name);
-	if (res == audioResources.end()) {
-		auto dbdata = audioDb.find(name);
-		if (dbdata == audioDb.end()) {
-			Env::Err() << "ERROR: Cannot load Audio Resource: " << name << std::endl;
-			return;
-		}
-		audioResources[name] = AudioResource(name, dbdata->second);
+	if (!_RequestGeneralResource<AudioResource>(name,audioDb,audioResources)) {
+		Env::Err() << "ERROR: Cannot load Audio Resource: " << name << std::endl;
 		return;
 	}
-	res->second.Access();
-	return;
+}
+
+void ResourceManager::FreeAudioResource(std::string name)
+{
+	_FreeGeneralResource<AudioResource>(name,  audioResources);
+}
+
+
+void ResourceManager::RequestVideoResource(std::string name)
+{
+	if (!_RequestGeneralResource<VideoResource>(name, videoDb, videoResources)) {
+		Env::Err() << "ERROR: Cannot load Audio Resource: " << name << std::endl;
+		return;
+	}
+}
+
+void ResourceManager::FreeVideoResource(std::string name)
+{
+	_FreeGeneralResource<VideoResource>(name, videoResources);
+}
+
+
+void ResourceManager::RequestTextureResource(std::string name)
+{
+	if (!_RequestGeneralResource<TextureResource>(name, textureDb, textureResources)) {
+		Env::Err() << "ERROR: Cannot load texture resource: " << name << std::endl;
+		return;
+	}
+}
+
+void ResourceManager::FreeTextureResource(std::string name)
+{
+	_FreeGeneralResource<TextureResource>(name, textureResources);
+}
+
+
+void ResourceManager::RequestScriptResource(std::string name)
+{
+	if (!_RequestGeneralResource<ScriptResource>(name, scriptDb, scriptResources)) {
+		Env::Err() << "ERROR: Cannot load script resource: " << name << std::endl;
+		return;
+	}
+}
+
+void ResourceManager::FreeScriptResource(std::string name)
+{
+	_FreeGeneralResource<ScriptResource>(name, scriptResources);
+}
+
+
+void ResourceManager::RequestFontResource(std::string name)
+{
+	if (!_RequestGeneralResource<FontResource>(name, fontDb, fontResources)) {
+		Env::Err() << "ERROR: Cannot load font resource: " << name << std::endl;
+		return;
+	}
+}
+
+void ResourceManager::FreeFontResource(std::string name)
+{
+	_FreeGeneralResource<FontResource>(name, fontResources);
+}
+
+
+void ResourceManager::RequestGLProgramResource(std::string name)
+{
+	if (!_RequestGeneralResource<GLProgramResource>(name, glProgramDb, glProgramResources)) {
+		Env::Err() << "ERROR: Cannot load shader resource: " << name << std::endl;
+		return;
+	}
+}
+
+void ResourceManager::FreeGLProgramResource(std::string name)
+{
+	_FreeGeneralResource<GLProgramResource>(name, glProgramResources);
+}
+
+
+void ResourceManager::RequestMapResource(std::string name)
+{
+	if (!_RequestGeneralResource<MapResource>(name, mapDb, mapResources)) {
+		Env::Err() << "ERROR: Cannot load map resource: " << name << std::endl;
+		return;
+	}
+}
+
+void ResourceManager::FreeMapResource(std::string name)
+{
+	_FreeGeneralResource<MapResource>(name, mapResources);
+}
+
+
+void ResourceManager::RequestTextResource(std::string name)
+{
+	if (!_RequestGeneralResource<TextResource>(name, textDb, textResources)) {
+		Env::Err() << "ERROR: Cannot load text resource: " << name << std::endl;
+		return;
+	}
+}
+
+void ResourceManager::FreeTextResource(std::string name)
+{
+	_FreeGeneralResource<TextResource>(name, textResources);
+}
+
+
+AudioResource ResourceManager::GetAudioResource(std::string name)
+{
+	return _GetGeneralResource<AudioResource>(name, audioDb, audioResources);
+}
+
+VideoResource ResourceManager::GetVideoResource(std::string name)
+{
+	return _GetGeneralResource<VideoResource>(name, videoDb, videoResources);
+}
+
+TextureResource ResourceManager::GetTextureResource(std::string name)
+{
+	return _GetGeneralResource<TextureResource>(name, textureDb, textureResources);
+}
+
+ScriptResource ResourceManager::GetScriptResource(std::string name)
+{
+	return _GetGeneralResource<ScriptResource>(name, scriptDb, scriptResources);
+}
+
+FontResource ResourceManager::GetFontResource(std::string name)
+{
+	return _GetGeneralResource<FontResource>(name, fontDb, fontResources);
+}
+
+GLProgramResource ResourceManager::GetGLProgramResource(std::string name)
+{
+	return _GetGeneralResource<GLProgramResource>(name, glProgramDb, glProgramResources);
+}
+
+MapResource ResourceManager::GetMapResource(std::string name)
+{
+	return _GetGeneralResource<MapResource>(name, mapDb, mapResources);
+}
+
+TextResource ResourceManager::GetTextResource(std::string name)
+{
+	return _GetGeneralResource<TextResource>(name, textDb, textResources);
 }
 
 

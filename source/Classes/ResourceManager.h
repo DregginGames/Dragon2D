@@ -87,6 +87,31 @@ public:
 	void FreeTextResource(std::string name);
 
 
+	//function: GetAudioResource
+	//note: Return a resource
+	AudioResource GetAudioResource(std::string name);
+	//function: GetAudioResource
+	//note: Return a resource
+	VideoResource GetVideoResource(std::string name);
+	//function: GetAudioResource
+	//note: Return a resource
+	TextureResource GetTextureResource(std::string name);
+	//function: GetAudioResource
+	//note: Return a resource
+	ScriptResource GetScriptResource(std::string name);
+	//function: GetAudioResource
+	//note: Return a resource
+	FontResource GetFontResource(std::string name);
+	//function: GetAudioResource
+	//note: Return a resource
+	GLProgramResource GetGLProgramResource(std::string name);
+	//function: GetAudioResource
+	//note: Return a resource
+	MapResource GetMapResource(std::string name);
+	//function: GetAudioResource
+	//note: Return a resource
+	TextResource GetTextResource(std::string name);
+
 private:
 	//var: ActiveManager. Pointer containting the active instance
 	static ResourceManager* ActiveManager;
@@ -132,6 +157,63 @@ protected:
 	//function: _LoadDbIntoMap
 	//note: Loads a filestring into a std::map. 
 	std::map<std::string, std::string> _LoadDbIntoMap(std::string FileString);
+
+	//function: _RequestGeneralResource
+	//note: helper for Resource access. Used by the Request[ResourceTyoe]Access functions.
+	template<class T>
+	bool _RequestGeneralResource(std::string name, std::map<std::string, std::string>&db, std::map<std::string, T>&resources)
+	{
+		//Since template functions are unreadable, some more comments here
+		//Try to get a resource from the given resource set
+		auto res = resources.find(name);
+		if (res == resources.end()) {
+			//If not in the resource set, try to find it in the db
+			auto dbdata = db.find(name);
+			if (dbdata == db.end()) {
+				//if not there, return false - we cannot add an unknown resource
+				return false;
+			}
+			//If we know it, Load it. T is our resource-class (i.e. AudioResource)
+			resources[name] = T(name, dbdata->second);
+			return true;
+		}
+		//If we have the resource in the set, increse ref count
+		res->second.Access();
+		return false;
+	}
+
+	//function: _RequestGeneralResource
+	//note: helper for Resource access. Used by the Free[ResourceTyoe]Access functions.
+	template<class T>
+	void _FreeGeneralResource(std::string name, std::map<std::string, T>&resources)
+	{
+		//Find res in the given resource set
+		auto res = resources.find(name);
+		//If we dont know the resource do nothing
+		if (res != resources.end()) {
+			//Decres ref count
+			res->second.Free();
+		}
+	}
+
+	//function: _GetGeneralResource
+	//note: helper for Resource access. Used by the Get[ResourceType] functions.
+	template<class T>
+	T _GetGeneralResource(std::string name, std::map<std::string, std::string>&db, std::map<std::string, T>&resources)
+	{
+		//Find res in the given resource set
+		auto res = resources.find(name);
+		if (res != resources.end()) {
+			return res->second;
+		}
+		//Try to load it. Will take a long time, but better then having black tiles cause someone cant edit map files
+		if (_RequestGeneralResource(name, db, resources)) {
+			return resources[name];
+		}
+
+		//Return invalid resource.
+		return T();
+	}
 };
 
 //class: GameManagerException
@@ -190,11 +272,11 @@ private:
 
 //class: VideoResource
 //note: dummy, does nothing cause we dont use videos atm
-class VideoResource
+class VideoResource : public Resource
 {
 public:
-	VideoResource(){}
-	VideoResource(std::string name, std::string file){}
+	VideoResource():Resource("invaldi"){}
+	VideoResource(std::string name, std::string file):Resource("invaldi"){}
 	~VideoResource(){}
 private:
 	
@@ -268,7 +350,7 @@ private:
 
 //class: TextResource
 //note: Contains text. The written one. Used for localization and stuff
-class TextResource : Resource
+class TextResource : public Resource
 {
 public:
 	TextResource();

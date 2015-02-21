@@ -69,29 +69,29 @@
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\Classes;$(SolutionDir)..\..\source\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include;$(SolutionDir)..\..\source\Classes;$(SolutionDir)..\..\source\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\Classes;$(SolutionDir)..\..\source\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include;$(SolutionDir)..\..\source\Classes;$(SolutionDir)..\..\source\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\Classes;$(SolutionDir)..\..\source\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath);</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include;$(SolutionDir)..\..\source\Classes;$(SolutionDir)..\..\source\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\Classes;$(SolutionDir)..\..\source\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)../SDL2/lib/x64/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include;$(SolutionDir)..\..\source\Classes;$(SolutionDir)..\..\source\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -103,7 +103,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;openGL32.lib;glew32.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_image.lib</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;openGL32.lib;glew32.lib;SDL2_mixer.lib;TailTipUI_32.lib;SDL2_ttf.lib;SDL2_image.lib</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -117,7 +117,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;openGL32.lib;glew32.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_image.lib</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;openGL32.lib;glew32.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_image.lib;TailTipUI_64.lib</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -135,7 +135,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;openGL32.lib;glew32.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_image.lib</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;openGL32.lib;glew32.lib;SDL2_mixer.lib;TailTipUI_32.lib;SDL2_ttf.lib;SDL2_image.lib</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -153,7 +153,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;openGL32.lib;glew32.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_image.lib</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;openGL32.lib;glew32.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_image.lib;TailTipUI_64.lib</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>

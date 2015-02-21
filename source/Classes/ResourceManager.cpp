@@ -50,14 +50,14 @@ ResourceManager::ResourceManager()
 
 	Env::Out() << "Filling dbs with the info in the files..." << std::endl;
 	//actual conversion happens in _LoadDbIntoMap
-	audioDb = _LoadDbIntoMap(audioDbFileString);
-	videoDb = _LoadDbIntoMap(videoDbFileString);
-	textureDb = _LoadDbIntoMap(textureDbFileString);
-	scriptDb = _LoadDbIntoMap(scriptDbFileString);
-	fontDb = _LoadDbIntoMap(fontDbFileString);
-	glProgramDb = _LoadDbIntoMap(glProgramDbFileString);
-	mapDb = _LoadDbIntoMap(mapDbFileString);
-	textDb = _LoadDbIntoMap(textDbFileString);
+	audioDb = _LoadDbIntoMap(audioDbFileString, "audio/");
+	videoDb = _LoadDbIntoMap(videoDbFileString, "video/");
+	textureDb = _LoadDbIntoMap(textureDbFileString, "texture/");
+	scriptDb = _LoadDbIntoMap(scriptDbFileString, "script/");
+	fontDb = _LoadDbIntoMap(fontDbFileString, "font/");
+	glProgramDb = _LoadDbIntoMap(glProgramDbFileString, "shader/");
+	mapDb = _LoadDbIntoMap(mapDbFileString, "map/");
+	textDb = _LoadDbIntoMap(textDbFileString, "text/");
 	Env::Out() << "Done!" << std::endl;
 }
 
@@ -219,7 +219,7 @@ TextResource ResourceManager::GetTextResource(std::string name)
 }
 
 
-std::map<std::string, std::string> ResourceManager::_LoadDbIntoMap(std::string FileString)
+std::map<std::string, std::string> ResourceManager::_LoadDbIntoMap(std::string FileString, std::string resFolder)
 {
 	std::map<std::string, std::string> tmpMap;
 
@@ -231,7 +231,7 @@ std::map<std::string, std::string> ResourceManager::_LoadDbIntoMap(std::string F
 		std::smatch m2;
 		std::string s2(m[1]);
 		std::regex_search(s2, m2, e2);
-		tmpMap[m2[1]] = m[1];
+		tmpMap[m2[1]] = resFolder+m[1].str();
 		s = m.suffix().str();
 	}
 	return tmpMap;
@@ -249,16 +249,13 @@ void ResourceManager::_CheckResMgr()
 //Subclasses (fml)
 //Resource
 Resource::Resource(std::string resourceName)
-: name(resourceName), tmpFilebuff(nullptr), references(1)
+: name(resourceName), references(1)
 {
 
 }
 
 Resource::~Resource()
 {
-	if (tmpFilebuff) {
-		delete tmpFilebuff;
-	}
 
 }
 
@@ -283,13 +280,13 @@ std::string Resource::GetName()
 SDL_RWops* Resource::_RWFromFile(std::string file)
 {
 	SDL_RWops* newRwOps = nullptr;
-	std::fstream infile = Env::Gamefile(file, std::ios::in);
+	std::fstream infile = Env::Gamefile(file, std::ios::in | std::ios::binary);
 	if (!infile.is_open()) {
 		Env::Err() << "Cold not open " << file << "Resource will be empty!";
+		return nullptr;
 	}
-	tmpFilebuff = new char[(int)infile.tellg()];
-	memcpy(tmpFilebuff, infile.rdbuf(), (int)infile.tellg());
-	newRwOps = SDL_RWFromMem(tmpFilebuff, (int)infile.tellg());
+	tmpFilestring = std::vector<char>(std::istreambuf_iterator<char>(infile), std::istreambuf_iterator<char>());
+	newRwOps = SDL_RWFromMem((void*)&tmpFilestring.data()[0], tmpFilestring.size());
 	return newRwOps;
 }
 
@@ -421,7 +418,7 @@ FontResource::FontResource(std::string name, std::string file)
 	//TODO: fixed font size? dosnt seem like a good idea
 	font[16] = TTF_OpenFontRW(fontFile, 0, 16);
 	if (!font[16]) {
-		Env::Err() << "Error loading 16-points-sized testfont" << file << "! Font will cause errors!" << std::endl;
+		Env::Err() << "Error loading 16-points-sized testfont " << file << "!(" << TTF_GetError() << ") Font will cause errors!" << std::endl;
 		return;
 	}
 }
@@ -432,8 +429,11 @@ FontResource::~FontResource()
 		if (fontPair->second != NULL) {
 			TTF_CloseFont(fontPair->second);
 		}
+
+		if (fontFile != NULL) {
+			SDL_RWclose(fontFile);
+		}
 	}
-	SDL_RWclose(fontFile);
 }
 
 TTF_Font* FontResource::GetFont(int size)

@@ -21,6 +21,8 @@
 //gl-foo
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+//libs
+#include <TailTipUI.h>
 
 namespace Dragon2D {
 //Standart definitions, macros and classes 

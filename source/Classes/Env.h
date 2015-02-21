@@ -8,6 +8,7 @@
 namespace Dragon2D {
 
 class SettingFile;
+class Framebuffer;
 
 //class: Env
 //note: Singleton wich manages the Env of the engine, so things as Settings, pahts, ...
@@ -70,6 +71,10 @@ public:
 	//function: clearScreen()
 	//note: cleans the active Framebuffer
 	static void ClearFramebuffer(bool colorbuffer = true, bool depthbuffer = true);
+
+	//function: GenerateFrameBuffer
+	//note: generates a framebuffer
+	static Framebuffer GenerateFramebuffer(int w, int h);
 
 protected:
 	static void _CheckEnv();
@@ -153,6 +158,16 @@ public:
 	EnvException(const char* envError) : Exception(envError) {};
 
 	~EnvException() throw() {};
+};
+
+//class: Framebuffer
+//note: Holds a framebuffer. Only a wrapper class
+class Framebuffer
+{
+public:
+	GLuint fboId = 0;
+	GLuint texId = 0;
+	GLuint depthId = 0;
 };
 
 } //namespace Dragon2D

@@ -156,7 +156,7 @@ protected:
 
 	//function: _LoadDbIntoMap
 	//note: Loads a filestring into a std::map. 
-	std::map<std::string, std::string> _LoadDbIntoMap(std::string FileString);
+	std::map<std::string, std::string> _LoadDbIntoMap(std::string FileString, std::string resFolder);
 
 	//function: _RequestGeneralResource
 	//note: helper for Resource access. Used by the Request[ResourceTyoe]Access functions.
@@ -250,7 +250,7 @@ public:
 private:
 	int references;
 	std::string name;
-	char* tmpFilebuff;
+	std::vector<char> tmpFilestring;
 protected:
 	SDL_RWops* _RWFromFile(std::string file);
 	

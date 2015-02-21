@@ -13,4 +13,9 @@ GameManager::~GameManager()
 
 }
 
+ResourceManager& GameManager::GetResourceManager()
+{
+	return resourceManager;
+}
+
 }; //namespace Dragon2D

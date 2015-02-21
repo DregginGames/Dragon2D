@@ -27,6 +27,11 @@ public:
 	//function: Preload
 	//note: loads all contend needed by the game and does what needs to be done. Normally called by RunGame().
 	void Preload();
+
+	//function: GetResourcemanager
+	//note: returns the resourceManager
+	ResourceManager& GetResourceManager();
+
 private:
 	//var ResourceManager. The Games ResourceManager
 	ResourceManager resourceManager;

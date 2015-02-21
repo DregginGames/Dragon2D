@@ -9,6 +9,10 @@ int main(int argc, char* argv[])
 	try {
 		Dragon2D::Env EngineEnv(argc, argv);
 		Dragon2D::GameManager CurrentManager;
+		TailTipUI::Root w(0);
+		Dragon2D::FontResource d = CurrentManager.GetResourceManager().GetFontResource("aller");
+		while (true) w.Render();
+
 	}
 	catch (Dragon2D::Exception e ) {
 		Dragon2D::Env::Err() << "CRITICAL ERROR: \n\t" << e.what() << std::endl;

@@ -1,4 +1,4 @@
-#include "ResourceManager.h"
+﻿#include "ResourceManager.h"
 #include "Env.h"
 
 namespace Dragon2D {
@@ -27,16 +27,16 @@ ResourceManager::ResourceManager()
 	std::fstream scriptDbFile = Env::Gamefile("script/script.db", std::ios::in);
 	if (!scriptDbFile.is_open()) throw ResourceManagerException("Can't load Script DB file");
 
-	std::fstream fontDbFile = Env::Gamefile("script/script.db", std::ios::in);
+	std::fstream fontDbFile = Env::Gamefile("font/font.db", std::ios::in);
 	if (!fontDbFile.is_open()) throw ResourceManagerException("Can't load Font DB file");
 
-	std::fstream glProgramDbFile = Env::Gamefile("script/script.db", std::ios::in);
+	std::fstream glProgramDbFile = Env::Gamefile("shader/shader.db", std::ios::in);
 	if (!glProgramDbFile.is_open()) throw ResourceManagerException("Can't load Shader DB file");
 
-	std::fstream mapDbFile = Env::Gamefile("script/script.db", std::ios::in);
+	std::fstream mapDbFile = Env::Gamefile("map/map.db", std::ios::in);
 	if (!mapDbFile.is_open()) throw ResourceManagerException("Can't load Map DB file");
 
-	std::fstream textDbFile = Env::Gamefile("script/script.db", std::ios::in);
+	std::fstream textDbFile = Env::Gamefile("text/text.db", std::ios::in);
 	if (!textDbFile.is_open()) throw ResourceManagerException("Can't load Text DB file");
 
 	std::string audioDbFileString = std::string(std::istreambuf_iterator<char>(audioDbFile), std::istreambuf_iterator<char>());
@@ -65,6 +65,23 @@ ResourceManager::~ResourceManager()
 {
 	ActiveManager = nullptr;
 }
+
+void ResourceManager::RequestAudioResource(std::string name)
+{
+	auto res = audioResources.find(name);
+	if (res == audioResources.end()) {
+		auto dbdata = audioDb.find(name);
+		if (dbdata == audioDb.end()) {
+			Env::Err() << "ERROR: Cannot load Audio Resource: " << name << std::endl;
+			return;
+		}
+		audioResources[name] = AudioResource(name, dbdata->second);
+		return;
+	}
+	res->second.Access();
+	return;
+}
+
 
 std::map<std::string, std::string> ResourceManager::_LoadDbIntoMap(std::string FileString)
 {
@@ -139,6 +156,7 @@ SDL_RWops* Resource::_RWFromFile(std::string file)
 	newRwOps = SDL_RWFromMem(tmpFilebuff, (int)infile.tellg());
 	return newRwOps;
 }
+
 //AudioResource
 AudioResource::AudioResource()
 : Resource("invalid")
@@ -161,10 +179,293 @@ AudioResource::AudioResource(std::string name, std::string file)
 	}
 }
 
-AudioResource::~AudioResource()
+AudioResource::~AudioResource() 
 {
 	Mix_FreeChunk(mixChunk);
 }
 
+Mix_Chunk* AudioResource::GetChunk() const
+{
+	return mixChunk;
+}
+
+TextureResource::TextureResource()
+: Resource("invalid")
+{
+
+}
+
+TextureResource::TextureResource(std::string name, std::string file)
+: Resource(name)
+{
+	texId = GL_INVALID_VALUE;
+	//Create SDL_Surface from input file
+	SDL_RWops *textureFile = _RWFromFile(file);
+	if (!textureFile) {
+		Env::Err() << "Could not Load Texture, using dummy texture" << std::endl;
+		return;
+	}
+	SDL_Surface *newTexture = IMG_Load_RW(textureFile, 1);
+	if (!newTexture) {
+		Env::Err() << "Could not Load Texture, using dummy texture" << std::endl;
+		return;
+	}
+	//Actual texture loading and creation
+	//Find out what type the texture will have
+	GLenum textureFormat = GL_BGR;
+	if (newTexture->format->BytesPerPixel == 4) {
+		if (newTexture->format->Rmask == 0x000000ff) {
+			textureFormat = GL_RGBA;
+		}
+		else {
+			textureFormat = GL_BGRA;
+		}
+	}
+	else {
+		if (newTexture->format->Rmask == 0x0000000ff) {
+			textureFormat = GL_RGB;
+		}
+		else {
+			textureFormat = GL_BGR;
+		}
+	}
+
+	//Set Some Filtering (needed for scaling what WILL happen)
+	GLuint newTexId = GL_INVALID_VALUE;
+	glGenTextures(1, &newTexId);
+	glBindTexture(GL_TEXTURE_2D, newTexId);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//Actual loading to the gpu
+	glTexImage2D(GL_TEXTURE_2D, 0, newTexture->format->BytesPerPixel, newTexture->w, newTexture->h, 0, textureFormat, GL_UNSIGNED_BYTE, newTexture->pixels);
+	//dont need the sdl surface anymore!
+	SDL_FreeSurface(newTexture);
+	texId = newTexId;
+}
+
+TextureResource::~TextureResource()
+{
+	//Free the texture on the gpu
+	glDeleteTextures(1, &texId);
+}
+
+GLuint TextureResource::GetTextureId() const
+{
+	return texId;
+}
+
+//Script resource is still a dummy. Will be implemetet as soon as the scripting system has been written/implementet/whatever
+ScriptResource::ScriptResource() 
+: Resource("invalid")
+{
+}
+ScriptResource::ScriptResource(std::string name, std::string file) 
+: Resource("invalid")
+{
+}
+ScriptResource::~ScriptResource()
+{
+}
+
+
+//Font rescource stores fonts for text rendering
+FontResource::FontResource()
+: Resource("invalid")
+{
+}
+
+FontResource::FontResource(std::string name, std::string file)
+: Resource(name)
+{
+	fontFile = _RWFromFile(file);
+	if (!fontFile)
+	{
+		return;
+	}
+	//TODO: fixed font size? dosnt seem like a good idea
+	font[16] = TTF_OpenFontRW(fontFile, 0, 16);
+	if (!font[16]) {
+		Env::Err() << "Error loading 16-points-sized testfont" << file << "! Font will cause errors!" << std::endl;
+		return;
+	}
+}
+
+FontResource::~FontResource()
+{
+	for (auto fontPair = font.begin(); fontPair != font.end(); fontPair++) {
+		if (fontPair->second != NULL) {
+			TTF_CloseFont(fontPair->second);
+		}
+	}
+	SDL_RWclose(fontFile);
+}
+
+TTF_Font* FontResource::GetFont(int size)
+{
+	for (auto fontPair = font.begin(); fontPair != font.end(); fontPair++) {
+		if (fontPair->first == size) {
+			return fontPair->second;
+		}
+	}
+	TTF_Font* newFont = nullptr;
+	if (fontFile) {
+		newFont = TTF_OpenFontRW(fontFile, 0, size);
+	}
+	if (!newFont) {
+		Env::Out() << "Error Loading fong, will use empty (error) font!" << std::endl;
+	}
+	font[size] = newFont;
+	return newFont;
+}
+
+GLuint _CompileShader(std::string source, GLenum shaderType​)
+{
+	//Create Shader and compile
+	GLuint shaderObject = glCreateShader(shaderType​);
+	const char* src = source.c_str();
+	glShaderSource(shaderObject, 1, &src, NULL);
+	int compileResult = 0;
+	glCompileShader(shaderObject);
+	glGetShaderiv(shaderObject, GL_COMPILE_STATUS, &compileResult);
+	//If we have an error, get the result. A little foo, but hey
+	if (compileResult == GL_FALSE) {
+		GLint logSize = 0;
+		glGetShaderiv(shaderObject, GL_INFO_LOG_LENGTH, &logSize);
+		std::vector<GLchar> errorLog(logSize);
+		glGetShaderInfoLog(shaderObject, logSize, &logSize, &errorLog[0]);
+		glDeleteShader(shaderObject);
+		std::string errorString(errorLog.begin(), errorLog.end());
+		Env::Err() << "Error compiling shader:\n" << errorString << std::endl;
+		return NULL;
+	}
+	return shaderObject;
+}
+
+GLProgramResource::GLProgramResource()
+: Resource("invalid")
+{
+}
+
+GLProgramResource::GLProgramResource(std::string name, std::string file)
+: Resource(name)
+{
+	std::list<GLuint> shaderList;
+	programId = NULL;
+
+	std::fstream infile = Env::Gamefile(file, std::ios::in);
+	std::string instring = std::string(std::istreambuf_iterator<char>(infile), std::istreambuf_iterator<char>());
+	//well need to remove some of the comments, those that are definitly surrounding our config makros
+	std::regex removeCommentRe("\\/\\/.*|\\/\\*[\\w\\d#\\s]*\\*\\/");
+	std::regex configMakroRe("#define (CONFIG_\\w*)");
+	std::string noCommetInString = std::regex_replace(instring, removeCommentRe, "");
+	std::smatch m;
+	std::string s = noCommetInString;
+	while (std::regex_search(s, m, removeCommentRe)) {
+		std::string configName = m[1];
+		GLuint newShader = NULL;
+		//check the config macos
+		if (configName == "CONFIG_HAS_VERTEX") {
+			newShader =  _CompileShader(std::string("#define CONTROL_COMPILE_VERTEX\n") + instring, GL_VERTEX_SHADER);
+		}
+		else if (configName == "CONFIG_HAS_FRAGMENT") {
+			newShader = _CompileShader(std::string("#define CONTROL_COMPILE_FRAGMENT\n") + instring, GL_FRAGMENT_SHADER);
+		}
+		else if (configName == "CONFIG_HAS_GEOMETRY") {
+			newShader = _CompileShader(std::string("#define CONTROL_COMPILE_GEOMETRY\n") + instring, GL_GEOMETRY_SHADER);
+		}
+		else if (configName == "CONFIG_HAS_TESS_EVALUATION") {
+			newShader = _CompileShader(std::string("#define CONTROL_COMPILE_TESS_EVALUATION\n") + instring, GL_TESS_EVALUATION_SHADER);
+		}
+		else if (configName == "CONFIG_HAS_TESS_CONTROL") {
+			newShader = _CompileShader(std::string("#define CONTROL_COMPILE_VERTEX_TESS_CONTROL\n") + instring, GL_TESS_CONTROL_SHADER);
+		}
+		else if (configName == "CONFIG_HAS_COMPUTE") {
+			newShader = _CompileShader(std::string("#define CONTROL_COMPILE_VERTEX_COMPUTE\n") + instring, GL_COMPUTE_SHADER);
+		}
+		else {
+			Env::Err() << "WARNING: unknown shader config makro: " << configName << std::endl;
+		}
+		//error checking
+		if (newShader == NULL) {
+			Env::Err() << "ERROR: Shader Compilation Error in " << file << std::endl;
+			//we should delete all the other shaders
+			for (GLuint s : shaderList) {
+				glDeleteShader(s);
+			}
+			shaderList.clear();
+			return;
+		}
+
+		shaderList.push_back(newShader);
+		s = m.suffix().str();
+	}
+
+	//Create program and add all shaders to it
+	programId = glCreateProgram();
+	for (GLuint shaderId : shaderList) {
+		glAttachShader(programId, shaderId);
+	}
+	//Link them and check for errors
+	glLinkProgram(programId);
+	GLint isLinked = 0;
+	glGetProgramiv(programId, GL_LINK_STATUS, (int*)&isLinked);
+	if (isLinked == GL_FALSE) {
+		GLint maxLength = 0;
+		glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &maxLength);
+		std::vector<char> errorLog(maxLength);
+		glGetProgramInfoLog(programId, maxLength, &maxLength, &errorLog[0]);
+		std::string errorString(errorLog.begin(), errorLog.end());
+		Env::Err() << "Error Linking " << file << "\n" << errorString << std::endl;
+		Env::Err() << "WARNING: ShaderResource will be invalid!";
+		glDeleteProgram(programId);
+		programId = NULL;
+	}
+	for (GLuint shaderId : shaderList) {
+		glDeleteShader(shaderId);
+	}
+	shaderList.clear();
+}
+
+GLProgramResource::~GLProgramResource()
+{
+	glDeleteProgram(programId);
+}
+
+GLuint GLProgramResource::GetProgramId() const
+{
+	return programId;
+}
+
+TextResource::TextResource()
+: Resource("invalid")
+{
+
+}
+
+TextResource::TextResource(std::string name, std::string file)
+: Resource(name)
+{
+	std::fstream infile = Env::Gamefile(file, std::ios::in);
+	std::string filestring = std::string(std::istreambuf_iterator<char>(infile), std::istreambuf_iterator<char>());
+	std::regex textRE("([\\w.])*\\s*=\\s*(.*)");
+	std::smatch m;
+	std::string s(filestring);
+	while (std::regex_search(s, m, textRE)) {
+		TextContainer[m[1]] = m[2];
+		s = m.suffix().str();
+	}
+}
+
+TextResource::~TextResource()
+{
+
+}
+
+std::string TextResource::operator[](std::string key)
+{
+	return TextContainer[key];
+}
+
 
 }; //namespace Dragon2D
+

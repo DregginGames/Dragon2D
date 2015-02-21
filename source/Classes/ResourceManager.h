@@ -29,6 +29,64 @@ public:
 	//deconstructor: ~ResourceManager
 	//note: closes files, ...
 	~ResourceManager();
+
+	//function: RequestAudioResource()
+	//note: Request Access to an audio resource, causing it to be loaded if it wasnt. Increment ref count if already loaded
+	void RequestAudioResource(std::string name);
+	//function: FreeAudioResource()
+	//note: Free an audio resource, causing its ref count to decrese. 
+	void FreeAudioResource(std::string name);
+
+	//function: RequestVideoResource()
+	//note: Request Access to an video resource, causing it to be loaded if it wasnt. Increment ref count if already loaded
+	void RequestVideoResource(std::string name);
+	//function: FreeVideoResource()
+	//note: Free an video resource, causing its ref count to decrese. 
+	void FreeVideoResource(std::string name);
+
+	//function: RequestTextureResource()
+	//note: Request Access to an texture resource, causing it to be loaded if it wasnt. Increment ref count if already loaded
+	void RequestTextureResource(std::string name);
+	//function: FreeTextureResource()
+	//note: Free an texture resource, causing its ref count to decrese. 
+	void FreeTextureResource(std::string name);
+
+	//function: RequestScriptResource()
+	//note: Request Access to an script resource, causing it to be loaded if it wasnt. Increment ref count if already loaded
+	void RequestScriptResource(std::string name);
+	//function: FreeScriptResource()
+	//note: Free an script resource, causing its ref count to decrese. 
+	void FreeScriptResource(std::string name);
+
+	//function: RequestFontResource()
+	//note: Request Access to an font resource, causing it to be loaded if it wasnt. Increment ref count if already loaded
+	void RequestFontResource(std::string name);
+	//function: FreeFontResource()
+	//note: Free an font resource, causing its ref count to decrese. 
+	void FreeFontResource(std::string name);
+
+	//function: RequestGLProgramResource()
+	//note: Request Access to an glprogram resource, causing it to be loaded if it wasnt. Increment ref count if already loaded
+	void RequestGLProgramResource(std::string name);
+	//function: FreeGLProgramResource()
+	//note: Free an glprogram resource, causing its ref count to decrese. 
+	void FreeGLProgramResource(std::string name);
+
+	//function: RequestMapResource()
+	//note: Request Access to an map resource, causing it to be loaded if it wasnt. Increment ref count if already loaded
+	void RequestMapResource(std::string name);
+	//function: FreeMapResource()
+	//note: Free an map resource, causing its ref count to decrese. 
+	void FreeMapResource(std::string name);
+
+	//function: RequestTextResource()
+	//note: Request Access to an text resource, causing it to be loaded if it wasnt. Increment ref count if already loaded
+	void RequestTextResource(std::string name);
+	//function: FreeTextResource()
+	//note: Free an text resource, causing its ref count to decrese. 
+	void FreeTextResource(std::string name);
+
+
 private:
 	//var: ActiveManager. Pointer containting the active instance
 	static ResourceManager* ActiveManager;
@@ -50,7 +108,22 @@ private:
 	//var: textDb. Contains list of all text files
 	std::map<std::string, std::string> textDb;
 
-	//var: scriptResources
+	//var: audioResources. Contains the currently loaded Audio Resourcess
+	std::map<std::string, AudioResource> audioResources;
+	//var: audioResources. Contains the currently loaded Audio Resourcess
+	std::map<std::string, VideoResource> videoResources;
+	//var: audioResources. Contains the currently loaded Audio Resourcess
+	std::map<std::string, TextureResource> textureResources;
+	//var: audioResources. Contains the currently loaded Audio Resourcess
+	std::map<std::string, ScriptResource> scriptResources;
+	//var: audioResources. Contains the currently loaded Audio Resourcess
+	std::map<std::string, FontResource> fontResources;
+	//var: audioResources. Contains the currently loaded Audio Resourcess
+	std::map<std::string, GLProgramResource> glProgramResources;
+	//var: audioResources. Contains the currently loaded Audio Resourcess
+	std::map<std::string, MapResource> mapResources;
+	//var: audioResources. Contains the currently loaded Audio Resourcess
+	std::map<std::string, TextResource> textResources;
 protected:
 	//function: _CheckResMgr
 	//note: checks singleton
@@ -109,6 +182,8 @@ public:
 	AudioResource();
 	AudioResource(std::string name, std::string file);
 	~AudioResource();
+
+	Mix_Chunk* GetChunk() const;
 private:
 	Mix_Chunk* mixChunk;
 };
@@ -118,9 +193,9 @@ private:
 class VideoResource
 {
 public:
-	VideoResource();
-	VideoResource(std::string name, std::string file);
-	~VideoResource();
+	VideoResource(){}
+	VideoResource(std::string name, std::string file){}
+	~VideoResource(){}
 private:
 	
 };
@@ -133,12 +208,14 @@ public:
 	TextureResource();
 	TextureResource(std::string name, std::string file);
 	~TextureResource();
+
+	GLuint		GetTextureId() const;
 private:
 	GLuint texId;
 };
 
 //class: ScriptResource
-//note: stores script
+//note: stores script. //TODO: dont be a dummy!
 class ScriptResource : public Resource
 {
 public:
@@ -149,7 +226,7 @@ private:
 	
 };
 
-//class: ScriptResource
+//class: FontResource
 //note: stores font
 class FontResource : public Resource
 {
@@ -157,8 +234,50 @@ public:
 	FontResource();
 	FontResource(std::string name, std::string file);
 	~FontResource();
+
+	TTF_Font* GetFont(int size);
 private:
-	TTF_Font*	font;
+	std::map<int,TTF_Font*>		font;
+	SDL_RWops*					fontFile;
+};
+
+//class: GLProgramResource
+//note: stores an ID for an compiled GLProgram
+class GLProgramResource : public Resource
+{
+public:
+	GLProgramResource();
+	GLProgramResource(std::string name, std::string file);
+	~GLProgramResource();
+
+	GLuint GetProgramId() const;
+private:
+	GLuint programId;
+};
+
+//class: MapResource
+//note:  Stores a map. the thing players walk on. Really. TODO: DONT BE SO DUMMY!!!
+class MapResource : public Resource
+{
+public:
+	MapResource() :Resource("invalid"){};
+	MapResource(std::string name, std::string file) :Resource("invalid"){}
+	~MapResource(){}
+private:
+};
+
+//class: TextResource
+//note: Contains text. The written one. Used for localization and stuff
+class TextResource : Resource
+{
+public:
+	TextResource();
+	TextResource(std::string name, std::string file);
+	~TextResource();
+
+	std::string operator[](std::string);
+private:
+	std::map<std::string, std::string> TextContainer;
 };
 
 

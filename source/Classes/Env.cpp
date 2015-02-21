@@ -168,6 +168,35 @@ Env::Env(int argc, char** argv)
 		throw EnvException("Could not Load all mixer modules. Did you include all libs for the requested modes?");
 	}
 
+	
+	//For image we basically do the same as in the mixer init
+	Out() << "Init Image (sdl_image)" << std::endl;
+	int imageInitFlags = 0;
+	
+	if (settings[engineInitName]["requestJPG"] == std::string("true")) {
+		imageInitFlags |= IMG_INIT_JPG;
+	}
+	if (settings[engineInitName]["requestPNG"] == std::string("true")) {
+		imageInitFlags |= IMG_INIT_PNG;
+	}
+	if (settings[engineInitName]["requestTIF"] == std::string("true")) {
+		imageInitFlags |= IMG_INIT_TIF;
+	}
+	if (settings[engineInitName]["requestWEBP"] == std::string("true")) {
+		imageInitFlags |= IMG_INIT_WEBP;
+	}
+	int imageInitResult = IMG_Init(imageInitFlags);
+	if (imageInitFlags != imageInitResult) {
+		//aand the bad thing happend
+		throw EnvException("Could not Load all image modules. Did you include all libs for the requested modes?");
+	}
+
+	//Font is an easy call to the ttf_init function. 
+	Out() << "Init Font (sdl_ttf)" << std::endl;
+	if (TTF_Init() != 0) {
+		throw EnvException("Could not init SDL_TTF!");
+	}
+	
 	Out() << "Done!" << std::endl;
 	//yay
 }

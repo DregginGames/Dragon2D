@@ -134,21 +134,21 @@ private:
 	std::map<std::string, std::string> textDb;
 
 	//var: audioResources. Contains the currently loaded Audio Resourcess
-	std::map<std::string, AudioResource> audioResources;
+	std::map<std::string, AudioResource*> audioResources;
 	//var: audioResources. Contains the currently loaded Audio Resourcess
-	std::map<std::string, VideoResource> videoResources;
+	std::map<std::string, VideoResource*> videoResources;
 	//var: audioResources. Contains the currently loaded Audio Resourcess
-	std::map<std::string, TextureResource> textureResources;
+	std::map<std::string, TextureResource*> textureResources;
 	//var: audioResources. Contains the currently loaded Audio Resourcess
-	std::map<std::string, ScriptResource> scriptResources;
+	std::map<std::string, ScriptResource*> scriptResources;
 	//var: audioResources. Contains the currently loaded Audio Resourcess
-	std::map<std::string, FontResource> fontResources;
+	std::map<std::string, FontResource*> fontResources;
 	//var: audioResources. Contains the currently loaded Audio Resourcess
-	std::map<std::string, GLProgramResource> glProgramResources;
+	std::map<std::string, GLProgramResource*> glProgramResources;
 	//var: audioResources. Contains the currently loaded Audio Resourcess
-	std::map<std::string, MapResource> mapResources;
+	std::map<std::string, MapResource*> mapResources;
 	//var: audioResources. Contains the currently loaded Audio Resourcess
-	std::map<std::string, TextResource> textResources;
+	std::map<std::string, TextResource*> textResources;
 protected:
 	//function: _CheckResMgr
 	//note: checks singleton
@@ -161,10 +161,10 @@ protected:
 	//function: _RequestGeneralResource
 	//note: helper for Resource access. Used by the Request[ResourceTyoe]Access functions.
 	template<class T>
-	bool _RequestGeneralResource(std::string name, std::map<std::string, std::string>&db, std::map<std::string, T>&resources)
+	bool _RequestGeneralResource(std::string name, std::map<std::string, std::string>&db, std::map<std::string, T*>&resources)
 	{
 		//Since template functions are unreadable, some more comments here
-		//Try to get a resource from the given resource set
+		//Try to get a resource from the given resource set 
 		auto res = resources.find(name);
 		if (res == resources.end()) {
 			//If not in the resource set, try to find it in the db
@@ -174,41 +174,42 @@ protected:
 				return false;
 			}
 			//If we know it, Load it. T is our resource-class (i.e. AudioResource)
-			resources[name] = T(name, dbdata->second);
+			T* newRes = new  T(name, dbdata->second);
+			resources[name] = newRes;
 			return true;
 		}
 		//If we have the resource in the set, increse ref count
-		res->second.Access();
-		return false;
+		res->second->Access();
+		return true;
 	}
 
 	//function: _RequestGeneralResource
 	//note: helper for Resource access. Used by the Free[ResourceTyoe]Access functions.
 	template<class T>
-	void _FreeGeneralResource(std::string name, std::map<std::string, T>&resources)
+	void _FreeGeneralResource(std::string name, std::map<std::string, T*>&resources)
 	{
 		//Find res in the given resource set
 		auto res = resources.find(name);
 		//If we dont know the resource do nothing
 		if (res != resources.end()) {
 			//Decres ref count
-			res->second.Free();
+			res->second->Free();
 		}
 	}
 
 	//function: _GetGeneralResource
 	//note: helper for Resource access. Used by the Get[ResourceType] functions.
 	template<class T>
-	T _GetGeneralResource(std::string name, std::map<std::string, std::string>&db, std::map<std::string, T>&resources)
+	T _GetGeneralResource(std::string name, std::map<std::string, std::string>&db, std::map<std::string, T*>&resources)
 	{
 		//Find res in the given resource set
 		auto res = resources.find(name);
 		if (res != resources.end()) {
-			return res->second;
+			return *res->second;
 		}
 		//Try to load it. Will take a long time, but better then having black tiles cause someone cant edit map files
 		if (_RequestGeneralResource(name, db, resources)) {
-			return resources[name];
+			return *resources[name];
 		}
 
 		//Return invalid resource.

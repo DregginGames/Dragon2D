@@ -103,8 +103,8 @@ Env::Env(int argc, char** argv)
 	int height = stoi(settings[engineInitName]["height"]);
 
 	//try out some opengl-configs and fire up the window
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
@@ -124,6 +124,8 @@ Env::Env(int argc, char** argv)
 			throw EnvException("Cannot create window!");
 		}
 	}
+
+	resolution = glm::vec2(width, height);
 
 	Out() << "Init OpenGL" << std::endl;
 	//Fire up glew and the context!
@@ -146,6 +148,15 @@ Env::Env(int argc, char** argv)
 		std::string glewError = (char*)(glewGetErrorString(err));
 		throw EnvException((std::string("Cannot Init glew: ") + glewError).c_str());
 	}
+
+	glGenVertexArrays(1, &vertexArray);
+	std::cout << glGetError() << std::endl;
+	glBindVertexArray(vertexArray);
+	std::cout << glGetError() << std::endl;
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glPixelStorei(GL_PACK_ALIGNMENT, 1);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	Out() << "Init Sound (sdl_mixer)" << std::endl;
 	//Next is sound. We use SDL_mixer.
@@ -250,6 +261,7 @@ void Env::ClearFramebuffer(bool colorbuffer, bool depthbuffer)
 
 Framebuffer Env::GenerateFramebuffer(int w, int h)
 {
+	_CheckEnv();
 	Framebuffer f;
 
 	GLuint FramebufferName = 0;
@@ -289,6 +301,16 @@ Framebuffer Env::GenerateFramebuffer(int w, int h)
 		f.depthId = depthrenderbuffer;
 	}
 	return f;
+}
+
+glm::vec4 Env::GetCurrentMouseState()
+{
+	_CheckEnv();
+	int x, y;
+	Uint32 buttonstate = SDL_GetMouseState(&x, &y);
+	bool l = buttonstate & SDL_BUTTON(SDL_BUTTON_LEFT);
+	bool r = buttonstate & SDL_BUTTON(SDL_BUTTON_RIGHT);
+	return glm::vec4(x / ActiveEnv->resolution.x, y / ActiveEnv->resolution.y, l ? 1 : 0, r ? 1 : 0);
 }
 
 std::fstream Env::Gamefile(std::string file, std::ios_base::openmode mode)

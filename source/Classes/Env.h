@@ -76,6 +76,10 @@ public:
 	//note: generates a framebuffer
 	static Framebuffer GenerateFramebuffer(int w, int h);
 
+	//function: GetCurrentMouseState:
+	//note: Returns a glm::vec4 with the relative mouse position in [0] and [1] and the mouse buttons in [2] and [3]
+	static glm::vec4 GetCurrentMouseState();
+
 protected:
 	static void _CheckEnv();
 
@@ -88,6 +92,9 @@ private:
 	std::string engineInitName;
 	//var: gameInitName. contains the path to the game init file
 	std::string gameInitName;
+
+	//var: resolution. holds the screen resolution
+	glm::vec2 resolution;
 
 	//var: streamOut. contains the std::ostream where to write on in general cases. log.txt if not in debug
 	static std::ostream	streamOut;
@@ -107,6 +114,9 @@ private:
 	//var: glContext - GLContext of this env. 
 	SDL_GLContext	context;
 
+	//var: vertexArray
+	GLuint vertexArray;
+	
 };
 
 //class: ;

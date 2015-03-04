@@ -23,6 +23,9 @@
 #include <glm/glm.hpp>
 //libs
 #include <TailTipUI.h>
+#include <TailTipUI_text.h>
+#include <TailTipUI_area.h>
+#include <TailTipUI_xml.h>
 
 namespace Dragon2D {
 //Standart definitions, macros and classes 

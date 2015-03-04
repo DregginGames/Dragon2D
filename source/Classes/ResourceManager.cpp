@@ -424,10 +424,10 @@ FontResource::FontResource(std::string name, std::string file)
 }
 
 FontResource::~FontResource()
-{
+{ 
 	for (auto fontPair = font.begin(); fontPair != font.end(); fontPair++) {
-		if (fontPair->second != NULL) {
-			TTF_CloseFont(fontPair->second);
+		if (fontPair->second != NULL) {  
+			TTF_CloseFont(fontPair->second); 
 		}
 
 		if (fontFile != NULL) {

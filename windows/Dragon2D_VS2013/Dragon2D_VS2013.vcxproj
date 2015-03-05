@@ -69,28 +69,28 @@
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include;$(SolutionDir)..\..\source\Classes;$(SolutionDir)..\..\source\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include;$(SolutionDir)..\..\source\Classes;$(SolutionDir)..\..\source\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include;$(SolutionDir)..\..\source\Classes;$(SolutionDir)..\..\source\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include;$(SolutionDir)..\..\source\Classes;$(SolutionDir)..\..\source\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -98,6 +98,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>base.h</PrecompiledHeaderFile>
+      <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -112,6 +117,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>base.h</PrecompiledHeaderFile>
+      <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -128,6 +138,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>base.h</PrecompiledHeaderFile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -146,6 +160,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>base.h</PrecompiledHeaderFile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -164,14 +182,18 @@
     <ClInclude Include="..\..\source\Classes\Env.h" />
     <ClInclude Include="..\..\source\Classes\GameManager.h" />
     <ClInclude Include="..\..\source\Classes\ResourceManager.h" />
+    <ClInclude Include="..\..\source\Classes\ScriptEngine.h" />
+    <ClInclude Include="..\..\source\Classes\ScriptLibHelper.h" />
     <ClInclude Include="..\..\source\Dragon2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\source\base.cpp" />
     <ClCompile Include="..\..\source\Classes\BaseClass.cpp" />
     <ClCompile Include="..\..\source\Classes\Env.cpp" />
     <ClCompile Include="..\..\source\Classes\GameManager.cpp" />
     <ClCompile Include="..\..\source\Classes\ResourceManager.cpp" />
     <ClCompile Include="..\..\source\Dragon2D.cpp" />
+    <ClCompile Include="..\..\source\ScriptEngine.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

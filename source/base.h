@@ -26,6 +26,11 @@
 #include <TailTipUI_text.h>
 #include <TailTipUI_area.h>
 #include <TailTipUI_xml.h>
+#ifdef _MSC_VER //needed to disable big-name errors
+#pragma warning(disable:4503)
+#endif
+#include <chaiscript/chaiscript.hpp>
+
 
 namespace Dragon2D {
 //Standart definitions, macros and classes 

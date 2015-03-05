@@ -1,0 +1,15 @@
+def Init() {}
+
+def Run() {
+	puts("im running!\n");
+	var test = vec4(1,3,4,5);
+	
+	var testui = XMLUI(0, "demogame/testui.xml", Mouseinfo);
+	while(true) {
+		ClearScreen(true,true);
+		testui.RenderElements();
+		UpdateScreen();
+	}
+}
+
+def Stop() {}

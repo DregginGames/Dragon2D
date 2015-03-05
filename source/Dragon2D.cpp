@@ -1,6 +1,7 @@
 #include "Dragon2D.h"
 #include "./Classes/Env.h"
 #include "./Classes/GameManager.h"
+#include "./Classes/ScriptEngine.h"
 //function: main
 //note: entry point. Starts Env and GameManager
 //note: Returns 0 if everything goes well, 1 in case of a Dragon2D exception, 2 in case of a std exception and 3 if the world burned down
@@ -9,12 +10,14 @@ int main(int argc, char* argv[])
 	try {
 		Dragon2D::Env EngineEnv(argc, argv);
 		Dragon2D::GameManager CurrentManager;
-
+		Dragon2D::ScriptEngine ScriptEngine;
+		ScriptEngine.Run();
 
 		TailTipUI::Root w(0);
 		Dragon2D::FontResource d = CurrentManager.GetResourceManager().GetFontResource("lucon");
 		TTF_Font* foo = d.GetFont(1024);
 
+		/*
 		TailTipUI::XMLLoader loader(0, "demogame/testui.xml", Dragon2D::Env::GetCurrentMouseState);
 
 		while (true) {
@@ -24,6 +27,7 @@ int main(int argc, char* argv[])
 			SDL_Event test;
 			SDL_PollEvent(&test);
 		}
+		*/
 
 	}
 	catch (Dragon2D::Exception e ) {

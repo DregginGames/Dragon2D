@@ -1,0 +1,13 @@
+Include("mainmenu");
+
+def QuitGameFromMenuCallback(UIElement e) {
+	CurrentManager().Quit();
+}
+
+
+def LoadMainmenu() {
+	var mainmenu = NewUiObject();
+	mainmenu.Load("mainmenu");
+	mainmenu.AddCallback("quitGame", QuitGameFromMenuCallback);
+	CurrentManager().Add(mainmenu);
+}

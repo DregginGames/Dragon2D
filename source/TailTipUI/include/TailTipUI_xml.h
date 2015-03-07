@@ -18,8 +18,9 @@ namespace TailTipUI {
 	public:
 		XMLLoader(GLuint destinationFramebuffer);
 		XMLLoader(GLuint destinationFramebuffer, std::string infile, MouseinfoCallbackType mouseInfoCallback = MouseinfoCallbackType(), ButtoninfoCallbackType buttonInfoCallback = ButtoninfoCallbackType(), FontLoaderFunctionType f = defaultFontLoader);
+		~XMLLoader();
 
-		void Load(std::string infile, FontLoaderFunctionType f, MouseinfoCallbackType mouseInfoCallback, ButtoninfoCallbackType buttonInfoCallback);
+		void Load(std::string infile, MouseinfoCallbackType mouseInfoCallback = MouseinfoCallbackType(), ButtoninfoCallbackType buttonInfoCallback = ButtoninfoCallbackType(), FontLoaderFunctionType f = defaultFontLoader);
 	
 		void RegisterCallback(std::string name, ElementCallbackType c);
 		void RemoveCallback(std::string name);

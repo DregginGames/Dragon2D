@@ -25,8 +25,8 @@
 #include <TailTipUI.h>
 #include <TailTipUI_text.h>
 #include <TailTipUI_area.h>
-#include <TailTipUI_xml.h>
-#ifdef _MSC_VER //needed to disable big-name errors
+#include <TailTipUI_xml.h> 
+#ifdef _MSC_VER //needed to disable big-name errors caused by chaiscript. they are annoying
 #pragma warning(disable:4503)
 #endif
 #include <chaiscript/chaiscript.hpp>

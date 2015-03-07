@@ -2,6 +2,7 @@
 
 #include "base.h"
 #include "Env.h"
+#include "ScriptLibHelper.h"
 
 namespace Dragon2D {
 
@@ -217,6 +218,33 @@ protected:
 	}
 };
 
+D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(ResourceManager)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestAudioResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestVideoResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestTextureResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestScriptResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestFontResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestGLProgramResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestMapResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestTextResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeAudioResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeVideoResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeTextureResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeScriptResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeFontResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeGLProgramResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeMapResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeTextResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetAudioResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetVideoResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetTextureResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetScriptResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetFontResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetGLProgramResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetMapResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetTextResource)
+D2DCLASS_SCRIPTINFO_END
+
 //class: GameManagerException
 //note: Exception that happen in the Game Manager or in classes related to it are defined below
 class ResourceManagerException : public Exception
@@ -240,6 +268,7 @@ public:
 class Resource 
 {
 public:
+	Resource();
 	Resource(std::string resourceName);
 	virtual ~Resource();
 
@@ -256,6 +285,13 @@ protected:
 	SDL_RWops* _RWFromFile(std::string file);
 	
 };
+D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(Resource)
+D2DCLASS_SCRIPTINFO_CONSTRUCTOR(Resource, std::string)
+D2DCLASS_SCRIPTINFO_MEMBER(Resource, Access)
+D2DCLASS_SCRIPTINFO_MEMBER(Resource, Free)
+D2DCLASS_SCRIPTINFO_MEMBER(Resource, GetResourceCount)
+D2DCLASS_SCRIPTINFO_MEMBER(Resource, GetName)
+D2DCLASS_SCRIPTINFO_END
 
 //class: AudioResource
 //note: stores audio chunk that is used by sdl stuff
@@ -271,6 +307,12 @@ private:
 	Mix_Chunk* mixChunk;
 };
 
+D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(AudioResource)
+D2DCLASS_SCRIPTINFO_PARENTINFO(Resource, AudioResource)
+D2DCLASS_SCRIPTINFO_CONSTRUCTOR(AudioResource, std::string, std::string)
+D2DCLASS_SCRIPTINFO_MEMBER(AudioResource, GetChunk)
+D2DCLASS_SCRIPTINFO_END
+
 //class: VideoResource
 //note: dummy, does nothing cause we dont use videos atm
 class VideoResource : public Resource
@@ -282,6 +324,10 @@ public:
 private:
 	
 };
+D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(VideoResource)
+D2DCLASS_SCRIPTINFO_PARENTINFO(Resource, VideoResource)
+D2DCLASS_SCRIPTINFO_CONSTRUCTOR(VideoResource, std::string, std::string)
+D2DCLASS_SCRIPTINFO_END
 
 //class: TextureResource
 //note: stores texture gluint that is placed on the gpu
@@ -296,6 +342,11 @@ public:
 private:
 	GLuint texId;
 };
+D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(TextureResource)
+D2DCLASS_SCRIPTINFO_PARENTINFO(Resource, TextureResource)
+D2DCLASS_SCRIPTINFO_CONSTRUCTOR(TextureResource, std::string, std::string)
+D2DCLASS_SCRIPTINFO_MEMBER(TextureResource, GetTextureId)
+D2DCLASS_SCRIPTINFO_END
 
 //class: ScriptResource
 //note: stores script. //TODO: dont be a dummy!
@@ -308,6 +359,10 @@ public:
 private:
 	
 };
+D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(ScriptResource)
+D2DCLASS_SCRIPTINFO_PARENTINFO(Resource, ScriptResource)
+D2DCLASS_SCRIPTINFO_CONSTRUCTOR(ScriptResource, std::string, std::string)
+D2DCLASS_SCRIPTINFO_END
 
 //class: FontResource
 //note: stores font
@@ -323,6 +378,11 @@ private:
 	std::map<int,TTF_Font*>		font;
 	SDL_RWops*					fontFile;
 };
+D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(FontResource)
+D2DCLASS_SCRIPTINFO_PARENTINFO(Resource, FontResource)
+D2DCLASS_SCRIPTINFO_CONSTRUCTOR(FontResource, std::string, std::string)
+//D2DCLASS_SCRIPTINFO_MEMBER(FontResource, GetFont)
+D2DCLASS_SCRIPTINFO_END
 
 //class: GLProgramResource
 //note: stores an ID for an compiled GLProgram
@@ -337,6 +397,11 @@ public:
 private:
 	GLuint programId;
 };
+D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(GLProgramResource)
+D2DCLASS_SCRIPTINFO_PARENTINFO(Resource, GLProgramResource)
+D2DCLASS_SCRIPTINFO_CONSTRUCTOR(GLProgramResource, std::string, std::string)
+D2DCLASS_SCRIPTINFO_MEMBER(GLProgramResource, GetProgramId)
+D2DCLASS_SCRIPTINFO_END
 
 //class: MapResource
 //note:  Stores a map. the thing players walk on. Really. TODO: DONT BE SO DUMMY!!!
@@ -348,6 +413,10 @@ public:
 	~MapResource(){}
 private:
 };
+D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(MapResource)
+D2DCLASS_SCRIPTINFO_PARENTINFO(Resource, MapResource)
+D2DCLASS_SCRIPTINFO_CONSTRUCTOR(MapResource, std::string, std::string)
+D2DCLASS_SCRIPTINFO_END
 
 //class: TextResource
 //note: Contains text. The written one. Used for localization and stuff
@@ -362,6 +431,10 @@ public:
 private:
 	std::map<std::string, std::string> TextContainer;
 };
-
+D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(TextResource)
+D2DCLASS_SCRIPTINFO_PARENTINFO(Resource, TextResource)
+D2DCLASS_SCRIPTINFO_CONSTRUCTOR(TextResource, std::string, std::string)
+D2DCLASS_SCRIPTINFO_OPERATOR(TextResource, operator[], [])
+D2DCLASS_SCRIPTINFO_END
 
 }; //namespace Dragon2D

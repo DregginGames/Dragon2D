@@ -48,6 +48,9 @@
     <ClInclude Include="..\..\source\Classes\ScriptLibHelper.h">
       <Filter>Headerdateien\Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\Classes\Ui.h">
+      <Filter>Headerdateien\Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\Dragon2D.cpp">
@@ -68,8 +71,17 @@
     <ClCompile Include="..\..\source\base.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\ScriptEngine.cpp">
+    <ClCompile Include="..\..\source\Classes\ScriptLibHelper.cpp">
       <Filter>Quelldateien\Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\Classes\ScriptEngine.cpp">
+      <Filter>Quelldateien\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Classes\Ui.cpp">
+      <Filter>Quelldateien\Classes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

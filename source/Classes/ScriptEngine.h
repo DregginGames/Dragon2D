@@ -7,22 +7,6 @@
 namespace Dragon2D
 {
 
-#define SCRIPTCLASS_ADD(name, chai) ScriptInfo_##name(chai);
-#define SCRIPTFUNCTION_ADD(func,name, chai) chai.add(chaiscript::fun(&func),name)
-#define SCRIPTTYPE_ADD(type, name, chai) chai.add(chaiscript::user_type<type>(), name)
-
-	inline void LoadClasses(chaiscript::ChaiScript &chai) {
-		SCRIPTTYPE_ADD(std::ostream, "ostream", chai);
-		SCRIPTFUNCTION_ADD(Env::Gamefile, "Gamefile", chai);
-		SCRIPTFUNCTION_ADD(Env::Enginefile, "Enginefile", chai);
-		SCRIPTFUNCTION_ADD(Env::GetCurrentMouseState, "Mouseinfo", chai);
-		SCRIPTFUNCTION_ADD(Env::SwapBuffers, "UpdateScreen", chai);
-		SCRIPTFUNCTION_ADD(Env::ClearFramebuffer, "ClearScreen", chai);
-		SCRIPTCLASS_ADD(vec4, chai);
-		SCRIPTCLASS_ADD(XMLUI, chai);
-	}
-
-
 	//class: ScriptEngine
 	//note: holds the chaiscript engine and is responsible for the interaction of engine-classes with it
 	class ScriptEngine
@@ -39,11 +23,19 @@ namespace Dragon2D
 		//note: runs the script engine wich causes Run() to be called in the run.chai-file
 		void Run();
 
-		
-	private:
-		chaiscript::ChaiScript chai;
+		//function: IncludeScript
+		//note: includes a script file and evals it
+		static void IncludeScript(std::string name);
 
+	private:
+		//var: chai. Hods the chai interpreter
+		chaiscript::ChaiScript chai;
+		//var: activeEngine. Holds the active script engine
+		static ScriptEngine* activeEngine;
+		//var: knownFiles. Holds names of the included files. used to avoid inlcludes breaking the engine
+		std::vector<std::string> knownFiles;
 	protected:
+		void _IncludeScript(std::string name);
 	};
 
 	//class: ScriptEngine

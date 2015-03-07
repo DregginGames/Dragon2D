@@ -1,0 +1,8 @@
+<root>
+	<area pos="0.05,0.05,0.4,0.9" bgcolor="0.6,0.4,0.1,1.0">
+		<button widthlock="false" name="New Game" font="demogame/font/lucon.ttf:64" pos="0.2,0.2,0.3,0.1" id="newgameButton" bgcolor="0.5,0.5,0.5,0.8" color="1.0,1.0,1.0,1.0" />
+		<button widthlock="false" name="Load Game" font="demogame/font/lucon.ttf:64" pos="0.2,0.35,0.3,0.1" id="loadgameButton" bgcolor="0.5,0.5,0.5,0.8" color="1.0,1.0,1.0,1.0" />
+		<button widthlock="false" name="Settings" font="demogame/font/lucon.ttf:64" pos="0.2,0.5,0.3,0.1" id="settingsButton" bgcolor="0.5,0.5,0.5,0.8" color="1.0,1.0,1.0,1.0" />
+		<button onclick="callback.quitGame" widthlock="false" name="Quit" font="demogame/font/lucon.ttf:64" pos="0.2,0.65,0.3,0.1" id="quitButton" bgcolor="0.5,0.5,0.5,0.8" color="1.0,1.0,1.0,1.0" />
+	</area>
+</root>

@@ -248,6 +248,12 @@ void ResourceManager::_CheckResMgr()
 
 //Subclasses (fml)
 //Resource
+Resource::Resource()
+	: name("invalid"), references(-1)
+{
+
+}
+
 Resource::Resource(std::string resourceName)
 : name(resourceName), references(1)
 {

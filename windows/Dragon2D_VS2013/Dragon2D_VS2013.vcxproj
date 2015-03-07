@@ -184,6 +184,7 @@
     <ClInclude Include="..\..\source\Classes\ResourceManager.h" />
     <ClInclude Include="..\..\source\Classes\ScriptEngine.h" />
     <ClInclude Include="..\..\source\Classes\ScriptLibHelper.h" />
+    <ClInclude Include="..\..\source\Classes\Ui.h" />
     <ClInclude Include="..\..\source\Dragon2D.h" />
   </ItemGroup>
   <ItemGroup>
@@ -192,8 +193,13 @@
     <ClCompile Include="..\..\source\Classes\Env.cpp" />
     <ClCompile Include="..\..\source\Classes\GameManager.cpp" />
     <ClCompile Include="..\..\source\Classes\ResourceManager.cpp" />
+    <ClCompile Include="..\..\source\Classes\ScriptEngine.cpp" />
+    <ClCompile Include="..\..\source\Classes\ScriptLibHelper.cpp" />
+    <ClCompile Include="..\..\source\Classes\Ui.cpp" />
     <ClCompile Include="..\..\source\Dragon2D.cpp" />
-    <ClCompile Include="..\..\source\ScriptEngine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

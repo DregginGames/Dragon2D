@@ -9,26 +9,11 @@ int main(int argc, char* argv[])
 {
 	try {
 		Dragon2D::Env EngineEnv(argc, argv);
-		Dragon2D::GameManager CurrentManager;
 		Dragon2D::ScriptEngine ScriptEngine;
+		Dragon2D::GameManager gamemanager;
 		ScriptEngine.Run();
-
-		TailTipUI::Root w(0);
-		Dragon2D::FontResource d = CurrentManager.GetResourceManager().GetFontResource("lucon");
-		TTF_Font* foo = d.GetFont(1024);
-
-		/*
-		TailTipUI::XMLLoader loader(0, "demogame/testui.xml", Dragon2D::Env::GetCurrentMouseState);
-
-		while (true) {
-			Dragon2D::Env::ClearFramebuffer();
-			loader.RenderElements();
-			Dragon2D::Env::SwapBuffers();
-			SDL_Event test;
-			SDL_PollEvent(&test);
-		}
-		*/
-
+		//Here it ends. Run-script should take care of everything. 
+		//No, the stuff will not entirely run in the scripts, they call the standart-functions of GameManager and stuff.
 	}
 	catch (Dragon2D::Exception e ) {
 		Dragon2D::Env::Err() << "CRITICAL ERROR: \n\t" << e.what() << std::endl;

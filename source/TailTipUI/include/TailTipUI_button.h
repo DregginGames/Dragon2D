@@ -22,7 +22,12 @@ namespace TailTipUI {
 	private:
 		Text* buttonText;
 		bool widthlockText;
+
 	protected:
+
+		virtual void _InternalHoverEvent();
+		virtual void _InternalStopHoverEvent();
+		void _UpdateText();
 	};
 
 };

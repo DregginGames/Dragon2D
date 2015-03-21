@@ -1,6 +1,15 @@
-Include("mainmenu");
+def StartNewGameFromMenuCallback(UIElement e, XMLUI loader) {
+	loader.GetElementById("mainmenu").SetHidden(true);
+	loader.GetElementById("ingameui").SetHidden(false);
+	GlobalMap("testmap").Load("testmap");
+	CurrentManager().Add(GlobalMap("testmap"));
+}
 
-def QuitGameFromMenuCallback(UIElement e) {
+def evalCommand (UIElement e, XMLUI loader) {
+	RawEval(e.GetName());
+}
+
+def QuitGameFromMenuCallback(UIElement e, XMLUI loader) {
 	CurrentManager().Quit();
 }
 
@@ -8,6 +17,8 @@ def QuitGameFromMenuCallback(UIElement e) {
 def LoadMainmenu() {
 	var mainmenu = NewUiObject();
 	mainmenu.Load("mainmenu");
+	mainmenu.AddCallback("newGame", StartNewGameFromMenuCallback);
 	mainmenu.AddCallback("quitGame", QuitGameFromMenuCallback);
+	mainmenu.AddCallback("evalCommand", evalCommand);
 	CurrentManager().Add(mainmenu);
 }

@@ -5,6 +5,14 @@
 
 namespace Dragon2D {
 
+static const GLfloat g_quad[] = {
+		-1.0f, -1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f,
+		-1.0f, 1.0f, 0.0f,
+		-1.0f, 1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+};
 
 Env*			Env::ActiveEnv = nullptr;
 std::ostream	Env::streamOut( NULL );
@@ -152,11 +160,14 @@ Env::Env(int argc, char** argv)
 	glGenVertexArrays(1, &vertexArray);
 	std::cout << glGetError() << std::endl;
 	glBindVertexArray(vertexArray);
-	std::cout << glGetError() << std::endl;
+	glGenBuffers(1, &quadBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, quadBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_quad), g_quad, GL_STATIC_DRAW);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glPixelStorei(GL_PACK_ALIGNMENT, 1);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 
 	Out() << "Init Sound (sdl_mixer)" << std::endl;
 	//Next is sound. We use SDL_mixer.
@@ -209,6 +220,22 @@ Env::Env(int argc, char** argv)
 		throw EnvException("Could not init SDL_TTF!");
 	}
 	
+	//in the end fire up the resource manager
+	resourceManager.reset(new ResourceManager);
+
+
+	Out() << "Give information to TailTipUI" << std::endl;
+	TailTipUI::Info(settings[gameInitName]["title"], width, height);
+	TailTipUI::Info::SetMouseCallback(Env::GetCurrentMouseState);
+	TailTipUI::Info::SetButtonCallback(Env::GetCurrentKeysRaw);
+	TailTipUI::Info::SetImageCallback([this](std::string name) { 
+		return resourceManager->GetTextureResource(name).GetTextureId(); 
+	});
+	TailTipUI::Info::SetFontCallback([this](std::string name, int size) {
+		return resourceManager->GetFontResource(name).GetFont(size);
+	});
+	TailTipUI::Info::SetTextBufferResetCallback(Env::ResetCurrentTextInput);
+	TailTipUI::Info::SetGetTextBufferCallback(Env::GetCurrentText);
 	Out() << "Done!" << std::endl;
 	//yay
 }
@@ -303,6 +330,22 @@ Framebuffer Env::GenerateFramebuffer(int w, int h)
 	return f;
 }
 
+void Env::RenderQuad()
+{
+	_CheckEnv();
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, ActiveEnv->quadBuffer);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDisableVertexAttribArray(0);
+}
+
+glm::vec2 Env::GetResolution()
+{
+	_CheckEnv();
+	return ActiveEnv->resolution;
+}
+
 glm::vec4 Env::GetCurrentMouseState()
 {
 	_CheckEnv();
@@ -317,6 +360,12 @@ std::fstream Env::Gamefile(std::string file, std::ios_base::openmode mode)
 {
 	_CheckEnv();
 	return std::fstream(ActiveEnv->GetGamepath() + file, mode);
+}
+
+ResourceManager& Env::GetResourceManager()
+{
+	_CheckEnv();
+	return *(ActiveEnv->resourceManager);
 }
 
 std::fstream Env::Enginefile(std::string file, std::ios_base::openmode mode)
@@ -349,6 +398,51 @@ std::ostream& Env::Err()
 	//dont check env since the streams are static
 	return streamOutError;
 }
+
+void Env::HandleEvent(SDL_Event&e)
+{
+	_CheckEnv();
+	ActiveEnv->currentKeyInputs.clear();
+	switch (e.type) {
+	case SDL_TEXTINPUT:
+		ActiveEnv->currentText += e.text.text;
+		ActiveEnv->currentKeyInputs.push_back(e.text.text);
+		break;
+	case SDL_KEYDOWN:
+		if (e.key.keysym.sym == SDLK_BACKSPACE) {
+			if (ActiveEnv->currentText.size() > 0) {
+				ActiveEnv->currentText.pop_back();
+			}
+		}
+		break;
+	}
+}
+
+std::list<std::string> Env::GetCurrentKeys()
+{
+	_CheckEnv();
+	return ActiveEnv->currentKeyInputs;
+}
+
+void Env::ResetCurrentTextInput()
+{
+	_CheckEnv();
+	ActiveEnv->currentText = "";
+}
+
+std::string Env::GetCurrentText()
+{
+	_CheckEnv();
+	return  ActiveEnv->currentText;
+}
+
+const Uint8* Env::GetCurrentKeysRaw()
+{
+	_CheckEnv();
+	SDL_PumpEvents();
+	return SDL_GetKeyboardState(NULL);
+}
+
 
 
 //Setting stuff
@@ -391,7 +485,6 @@ std::string& SettingFile::operator[](std::string key)
 {
 	return settings[key];
 }
-
 
 
 

@@ -1,13 +1,17 @@
 Include("mainmenu");
+Include("tilesetEditor");
 
-def ScriptUpdate(float deltat) {}
+def ScriptUpdate(float deltat) {
+	
+}
 def ScriptRender(float deltat) {}
 
 def Init() {}
 
 def Run() {
-
+	ResetCurrentTextInput();
 	LoadMainmenu(); 
+	//LoadTilesetEditor();
 	CurrentManager().RunGame(ScriptUpdate, ScriptRender);
 }
 

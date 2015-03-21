@@ -1,7 +1,7 @@
 #pragma once
 
 #include "base.h"
-#include "Env.h"
+
 #include "ScriptLibHelper.h"
 
 namespace Dragon2D {
@@ -90,28 +90,28 @@ public:
 
 	//function: GetAudioResource
 	//note: Return a resource
-	AudioResource GetAudioResource(std::string name);
+	AudioResource& GetAudioResource(std::string name);
 	//function: GetAudioResource
 	//note: Return a resource
-	VideoResource GetVideoResource(std::string name);
+	VideoResource& GetVideoResource(std::string name);
 	//function: GetAudioResource
 	//note: Return a resource
-	TextureResource GetTextureResource(std::string name);
+	TextureResource& GetTextureResource(std::string name);
 	//function: GetAudioResource
 	//note: Return a resource
-	ScriptResource GetScriptResource(std::string name);
+	ScriptResource& GetScriptResource(std::string name);
 	//function: GetAudioResource
 	//note: Return a resource
-	FontResource GetFontResource(std::string name);
+	FontResource& GetFontResource(std::string name);
 	//function: GetAudioResource
 	//note: Return a resource
-	GLProgramResource GetGLProgramResource(std::string name);
+	GLProgramResource& GetGLProgramResource(std::string name);
 	//function: GetAudioResource
 	//note: Return a resource
-	MapResource GetMapResource(std::string name);
+	MapResource& GetMapResource(std::string name);
 	//function: GetAudioResource
 	//note: Return a resource
-	TextResource GetTextResource(std::string name);
+	TextResource& GetTextResource(std::string name);
 
 private:
 	//var: ActiveManager. Pointer containting the active instance
@@ -153,7 +153,7 @@ private:
 protected:
 	//function: _CheckResMgr
 	//note: checks singleton
-	void _CheckResMgr();
+	static void _CheckResMgr();
 
 	//function: _LoadDbIntoMap
 	//note: Loads a filestring into a std::map. 
@@ -201,7 +201,7 @@ protected:
 	//function: _GetGeneralResource
 	//note: helper for Resource access. Used by the Get[ResourceType] functions.
 	template<class T>
-	T _GetGeneralResource(std::string name, std::map<std::string, std::string>&db, std::map<std::string, T*>&resources)
+	T& _GetGeneralResource(std::string name, std::map<std::string, std::string>&db, std::map<std::string, T*>&resources)
 	{
 		//Find res in the given resource set
 		auto res = resources.find(name);
@@ -214,7 +214,7 @@ protected:
 		}
 
 		//Return invalid resource.
-		return T();
+		return *(new T);
 	}
 };
 
@@ -339,8 +339,10 @@ public:
 	~TextureResource();
 
 	GLuint		GetTextureId() const;
+	void Bind();
 private:
 	GLuint texId;
+	static GLuint boundTexture;
 };
 D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(TextureResource)
 D2DCLASS_SCRIPTINFO_PARENTINFO(Resource, TextureResource)
@@ -394,13 +396,19 @@ public:
 	~GLProgramResource();
 
 	GLuint GetProgramId() const;
+	void Use();
+	GLuint operator[](std::string uniformName);
 private:
 	GLuint programId;
+	std::map<std::string, GLuint> uniforms;
+	static GLuint boundProgram;
 };
 D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(GLProgramResource)
 D2DCLASS_SCRIPTINFO_PARENTINFO(Resource, GLProgramResource)
 D2DCLASS_SCRIPTINFO_CONSTRUCTOR(GLProgramResource, std::string, std::string)
 D2DCLASS_SCRIPTINFO_MEMBER(GLProgramResource, GetProgramId)
+D2DCLASS_SCRIPTINFO_MEMBER(GLProgramResource, Use)
+D2DCLASS_SCRIPTINFO_OPERATOR(GLProgramResource, operator[], [])
 D2DCLASS_SCRIPTINFO_END
 
 //class: MapResource

@@ -27,6 +27,11 @@ namespace Dragon2D
 		//note: includes a script file and evals it
 		static void IncludeScript(std::string name);
 
+		//function: RawEval
+		//note: evals a script 
+		//param:	command: the stuff to eval. should be chaiscript.
+		static void RawEval(std::string command);
+
 	private:
 		//var: chai. Hods the chai interpreter
 		chaiscript::ChaiScript chai;
@@ -36,6 +41,7 @@ namespace Dragon2D
 		std::vector<std::string> knownFiles;
 	protected:
 		void _IncludeScript(std::string name);
+		void _RawEval(std::string command);
 	};
 
 	//class: ScriptEngine

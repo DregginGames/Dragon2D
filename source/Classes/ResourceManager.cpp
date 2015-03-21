@@ -6,6 +6,8 @@ namespace Dragon2D {
 //filling static vars
 ResourceManager* ResourceManager::ActiveManager = nullptr;
 
+
+
 ResourceManager::ResourceManager()
 {
 	Env::Out() << "Init ResourceManager" << std::endl;
@@ -68,6 +70,7 @@ ResourceManager::~ResourceManager()
 
 void ResourceManager::RequestAudioResource(std::string name)
 {
+
 	if (!_RequestGeneralResource<AudioResource>(name,audioDb,audioResources)) {
 		Env::Err() << "ERROR: Cannot load Audio Resource: " << name << std::endl;
 		return;
@@ -178,42 +181,42 @@ void ResourceManager::FreeTextResource(std::string name)
 }
 
 
-AudioResource ResourceManager::GetAudioResource(std::string name)
+AudioResource& ResourceManager::GetAudioResource(std::string name)
 {
 	return _GetGeneralResource<AudioResource>(name, audioDb, audioResources);
 }
 
-VideoResource ResourceManager::GetVideoResource(std::string name)
+VideoResource& ResourceManager::GetVideoResource(std::string name)
 {
 	return _GetGeneralResource<VideoResource>(name, videoDb, videoResources);
 }
 
-TextureResource ResourceManager::GetTextureResource(std::string name)
+TextureResource& ResourceManager::GetTextureResource(std::string name)
 {
 	return _GetGeneralResource<TextureResource>(name, textureDb, textureResources);
 }
 
-ScriptResource ResourceManager::GetScriptResource(std::string name)
+ScriptResource& ResourceManager::GetScriptResource(std::string name)
 {
 	return _GetGeneralResource<ScriptResource>(name, scriptDb, scriptResources);
 }
 
-FontResource ResourceManager::GetFontResource(std::string name)
+FontResource& ResourceManager::GetFontResource(std::string name)
 {
 	return _GetGeneralResource<FontResource>(name, fontDb, fontResources);
 }
 
-GLProgramResource ResourceManager::GetGLProgramResource(std::string name)
+GLProgramResource& ResourceManager::GetGLProgramResource(std::string name)
 {
 	return _GetGeneralResource<GLProgramResource>(name, glProgramDb, glProgramResources);
 }
 
-MapResource ResourceManager::GetMapResource(std::string name)
+MapResource& ResourceManager::GetMapResource(std::string name)
 {
 	return _GetGeneralResource<MapResource>(name, mapDb, mapResources);
 }
 
-TextResource ResourceManager::GetTextResource(std::string name)
+TextResource& ResourceManager::GetTextResource(std::string name)
 {
 	return _GetGeneralResource<TextResource>(name, textDb, textResources);
 }
@@ -328,6 +331,8 @@ Mix_Chunk* AudioResource::GetChunk() const
 	return mixChunk;
 }
 
+GLuint TextureResource::boundTexture = NULL;
+
 TextureResource::TextureResource()
 : Resource("invalid")
 {
@@ -349,37 +354,9 @@ TextureResource::TextureResource(std::string name, std::string file)
 		Env::Err() << "Could not Load Texture, using dummy texture" << std::endl;
 		return;
 	}
-	//Actual texture loading and creation
-	//Find out what type the texture will have
-	GLenum textureFormat = GL_BGR;
-	if (newTexture->format->BytesPerPixel == 4) {
-		if (newTexture->format->Rmask == 0x000000ff) {
-			textureFormat = GL_RGBA;
-		}
-		else {
-			textureFormat = GL_BGRA;
-		}
-	}
-	else {
-		if (newTexture->format->Rmask == 0x0000000ff) {
-			textureFormat = GL_RGB;
-		}
-		else {
-			textureFormat = GL_BGR;
-		}
-	}
+	
 
-	//Set Some Filtering (needed for scaling what WILL happen)
-	GLuint newTexId = GL_INVALID_VALUE;
-	glGenTextures(1, &newTexId);
-	glBindTexture(GL_TEXTURE_2D, newTexId);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//Actual loading to the gpu
-	glTexImage2D(GL_TEXTURE_2D, 0, newTexture->format->BytesPerPixel, newTexture->w, newTexture->h, 0, textureFormat, GL_UNSIGNED_BYTE, newTexture->pixels);
-	//dont need the sdl surface anymore!
-	SDL_FreeSurface(newTexture);
-	texId = newTexId;
+	texId = TailTipUI::SurfaceToTexture(newTexture);
 }
 
 TextureResource::~TextureResource()
@@ -391,6 +368,14 @@ TextureResource::~TextureResource()
 GLuint TextureResource::GetTextureId() const
 {
 	return texId;
+}
+
+void TextureResource::Bind()
+{
+	if (texId != boundTexture && texId != 0) {
+		glBindTexture(GL_TEXTURE_2D, texId);
+		boundTexture = texId;
+	}
 }
 
 //Script resource is still a dummy. Will be implemetet as soon as the scripting system has been written/implementet/whatever
@@ -454,7 +439,7 @@ TTF_Font* FontResource::GetFont(int size)
 		newFont = TTF_OpenFontRW(fontFile, 0, size);
 	}
 	if (!newFont) {
-		Env::Out() << "Error Loading fong, will use empty (error) font!" << std::endl;
+		Env::Out() << "Error Loading fong, will use empty (error) font!" << TTF_GetError() << std::endl;
 	}
 	font[size] = newFont;
 	return newFont;
@@ -483,6 +468,8 @@ GLuint _CompileShader(std::string source, GLenum shaderType​)
 	return shaderObject;
 }
 
+GLuint GLProgramResource::boundProgram = 0;
+
 GLProgramResource::GLProgramResource()
 : Resource("invalid")
 {
@@ -502,7 +489,7 @@ GLProgramResource::GLProgramResource(std::string name, std::string file)
 	std::string noCommetInString = std::regex_replace(instring, removeCommentRe, "");
 	std::smatch m;
 	std::string s = noCommetInString;
-	while (std::regex_search(s, m, removeCommentRe)) {
+	while (std::regex_search(s, m, configMakroRe)) {
 		std::string configName = m[1];
 		GLuint newShader = NULL;
 		//check the config macos
@@ -576,6 +563,29 @@ GLProgramResource::~GLProgramResource()
 GLuint GLProgramResource::GetProgramId() const
 {
 	return programId;
+}
+
+
+void GLProgramResource::Use()
+{
+	if (programId != NULL && boundProgram!=programId) {
+		glUseProgram(programId);
+		boundProgram = programId;
+	}
+}
+
+GLuint GLProgramResource::operator[](std::string uniformName) 
+{
+	if (programId == 0) {
+		return NULL;
+	}
+	auto p = uniforms.find(uniformName);
+	if (p == uniforms.end()) {
+		GLuint newPos = glGetUniformLocation(programId, uniformName.c_str());
+		uniforms[uniformName] = newPos;
+		return newPos;
+	}
+	return p->second;
 }
 
 TextResource::TextResource()

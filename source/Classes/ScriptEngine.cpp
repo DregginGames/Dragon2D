@@ -51,6 +51,9 @@ namespace Dragon2D
 		catch (...) {
 			throw ScriptEngineException("Unknown Script Error!");
 		}
+
+		//this should only be reached after we somewhere hit "quit". So delete globals here.
+		ResetGlobals();
 	}
 
 	ScriptEngine::~ScriptEngine()
@@ -66,6 +69,15 @@ namespace Dragon2D
 		}
 
 		activeEngine->_IncludeScript(name);
+	}
+
+	void ScriptEngine::RawEval(std::string command)
+	{
+		if (activeEngine == nullptr) {
+			throw ScriptEngineException("Cannot include script without valid engine!");
+		}
+
+		activeEngine->_RawEval(command);
 	}
 
 	void ScriptEngine::_IncludeScript(std::string name)
@@ -84,9 +96,14 @@ namespace Dragon2D
 			return;
 		}
 		std::string filestring = std::string(std::istreambuf_iterator<char>(includefile), std::istreambuf_iterator<char>());
+		_RawEval(filestring);
+		
+	}
 
+	void ScriptEngine::_RawEval(std::string command)
+	{
 		try {
-			chai.eval(filestring);
+			chai.eval(command);
 		}
 		catch (chaiscript::exception::eval_error e) {
 			Env::Err() << e.what() << std::endl;

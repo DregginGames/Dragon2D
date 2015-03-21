@@ -51,6 +51,15 @@
     <ClInclude Include="..\..\source\Classes\Ui.h">
       <Filter>Headerdateien\Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\Classes\Sprite.h">
+      <Filter>Headerdateien\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\Classes\Map.h">
+      <Filter>Headerdateien\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\Classes\Tileset.h">
+      <Filter>Headerdateien\Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\Dragon2D.cpp">
@@ -78,6 +87,15 @@
       <Filter>Quelldateien\Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\Classes\Ui.cpp">
+      <Filter>Quelldateien\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Classes\Sprite.cpp">
+      <Filter>Quelldateien\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Classes\Tileset.cpp">
+      <Filter>Quelldateien\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Classes\Map.cpp">
       <Filter>Quelldateien\Classes</Filter>
     </ClCompile>
   </ItemGroup>

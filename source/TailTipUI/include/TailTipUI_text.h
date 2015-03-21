@@ -13,6 +13,8 @@ namespace TailTipUI {
 		virtual void SetName(std::string newname) override;
 		virtual void SetForgroundColor(glm::vec4 color) override;
 		
+		virtual glm::vec4 RelativePositionToParent() override;
+
 		virtual void SetWidthLock(bool b);
 		virtual bool GetWidthLock();
 

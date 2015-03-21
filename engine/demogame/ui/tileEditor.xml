@@ -1,0 +1,38 @@
+<root>
+	<area pos="0,0,0.5,1" id="tileEditor" bgcolor="0.1,0.1,0.1,0.5">
+		<input font="LatoRegular:64" pos="0.1,0.05,0.6,0.04" bgcolor="0.5,0.5,0.5,0.8" color="1.0,1.0,1.0,1.0" id="tilesetName" />
+		<button onclick="callback.loadTileset" name="Load" font="LatoRegular:64" pos="0.7,0.05,0.18,0.04" id="loadButton" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+		<button onclick="callback.saveTileset" name="Save" font="LatoRegular:64" pos="0.8,0.8,0.2,0.04" id="saveButton" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+		
+		<input font="LatoRegular:64" pos="0.1,0.13,0.6,0.04" bgcolor="0.5,0.5,0.5,0.8" color="1.0,1.0,1.0,1.0" id="tileTex" />
+		<button onclick="callback.setTexture" name="Set" font="LatoRegular:64" pos="0.7,0.13,0.1,0.04" id="loadButton" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+		
+		<text font="LatoRegular:64" pos="0.1,0.22,0.0,0.04" name="Generate Pattern:" color="1,1,1,1" id="generateText" />
+		<button onclick="callback.generatePattern" name="Gen" font="LatoRegular:64" pos="0.8,0.27,0.1,0.04" id="generateButton" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+		<input font="LatoRegular:64" pos="0.1,0.27,0.2,0.04" bgcolor="0.5,0.5,0.5,0.8" color="1.0,1.0,1.0,1.0" id="patternW" name="3"/>
+		<input font="LatoRegular:64" pos="0.4,0.27,0.2,0.04" bgcolor="0.5,0.5,0.5,0.8" color="1.0,1.0,1.0,1.0" id="patternH" name="3"/>
+		
+		<input font="LatoRegular:64" pos="0.1,0.45,0.2,0.04" bgcolor="0.5,0.5,0.5,0.8" color="1.0,1.0,1.0,1.0" id="tileId" />
+		<button onclick="callback.createId" name="Create" font="LatoRegular:64" pos="0.6,0.45,0.1,0.04" id="LoadIdButton" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+		
+		<text font="LatoRegular:64" pos="0.12,0.5,0.0,0.04" name="x:" color="1,1,1,1" id="tileX" />
+		<button onclick="callback.incTileX" name="+" font="LatoRegular:64" pos="0.1,0.51,0.02,0.02" id="stepSize+" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+		<button onclick="callback.decTileX" name="-" font="LatoRegular:64" pos="0.1,0.53,0.015,0.02" id="stepSize-" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+		<text font="LatoRegular:64" pos="0.52,0.5,0.0,0.04" name="w:" color="1,1,1,1" id="tileW"/>
+		<button onclick="callback.incTileW" name="+" font="LatoRegular:64" pos="0.5,0.51,0.02,0.02" id="stepSize+" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+		<button onclick="callback.decTileW" name="-" font="LatoRegular:64" pos="0.5,0.53,0.015,0.02" id="stepSize-" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+		<text font="LatoRegular:64" pos="0.12,0.55,0.0,0.04" name="y: " color="1,1,1,1" id="tileY" />
+		<button onclick="callback.incTileY" name="+" font="LatoRegular:64" pos="0.1,0.56,0.02,0.02" id="stepSize+" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+		<button onclick="callback.decTileY" name="-" font="LatoRegular:64" pos="0.1,0.58,0.015,0.02" id="stepSize-" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+		<text font="LatoRegular:64" pos="0.52,0.55,0.0,0.04" name="h:" color="1,1,1,1" id="tileH" />
+		<button onclick="callback.incTileH" name="+" font="LatoRegular:64" pos="0.5,0.56,0.02,0.02" id="stepSize+" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+		<button onclick="callback.decTileH" name="-" font="LatoRegular:64" pos="0.5,0.58,0.015,0.02" id="stepSize-" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+		
+		<text font="LatoRegular:64" pos="0.12,0.61,0.0,0.04" name="Step Size:" color="1,1,1,1" id="stepSizeName" />
+		<text font="LatoRegular:64" pos="0.42,0.61,0.0,0.04" name="0.1" color="1,1,1,1" id="stepSize" />
+		<button onclick="callback.incStepSize" name="+" font="LatoRegular:64" pos="0.1,0.61,0.02,0.02" id="stepSize+" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+		<button onclick="callback.decStepSize" name="-" font="LatoRegular:64" pos="0.1,0.63,0.015,0.02" id="stepSize-" bgcolor="0.1,0.1,0.1,0.8" color="1.0,1.0,1.0,1.0" />
+	</area>
+	<area pos="0.5,0,0.5,1" id="interactiveArea" bgcolor="0,0,0,0" onclick="callback.mouseSelect" />
+	<area pos="0,0,0.1,0.1" hidden="true" bgcolor="1,0,0,0.3" id="selectedArea" />
+</root>

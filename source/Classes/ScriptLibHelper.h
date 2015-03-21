@@ -4,6 +4,16 @@
 
 namespace Dragon2D {
 
+	//since chaiscript cant global, and we also need to make shure that global variables are deleted way before chaiscript does it, there is a wrapper
+	//every class has its own container for global variables, accessed with Global##classname(identifier) (example: GlobalSprite("s");
+	//that returns a shared poninter. For internal stuff, there is AddGlobalReset(std::function<void(void)> f) and ResetGlobals().
+	//these make shure everything is deleted properly
+
+	//function: AddGlobalReset
+	//note: Adds a resetter for global objects
+	void AddGlobalReset(std::function<void(void)> f);
+	void ResetGlobals();
+
 #define SCRIPTCLASS_ADD(name, chai) ScriptInfo_##name(chai);
 #define SCRIPTFUNCTION_ADD(func,name, chai) chai.add(chaiscript::fun(&func),name)
 #define SCRIPTTYPE_ADD(type, name, chai) chai.add(chaiscript::user_type<type>(), name)
@@ -22,11 +32,25 @@ namespace Dragon2D {
 	m->add(chaiscript::base_class<base , derived>());
 
 #define D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(name) \
+	inline std::map<std::string,std::shared_ptr<name>>& ScriptInfo_##name##_AccessGloalValues() { \
+		static std::map<std::string,std::shared_ptr<name>> Values; \
+		return Values; \
+	} \
+	inline std::shared_ptr<name> ScriptInfo_##name##_AccessGloalVar(std::string n) { \
+		if(!ScriptInfo_##name##_AccessGloalValues()[n]) ScriptInfo_##name##_AccessGloalValues()[n].reset(new name()); \
+		return ScriptInfo_##name##_AccessGloalValues()[n]; \
+	} \
+	inline void ScriptInfo_##name##_ResetGlobal() { \
+		ScriptInfo_##name##_AccessGloalValues().clear(); \
+		} \
 	inline void ScriptInfo_##name(chaiscript::ChaiScript&chai) { \
 	chaiscript::ModulePtr m = chaiscript::ModulePtr(new chaiscript::Module()); \
 	m->add(chaiscript::user_type<name>(), #name ); \
 	m->add(chaiscript::constructor<name()>(), #name); \
-	m->add(chaiscript::constructor<name(const name##&)>(), #name);
+	m->add(chaiscript::constructor<name(const name##&)>(), #name); \
+	m->add(chaiscript::fun(&ScriptInfo_##name##_AccessGloalVar), "Global"#name); \
+	m->add(chaiscript::fun(&ScriptInfo_##name##_ResetGlobal), "GlobalReset"#name); \
+	AddGlobalReset(ScriptInfo_##name##_ResetGlobal); \
 
 #define D2DCLASS_SCRIPTINFO_BEGIN_GENERAL_GAMECLASS(name) \
 	D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(name) \

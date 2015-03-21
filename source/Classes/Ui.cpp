@@ -5,7 +5,7 @@ namespace Dragon2D
 	Ui::Ui()
 		: xmlloader(0)
 	{
-
+		SetRenderLayer(255);
 	}
 
 	Ui::Ui(std::string name)
@@ -22,7 +22,7 @@ namespace Dragon2D
 	void Ui::Load(std::string name)
 	{
 		std::string xmlfile = Env::GetGamepath() + std::string("ui/") + name + ".xml";
-		xmlloader.Load(xmlfile, Env::GetCurrentMouseState);
+		xmlloader.Load(xmlfile);
 	}
 
 	void Ui::Render()
@@ -35,7 +35,7 @@ namespace Dragon2D
 
 	}
 
-	void Ui::AddCallback(std::string name, TailTipUI::ElementCallbackType c)
+	void Ui::AddCallback(std::string name, TailTipUI::XMLLoaderEventCallback c)
 	{
 		xmlloader.RegisterCallback(name, c);
 	}

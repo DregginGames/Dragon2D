@@ -20,7 +20,7 @@ namespace Dragon2D {
 
 		virtual void Load(std::string name);
 
-		virtual void AddCallback(std::string name, TailTipUI::ElementCallbackType c);
+		virtual void AddCallback(std::string name, TailTipUI::XMLLoaderEventCallback c);
 	private:
 
 		TailTipUI::XMLLoader xmlloader;

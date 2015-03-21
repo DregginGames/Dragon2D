@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug Slow|Win32">
+      <Configuration>Debug Slow</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug Slow|x64">
+      <Configuration>Debug Slow</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -29,7 +37,19 @@
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Slow|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Slow|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
@@ -55,7 +75,13 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Slow|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Slow|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -69,33 +95,69 @@
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Slow|Win32'">
+    <OutDir>$(SolutionDir)..\..\engine\</OutDir>
+    <IntDir>$(SolutionDir)..\..\build\</IntDir>
+    <TargetName>Dragon2D</TargetName>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Slow|x64'">
+    <OutDir>$(SolutionDir)..\..\engine\</OutDir>
+    <IntDir>$(SolutionDir)..\..\build\</IntDir>
+    <TargetName>Dragon2D</TargetName>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>base.h</PrecompiledHeaderFile>
+      <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;openGL32.lib;glew32.lib;SDL2_mixer.lib;TailTipUI_32.lib;SDL2_ttf.lib;SDL2_image.lib</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Slow|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -103,6 +165,9 @@
       <PrecompiledHeaderFile>base.h</PrecompiledHeaderFile>
       <MinimalRebuild>false</MinimalRebuild>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -115,7 +180,26 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>base.h</PrecompiledHeaderFile>
+      <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;openGL32.lib;glew32.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_image.lib;TailTipUI_64.lib</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Slow|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -181,9 +265,12 @@
     <ClInclude Include="..\..\source\Classes\BaseClass.h" />
     <ClInclude Include="..\..\source\Classes\Env.h" />
     <ClInclude Include="..\..\source\Classes\GameManager.h" />
+    <ClInclude Include="..\..\source\Classes\Map.h" />
     <ClInclude Include="..\..\source\Classes\ResourceManager.h" />
     <ClInclude Include="..\..\source\Classes\ScriptEngine.h" />
     <ClInclude Include="..\..\source\Classes\ScriptLibHelper.h" />
+    <ClInclude Include="..\..\source\Classes\Sprite.h" />
+    <ClInclude Include="..\..\source\Classes\Tileset.h" />
     <ClInclude Include="..\..\source\Classes\Ui.h" />
     <ClInclude Include="..\..\source\Dragon2D.h" />
   </ItemGroup>
@@ -192,9 +279,12 @@
     <ClCompile Include="..\..\source\Classes\BaseClass.cpp" />
     <ClCompile Include="..\..\source\Classes\Env.cpp" />
     <ClCompile Include="..\..\source\Classes\GameManager.cpp" />
+    <ClCompile Include="..\..\source\Classes\Map.cpp" />
     <ClCompile Include="..\..\source\Classes\ResourceManager.cpp" />
     <ClCompile Include="..\..\source\Classes\ScriptEngine.cpp" />
     <ClCompile Include="..\..\source\Classes\ScriptLibHelper.cpp" />
+    <ClCompile Include="..\..\source\Classes\Sprite.cpp" />
+    <ClCompile Include="..\..\source\Classes\Tileset.cpp" />
     <ClCompile Include="..\..\source\Classes\Ui.cpp" />
     <ClCompile Include="..\..\source\Dragon2D.cpp" />
   </ItemGroup>

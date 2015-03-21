@@ -45,9 +45,7 @@ public:
 	//param:	e: the element to remove
 	void Remove(BaseClassPtr e);
 
-	//function: GetResourcemanager
-	//note: returns the resourceManager
-	ResourceManager& GetResourceManager();
+
 
 	//function: CurrentManager()
 	//note: Returns the current manager
@@ -57,9 +55,6 @@ private:
 	//var: ActiveGameManager. current gamemanager
 	static GameManager* activeGameManager;
 
-	//var ResourceManager. The Games ResourceManager
-	ResourceManager resourceManager;
-
 	//var: updateCallback. function to call on every update
 	UpdateCallback updateCallback;
 	//var: renderCallback. function to call on every update
@@ -67,6 +62,11 @@ private:
 
 	//var: elements. holds all the elements of this manager
 	std::vector<BaseClassPtr> elements;
+
+	//var: toDelete. holds all the elemeents to remove from this manager. remove is performed every frame
+	std::vector<BaseClassPtr> toDelete;
+	//var: toAdd. holds all elements that will be added to this manager. add is performed after the remove.
+	std::vector<BaseClassPtr> toAdd;
 
 	//var: isRunning
 	bool isRunning;
@@ -80,7 +80,6 @@ D2DCLASS_SCRIPTINFO_MEMBER(GameManager, RunGame)
 D2DCLASS_SCRIPTINFO_MEMBER(GameManager, Preload)
 D2DCLASS_SCRIPTINFO_MEMBER(GameManager, Add)
 D2DCLASS_SCRIPTINFO_MEMBER(GameManager, Remove)
-D2DCLASS_SCRIPTINFO_MEMBER(GameManager, GetResourceManager)
 D2DCLASS_SCRIPTINFO_MEMBER(GameManager, CurrentManager)
 D2DCLASS_SCRIPTINFO_MEMBER(GameManager, Quit)
 D2DCLASS_SCRIPTINFO_END

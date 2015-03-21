@@ -53,11 +53,23 @@ namespace Dragon2D {
 		//note: Returns the parent-class 
 		virtual BaseClassPtr GetParent();
 
+		//function: SetRenderLayer
+		//note: Sets the render layer of this object
+		//param:	layer: layer to render on. must be >= 0
+		void SetRenderLayer(unsigned int layer);
+
+		//function: GetRenderLayer
+		//note: Returns the render layer of this object
+		unsigned int GetRenderLayer();
+
 	private:
 		//var: parent. Parent of this object
 		BaseClassPtr parent;
 		//var: children. Children of this object
 		std::vector<BaseClassPtr> children;
+
+		//var: renderLayer. Layer of the object. REALLY IMPORTAND for render-order.
+		unsigned int renderLayer;
 	};
 
 	D2DCLASS_SCRIPTINFO_BEGIN_GENERAL_GAMECLASS(BaseClass)

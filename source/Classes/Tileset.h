@@ -67,7 +67,9 @@ namespace Dragon2D
 	protected:
 
 	};
+
 	D2DCLASS_SCRIPTINFO_BEGIN(BatchedTileset, Tileset)
 		D2DCLASS_SCRIPTINFO_CONSTRUCTOR(BatchedTileset, std::string)
+		D2DCLASS_SCRIPTINFO_MEMBER(BatchedTileset, FlushBatched)
 	D2DCLASS_SCRIPTINFO_END
 }; //namespace Dragon2D

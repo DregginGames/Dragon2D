@@ -56,11 +56,23 @@ namespace Dragon2D {
 		//function: SetRenderLayer
 		//note: Sets the render layer of this object
 		//param:	layer: layer to render on. must be >= 0
-		void SetRenderLayer(unsigned int layer);
+		virtual void SetRenderLayer(unsigned int layer);
 
 		//function: GetRenderLayer
 		//note: Returns the render layer of this object
-		unsigned int GetRenderLayer();
+		virtual unsigned int GetRenderLayer();
+
+		//function: Ptr
+		//note: Returns a pointer to this object
+		virtual BaseClassPtr Ptr();
+
+		//function: RegisterInputHooks
+		//note: Called when the objects input-hooks can be registerd
+		virtual void RegisterInputHooks();
+
+		//function: RemoveInputHooks
+		//note: Called when the objects input-hooks can be removed
+		virtual void RemoveInputHooks();
 
 	private:
 		//var: parent. Parent of this object

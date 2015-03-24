@@ -60,6 +60,9 @@
     <ClInclude Include="..\..\source\Classes\Tileset.h">
       <Filter>Headerdateien\Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\Classes\Input.h">
+      <Filter>Headerdateien\Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\Dragon2D.cpp">
@@ -96,6 +99,9 @@
       <Filter>Quelldateien\Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\Classes\Map.cpp">
+      <Filter>Quelldateien\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Classes\Input.cpp">
       <Filter>Quelldateien\Classes</Filter>
     </ClCompile>
   </ItemGroup>

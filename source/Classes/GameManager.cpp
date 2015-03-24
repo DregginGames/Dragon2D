@@ -60,6 +60,8 @@ void GameManager::RunGame(UpdateCallback c, UpdateCallback r)
 
 		//remove object marked as to delete
 		for (auto e : toDelete) {
+			//input hooks are only active while being part of the game manager
+			e->RemoveInputHooks();
 			for (auto c = elements.begin(); c != elements.end(); c++) {
 				if (*c == e) {
 					elements.erase(c);
@@ -72,6 +74,8 @@ void GameManager::RunGame(UpdateCallback c, UpdateCallback r)
 		//add objects marked as to add
 		for (auto e : toAdd) {
 			elements.push_back(e);
+			//input hooks are only active while being part of the game manager
+			e->RegisterInputHooks();
 		}
 		toAdd.clear();
 
@@ -108,6 +112,13 @@ void GameManager::RunGame(UpdateCallback c, UpdateCallback r)
 		Env::SwapBuffers();
 
 	}
+	
+	//Elements that are still existent need thier cleanup, too
+	//so remove input hooks and stuff
+	for (auto e : elements) {
+		e->RemoveInputHooks();
+	}
+	elements.clear();
 }
 
 void GameManager::_CheckManager()

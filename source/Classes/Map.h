@@ -32,6 +32,8 @@ namespace Dragon2D
 		virtual void SetMapPosition(int x, int y);
 		virtual void GetMapPosition(int&x, int&y) const;
 
+		virtual void RegisterInputHooks() override;
+		virtual void RemoveInputHooks() override; 
 	private:
 		std::list<MapLayer> layers;
 

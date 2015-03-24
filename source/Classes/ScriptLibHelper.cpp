@@ -65,6 +65,7 @@ namespace Dragon2D {
 		SCRIPTCLASS_ADD(Ui, chai);
 		SCRIPTCLASS_ADD(Sprite, chai);
 		SCRIPTCLASS_ADD(Tileset, chai);
+		SCRIPTCLASS_ADD(BatchedTileset, chai);
 		SCRIPTCLASS_ADD(Map, chai);
 	}
 

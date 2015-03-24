@@ -5,6 +5,7 @@
 //includes
 #include "base.h"
 #include "ResourceManager.h"
+#include "Input.h"
 
 namespace Dragon2D {
 
@@ -88,6 +89,9 @@ public:
 	static glm::vec2 GetResolution();
 
 	//Input Foo
+	//function: GetInput
+	//note: returns ref to the current input manager
+	static Input& GetInput();
 
 	//function: GetCurrentMouseState:
 	//note: Returns a glm::vec4 with the relative mouse position in [0] and [1] and the mouse buttons in [2] and [3]
@@ -154,6 +158,8 @@ private:
 	//var ResourceManager. The Games ResourceManager
 	std::shared_ptr<ResourceManager> resourceManager;
 	
+	//var input. The current input manager
+	std::shared_ptr<Input> input;
 	//var: currentKeyInputs
 	std::list<std::string> currentKeyInputs;
 	//var: currentText. 

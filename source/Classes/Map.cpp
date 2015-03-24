@@ -3,9 +3,13 @@
 namespace Dragon2D
 {
 
+	void testevent(bool b) {
+		std::cout << "blah:" << b << std::endl;
+	}
+
 	Map::Map()
 	{
-
+		 
 	}
 
 	Map::Map(std::string name)
@@ -15,12 +19,10 @@ namespace Dragon2D
 
 	Map::~Map()
 	{
-
 	}
 
 	void Map::Load(std::string name)
 	{
-		
 		std::string filename = Env::GetGamepath() + std::string("map/") + name + ".xml";
 		HoardXML::Document xmlDoc(filename);
 
@@ -167,8 +169,8 @@ namespace Dragon2D
 
 		for (auto layer : layers) {
 			//for each tile
-			for (int y = 0; y < height; y++) {
-				for (int x = 0; x < width; x++) {
+			for (int y = ox; y < height+ox; y++) {
+				for (int x = oy; x < width+oy; x++) {
 					//check if the tile exists
 					auto xiter = layer.tiles.find(x);
 					int tile = layer.defaultId;
@@ -208,5 +210,16 @@ namespace Dragon2D
 	{
 		ox += x;
 		oy += y;
+	}
+
+	void Map::RegisterInputHooks()
+	{
+		std::function<void(bool)> f = testevent;
+		Env::GetInput().AddHook("testclick", Ptr(), f);
+	}
+
+	void Map::RemoveInputHooks()
+	{
+		Env::GetInput().RemoveHooks(Ptr());
 	}
 };

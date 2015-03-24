@@ -48,7 +48,7 @@ Env::Env(int argc, char** argv)
 	//Defualt the arguments
 	isDebug = false;
 	gamepath = "./";
-	engineInitName = "cfg/settings.cfg";
+	engineInitName = "";
 
 	try {
 		//Parse the input arguments 
@@ -72,6 +72,10 @@ Env::Env(int argc, char** argv)
 				gamepath = arg;
 			}
 		}
+		if (engineInitName == "") {
+			engineInitName = gamepath + "cfg/settings.cfg";
+		}
+
 	}
 	catch (std::exception e) {
 		throw EnvException("Cannot Parse Arguments! Syntax is \"Dragon2D [options] <gamepath> [options]\"");
@@ -223,6 +227,8 @@ Env::Env(int argc, char** argv)
 	//in the end fire up the resource manager
 	resourceManager.reset(new ResourceManager);
 
+	//fire up input
+	input.reset(new Input);
 
 	Out() << "Give information to TailTipUI" << std::endl;
 	TailTipUI::Info(settings[gameInitName]["title"], width, height);
@@ -242,6 +248,8 @@ Env::Env(int argc, char** argv)
 
 Env::~Env()
 {
+	input.reset();
+	resourceManager.reset();
 	Mix_Quit();
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
@@ -368,6 +376,12 @@ ResourceManager& Env::GetResourceManager()
 	return *(ActiveEnv->resourceManager);
 }
 
+Input& Env::GetInput()
+{
+	_CheckEnv();
+	return *(ActiveEnv->input);
+}
+
 std::fstream Env::Enginefile(std::string file, std::ios_base::openmode mode)
 {
 	_CheckEnv();
@@ -403,6 +417,7 @@ void Env::HandleEvent(SDL_Event&e)
 {
 	_CheckEnv();
 	ActiveEnv->currentKeyInputs.clear();
+	ActiveEnv->input->Update(e);
 	switch (e.type) {
 	case SDL_TEXTINPUT:
 		ActiveEnv->currentText += e.text.text;

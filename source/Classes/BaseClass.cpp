@@ -70,4 +70,18 @@ namespace Dragon2D
 		return renderLayer;
 	}
 
+	BaseClassPtr BaseClass::Ptr()
+	{
+		return shared_from_this();
+	}
+
+	void BaseClass::RegisterInputHooks()
+	{
+	
+	}
+
+	void BaseClass::RemoveInputHooks()
+	{
+
+	}
 }; //namespace Dragon2D

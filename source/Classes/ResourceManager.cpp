@@ -17,28 +17,36 @@ ResourceManager::ResourceManager()
 	ActiveManager = this;
 	//Load all .db files
 	Env::Out() << "Loading Db files..." << std::endl;
-	std::fstream audioDbFile = Env::Gamefile("audio/audio.db", std::ios::in);
+	std::fstream audioDbFile;
+	Env::Gamefile("audio/audio.db", std::ios::in, audioDbFile);
 	if (!audioDbFile.is_open()) throw ResourceManagerException("Can't load Audio DB file");
 
-	std::fstream videoDbFile = Env::Gamefile("video/video.db", std::ios::in);
+	std::fstream videoDbFile;
+	Env::Gamefile("video/video.db", std::ios::in, videoDbFile);
 	if (!videoDbFile.is_open()) throw ResourceManagerException("Can't load Video DB file");
 
-	std::fstream textureDbFile = Env::Gamefile("texture/texture.db", std::ios::in);
+	std::fstream textureDbFile;
+	Env::Gamefile("texture/texture.db", std::ios::in, textureDbFile);
 	if (!textureDbFile.is_open()) throw ResourceManagerException("Can't load Texture DB file");
 
-	std::fstream scriptDbFile = Env::Gamefile("script/script.db", std::ios::in);
+	std::fstream scriptDbFile;
+	Env::Gamefile("script/script.db", std::ios::in, scriptDbFile);
 	if (!scriptDbFile.is_open()) throw ResourceManagerException("Can't load Script DB file");
 
-	std::fstream fontDbFile = Env::Gamefile("font/font.db", std::ios::in);
+	std::fstream fontDbFile;
+	Env::Gamefile("font/font.db", std::ios::in,fontDbFile);
 	if (!fontDbFile.is_open()) throw ResourceManagerException("Can't load Font DB file");
 
-	std::fstream glProgramDbFile = Env::Gamefile("shader/shader.db", std::ios::in);
+	std::fstream glProgramDbFile;
+	Env::Gamefile("shader/shader.db", std::ios::in,glProgramDbFile);
 	if (!glProgramDbFile.is_open()) throw ResourceManagerException("Can't load Shader DB file");
 
-	std::fstream mapDbFile = Env::Gamefile("map/map.db", std::ios::in);
+	std::fstream mapDbFile;
+	Env::Gamefile("map/map.db", std::ios::in,mapDbFile);
 	if (!mapDbFile.is_open()) throw ResourceManagerException("Can't load Map DB file");
 
-	std::fstream textDbFile = Env::Gamefile("text/text.db", std::ios::in);
+	std::fstream textDbFile;
+	Env::Gamefile("text/text.db", std::ios::in, textDbFile);
 	if (!textDbFile.is_open()) throw ResourceManagerException("Can't load Text DB file");
 
 	std::string audioDbFileString = std::string(std::istreambuf_iterator<char>(audioDbFile), std::istreambuf_iterator<char>());
@@ -289,7 +297,8 @@ std::string Resource::GetName()
 SDL_RWops* Resource::_RWFromFile(std::string file)
 {
 	SDL_RWops* newRwOps = nullptr;
-	std::fstream infile = Env::Gamefile(file, std::ios::in | std::ios::binary);
+	std::fstream infile;
+	Env::Gamefile(file, std::ios::in | std::ios::binary, infile);
 	if (!infile.is_open()) {
 		Env::Err() << "Cold not open " << file << "Resource will be empty!";
 		return nullptr;
@@ -445,10 +454,10 @@ TTF_Font* FontResource::GetFont(int size)
 	return newFont;
 }
 
-GLuint _CompileShader(std::string source, GLenum shaderType​)
+GLuint _CompileShader(std::string source, GLenum shaderType)
 {
 	//Create Shader and compile
-	GLuint shaderObject = glCreateShader(shaderType​);
+	GLuint shaderObject = glCreateShader(shaderType);
 	const char* src = source.c_str();
 	glShaderSource(shaderObject, 1, &src, NULL);
 	int compileResult = 0;
@@ -481,7 +490,8 @@ GLProgramResource::GLProgramResource(std::string name, std::string file)
 	std::list<GLuint> shaderList;
 	programId = NULL;
 
-	std::fstream infile = Env::Gamefile(file, std::ios::in);
+	std::fstream infile;
+	Env::Gamefile(file, std::ios::in, infile);
 	std::string instring = std::string(std::istreambuf_iterator<char>(infile), std::istreambuf_iterator<char>());
 	//well need to remove some of the comments, those that are definitly surrounding our config makros
 	std::regex removeCommentRe("\\/\\/.*|\\/\\*[\\w\\d#\\s]*\\*\\/");
@@ -597,7 +607,8 @@ TextResource::TextResource()
 TextResource::TextResource(std::string name, std::string file)
 : Resource(name)
 {
-	std::fstream infile = Env::Gamefile(file, std::ios::in);
+	std::fstream infile;
+	Env::Gamefile(file, std::ios::in, infile);
 	std::string filestring = std::string(std::istreambuf_iterator<char>(infile), std::istreambuf_iterator<char>());
 	std::regex textRE("([\\w.])*\\s*=\\s*(.*)");
 	std::smatch m;

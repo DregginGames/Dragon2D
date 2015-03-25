@@ -34,9 +34,9 @@ namespace Dragon2D {
 		SCRIPTFUNCTION_ADD(ScriptEngine::IncludeScript, "Include", chai);
 		SCRIPTFUNCTION_ADD(ScriptEngine::RawEval, "RawEval", chai);
 		SCRIPTTYPE_ADD(std::ostream, "ostream", chai);
-		SCRIPTTYPE_ADD(TTF_Font, "TTF_Font", chai);
-		SCRIPTTYPE_ADD(Mix_Chunk, "Mix_Chunk", chai);
-		SCRIPTTYPE_ADD(GLuint, "GLuint", chai);
+		//SCRIPTTYPE_ADD(TTF_Font, "TTF_Font", chai);
+		//SCRIPTTYPE_ADD(Mix_Chunk, "Mix_Chunk", chai);
+		//SCRIPTTYPE_ADD(GLuint, "GLuint", chai);
 		//SCRIPTTYPE_ADD(GLfloat, "GLfloat", chai);
 		SCRIPTFUNCTION_ADD(StrToInt, "StrToInt", chai);
 		SCRIPTFUNCTION_ADD(StrToFloat, "StrToFloat", chai);

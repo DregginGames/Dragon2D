@@ -1,6 +1,6 @@
 #include "ScriptEngine.h"
 //this include is here since not every file needs to compile the chaiscript stdlib
-#include <chaiscript\chaiscript_stdlib.hpp>
+#include <chaiscript/chaiscript_stdlib.hpp>
 
 namespace Dragon2D
 {
@@ -14,7 +14,8 @@ namespace Dragon2D
 		}
 		activeEngine = this;
 		LoadClasses(chai);
-		std::fstream runfile = Env::Gamefile("script/run.chai", std::ios::in);
+		std::fstream runfile;
+		Env::Gamefile("script/run.chai", std::ios::in, runfile);
 		if (!runfile.is_open()) {
 			throw ScriptEngineException("Can open runfile. Is there a script/run.chai?");
 		}
@@ -90,7 +91,8 @@ namespace Dragon2D
 		}
 		knownFiles.push_back(name);
 
-		std::fstream includefile = Env::Gamefile(std::string("script/")+name+".chai", std::ios::in);
+		std::fstream includefile;
+		Env::Gamefile(std::string("script/")+name+".chai", std::ios::in, includefile);
 		if (!includefile.is_open()) {
 			Env::Err() << "WARNING: cannot open script " << name << std::endl;
 			return;

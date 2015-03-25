@@ -8,11 +8,17 @@ namespace Dragon2D
 	}
 
 	Map::Map()
+		: ox(0), oy(0),width(0),height(0),ratioModifier(0.0f),
+		forceStreamTeleport(false),keepAspectRatio(false),tilesize(0.0f),
+		walkarea(0)
 	{
 		 
 	}
 
 	Map::Map(std::string name)
+		: ox(0), oy(0),width(0),height(0),ratioModifier(0.0f),
+		forceStreamTeleport(false),keepAspectRatio(false),tilesize(0.0f),
+		walkarea(0)
 	{
 		Load(name);
 	}
@@ -180,8 +186,10 @@ namespace Dragon2D
 							tile = yiter->second;
 						}
 					}
+							
 					if (tile != -1) {
-						layer.tileset->Render(tile, glm::vec4(ratioModify.x + x*ratioModify[2], ratioModify.y+ y*ratioModify[3], ratioModify[2], ratioModify[3]));
+						glm::vec4 tilepos(ratioModify.x + x*ratioModify[2], ratioModify.y+ y*ratioModify[3], ratioModify[2], ratioModify[3]);
+						layer.tileset->Render(tile, tilepos);
 					}
 				}
 			}

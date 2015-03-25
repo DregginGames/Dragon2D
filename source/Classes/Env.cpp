@@ -364,10 +364,10 @@ glm::vec4 Env::GetCurrentMouseState()
 	return glm::vec4(x / ActiveEnv->resolution.x, y / ActiveEnv->resolution.y, l ? 1 : 0, r ? 1 : 0);
 }
 
-std::fstream Env::Gamefile(std::string file, std::ios_base::openmode mode)
+void Env::Gamefile(std::string file, std::ios_base::openmode mode, std::fstream &stream)
 {
 	_CheckEnv();
-	return std::fstream(ActiveEnv->GetGamepath() + file, mode);
+	return stream.open(ActiveEnv->GetGamepath() + file, mode);
 }
 
 ResourceManager& Env::GetResourceManager()
@@ -382,10 +382,10 @@ Input& Env::GetInput()
 	return *(ActiveEnv->input);
 }
 
-std::fstream Env::Enginefile(std::string file, std::ios_base::openmode mode)
+void Env::Enginefile(std::string file, std::ios_base::openmode mode, std::fstream &stream)
 {
 	_CheckEnv();
-	return std::fstream(file, mode);
+	return stream.open(file, mode);
 }
 
 SettingFile& Env::Setting(std::string file)

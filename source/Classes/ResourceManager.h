@@ -252,7 +252,7 @@ class ResourceManagerException : public Exception
 public:
 	//constructor: ResourceManagerException() 
 	//note: standart constructor 
-	ResourceManagerException() : ResourceManagerException() {};
+	ResourceManagerException() : Exception() {};
 
 	//constructor:  ResourceManagerException(std::string managerError)
 	//note: takes an manager error as argument 

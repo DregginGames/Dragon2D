@@ -1,0 +1,15 @@
+Starting Init of the ENV
+Loading Settings
+Starting SDL
+Opening Window
+Init OpenGL
+Init glew
+Init Sound (sdl_mixer)
+Init Image (sdl_image)
+Init Font (sdl_ttf)
+Init ResourceManager
+Loading Db files...
+Filling dbs with the info in the files...
+Done!
+Give information to TailTipUI
+Done!

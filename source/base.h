@@ -9,7 +9,7 @@
 #include <exception>
 #include <regex>
 #include <fstream>
-#include <strstream>
+#include <sstream>
 #include <cstring>
 
 //Not-So-Standart lib includes

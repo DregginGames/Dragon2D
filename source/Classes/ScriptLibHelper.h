@@ -20,10 +20,10 @@ namespace Dragon2D {
 
 
 #define D2DCLASS_SCRIPTINFO_MEMBER(classname, member) \
-	m->add(chaiscript::fun(&classname::##member), #member);
+	m->add(chaiscript::fun(&classname::member), #member);
 
 #define D2DCLASS_SCRIPTINFO_OPERATOR(classname, operatorfunc, op) \
-	m->add(chaiscript::fun(&classname::##operatorfunc), #op);
+	m->add(chaiscript::fun(&classname::operatorfunc), #op);
 
 #define D2DCLASS_SCRIPTINFO_CONSTRUCTOR(classname, ...) \
 	m->add(chaiscript::constructor<classname(__VA_ARGS__)>(), #classname);
@@ -47,7 +47,7 @@ namespace Dragon2D {
 	chaiscript::ModulePtr m = chaiscript::ModulePtr(new chaiscript::Module()); \
 	m->add(chaiscript::user_type<name>(), #name ); \
 	m->add(chaiscript::constructor<name()>(), #name); \
-	m->add(chaiscript::constructor<name(const name##&)>(), #name); \
+	m->add(chaiscript::constructor<name(const name &)>(), #name); \
 	m->add(chaiscript::fun(&ScriptInfo_##name##_AccessGloalVar), "Global"#name); \
 	m->add(chaiscript::fun(&ScriptInfo_##name##_ResetGlobal), "GlobalReset"#name); \
 	AddGlobalReset(ScriptInfo_##name##_ResetGlobal); \

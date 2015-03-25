@@ -23,7 +23,7 @@ namespace Dragon2D
 		Uint32 bt = SDL_GetTicks();
 		HoardXML::Document indoc(infilename);
 		Uint32 tges = SDL_GetTicks() - bt;
-		std::cout << "LoadTime:" << tges;
+		std::cout << "LoadTime:" << tges << std::endl;
 		//we silently quit if we cant find what we load. used for editing in the editor when creating new tilesets.
 		if (indoc["tileset"].size() < 1) {
 			return;
@@ -62,6 +62,7 @@ namespace Dragon2D
 			}
 		}
 		UseTexture(texture);
+
 	}
 
 	//we dont render. normally. 

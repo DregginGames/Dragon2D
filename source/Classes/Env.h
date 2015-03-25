@@ -54,10 +54,10 @@ public:
 
 	//function: Gamefile(std::string file, std::ios_base::openmode mode);
 	//note: opens file from the game directory
-	static std::fstream Gamefile(std::string file, std::ios_base::openmode mode);
+	static void Gamefile(std::string file, std::ios_base::openmode mode, std::fstream&stream);
 	//function: Enginefile(std::string file, std::ios_base::openmode mode);
 	//note: opens file from the engine directory
-	static std::fstream Enginefile(std::string file, std::ios_base::openmode mode);
+	static void Enginefile(std::string file, std::ios_base::openmode mode, std::fstream&stream);
 
 	//function: GetResourcemanager
 	//note: returns the resourceManager

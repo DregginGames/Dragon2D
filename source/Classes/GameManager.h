@@ -91,7 +91,7 @@ class GameManagerException : public Exception
 public:
 	//constructor: GameManagerException() 
 	//note: standart constructor 
-	GameManagerException() : GameManagerException() {};
+	GameManagerException() : Exception() {};
 
 	//constructor:  GameManagerException(std::string managerError)
 	//note: takes an manager error as argument 

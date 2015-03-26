@@ -7,7 +7,7 @@
 	</info>
 	
 	<mapdata>
-		<layer id="0" tileset="foo" nodefault="true" default="0">
+		<layer id="0" tileset="foo" nodefault="false" default="0">
 				<tile x="0" y="0" id="0" />
 				<tile x="1" y="0" id="1" />
 				<tile x="2" y="0" id="2" />

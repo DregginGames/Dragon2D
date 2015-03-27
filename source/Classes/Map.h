@@ -40,9 +40,8 @@ namespace Dragon2D
 		std::list<MapStreamBox> streamBoxes;
 		bool forceStreamTeleport;
 
-		bool keepAspectRatio;
-		float ratioModifier;
-		float tilesize;
+		bool keepTileRatio;
+		glm::vec4 tilesize;
 
 		glm::vec4 walkarea;
 		int width;

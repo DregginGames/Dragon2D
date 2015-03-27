@@ -8,17 +8,15 @@ namespace Dragon2D
 	}
 
 	Map::Map()
-		: ox(0), oy(0),width(0),height(0),ratioModifier(0.0f),
-		forceStreamTeleport(false),keepAspectRatio(false),tilesize(0.0f),
-		walkarea(0)
+		: forceStreamTeleport(false),keepTileRatio(true), tilesize(0.0f),
+		walkarea(0), width(0),height(0),ox(0), oy(0)
 	{
 		 
 	}
 
 	Map::Map(std::string name)
-		: ox(0), oy(0),width(0),height(0),ratioModifier(0.0f),
-		forceStreamTeleport(false),keepAspectRatio(false),tilesize(0.0f),
-		walkarea(0)
+		: forceStreamTeleport(false),keepTileRatio(true), tilesize(0.0f),
+		walkarea(0), width(0),height(0),ox(0), oy(0)	
 	{
 		Load(name);
 	}
@@ -45,7 +43,7 @@ namespace Dragon2D
 				for (auto infotag : infotags) {
 					if (infotag.GetName() == "mapsize") {
 						width = atoi(infotag.GetAttribute("width").c_str());
-						height = atoi(infotag.GetAttribute("width").c_str());
+						height = atoi(infotag.GetAttribute("height").c_str());
 					}
 					else if (infotag.GetName() == "walkable") {
 						walkarea.x = (float)atof(infotag.GetAttribute("x").c_str());
@@ -54,9 +52,7 @@ namespace Dragon2D
 						walkarea[3] = (float)atof(infotag.GetAttribute("h").c_str());
 					}
 					else if (infotag.GetName() == "tilesize") {
-						ratioModifier = (float)atof(infotag.GetAttribute("tileratio").c_str());
-						tilesize = (float)atof(infotag.GetAttribute("size").c_str());
-						keepAspectRatio = infotag.GetAttribute("keepAspect") == "true" ? true : false;
+						keepTileRatio = infotag.GetAttribute("keepRatio") == "true" ? true : false;
 					}
 					else if (infotag.GetName() == "stream") {
 						forceStreamTeleport = infotag.GetAttribute("teleport") == "true" ? true : false;
@@ -155,23 +151,25 @@ namespace Dragon2D
 				Env::Out() << "WARNING: unknown tag in map file: " << c.GetName() << "! " << filename << std::endl;
 			}
 		}
-
+		
+		//recalculate some of the values cause the screen shurl wont be a square 
+		glm::vec2 res = Env::GetResolution();
+		float ar = res.x/res.y;
+		tilesize[2] = 1.0f / (float)width;
+		tilesize[3] = 1.0f / (float)height;
+		if(ar>1.0f && keepTileRatio) {
+			tilesize[2] = tilesize[3]/ar;
+			width = floor(0.5f+1.0f/tilesize[2]);
+			tilesize.x = 0.0f-(1.0f-width*tilesize[2])*0.5f;
+		} else if(ar<1.0f && keepTileRatio) {
+			tilesize[3] = tilesize[2]*ar;
+			height = floor(0.5f+1.0f/tilesize[3]);
+			tilesize.y = 0.0f-(1.0f-height*tilesize[3])*0.5f;
+		}	
 	}
 
 	void Map::Render()
 	{
-		//float aspectRatio = Env::
-		//for each layer
-		glm::vec2 res = Env::GetResolution();
-
-		float ar = res.x / res.y;
-		glm::vec4 ratioModify;
-		ratioModify[2] = 1.0f / (float)width;
-		ratioModify[3] = 1.0f / (float)height;
-		if (keepAspectRatio) {	//TODO: fix this
-			ratioModify[2] = (ratioModify[3] / ar);
-			ratioModify.x = (1.0f - ratioModify[2] * width)*.5f;
-		}
 
 		for (auto layer : layers) {
 			//for each tile
@@ -188,7 +186,7 @@ namespace Dragon2D
 					}
 							
 					if (tile != -1) {
-						glm::vec4 tilepos(ratioModify.x + x*ratioModify[2], ratioModify.y+ y*ratioModify[3], ratioModify[2], ratioModify[3]);
+						glm::vec4 tilepos(tilesize.x + x*tilesize[2], tilesize.y+ y*tilesize[3], tilesize[2], tilesize[3]);
 						layer.tileset->Render(tile, tilepos);
 					}
 				}

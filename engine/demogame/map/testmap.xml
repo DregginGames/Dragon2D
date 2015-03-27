@@ -1,22 +1,22 @@
 <map name="testmap">
 	<info>
-		<mapsize width="20" height="20" />
+		<mapsize width="13" height="10" />
 		<walkable x="2" y="2" w="18" h="18" />
 		<stream teleport="false" />
-		<tilesize size="0.03" tileratio="1" keepAspect="false" />
+		<tilesize tileratio="1" keepRatio="true" />
 	</info>
 	
 	<mapdata>
-		<layer id="0" tileset="foo" nodefault="false" default="0">
+		<layer id="0" tileset="BaseTileset" nodefault="false" default="63">
 				<tile x="0" y="0" id="0" />
 				<tile x="1" y="0" id="1" />
 				<tile x="2" y="0" id="2" />
-				<tile x="0" y="1" id="3" />
-				<tile x="1" y="1" id="4" />
-				<tile x="2" y="1" id="5" />
-				<tile x="0" y="2" id="6" />
-				<tile x="1" y="2" id="7" />
-				<tile x="2" y="2" id="8" />
+				<tile x="0" y="1" id="20" />
+				<tile x="1" y="1" id="21" />
+				<tile x="2" y="1" id="22" />
+				<tile x="0" y="2" id="40" />
+				<tile x="1" y="2" id="41" />
+				<tile x="2" y="2" id="42" />
 		</layer>
 		<streaminglayer>
 			<streambox teleport="false" x="15" y="15" w="10" h="10" map="testmap" sx="16" sy="16" sox="0" soy="0" />

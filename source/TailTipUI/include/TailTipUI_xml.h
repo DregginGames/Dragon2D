@@ -44,8 +44,7 @@ namespace TailTipUI {
 		
 	private:
 		GLuint framebuffer;
-		Root* rootElelent;
-
+		
 		std::map<std::string, XMLLoaderEventCallback> callbacks;
 		std::vector<GeneralElement*> elements;
 		std::map<std::string, std::string> hoverEvents;

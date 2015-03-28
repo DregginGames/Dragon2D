@@ -17,7 +17,7 @@ namespace Dragon2D
 				std::string rawEvent = input->GetAttribute("key");
 				newEvent.key = rawEvent;
 				//is it a mouseclick?
-				unsigned int pos = rawEvent.find("MOUSE");
+				auto pos = rawEvent.find("MOUSE");
 				if (pos!=rawEvent.npos) {
 					pos += 5;
 					if (pos < rawEvent.size() && rawEvent[pos] >= '0' && rawEvent[pos] <= '9') {
@@ -122,7 +122,7 @@ namespace Dragon2D
 	}
 
 	InputEvent::InputEvent()
-		: name(""), isMouseEvent(false), isKeyboardEvent(false), isMouseAxisEvent(false)
+		: name(""), isKeyboardEvent(false), isMouseEvent(false), isMouseAxisEvent(false)
 	{
 
 	}
@@ -148,7 +148,7 @@ namespace Dragon2D
 	SDL_Keycode StringToKeycode(std::string k)
 	{
 		if (k == "KEY_NONE") {
-			return NULL;
+			return 0;
 		}
 		KEYHELPER_DIFF(ESC, SDLK_ESCAPE)
 			KEYHELPER(UP)

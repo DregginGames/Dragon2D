@@ -5,20 +5,20 @@ namespace Dragon2D
 {
 
 	Sprite::Sprite()
-		: textureName(), programName("defaultSprite"), position(.0f, .0f, 1.f, 1.f), textureOffset(.0f, .0f, 1.f, 1.f)
+		: programName("defaultSprite"), textureName(), position(.0f, .0f, 1.f, 1.f), textureOffset(.0f, .0f, 1.f, 1.f)
 	{
 		Env::GetResourceManager().RequestGLProgramResource(programName);
 	}
 
 	Sprite::Sprite(std::string name)
-		: textureName(name), programName("defaultSprite"), position(.0f, .0f, 1.f, 1.f), textureOffset(.0f, .0f, 1.f, 1.f)
+		:  programName("defaultSprite"), textureName(name), position(.0f, .0f, 1.f, 1.f), textureOffset(.0f, .0f, 1.f, 1.f)
 	{
 		Env::GetResourceManager().RequestGLProgramResource(programName);
 		Env::GetResourceManager().RequestTextureResource(textureName);
 	}
 
 	Sprite::Sprite(std::string name, std::string program)
-		: textureName(name), programName(program), position(.0f, .0f, 1.f, 1.f), textureOffset(.0f, .0f, 1.f, 1.f)
+		: programName(program), textureName(name), position(.0f, .0f, 1.f, 1.f), textureOffset(.0f, .0f, 1.f, 1.f)
 	{
 		Env::GetResourceManager().RequestGLProgramResource(programName);
 		Env::GetResourceManager().RequestTextureResource(textureName);

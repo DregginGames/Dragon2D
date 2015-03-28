@@ -188,14 +188,19 @@ Env::Env(int argc, char** argv)
 	if (settings[engineInitName]["requestFLAC"] == std::string("true")) {
 		mixerInitFlags |= MIX_INIT_FLAC;
 	}
+	if(Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,2,4096)!=0) {
+		throw EnvException("Could not open Audio Device!");
+	}
 	int inittedMixerFlags = Mix_Init(mixerInitFlags);
 	//Hope that all modes were supported, but dont think that it will always work!
 	if (mixerInitFlags != inittedMixerFlags) {
 		//aand the bad thing happend
 		throw EnvException("Could not Load all mixer modules. Did you include all libs for the requested modes?");
 	}
+	//set channels
+	int mixChannels = atoi(settings[engineInitName]["channels"].c_str());
+	Mix_AllocateChannels(mixChannels);
 
-	
 	//For image we basically do the same as in the mixer init
 	Out() << "Init Image (sdl_image)" << std::endl;
 	int imageInitFlags = 0;

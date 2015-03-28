@@ -260,13 +260,13 @@ void ResourceManager::_CheckResMgr()
 //Subclasses (fml)
 //Resource
 Resource::Resource()
-	: name("invalid"), references(-1)
+	: references(-1), name("invalid")
 {
 
 }
 
 Resource::Resource(std::string resourceName)
-: name(resourceName), references(1)
+: references(1), name("invalid")
 {
 
 }
@@ -326,7 +326,7 @@ AudioResource::AudioResource(std::string name, std::string file)
 	}
 	mixChunk = Mix_LoadWAV_RW(infile, 1);
 	if (!mixChunk) {
-		Env::Err() << "Error Loading Mix Chunk for " << file << "! Sound will be empty!" << std::endl;
+		Env::Err() << "Error Loading Mix Chunk for " << file << "! Sound will be empty! " << Mix_GetError() << std::endl;
 	}
 }
 
@@ -340,7 +340,7 @@ Mix_Chunk* AudioResource::GetChunk() const
 	return mixChunk;
 }
 
-GLuint TextureResource::boundTexture = NULL;
+GLuint TextureResource::boundTexture = 0;
 
 TextureResource::TextureResource()
 : Resource("invalid")
@@ -472,7 +472,7 @@ GLuint _CompileShader(std::string source, GLenum shaderType)
 		glDeleteShader(shaderObject);
 		std::string errorString(errorLog.begin(), errorLog.end());
 		Env::Err() << "Error compiling shader:\n" << errorString << std::endl;
-		return NULL;
+		return 0;
 	}
 	return shaderObject;
 }
@@ -488,7 +488,7 @@ GLProgramResource::GLProgramResource(std::string name, std::string file)
 : Resource(name)
 {
 	std::list<GLuint> shaderList;
-	programId = NULL;
+	programId = 0;
 
 	std::fstream infile;
 	Env::Gamefile(file, std::ios::in, infile);
@@ -501,7 +501,7 @@ GLProgramResource::GLProgramResource(std::string name, std::string file)
 	std::string s = noCommetInString;
 	while (std::regex_search(s, m, configMakroRe)) {
 		std::string configName = m[1];
-		GLuint newShader = NULL;
+		GLuint newShader = 0;
 		//check the config macos
 		if (configName == "CONFIG_HAS_VERTEX") {
 			newShader =  _CompileShader(std::string("#define CONTROL_COMPILE_VERTEX\n") + instring, GL_VERTEX_SHADER);
@@ -525,7 +525,7 @@ GLProgramResource::GLProgramResource(std::string name, std::string file)
 			Env::Err() << "WARNING: unknown shader config makro: " << configName << std::endl;
 		}
 		//error checking
-		if (newShader == NULL) {
+		if (newShader == 0) {
 			Env::Err() << "ERROR: Shader Compilation Error in " << file << std::endl;
 			//we should delete all the other shaders
 			for (GLuint s : shaderList) {
@@ -557,7 +557,7 @@ GLProgramResource::GLProgramResource(std::string name, std::string file)
 		Env::Err() << "Error Linking " << file << "\n" << errorString << std::endl;
 		Env::Err() << "WARNING: ShaderResource will be invalid!";
 		glDeleteProgram(programId);
-		programId = NULL;
+		programId = 0;
 	}
 	for (GLuint shaderId : shaderList) {
 		glDeleteShader(shaderId);
@@ -578,7 +578,7 @@ GLuint GLProgramResource::GetProgramId() const
 
 void GLProgramResource::Use()
 {
-	if (programId != NULL && boundProgram!=programId) {
+	if (programId != 0 && boundProgram!=programId) {
 		glUseProgram(programId);
 		boundProgram = programId;
 	}
@@ -587,7 +587,7 @@ void GLProgramResource::Use()
 GLuint GLProgramResource::operator[](std::string uniformName) 
 {
 	if (programId == 0) {
-		return NULL;
+		return 0;
 	}
 	auto p = uniforms.find(uniformName);
 	if (p == uniforms.end()) {

@@ -20,11 +20,16 @@ namespace Dragon2D
 	void Music::Load(std::string loadname)
 	{
 		name = loadname;
-		//Env::GetResourceManager().RequestAudioResource(name);		
+		Env::GetResourceManager().RequestAudioResource(name);		
 	}	
 	
-	void Music::Play(int fadetime)
+	void Music::Play(int fadetime, int loops)
 	{
-
+		if(curChannel!=-1) {
+			Mix_FadeOutChannel(curChannel, fadetime);
+		}
+		
+		AudioResource &res = Env::GetResourceManager().GetAudioResource(name);
+		curChannel = Mix_FadeInChannel(-1,res.GetChunk(),loops,fadetime);
 	}	
 }; //namespace Dragon2D

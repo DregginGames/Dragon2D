@@ -8,6 +8,7 @@
 #include "Sprite.h"
 #include "Tileset.h"
 #include "Map.h"
+#include "Audio.h"
 
 namespace Dragon2D {
 	std::vector <std::function<void(void)>> gResetters;
@@ -67,6 +68,7 @@ namespace Dragon2D {
 		SCRIPTCLASS_ADD(Tileset, chai);
 		SCRIPTCLASS_ADD(BatchedTileset, chai);
 		SCRIPTCLASS_ADD(Map, chai);
+		SCRIPTCLASS_ADD(Music, chai);
 	}
 
 

@@ -3,6 +3,8 @@ def StartNewGameFromMenuCallback(UIElement e, XMLUI loader) {
 	loader.GetElementById("ingameui").SetHidden(false);
 	GlobalMap("testmap").Load("testmap");
 	CurrentManager().Add(GlobalMap("testmap"));
+	GlobalMusic("testmusic").Load("as");
+	GlobalMusic("testmusic").Play(1000,-1);
 }
 
 def evalCommand (UIElement e, XMLUI loader) {

@@ -458,14 +458,6 @@ namespace TailTipUI {
 		//destructor: ~Root
 		~Root();
 
-		//function: AttatchChild
-		//note: Adds a new Element as a child to this
-		//param:	child: the element to add. should be created with new
-		virtual void AttatchChild(ChildElement* child);
-		//function: DeattatchChild
-		//note: removes an element 
-		//param:	child: the element to remove
-		virtual void DeattatchChild(ChildElement* child);
 		//function: Render
 		//note: Renders the element and its children
 		virtual void Render() override;

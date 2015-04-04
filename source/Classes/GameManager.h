@@ -7,7 +7,11 @@
 
 namespace Dragon2D {
 
-	typedef std::function<void(float)> UpdateCallback;
+	//The ticksize, also known as DeltaT. It always the same, causing a constant outcome/time for everything
+	//Updates happen n times per second, so dt is 1/n.
+	const double ticksize = 1.0/30.0;
+
+	typedef std::function<void(void)> UpdateCallback;
 //class: GameManager
 //note: Manages the Game, including Handling the Scene Elements, Maps, Updates, ...
 class GameManager
@@ -70,6 +74,9 @@ private:
 
 	//var: isRunning
 	bool isRunning;
+	
+	//var: ticks since call to RunGame
+	unsigned long ticks; 
 protected:
 	static void _CheckManager();
 };

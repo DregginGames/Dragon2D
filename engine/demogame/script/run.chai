@@ -1,10 +1,10 @@
 Include("mainmenu");
 Include("tilesetEditor");
 
-def ScriptUpdate(float deltat) {
+def ScriptUpdate() {
 	
 }
-def ScriptRender(float deltat) {}
+def ScriptRender() {}
 
 def Init() {}
 

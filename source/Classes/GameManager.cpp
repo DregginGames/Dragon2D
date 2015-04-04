@@ -5,7 +5,7 @@ namespace Dragon2D {
 GameManager* GameManager::activeGameManager = nullptr;
 
 GameManager::GameManager() 
-	: isRunning(false)
+	: isRunning(false), ticks(0)
 {
 	if (activeGameManager != nullptr) {
 		throw GameManagerException("Only one instance of GameManager is allowed!");
@@ -45,9 +45,16 @@ void GameManager::RunGame(UpdateCallback c, UpdateCallback r)
 	updateCallback = c;
 	renderCallback = r;
 	isRunning = true;
+
+	std::chrono::high_resolution_clock::time_point curtime = std::chrono::high_resolution_clock::now();
+	double timeLeft = 0.0;
 	while (isRunning) {
+		std::chrono::high_resolution_clock::time_point newTime = std::chrono::high_resolution_clock::now();
+		timeLeft+=std::chrono::duration_cast<std::chrono::duration<double>>(newTime-curtime).count();
+		curtime = newTime;
+
 		SDL_Event e;
-		//Handle Events
+		//Handle Events. These arnt tick events!
 		while (SDL_PollEvent(&e)) {
 			Env::HandleEvent(e);
 			switch (e.type) {
@@ -80,18 +87,22 @@ void GameManager::RunGame(UpdateCallback c, UpdateCallback r)
 		toAdd.clear();
 
 
-		//Update
-		if (updateCallback) {
-			updateCallback(0.0f);
-		}
-		for (auto e : elements) {
-			e->Update();
+		//Update - delta div dt times!
+		while(timeLeft>=ticksize) {
+			if (updateCallback) {
+				updateCallback();
+			}
+			for (auto e : elements) {
+				e->Update();
+			}
+			timeLeft-=ticksize;
+			ticks++;
 		}
 
 		//Render Everything
 		Env::ClearFramebuffer();
 		if (renderCallback) {
-			renderCallback(0.0f);
+			renderCallback();
 		}
 
 		auto stillToRender = elements;

@@ -223,6 +223,13 @@ namespace TailTipUI {
 		//function: GetPos()
 		//note: Returns the position of this object. 
 		virtual glm::vec4 GetPos();
+	
+		//function: SetCentered
+		//note: Sets if the object is centered aournd its x-position	
+		virtual void SetCentered(bool b);
+		//function: GetCentered
+		//note: Returns if the object is centered around its x-position
+		virtual bool GetCentered();
 
 		//function: SetDraggable
 		//note: Sets weather this object can be dragged around with the mouse
@@ -356,6 +363,8 @@ namespace TailTipUI {
 
 		//var: pos. position of the element
 		glm::vec4 pos;
+		//var: centered. is the object centered
+		bool centered;
 
 		//var: name. name of the element
 		std::string name;

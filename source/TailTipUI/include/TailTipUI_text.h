@@ -8,7 +8,8 @@ namespace TailTipUI {
 		Text();
 		Text(std::string name);
 		Text(std::string name, TTF_Font* font);
-
+		
+		virtual void SetPos(glm::vec4 p) override;
 		virtual void SetFont(TTF_Font* newfont) override;
 		virtual void SetName(std::string newname) override;
 		virtual void SetForgroundColor(glm::vec4 color) override;
@@ -20,8 +21,8 @@ namespace TailTipUI {
 
 		virtual void ForceUpdate();
 		
-	private:
 		
+	private:	
 		float textsizeratio;
 		GLuint tex;
 		bool wlock;

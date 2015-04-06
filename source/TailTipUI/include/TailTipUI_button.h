@@ -4,30 +4,21 @@
 
 namespace TailTipUI {
 
-	class Button : public Area
+	class Button : public Text
 	{
 	public:
 		Button();
 		Button(std::string text);
 		~Button();
-
-		virtual void SetFont(TTF_Font* newfont) override;
-		virtual void SetName(std::string newname) override;
-		virtual void SetId(std::string id) override;
-		virtual void SetForgroundColor(glm::vec4 color) override;
-		virtual void SetPos(glm::vec4 newpos) override;
-
-		virtual void SetTextWidthlock(bool b);
-		virtual bool GetTextWidthlock();
+	
+		void SetTextScale(float s);	
+		float GetTextScale();	
 	private:
-		Text* buttonText;
-		bool widthlockText;
-
+		float 		textScale;
 	protected:
-
+		virtual void _Render() override;
 		virtual void _InternalHoverEvent();
-		virtual void _InternalStopHoverEvent();
-		void _UpdateText();
+		virtual void _InternalStopHoverEvent();	
 	};
 
 };

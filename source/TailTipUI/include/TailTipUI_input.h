@@ -6,21 +6,21 @@
 
 namespace TailTipUI
 {
-	class Input : public Area
+	class Input : public Text
 	{
 	public:
 		Input();
 		~Input();
+		
+		virtual void SetPos(glm::vec4 p) override;
+		virtual glm::vec4 GetPos();
 
-		virtual void SetFont(TTF_Font* newfont) override;
-		virtual void SetName(std::string newname) override;
-		virtual void SetId(std::string id) override;
-		virtual void SetForgroundColor(glm::vec4 color) override;
-
+		virtual bool GetHover();
 	private:
-		Text* InputText;
+		glm::vec4 bgpos;
 		int maxChars;
 		bool wasDeleting;
+		std::string intext;
 	protected:
 		virtual void _Render() override;
 		virtual void _Focus() override;

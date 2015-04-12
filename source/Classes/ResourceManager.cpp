@@ -416,8 +416,8 @@ FontResource::FontResource(std::string name, std::string file)
 		return;
 	}
 	//TODO: fixed font size? dosnt seem like a good idea
-	font[16] = TTF_OpenFontRW(fontFile, 0, 16);
-	if (!font[16]) {
+	font[64] = TTF_OpenFontRW(fontFile, 0, 64);
+	if (!font[64]) {
 		Env::Err() << "Error loading 16-points-sized testfont " << file << "!(" << TTF_GetError() << ") Font will cause errors!" << std::endl;
 		return;
 	}

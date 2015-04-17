@@ -10,7 +10,7 @@ class Resource;
 class AudioResource;
 class VideoResource;
 class TextureResource;
-class ScriptResource;
+class XMLResource;
 class FontResource;
 class GLProgramResource;
 class MapResource;
@@ -52,12 +52,12 @@ public:
 	//note: Free an texture resource, causing its ref count to decrese. 
 	void FreeTextureResource(std::string name);
 
-	//function: RequestScriptResource()
+	//function: RequestXMLResource()
 	//note: Request Access to an script resource, causing it to be loaded if it wasnt. Increment ref count if already loaded
-	void RequestScriptResource(std::string name);
-	//function: FreeScriptResource()
+	void RequestXMLResource(std::string name);
+	//function: FreeXMLResource()
 	//note: Free an script resource, causing its ref count to decrese. 
-	void FreeScriptResource(std::string name);
+	void FreeXMLResource(std::string name);
 
 	//function: RequestFontResource()
 	//note: Request Access to an font resource, causing it to be loaded if it wasnt. Increment ref count if already loaded
@@ -99,7 +99,7 @@ public:
 	TextureResource& GetTextureResource(std::string name);
 	//function: GetAudioResource
 	//note: Return a resource
-	ScriptResource& GetScriptResource(std::string name);
+	XMLResource& GetXMLResource(std::string name);
 	//function: GetAudioResource
 	//note: Return a resource
 	FontResource& GetFontResource(std::string name);
@@ -136,19 +136,19 @@ private:
 
 	//var: audioResources. Contains the currently loaded Audio Resourcess
 	std::map<std::string, AudioResource*> audioResources;
-	//var: audioResources. Contains the currently loaded Audio Resourcess
+	//var: videoResources. Contains the currently loaded Video Resourcess
 	std::map<std::string, VideoResource*> videoResources;
-	//var: audioResources. Contains the currently loaded Audio Resourcess
+	//var: textureResources. Contains the currently loaded Texture Resourcess
 	std::map<std::string, TextureResource*> textureResources;
-	//var: audioResources. Contains the currently loaded Audio Resourcess
-	std::map<std::string, ScriptResource*> scriptResources;
-	//var: audioResources. Contains the currently loaded Audio Resourcess
+	//var: XMLResources. Contains the currently loaded XML Resourcess
+	std::map<std::string, XMLResource*> XMLResources;
+	//var: fontResources. Contains the currently loaded Font Resourcess
 	std::map<std::string, FontResource*> fontResources;
-	//var: audioResources. Contains the currently loaded Audio Resourcess
+	//var: glProgramResources. Contains the currently loaded Shader Resourcess
 	std::map<std::string, GLProgramResource*> glProgramResources;
-	//var: audioResources. Contains the currently loaded Audio Resourcess
+	//var: mapResources. Contains the currently loaded Map Resourcess
 	std::map<std::string, MapResource*> mapResources;
-	//var: audioResources. Contains the currently loaded Audio Resourcess
+	//var: textResources. Contains the currently loaded Text Resourcess
 	std::map<std::string, TextResource*> textResources;
 protected:
 	//function: _CheckResMgr
@@ -171,7 +171,14 @@ protected:
 			//If not in the resource set, try to find it in the db
 			auto dbdata = db.find(name);
 			if (dbdata == db.end()) {
-				//if not there, return false - we cannot add an unknown resource
+				//if not there, return false - we cannot add an unknown resource. or can we?
+				//try to see if the resource loads when we give that name to it.
+				T* newRes = new  T(name, name);
+				if (newRes->GetName() != "invalid") { //yay
+					resources[name] = newRes;
+					return true;
+				}
+				//ok we tried
 				return false;
 			}
 			//If we know it, Load it. T is our resource-class (i.e. AudioResource)
@@ -222,7 +229,7 @@ D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(ResourceManager)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestAudioResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestVideoResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestTextureResource)
-D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestScriptResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestXMLResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestFontResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestGLProgramResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestMapResource)
@@ -230,7 +237,7 @@ D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, RequestTextResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeAudioResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeVideoResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeTextureResource)
-D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeScriptResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeXMLResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeFontResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeGLProgramResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeMapResource)
@@ -238,7 +245,7 @@ D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, FreeTextResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetAudioResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetVideoResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetTextureResource)
-D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetScriptResource)
+D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetXMLResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetFontResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetGLProgramResource)
 D2DCLASS_SCRIPTINFO_MEMBER(ResourceManager, GetMapResource)
@@ -350,20 +357,22 @@ D2DCLASS_SCRIPTINFO_CONSTRUCTOR(TextureResource, std::string, std::string)
 D2DCLASS_SCRIPTINFO_MEMBER(TextureResource, GetTextureId)
 D2DCLASS_SCRIPTINFO_END
 
-//class: ScriptResource
+//class: XMLResource
 //note: stores script. //TODO: dont be a dummy!
-class ScriptResource : public Resource
+class XMLResource : public Resource
 {
 public:
-	ScriptResource();
-	ScriptResource(std::string name, std::string file);
-	~ScriptResource();
+	XMLResource();
+	XMLResource(std::string name, std::string file);
+	~XMLResource();
+
+	HoardXML::Document& GetDocument();
 private:
-	
+	HoardXML::Document document;
 };
-D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(ScriptResource)
-D2DCLASS_SCRIPTINFO_PARENTINFO(Resource, ScriptResource)
-D2DCLASS_SCRIPTINFO_CONSTRUCTOR(ScriptResource, std::string, std::string)
+D2DCLASS_SCRIPTINFO_BEGIN_GENERAL(XMLResource)
+D2DCLASS_SCRIPTINFO_PARENTINFO(Resource, XMLResource)
+D2DCLASS_SCRIPTINFO_CONSTRUCTOR(XMLResource, std::string, std::string)
 D2DCLASS_SCRIPTINFO_END
 
 //class: FontResource

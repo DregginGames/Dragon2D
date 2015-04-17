@@ -9,6 +9,7 @@
 #include "Tileset.h"
 #include "Map.h"
 #include "Audio.h"
+#include "Player.h"
 
 namespace Dragon2D {
 	std::vector <std::function<void(void)>> gResetters;
@@ -32,15 +33,14 @@ namespace Dragon2D {
 	}
 
 	void LoadClasses(chaiscript::ChaiScript &chai) {
+		//Script engine foo
 		SCRIPTFUNCTION_ADD(ScriptEngine::IncludeScript, "Include", chai);
 		SCRIPTFUNCTION_ADD(ScriptEngine::RawEval, "RawEval", chai);
 		SCRIPTTYPE_ADD(std::ostream, "ostream", chai);
-		//SCRIPTTYPE_ADD(TTF_Font, "TTF_Font", chai);
-		//SCRIPTTYPE_ADD(Mix_Chunk, "Mix_Chunk", chai);
-		//SCRIPTTYPE_ADD(GLuint, "GLuint", chai);
-		//SCRIPTTYPE_ADD(GLfloat, "GLfloat", chai);
+		//Some stuff		
 		SCRIPTFUNCTION_ADD(StrToInt, "StrToInt", chai);
 		SCRIPTFUNCTION_ADD(StrToFloat, "StrToFloat", chai);
+		//ENV functions
 		SCRIPTFUNCTION_ADD(Env::Gamefile, "Gamefile", chai);
 		SCRIPTFUNCTION_ADD(Env::Enginefile, "Enginefile", chai);
 		SCRIPTFUNCTION_ADD(Env::GetCurrentMouseState, "Mouseinfo", chai);
@@ -48,27 +48,34 @@ namespace Dragon2D {
 		SCRIPTFUNCTION_ADD(Env::ClearFramebuffer, "ClearScreen", chai);
 		SCRIPTFUNCTION_ADD(Env::ResetCurrentTextInput, "ResetCurrentTextInput", chai);
 		SCRIPTFUNCTION_ADD(Env::GetCurrentText, "GetCurrentText", chai);
+		//Base Types
 		SCRIPTCLASS_ADD(vec4, chai);
 		SCRIPTCLASS_ADD(XMLUI, chai);
 		SCRIPTCLASS_ADD(UIElement, chai);
+		//Base Engine Structures and Resources
 		SCRIPTCLASS_ADD(BaseClass, chai);
 		SCRIPTCLASS_ADD(Resource, chai);
 		SCRIPTCLASS_ADD(AudioResource, chai);
 		SCRIPTCLASS_ADD(VideoResource, chai);
 		SCRIPTCLASS_ADD(TextureResource, chai);
-		SCRIPTCLASS_ADD(ScriptResource, chai);
+		SCRIPTCLASS_ADD(XMLResource, chai);
 		SCRIPTCLASS_ADD(FontResource, chai);
 		SCRIPTCLASS_ADD(GLProgramResource, chai);
 		SCRIPTCLASS_ADD(MapResource, chai);
 		SCRIPTCLASS_ADD(TextResource, chai);
 		SCRIPTCLASS_ADD(ResourceManager, chai);
+		//Engine Management
 		SCRIPTCLASS_ADD(GameManager, chai);
 		SCRIPTCLASS_ADD(Ui, chai);
+		//Basic Game Classes
+		SCRIPTCLASS_ADD(Music, chai);
+		SCRIPTCLASS_ADD(GameObject, chai);
 		SCRIPTCLASS_ADD(Sprite, chai);
 		SCRIPTCLASS_ADD(Tileset, chai);
 		SCRIPTCLASS_ADD(BatchedTileset, chai);
+		SCRIPTCLASS_ADD(AnimatedTileset, chai);
 		SCRIPTCLASS_ADD(Map, chai);
-		SCRIPTCLASS_ADD(Music, chai);
+		SCRIPTCLASS_ADD(Player, chai);
 	}
 
 

@@ -15,13 +15,21 @@ namespace Dragon2D
 		Load(name);
 	}
 
+	Tileset::~Tileset()
+	{
+		std::string infilename = std::string("tilesets/") + name + ".xml";
+		Env::GetResourceManager().FreeXMLResource(infilename);
+	}
+
 	void Tileset::Load(std::string loadName)
 	{
 		name = loadName;
 		std::string texture;
-		std::string infilename = Env::GetGamepath() + std::string("tilesets/") + name + ".xml";
+		std::string infilename = std::string("tilesets/") + name + ".xml";
 		Uint32 bt = SDL_GetTicks();
-		HoardXML::Document indoc(infilename);
+		Env::GetResourceManager().RequestXMLResource(infilename);
+		HoardXML::Document &indoc = Env::GetResourceManager().GetXMLResource(infilename).GetDocument();
+
 		Uint32 tges = SDL_GetTicks() - bt;
 		std::cout << "LoadTime:" << tges << std::endl;
 		//we silently quit if we cant find what we load. used for editing in the editor when creating new tilesets.
@@ -53,9 +61,25 @@ namespace Dragon2D
 						tiles[newId] = glm::vec4(atof(xString.c_str()), atof(yString.c_str()), atof(wString.c_str()), atof(hString.c_str()));
 					}
 					else {
-						Env::Out() << "WARNING: unknown tag \"" << tagname << "\" in tileset " << name << std::endl;
+						Env::Out() << "WARNING: unknown tag \"" << tileTagName << "\" in tileset " << name << std::endl;
 					}
 				}
+			}
+			else if (tagname == "animation") {
+				TileAnimation newAnim;
+				newAnim.name = tag.GetAttribute("name");
+				newAnim.loop = tag.GetAttribute("loop") == "true";
+				for (auto animTile : tag.GetChildren()) {
+					if (animTile.GetName() == "tile") {
+						int id = atoi(animTile.GetAttribute("id").c_str());
+						int len = atoi(animTile.GetAttribute("len").c_str());
+						newAnim.tileList.push_back(std::make_pair(id, len));
+					}
+					else {
+						Env::Out() << "WARNING: unknown animation tag \"" << animTile.GetName() << "\" in tileset " << name << std::endl;
+					}	
+				}
+				animations[newAnim.name] = newAnim;
 			}
 			else {
 				Env::Out() << "WARNING: unknown tag \"" << tagname << "\" in tileset " << name << std::endl;
@@ -68,7 +92,7 @@ namespace Dragon2D
 	//we dont render. normally. 
 	void Tileset::Render() 
 	{
-
+		BaseClass::Render();
 	}
 
 	std::string Tileset::GetName() const
@@ -113,7 +137,7 @@ namespace Dragon2D
 		outdoc.Save(outfilename);
 	}
 
-	void Tileset::Render(int id, glm::vec4 pos)
+	void Tileset::Render(int id)
 	{
 		auto tileIterator = tiles.find(id);
 		if (tileIterator == tiles.end()) {
@@ -122,7 +146,6 @@ namespace Dragon2D
 		else {
 			SetOffset(tileIterator->second);
 		}
-		SetPosition(pos);
 		Sprite::Render();
 	}
 
@@ -171,8 +194,9 @@ namespace Dragon2D
 		glGenBuffers(1, &uvBuffer);
 	}
 
-	void BatchedTileset::Render(int id, glm::vec4 pos)
+	void BatchedTileset::Render(int id)
 	{
+		glm::vec4 pos = GetPosition();
 		//We render quads, so we need to 1st scale it, 2nd move it and 3rd push it to the rawVertexBuffer
 		//glm::vec2 rpos(pos.x * 2 - 1, (1.0f-pos.y-pos[3]) * 2.0f - 1.0f);
 		//glm::vec2 rsize(pos[2] * 2.0f, pos[3] * 2.0f);
@@ -224,4 +248,68 @@ namespace Dragon2D
 		rawVertexBuffer.clear();
 		rawUVBuffer.clear();
 	}
+
+	//Animated Tileset
+	AnimatedTileset::AnimatedTileset()
+		: currentAnimation(""), paused(true), curAnimPos(0), curTile(0), ticksToNextFrame(0)
+	{
+	}
+
+	AnimatedTileset::AnimatedTileset(std::string name)
+		: Tileset(name), currentAnimation(""), paused(true), curAnimPos(0), curTile(0), ticksToNextFrame(0)
+	{
+	}
+
+	void AnimatedTileset::Render()
+	{
+		Tileset::Render(curTile);
+		BaseClass::Render();
+	}
+
+	void AnimatedTileset::Update()
+	{
+		if (paused || animations[currentAnimation].tileList.size()<=0) {
+			return;
+		}
+		ticksToNextFrame--;
+		if (ticksToNextFrame <= 0) {
+			curAnimPos++;
+			std::cout << curAnimPos << std::endl;
+			if(curAnimPos >= animations[currentAnimation].tileList.size()) {
+				if (animations[currentAnimation].loop) {
+					curAnimPos = 0;
+				}
+				else {
+					Stop();
+					return;
+				}
+			}
+			curTile = animations[currentAnimation].tileList[curAnimPos].first;
+			ticksToNextFrame = animations[currentAnimation].tileList[curAnimPos].second;
+		}
+		BaseClass::Update();
+	}
+	
+	void AnimatedTileset::Play(std::string animationName)
+	{
+		paused = false;
+		currentAnimation = animationName;
+		if (animations[currentAnimation].tileList.size() != 0) {
+			curAnimPos = 0;
+			curTile = animations[currentAnimation].tileList[curAnimPos].first;
+			ticksToNextFrame = animations[currentAnimation].tileList[curAnimPos].second;
+		}
+	}
+
+	void AnimatedTileset::TogglePause()
+	{
+		paused = !paused;
+	}
+
+	void AnimatedTileset::Stop()
+	{
+		paused = true;
+		currentAnimation = "";
+	}
+
 }; //Dragon2D

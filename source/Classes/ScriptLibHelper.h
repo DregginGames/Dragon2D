@@ -35,14 +35,14 @@ namespace Dragon2D {
 	inline std::map<std::string,std::shared_ptr<name>>& ScriptInfo_##name##_AccessGloalValues() { \
 		static std::map<std::string,std::shared_ptr<name>> Values; \
 		return Values; \
-	} \
+		} \
 	inline std::shared_ptr<name> ScriptInfo_##name##_AccessGloalVar(std::string n) { \
 		if(!ScriptInfo_##name##_AccessGloalValues()[n]) ScriptInfo_##name##_AccessGloalValues()[n].reset(new name()); \
 		return ScriptInfo_##name##_AccessGloalValues()[n]; \
-	} \
+		} \
 	inline void ScriptInfo_##name##_ResetGlobal() { \
 		ScriptInfo_##name##_AccessGloalValues().clear(); \
-		} \
+			} \
 	inline void ScriptInfo_##name(chaiscript::ChaiScript&chai) { \
 	chaiscript::ModulePtr m = chaiscript::ModulePtr(new chaiscript::Module()); \
 	m->add(chaiscript::user_type<name>(), #name ); \
@@ -58,7 +58,9 @@ namespace Dragon2D {
 
 #define D2DCLASS_SCRIPTINFO_BEGIN(name, parent) \
 	D2DCLASS_SCRIPTINFO_BEGIN_GENERAL_GAMECLASS(name) \
-	D2DCLASS_SCRIPTINFO_PARENTINFO(parent, name)
+	D2DCLASS_SCRIPTINFO_PARENTINFO(parent, name) \
+	chai.add(chaiscript::type_conversion<name##Ptr,parent##Ptr>([](const name##Ptr in) { return std::dynamic_pointer_cast<parent>(in);})); \
+	chai.add(chaiscript::type_conversion<name##Ptr, BaseClassPtr>([](const name##Ptr in) { return std::dynamic_pointer_cast<BaseClass>(in);}));
 
 #define D2DCLASS_SCRIPTINFO_END chai.add(m); }
 

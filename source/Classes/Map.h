@@ -2,12 +2,14 @@
 
 #include "BaseClass.h"
 #include "Tileset.h"
+#include "GameObject.h"
 
 namespace Dragon2D
 {
 
 	class MapLayer;
 	class MapStreamBox;
+	class MapClipBox;
 
 	//Maps are made of tiles. Tiles themself have a size. 
 	//However, the size of a map is not given as a relative size - what you set with SetPos() sets the render area of the map!
@@ -28,15 +30,20 @@ namespace Dragon2D
 		virtual void Render() override;
 		virtual void Update() override;
 
-		virtual void Move(int x, int y);
+		virtual void Move(int x, int y, int ticks);
 		virtual void SetMapPosition(int x, int y);
 		virtual void GetMapPosition(int&x, int&y) const;
 
-		virtual void RegisterInputHooks() override;
-		virtual void RemoveInputHooks() override; 
+		virtual void GetMapDimensions(int&w, int&h, float&tw, float&th) const;
+		virtual glm::vec4 Tilepos(int x, int y) const;
+
+		std::vector<GameObjectPtr> GetObjectsAtPosition(int x, int y) const;
+		bool IsPositionWalkable(int x, int y) const;
 	private:
+		std::string name;
 		std::list<MapLayer> layers;
 
+		std::list<MapClipBox> clipBoxes;
 		std::list<MapStreamBox> streamBoxes;
 		bool forceStreamTeleport;
 
@@ -48,6 +55,12 @@ namespace Dragon2D
 		int height;
 		int ox;
 		int oy;
+		int dox;
+		int doy;
+
+		int ticksLeftMapMovement;
+		int movementLength;
+		glm::vec4 mapMovementOffset;
 	};
 	D2DCLASS_SCRIPTINFO_BEGIN(Map, BaseClass)
 		D2DCLASS_SCRIPTINFO_CONSTRUCTOR(Map, std::string)
@@ -88,6 +101,14 @@ namespace Dragon2D
 		glm::vec4 streamPos;
 		//var: isTeleport. if true, entering the box causes a teleport and not a mapstream
 		bool isTeleport;
+	};
+
+	//class: MapClipBox
+	//note: Constains infomration about clipping
+	class MapClipBox
+	{
+	public:
+		glm::vec4 pos;
 	};
 }; //namespace Dragon2D
 

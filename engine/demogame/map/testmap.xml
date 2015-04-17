@@ -1,7 +1,7 @@
 <map name="testmap">
 	<info>
-		<mapsize width="20" height="20" />
-		<walkable x="2" y="2" w="18" h="18" />
+		<mapsize width="15" height="15" />
+		<walkable x="3" y="3"/>
 		<stream teleport="false" />
 		<tilesize tileratio="1" keepRatio="true" />
 	</info>

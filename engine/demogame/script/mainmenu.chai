@@ -5,6 +5,7 @@ def StartNewGameFromMenuCallback(UIElement e, XMLUI loader) {
 	CurrentManager().Add(GlobalMap("testmap"));
 	GlobalMusic("testmusic").Load("as");
 	GlobalMusic("testmusic").Play(1000,-1);
+	GlobalMap("testmap").Move(-4,-4,300);
 }
 
 def evalCommand (UIElement e, XMLUI loader) {

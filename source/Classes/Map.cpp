@@ -3,33 +3,32 @@
 namespace Dragon2D
 {
 
-	void testevent(bool b) {
-		std::cout << "blah:" << b << std::endl;
-	}
-
 	Map::Map()
-		: forceStreamTeleport(false),keepTileRatio(true), tilesize(0.0f),
-		walkarea(0), width(0),height(0),ox(0), oy(0)
+		: name(""), forceStreamTeleport(false), keepTileRatio(true), tilesize(0.0f),
+		walkarea(0), width(0), height(0), ox(0), oy(0), dox(0), doy(0), ticksLeftMapMovement(0), movementLength(0), mapMovementOffset(0)
 	{
 		 
 	}
 
 	Map::Map(std::string name)
-		: forceStreamTeleport(false),keepTileRatio(true), tilesize(0.0f),
-		walkarea(0), width(0),height(0),ox(0), oy(0)	
+		: name(name),forceStreamTeleport(false),keepTileRatio(true), tilesize(0.0f),
+		walkarea(0), width(0), height(0), ox(0), oy(0), dox(0), doy(0), ticksLeftMapMovement(0), movementLength(0), mapMovementOffset(0.0f)
 	{
 		Load(name);
 	}
 
 	Map::~Map()
 	{
+		std::string filename = std::string("map/") + name + ".xml";
+		Env::GetResourceManager().FreeXMLResource(filename);
 	}
 
 	void Map::Load(std::string name)
 	{
-		std::string filename = Env::GetGamepath() + std::string("map/") + name + ".xml";
-		HoardXML::Document xmlDoc(filename);
-
+		std::string filename = std::string("map/") + name + ".xml";
+		Env::GetResourceManager().RequestXMLResource(filename);
+		HoardXML::Document& xmlDoc = Env::GetResourceManager().GetXMLResource(filename).GetDocument();
+		this->name = name;
 
 		if (xmlDoc["map"].size() != 1) {
 			Env::Err() << "ERROR: Errors in mapfile " << filename << std::endl;
@@ -46,10 +45,8 @@ namespace Dragon2D
 						height = atoi(infotag.GetAttribute("height").c_str());
 					}
 					else if (infotag.GetName() == "walkable") {
-						walkarea.x = (float)atof(infotag.GetAttribute("x").c_str());
-						walkarea.y = (float)atof(infotag.GetAttribute("y").c_str());
-						walkarea[2] = (float)atof(infotag.GetAttribute("w").c_str());
-						walkarea[3] = (float)atof(infotag.GetAttribute("h").c_str());
+						walkarea.x = atoi(infotag.GetAttribute("x").c_str());
+						walkarea.y = atoi(infotag.GetAttribute("y").c_str());
 					}
 					else if (infotag.GetName() == "tilesize") {
 						keepTileRatio = infotag.GetAttribute("keepRatio") == "true" ? true : false;
@@ -126,17 +123,28 @@ namespace Dragon2D
 								box.streamPos.y = (float)atof(streamBoxAttributes["sy"].c_str());
 								box.streamPos[2] = (float)atof(streamBoxAttributes["sox"].c_str());
 								box.streamPos[3] = (float)atof(streamBoxAttributes["soy"].c_str());
-								if (streamBoxAttributes["teleport"] == "true") {
-									box.isTeleport = true;
-								}
-								else
-								{
-									box.isTeleport = false;
-								}
+								box.isTeleport = streamBoxAttributes["teleport"] == "true";
 								streamBoxes.push_back(box);
 							}
 							else {
 								Env::Out() << "WARNING: unknown Map-streaming tag in map file: " << streamTag.GetName() << "! " << filename << std::endl;
+							}
+						}
+					}
+					//clipping clayer (non-walkable areas)
+					else if (layertype == "clippinglayer") {
+						auto clipTags = l.GetChildren();
+						for (auto clipTag : clipTags) {
+							if (clipTag.GetName() == "clipbox") {
+								MapClipBox box;
+								box.pos.x = (float)atof(clipTag.GetAttribute("x").c_str());
+								box.pos.y = (float)atof(clipTag.GetAttribute("y").c_str());
+								box.pos[2] = (float)atof(clipTag.GetAttribute("w").c_str());
+								box.pos[3] = (float)atof(clipTag.GetAttribute("h").c_str());
+								clipBoxes.push_back(box);
+							}
+							else {
+								Env::Out() << "WARNING: unknown Map-clipping tag in map file: " << clipTag.GetName() << "! " << filename << std::endl;
 							}
 						}
 					}
@@ -159,13 +167,20 @@ namespace Dragon2D
 		tilesize[3] = 1.0f / (float)height;
 		if(ar>1.0f && keepTileRatio) {
 			tilesize[2] = tilesize[3]/ar;
-			width = floor(0.5f+1.0f/tilesize[2]);
+			width = (int)floor(0.5f+1.0f/tilesize[2]);
 			tilesize.x = 0.0f-(1.0f-width*tilesize[2])*0.5f;
 		} else if(ar<1.0f && keepTileRatio) {
 			tilesize[3] = tilesize[2]*ar;
-			height = floor(0.5f+1.0f/tilesize[3]);
+			height = (int)floor(0.5f+1.0f/tilesize[3]);
 			tilesize.y = 0.0f-(1.0f-height*tilesize[3])*0.5f;
 		}	
+		//clamp tilesize to pixels
+		res.x = 1.0f / res.x;
+		res.y = 1.0f / res.y;
+		tilesize.x = ceilf(tilesize.x / res.x)*res.x;
+		tilesize[2] = ceilf(tilesize[2] / res.x)*res.x;
+		tilesize[3] = ceilf(tilesize[3] / res.y)*res.y;
+		tilesize.y = ceilf(tilesize.y / res.y)*res.y;
 	}
 
 	void Map::Render()
@@ -173,8 +188,8 @@ namespace Dragon2D
 
 		for (auto layer : layers) {
 			//for each tile
-			for (int y = ox; y < height+ox; y++) {
-				for (int x = oy; x < width+oy; x++) {
+			for (int y = oy - std::abs(doy); y < height + oy + std::abs(doy); y++) {
+				for (int x = ox - std::abs(dox); x < width + ox + std::abs(dox); x++) {
 					//check if the tile exists
 					auto xiter = layer.tiles.find(x);
 					int tile = layer.defaultId;
@@ -186,18 +201,66 @@ namespace Dragon2D
 					}
 							
 					if (tile != -1) {
-						glm::vec4 tilepos(tilesize.x + x*tilesize[2], tilesize.y+ y*tilesize[3], tilesize[2], tilesize[3]);
-						layer.tileset->Render(tile, tilepos);
+						layer.tileset->SetPosition(Tilepos(x, y));
+						layer.tileset->Render(tile);
 					}
 				}
 			}
 			layer.tileset->FlushBatched();
 		}
+
+		BaseClass::Render();
 	}
 	
 	void Map::Update()
 	{
+		GameObjectPtr focusedObject = GameObject::GetFocusedObject();
+		if (focusedObject) {	//TODO: Dynamic timing or something. 20ticks are somehow random...
+			int mx, my;
+			int dx=0, dy=0;
+			focusedObject->GetMapPosition(mx, my);
+			if (mx - dox < ox+walkarea.x) {
+				Move(mx - dox - (ox+walkarea.x), 0, 20);
+			}
+			else if (mx - dox + walkarea.x > width+ox) {
+				Move(mx - dox + walkarea.x - (width + ox), 0, 20);
+			}
+			if (my - doy < oy + walkarea.y) {
+				Move(0, my - doy - (oy + walkarea.y), 20);
+			}
+			else if (my - doy + walkarea.y > width + oy) {
+				Move(0, my - doy + walkarea.y - (width + oy), 20);
+			}
+		}
+		if (ticksLeftMapMovement > 0) {
+			float dx = (float)dox*(float)(movementLength-ticksLeftMapMovement) / (float)movementLength;
+			float dy = (float)doy*(float)(movementLength - ticksLeftMapMovement) / (float)movementLength;
+			mapMovementOffset = glm::vec4(tilesize[2] *dx, tilesize[3] * dy, 0.0f, 0.0f);
+			glm::vec2 res = Env::GetResolution();
+			res.x = 1.0f / res.x;
+			res.y = 1.0f / res.y;
+			mapMovementOffset.x = floorf(mapMovementOffset.x / res.x)*res.x;
+			mapMovementOffset.y = floorf(mapMovementOffset.y / res.y)*res.y;
+			//clamp offset to pixels
+			ticksLeftMapMovement--;
+		}
+		else if (ticksLeftMapMovement==0) {
+			ticksLeftMapMovement--;
+			mapMovementOffset = glm::vec4(0.0f);
+			ox += dox;
+			oy += doy;
+			dox = 0;
+			doy = 0;
+			movementLength = 0;
+		}
 
+		for (auto c : children) {
+			GameObjectPtr cPtr = std::dynamic_pointer_cast<GameObject>(c);
+			if (cPtr) {
+				cPtr->UpdatePositionFromMap();
+			}
+		}
+		BaseClass::Update();
 	}
 
 	void Map::SetMapPosition(int x, int y)
@@ -212,20 +275,54 @@ namespace Dragon2D
 		y = oy;
 	}
 
-	void Map::Move(int x, int y)
+	void Map::GetMapDimensions(int&w, int&h, float&tw, float&th) const
 	{
-		ox += x;
-		oy += y;
+		w = width;
+		h = height;
+		tw = tilesize[2];
+		th = tilesize[3];
 	}
 
-	void Map::RegisterInputHooks()
+	glm::vec4 Map::Tilepos(int x, int y) const 
 	{
-		std::function<void(bool)> f = testevent;
-		Env::GetInput().AddHook("testclick", Ptr(), f);
+		glm::vec4 tilepos = glm::vec4(tilesize.x + (x - ox)*tilesize[2], tilesize.y + (y - oy)*tilesize[3], tilesize[2], tilesize[3]) - mapMovementOffset;
+		return tilepos;
 	}
 
-	void Map::RemoveInputHooks()
+	void Map::Move(int x, int y, int ticks)
 	{
-		Env::GetInput().RemoveHooks(Ptr());
+		dox += x;
+		doy += y;
+		ticksLeftMapMovement = 0+ticks;
+		movementLength += ticks;
+		mapMovementOffset = glm::vec4(0.0f);
 	}
+
+	std::vector<GameObjectPtr> Map::GetObjectsAtPosition(int x, int y) const
+	{
+		glm::vec4 p = Tilepos(x, y);
+		std::vector<GameObjectPtr> result;
+		for (auto c : children) {
+			if (c) {
+				GameObjectPtr cPtr = std::dynamic_pointer_cast<GameObject>(c);
+				glm::vec4 cPos = cPtr->GetPosition();
+				if (cPos.x >= p.x && cPos.y >= p.y && cPos.x <= p[2] && cPos.y <= p[3]) {
+					result.push_back(cPtr);
+				}
+			}
+		}
+		return result;
+	}
+
+	bool Map::IsPositionWalkable(int x, int y) const
+	{
+		//search the clipboxes
+		for (auto box : clipBoxes) {
+			if (x >= box.pos.x && y >= box.pos.y && x <= box.pos.x + box.pos[2] && y <= box.pos.y + box.pos[4]) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 };

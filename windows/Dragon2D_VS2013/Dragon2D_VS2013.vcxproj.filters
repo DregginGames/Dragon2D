@@ -63,6 +63,12 @@
     <ClInclude Include="..\..\source\Classes\Input.h">
       <Filter>Headerdateien\Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\Classes\Player.h">
+      <Filter>Headerdateien\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\Classes\GameObject.h">
+      <Filter>Headerdateien\Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\Dragon2D.cpp">
@@ -102,6 +108,15 @@
       <Filter>Quelldateien\Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\Classes\Input.cpp">
+      <Filter>Quelldateien\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Classes\Audio.cpp">
+      <Filter>Quelldateien\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Classes\Player.cpp">
+      <Filter>Quelldateien\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Classes\GameObject.cpp">
       <Filter>Quelldateien\Classes</Filter>
     </ClCompile>
   </ItemGroup>

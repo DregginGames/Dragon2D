@@ -51,7 +51,7 @@ namespace Dragon2D {
 		virtual void SetParent(BaseClassPtr parent);
 		//function: GetParent
 		//note: Returns the parent-class 
-		virtual BaseClassPtr GetParent();
+		virtual BaseClassPtr GetParent() const;
 
 		//function: SetRenderLayer
 		//note: Sets the render layer of this object
@@ -60,7 +60,7 @@ namespace Dragon2D {
 
 		//function: GetRenderLayer
 		//note: Returns the render layer of this object
-		virtual unsigned int GetRenderLayer();
+		virtual unsigned int GetRenderLayer() const;
 
 		//function: Ptr
 		//note: Returns a pointer to this object
@@ -74,7 +74,11 @@ namespace Dragon2D {
 		//note: Called when the objects input-hooks can be removed
 		virtual void RemoveInputHooks();
 
-	private:
+		//function: IncTick()
+		//note: Called once by the GameManager, increases the ticks that elapsed since the gameManager started 
+		static void IncTick();
+
+	protected:
 		//var: parent. Parent of this object
 		BaseClassPtr parent;
 		//var: children. Children of this object
@@ -82,6 +86,11 @@ namespace Dragon2D {
 
 		//var: renderLayer. Layer of the object. REALLY IMPORTAND for render-order.
 		unsigned int renderLayer;
+
+		//var: ticks. Ticks since the GameManager started
+		static long int ticks;
+		//var: hasInputsRegisterd. Helper to manage post-game-manager-call input hug registration and removal
+		bool hasInputsRegisterd;
 	};
 
 	D2DCLASS_SCRIPTINFO_BEGIN_GENERAL_GAMECLASS(BaseClass)

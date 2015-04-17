@@ -5,20 +5,20 @@ namespace Dragon2D
 {
 
 	Sprite::Sprite()
-		: programName("defaultSprite"), textureName(), position(.0f, .0f, 1.f, 1.f), textureOffset(.0f, .0f, 1.f, 1.f)
+		: programName("defaultSprite"), textureName(), textureOffset(.0f, .0f, 1.f, 1.f)
 	{
 		Env::GetResourceManager().RequestGLProgramResource(programName);
 	}
 
 	Sprite::Sprite(std::string name)
-		:  programName("defaultSprite"), textureName(name), position(.0f, .0f, 1.f, 1.f), textureOffset(.0f, .0f, 1.f, 1.f)
+		:  programName("defaultSprite"), textureName(name), textureOffset(.0f, .0f, 1.f, 1.f)
 	{
 		Env::GetResourceManager().RequestGLProgramResource(programName);
 		Env::GetResourceManager().RequestTextureResource(textureName);
 	}
 
 	Sprite::Sprite(std::string name, std::string program)
-		: programName(program), textureName(name), position(.0f, .0f, 1.f, 1.f), textureOffset(.0f, .0f, 1.f, 1.f)
+		: programName(program), textureName(name), textureOffset(.0f, .0f, 1.f, 1.f)
 	{
 		Env::GetResourceManager().RequestGLProgramResource(programName);
 		Env::GetResourceManager().RequestTextureResource(textureName);
@@ -42,16 +42,6 @@ namespace Dragon2D
 		Env::GetResourceManager().FreeTextureResource(textureName);
 		textureName = texture;
 		Env::GetResourceManager().RequestTextureResource(textureName);
-	}
-
-	void Sprite::SetPosition(glm::vec4 pos)
-	{
-		position = pos;
-	}
-
-	glm::vec4 Sprite::GetPosition()
-	{
-		return position;
 	}
 
 	void Sprite::SetOffset(glm::vec4 offset)

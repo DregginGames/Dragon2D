@@ -89,6 +89,8 @@ void GameManager::RunGame(UpdateCallback c, UpdateCallback r)
 
 		//Update - delta div dt times!
 		while(timeLeft>=ticksize) {
+			BaseClass::IncTick();
+			ticks++;
 			if (updateCallback) {
 				updateCallback();
 			}
@@ -96,7 +98,6 @@ void GameManager::RunGame(UpdateCallback c, UpdateCallback r)
 				e->Update();
 			}
 			timeLeft-=ticksize;
-			ticks++;
 		}
 
 		//Render Everything

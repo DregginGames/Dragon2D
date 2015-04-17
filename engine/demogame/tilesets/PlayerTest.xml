@@ -1,0 +1,54 @@
+<tileset name="PlayerTest" >
+		<texture name="gen_char_sheet" />
+		<default id="0" />
+		<tiles >
+			<tile h="0.25" id="0" w="0.333333" x="0" y="0" />
+			<tile h="0.25" id="1" w="0.333333" x="0.333333" y="0" />
+			<tile h="0.25" id="2" w="0.333333" x="0.666666" y="0" />
+			<tile h="0.25" id="3" w="0.333333" x="0" y="0.25" />
+			<tile h="0.25" id="4" w="0.333333" x="0.333333" y="0.25" />
+			<tile h="0.25" id="5" w="0.333333" x="0.666666" y="0.25" />
+			<tile h="0.25" id="6" w="0.333333" x="0" y="0.5" />
+			<tile h="0.25" id="7" w="0.333333" x="0.333333" y="0.5" />
+			<tile h="0.25" id="8" w="0.333333" x="0.666666" y="0.5" />
+			<tile h="0.25" id="9" w="0.333333" x="0" y="0.75" />
+			<tile h="0.25" id="10" w="0.333333" x="0.333333" y="0.75" />
+			<tile h="0.25" id="11" w="0.333333" x="0.666666" y="0.75" />
+		</tiles>
+		<animation name="left" loop="true">
+			<tile id="6" len="1" />
+		</animation>
+		<animation name="right" loop="true">
+			<tile id="9" len="1" />
+		</animation>
+		<animation name="up" loop="true">
+			<tile id="3" len="1" />
+		</animation>
+		<animation name="down" loop="true">
+			<tile id="0" len="1" />
+		</animation>
+		<animation name="walk_backward" loop="true">
+			<tile id="1" len="8" />
+			<tile id="0" len="8" />
+			<tile id="2" len="8" />
+			<tile id="0" len="8" />
+		</animation>
+		<animation name="walk_forward" loop="true">
+			<tile id="4" len="8" />
+			<tile id="3" len="8" />
+			<tile id="5" len="8" />
+			<tile id="3" len="8" />
+		</animation>
+		<animation name="walk_left" loop="true">
+			<tile id="7" len="8" />
+			<tile id="6" len="8" />
+			<tile id="8" len="8" />
+			<tile id="6" len="8" />
+		</animation>
+		<animation name="walk_right" loop="true">
+			<tile id="10" len="8" />
+			<tile id="9" len="8" />
+			<tile id="11" len="8" />
+			<tile id="9" len="8" />
+		</animation>
+</tileset>

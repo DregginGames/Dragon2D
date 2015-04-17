@@ -267,6 +267,8 @@
     <ClInclude Include="..\..\source\Classes\GameManager.h" />
     <ClInclude Include="..\..\source\Classes\Input.h" />
     <ClInclude Include="..\..\source\Classes\Map.h" />
+    <ClInclude Include="..\..\source\Classes\GameObject.h" />
+    <ClInclude Include="..\..\source\Classes\Player.h" />
     <ClInclude Include="..\..\source\Classes\ResourceManager.h" />
     <ClInclude Include="..\..\source\Classes\ScriptEngine.h" />
     <ClInclude Include="..\..\source\Classes\ScriptLibHelper.h" />
@@ -277,11 +279,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\base.cpp" />
+    <ClCompile Include="..\..\source\Classes\Audio.cpp" />
     <ClCompile Include="..\..\source\Classes\BaseClass.cpp" />
     <ClCompile Include="..\..\source\Classes\Env.cpp" />
     <ClCompile Include="..\..\source\Classes\GameManager.cpp" />
+    <ClCompile Include="..\..\source\Classes\GameObject.cpp" />
     <ClCompile Include="..\..\source\Classes\Input.cpp" />
     <ClCompile Include="..\..\source\Classes\Map.cpp" />
+    <ClCompile Include="..\..\source\Classes\Player.cpp" />
     <ClCompile Include="..\..\source\Classes\ResourceManager.cpp" />
     <ClCompile Include="..\..\source\Classes\ScriptEngine.cpp" />
     <ClCompile Include="..\..\source\Classes\ScriptLibHelper.cpp" />

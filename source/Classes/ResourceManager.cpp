@@ -119,17 +119,17 @@ void ResourceManager::FreeTextureResource(std::string name)
 }
 
 
-void ResourceManager::RequestScriptResource(std::string name)
+void ResourceManager::RequestXMLResource(std::string name)
 {
-	if (!_RequestGeneralResource<ScriptResource>(name, scriptDb, scriptResources)) {
+	if (!_RequestGeneralResource<XMLResource>(name, scriptDb, XMLResources)) {
 		Env::Err() << "ERROR: Cannot load script resource: " << name << std::endl;
 		return;
 	}
 }
 
-void ResourceManager::FreeScriptResource(std::string name)
+void ResourceManager::FreeXMLResource(std::string name)
 {
-	_FreeGeneralResource<ScriptResource>(name, scriptResources);
+	_FreeGeneralResource<XMLResource>(name, XMLResources);
 }
 
 
@@ -204,9 +204,9 @@ TextureResource& ResourceManager::GetTextureResource(std::string name)
 	return _GetGeneralResource<TextureResource>(name, textureDb, textureResources);
 }
 
-ScriptResource& ResourceManager::GetScriptResource(std::string name)
+XMLResource& ResourceManager::GetXMLResource(std::string name)
 {
-	return _GetGeneralResource<ScriptResource>(name, scriptDb, scriptResources);
+	return _GetGeneralResource<XMLResource>(name, scriptDb, XMLResources);
 }
 
 FontResource& ResourceManager::GetFontResource(std::string name)
@@ -266,7 +266,7 @@ Resource::Resource()
 }
 
 Resource::Resource(std::string resourceName)
-: references(1), name("invalid")
+	: references(1), name(resourceName)
 {
 
 }
@@ -387,19 +387,27 @@ void TextureResource::Bind()
 	}
 }
 
-//Script resource is still a dummy. Will be implemetet as soon as the scripting system has been written/implementet/whatever
-ScriptResource::ScriptResource() 
+//XML loading might not take forever, but files are accesed often.
+XMLResource::XMLResource() 
 : Resource("invalid")
-{
-}
-ScriptResource::ScriptResource(std::string name, std::string file) 
-: Resource("invalid")
-{
-}
-ScriptResource::~ScriptResource()
 {
 }
 
+XMLResource::XMLResource(std::string name, std::string file) 
+: Resource(name)
+{
+	std::string infile = Env::GetGamepath() + file;
+	document = HoardXML::Document(infile);
+}
+
+XMLResource::~XMLResource()
+{
+}
+
+HoardXML::Document& XMLResource::GetDocument()
+{
+	return document;
+}
 
 //Font rescource stores fonts for text rendering
 FontResource::FontResource()

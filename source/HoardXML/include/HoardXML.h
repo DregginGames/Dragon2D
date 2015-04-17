@@ -358,32 +358,11 @@ public:
 	//		calling save without argbuments on this will save it to that exact file. 
 	//param: the file to load from and save to by name
 	Document(std::string filename)
-	: saveToRaw(false)
 	{
 		std::ifstream infile(filename);
 		std::string indata = std::string(std::istreambuf_iterator<char>(infile), std::istreambuf_iterator<char>());
 		Load(indata);
 	}
-	
-	//constructor: Document
-	//note: Creates an document form a file given
-	//		calling save without argbuments on this will save it to that exact file.
-	//param:	file: the file to load from and save to by std::fstream
-	Document(std::fstream file)
-	: saveToRaw(true)
-	{
-		std::string indata = std::string(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
-		Load(indata);
-	}
-
-	//function: Save
-	//note: Saves a document to the given file
-	//param: 	outfile: the file to save to
-	void Save(std::fstream &outfile)
-	{
-		outfile << Serialize();
-	}
-
 
 	//function: Save
 	//note: Saves a document to a file named by "filename"
@@ -391,7 +370,7 @@ public:
 	void Save(std::string filename)
 	{
 		std::fstream outfile(filename, std::ios::out);
-		Save(outfile);
+		outfile << Serialize();
 		outfile.close();
 	}
 	
@@ -399,11 +378,7 @@ public:
 	//note: Saves a Document. Uses method intended by constructor
 	void Save() 
 	{
-		if(saveToRaw) {
-			Save(rawSavefile);
-		} else {
 			Save(savefile);
-		}
 	}
 	
 	//functions: Serialize
@@ -421,7 +396,6 @@ public:
 
 private:
 	std::string savefile;
-	std::fstream rawSavefile;
 	bool saveToRaw;
 protected:
 

@@ -32,6 +32,9 @@ namespace Dragon2D
 		//param:	command: the stuff to eval. should be chaiscript.
 		static void RawEval(std::string command);
 
+		//function: Chai
+		//note: direct access to the Chaiscript instance. Usefull for var-adding and stuff like that
+		static chaiscript::ChaiScript& Chai();
 	private:
 		//var: chai. Hods the chai interpreter
 		chaiscript::ChaiScript chai;

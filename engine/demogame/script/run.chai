@@ -1,4 +1,4 @@
-Include("mainmenu");
+//Include("mainmenu");
 Include("tilesetEditor");
 
 def ScriptUpdate() {
@@ -10,7 +10,9 @@ def Init() {}
 
 def Run() {
 	ResetCurrentTextInput();
-	LoadMainmenu(); 
+	NewUiObject().Load("mainmenu");
+	//LoadMainmenu(); 
+	//CurrentManager().Load("blub");
 	//LoadTilesetEditor();
 	CurrentManager().RunGame(ScriptUpdate, ScriptRender);
 }

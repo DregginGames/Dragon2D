@@ -21,8 +21,12 @@ namespace Dragon2D {
 		virtual void Load(std::string name);
 
 		virtual void AddCallback(std::string name, TailTipUI::XMLLoaderEventCallback c);
-	private:
 
+		virtual void SaveObjectState(SaveStatePtr &out, int startfield = 0) override;
+		virtual void RestoreObjectState(SaveStatePtr &in, int startfield = 0) override;
+
+	private:
+		std::string name;
 		TailTipUI::XMLLoader xmlloader;
 
 	protected:

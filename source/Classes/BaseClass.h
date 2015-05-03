@@ -2,12 +2,20 @@
 
 #include "base.h"
 #include "ScriptLibHelper.h"
+#include "Save.h"
 
 namespace Dragon2D {
+
+	//class: Typehelper
+	//note: This Class helps the ScriptEngine and the SaveEngine with type management - basically combines strings with typenames
+	class Typehelper;
+
 
 	template<class T>
 	std::shared_ptr<T> NewD2DObject() { return std::shared_ptr<T>(new T); }
 
+#define D2DCLASS_REGISTER(classname) static Typehelper generated_typehelper_##classname##_regall = Typehelper(#classname, ScriptInfo_##classname,NewD2DObject<classname>);
+#define D2DCLASS_REGISTER_NOSCRIPT(classname) static Typehelper generated_typehelper_##classname##_regnoscript = Typehelper(#classname, std::function<void(chaiscript::ChaiScript&)>(), NewD2DObject<classname>);
 	//This Define wich creates the necersary types for each class. Use this for game-object classes (BaseClass and children).
 	//syntax: D2DCLASS(Classname, Baseclass1, Baseclass2, ...)
 #define D2DCLASS(name,...) \
@@ -78,6 +86,14 @@ namespace Dragon2D {
 		//note: Called once by the GameManager, increases the ticks that elapsed since the gameManager started 
 		static void IncTick();
 
+		//function: SaveObjectState()
+		//note: returns a SaveObjectState that holds this object and its children
+		virtual void SaveObjectState(SaveStatePtr &out, int startfield=0);
+
+		//function: RestoreObjectState()
+		//note: restore a object saved with SaveObjectState
+		virtual void RestoreObjectState(SaveStatePtr &in, int startfield=0);
+
 	protected:
 		//var: parent. Parent of this object
 		BaseClassPtr parent;
@@ -101,4 +117,16 @@ namespace Dragon2D {
 		D2DCLASS_SCRIPTINFO_MEMBER(BaseClass, SetParent)
 		D2DCLASS_SCRIPTINFO_MEMBER(BaseClass, GetParent)
 	D2DCLASS_SCRIPTINFO_END
+
+	class Typehelper
+	{
+	public:
+		Typehelper(std::string name, std::function<void(chaiscript::ChaiScript&)>scriptFunc, std::function<BaseClassPtr(void)> createFunc);
+
+		static BaseClassPtr Create(std::string name);
+		static void ScriptengineRegister(chaiscript::ChaiScript&chai);
+	private:
+		static std::vector<std::function<void(chaiscript::ChaiScript&)>>* scriptfuncs;
+		static std::map < std::string, std::function<BaseClassPtr(void)>>* createfuncs;
+	};
 };

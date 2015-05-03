@@ -10,6 +10,8 @@
 #include <map>
 #include <list>
 #include <regex>
+#include <algorithm>
+
 //namespace: HoardXML
 //info: holds all the classes and functions used by HoardXML
 namespace HoardXML {
@@ -43,7 +45,7 @@ public:
 	Tag(std::string tagName, std::string toParse) 
 	: name(tagName), isEmptyTag(false)
 	{
-		//_ParseData(toParse);
+		Load(toParse);
 	}
 
 	//destructor: ~Tag
@@ -56,7 +58,7 @@ public:
 
 	//function: GetName
 	//note: returns the name of the Tag
-	std::string GetName() 
+	std::string GetName() const
 	{
 		return name;
 	}
@@ -87,7 +89,7 @@ public:
 
 	//function: GetData
 	//note: returns the data of this tag 
-	std::string GetData() 
+	std::string GetData() const
 	{
 		return data;
 	}
@@ -102,14 +104,14 @@ public:
 
 	//function: GetAttributes()
 	//note: returns a reference to the attributes of the tag. All of them, packed in a std::map 
-	std::map<std::string, std::string>& GetAttributes()
+	std::map<std::string, std::string>& GetAttributes() 
 	{
 		return attributes;
 	}
 
 	//function: GetChildren
 	//note: returns a reference to the children of this tag. 
-	std::vector<Tag>& GetChildren()
+	std::vector<Tag>& GetChildren() 
 	{
 		return children;
 	}
@@ -139,7 +141,7 @@ public:
 	//function: AddChild
 	//note: Adds a child to this tag. 
 	//param:	c: Tag to add
-	void AddChild(Tag c) 
+	void AddChild(Tag& c) 
 	{
 		children.push_back(c);
 	}
@@ -212,117 +214,65 @@ public:
 	//function: Load
 	//note: Loads tag-content into this tag
 	//param: 	toParse: data to parse
-	void Load(std::string toParse)
+	std::string Load(std::string toParse)
 	{
-		static std::regex completeTagRE("(<\\s*/*\\s*[\\w-]*\\s*[^<&>]*>)");
-		std::smatch m;
-		while(std::regex_search(toParse,m,completeTagRE)) {
-			Tag newTag = _ParseTag(m[1]);
-			//tag is invalid? remove and handle next
-			if(newTag.GetName()=="") {
-				toParse = m.prefix().str()+m.suffix().str();	
-				continue;
-			}
-			//its a tag without content? add as child, remove and handle next
-			if(newTag.GetEmptyTag()) {
-				toParse = m.prefix().str()+m.suffix().str();
-				AddChild(newTag);
-				continue;
-			}
-	
-			
-			std::string tagContent;
-			std::string tagSuffix;
-			//Get the data inside of the tag. dont panic if we cant find an end tag. if we cant, it will be handeld as a tag without content.
-			if(_TagContent(newTag.GetName(), m.suffix().str(), tagContent, tagSuffix)) {
-				newTag.Load(tagContent);
-				toParse = m.prefix().str()+tagSuffix;
-			} else {
-				toParse = m.prefix().str()+m.suffix().str();
-			}
-			AddChild(newTag);
-		}
-		//Everything that survived the stuff above must be data
-		SetData(_ProcessData(toParse));
-	}
-
-protected:
-	
-	//function _TagContent
-	//note: This function makes shure that the content between the tag-boundries is parsed right.
-	//		Its also responsible for avoiding problems with nested tags.
-	//		Returns TRUE if could parse content, false otherwise
-	//param:	name: name of the just opend tag
-	//			inSuffix: rest of file (!) after the opening tag
-	//		OUT outContent: The content between the tags, emptystring if no end-tag found
-	//		OUT outSuffix: The string behind the end-tag. undefiened if not found.
-	bool _TagContent(std::string name, std::string inSuffix, std::string&outContent, std::string&outSuffix) 
-	{
-		int tagCount=1;
-		static std::regex tagRE("<\\s*/*([\\w-]*)\\s*([^<&>]*)>");
-		static std::regex endTagTagRE("<\\s*/+([\\w-]*)\\s*([^<&>]*)>");
-		std::smatch m;
-		std::string dumped;
-		while (std::regex_search(inSuffix, m, tagRE)) {
-			//fond a tag. increase tagCount by 1 if its a opening tag, decrese otherwise
-			if (m[1].str() == name) {
-				std::smatch m2;
-				std::string tagString = m[0].str();
-				if (std::regex_search(tagString, m2, endTagTagRE)) {
-					if (m2[1].str() == name) {
-						tagCount--;
+		unsigned int pos = toParse.npos;
+		while((pos=toParse.find("<"))!=toParse.npos) {
+			data += toParse.substr(0,pos);
+			unsigned int endpos = toParse.find(">", pos);
+			std::string tagstring = toParse.substr(pos,endpos-pos+1);
+			toParse = toParse.substr(endpos+1, toParse.size()-endpos);
+			//create the new Tag
+			unsigned int newTagPos = 0;
+			if((newTagPos=tagstring.find_first_not_of("<> \n\t"))!=tagstring.npos) {
+				//is a end-tag?
+				if(tagstring[newTagPos]=='/' ) {
+					//get the name of this end-tag. in theory it should be the name of this tag, but who knows
+					unsigned int endTagNamePos = tagstring.find_first_not_of("<> \n\t/", newTagPos); 
+					unsigned int endTagNameEnd = tagstring.find_first_of("<> \n\t", endTagNamePos);
+					std::string endTagName = tagstring.substr(endTagNamePos,endTagNameEnd-endTagNamePos);
+					//if its us, were done here. 
+					if(endTagName==name) {
+						break;
+					} else { //otherewise this tag is bad, and it should feel bad. becomes data
+						data+=tagstring;
 					}
-				}
-				else {
-					tagCount++;
+				} else { //no, its a normal tag. parse it, add it as child and let it continue the parsing
+					unsigned int tagNamePos = tagstring.find_first_not_of("<> \n\t/", newTagPos); 
+					unsigned int tagNameEnd = tagstring.find_first_of("<> \n\t", tagNamePos);
+					std::string tagName = tagstring.substr(tagNamePos,tagNameEnd-tagNamePos);
+					Tag child(tagName);
+					//we have the name, we need the attributes: foo="bar". find the equal, go left, then right, then cut the string to parse.
+					std::string attributeString = tagstring.substr(tagNameEnd+1, tagstring.size()-tagNameEnd);
+					unsigned int equalPos = attributeString.npos;
+					while((equalPos=attributeString.find("="))!=attributeString.npos) {
+						std::string l = attributeString.substr(0,equalPos);
+						l.erase (std::remove (l.begin(), l.end(), ' '), l.end());
+						unsigned int rBegin = attributeString.find_first_of("\"'",equalPos+1);
+						unsigned int rEnd = attributeString.find_first_of("\"'",rBegin+1);
+						std::string r = attributeString.substr(rBegin+1,rEnd-rBegin-1);
+						child.SetAttribute(l,r);
+						attributeString = attributeString.substr(rEnd+1,attributeString.size()-rEnd);
+					}
+					//now check if it is an empty tag (-> <tag bub="blahrg> /> )
+					//if not, let it parse.
+					if(attributeString.find("/")!=attributeString.npos) {
+						child.SetEmptyTag(true);
+					} else {
+						toParse = child.Load(toParse);
+					}
+					AddChild(child);
 				}
 			}
-			if(tagCount<=0) {
-				outContent = dumped+m.prefix().str();
-				outSuffix = m.suffix().str();
-				return true;
-			}
-			dumped += m.prefix().str()+m[0].str();
-			inSuffix = m.suffix().str();
 		}
-		return false;
+		//last step is to fix the data. remove newlines, double spaces etc. 
+		data.erase (std::remove (data.begin(), data.end(), '\n'), data.end());
+		data.erase (std::remove (data.begin(), data.end(), '\r'), data.end());
+		data.erase (std::remove (data.begin(), data.end(), '\t'), data.end());
+		data.erase(std::unique(data.begin(), data.end(), [](char lhs, char rhs) { return (lhs == rhs) && (lhs == ' '); }), data.end());   
+		return toParse;
 	}
 	
-	
-	//function: _ParseTag
-	//note: Parses a tag, meaning the "<tagfoo>"-sequence to extract attributes
-	//param:	toParse: the data to  parse 	
-	static Tag _ParseTag(std::string toParse)
-	{
-		static std::regex tagRE("<\\s*([\\w-]*)\\s*([^<&>]*)>");
-		static std::regex attributeRE("([\\w-]*)=\"([^<&>\"]*)\"");
-		static std::regex noContentRE("(/)");
-		std::smatch m;
-		if(std::regex_search(toParse,m,tagRE)) {
-			Tag newTag(m[1]);
-			std::string argsAndTypeString = m[2];
-			std::smatch m2;
-			while(std::regex_search(argsAndTypeString, m2, attributeRE)) {
-				newTag.SetAttribute(m2[1], m2[2]);
-				argsAndTypeString = m2.suffix().str();
-			}
-			if(std::regex_search(argsAndTypeString, m2, noContentRE)) {
-				newTag.SetEmptyTag(true);
-			}
-			return newTag;
-		}
-		return Tag();
-	}
-
-	//function: _ProcessData
-	//note: Removes every not wanted character and replaces replacement characters. 
-	//param:	toParse: string to process
-	static std::string _ProcessData(std::string toParse)
-	{
-		static std::regex spaceRE("([\\s])[\\s]+");
-		
-		return std::regex_replace(toParse, spaceRE, "");
-	}
 private:
 	//var: name. Holds the name of this tag. 
 	std::string name;
@@ -348,7 +298,6 @@ public:
 	//constructor: Document
 	//note: Creates an empty document
 	Document() 
-	: saveToRaw(false)
 	{
 	
 	}
@@ -396,7 +345,6 @@ public:
 
 private:
 	std::string savefile;
-	bool saveToRaw;
 protected:
 
 };

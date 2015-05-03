@@ -1,4 +1,3 @@
-#version 330 core
 #define CONFIG_HAS_VERTEX
 #define CONFIG_HAS_FRAGMENT
 

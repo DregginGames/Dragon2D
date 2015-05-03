@@ -3,6 +3,7 @@
 
 namespace Dragon2D
 {
+	D2DCLASS_REGISTER(GameObject);
 	GameObjectPtr GameObject::focusedObject = GameObjectPtr();
 
 	GameObject::GameObject()

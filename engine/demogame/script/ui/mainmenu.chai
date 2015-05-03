@@ -1,0 +1,25 @@
+def StartNewGameFromMenuCallback(UIElement e, XMLUI loader) {
+	loader.GetElementById("mainmenu").SetHidden(true);
+	loader.GetElementById("ingameui").SetHidden(false);
+	GlobalMap("testmap").Load("testmap");
+	CurrentManager().Add(GlobalMap("testmap"));
+	GlobalMusic("testmusic").Load("as");
+	GlobalMusic("testmusic").Play(1000,-1);
+	GlobalMap("testmap").Move(-4,-4,300);
+}
+
+def evalCommand (UIElement e, XMLUI loader) {
+	RawEval(e.GetName());
+}
+
+def QuitGameFromMenuCallback(UIElement e, XMLUI loader) {
+	CurrentManager().Quit();
+}
+
+
+def LoadUImainmenu(Ui ui) {
+	ui.AddCallback("newGame", StartNewGameFromMenuCallback);
+	ui.AddCallback("quitGame", QuitGameFromMenuCallback);
+	ui.AddCallback("evalCommand", evalCommand);
+	CurrentManager().Add(ui);
+}

@@ -69,6 +69,15 @@
     <ClInclude Include="..\..\source\Classes\GameObject.h">
       <Filter>Headerdateien\Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\Classes\Save.h">
+      <Filter>Headerdateien\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\Classes\Typehelper.h">
+      <Filter>Headerdateien\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\Classes\PlayerCharacter.h">
+      <Filter>Headerdateien\Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\Dragon2D.cpp">
@@ -119,8 +128,15 @@
     <ClCompile Include="..\..\source\Classes\GameObject.cpp">
       <Filter>Quelldateien\Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\Classes\Save.cpp">
+      <Filter>Quelldateien\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Classes\PlayerCharacter.cpp">
+      <Filter>Quelldateien\Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

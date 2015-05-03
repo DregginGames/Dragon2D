@@ -10,6 +10,7 @@ namespace Dragon2D
 	class MapLayer;
 	class MapStreamBox;
 	class MapClipBox;
+	class MapTriggerBox;
 
 	//Maps are made of tiles. Tiles themself have a size. 
 	//However, the size of a map is not given as a relative size - what you set with SetPos() sets the render area of the map!
@@ -42,7 +43,10 @@ namespace Dragon2D
 	private:
 		std::string name;
 		std::list<MapLayer> layers;
+		
+		std::string mapscript;
 
+		std::list<MapTriggerBox> triggers;
 		std::list<MapClipBox> clipBoxes;
 		std::list<MapStreamBox> streamBoxes;
 		bool forceStreamTeleport;
@@ -109,6 +113,18 @@ namespace Dragon2D
 	{
 	public:
 		glm::vec4 pos;
+	};
+
+	//class: MapTrigger
+	//note: Trigger that does things if the focused GameObject runs over it
+	class MapTriggerBox
+	{
+	public:
+		int x;
+		int y;
+		int w;
+		int h;
+		std::string name;
 	};
 }; //namespace Dragon2D
 

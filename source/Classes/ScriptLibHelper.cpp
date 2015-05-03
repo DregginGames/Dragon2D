@@ -2,14 +2,8 @@
 #include "ResourceManager.h"
 #include "GameManager.h"
 #include "BaseClass.h"
-#include "Ui.h"
 #include "ScriptEngine.h"
 #include "ScriptLibHelper.h"
-#include "Sprite.h"
-#include "Tileset.h"
-#include "Map.h"
-#include "Audio.h"
-#include "Player.h"
 
 namespace Dragon2D {
 	std::vector <std::function<void(void)>> gResetters;
@@ -66,16 +60,7 @@ namespace Dragon2D {
 		SCRIPTCLASS_ADD(ResourceManager, chai);
 		//Engine Management
 		SCRIPTCLASS_ADD(GameManager, chai);
-		SCRIPTCLASS_ADD(Ui, chai);
-		//Basic Game Classes
-		SCRIPTCLASS_ADD(Music, chai);
-		SCRIPTCLASS_ADD(GameObject, chai);
-		SCRIPTCLASS_ADD(Sprite, chai);
-		SCRIPTCLASS_ADD(Tileset, chai);
-		SCRIPTCLASS_ADD(BatchedTileset, chai);
-		SCRIPTCLASS_ADD(AnimatedTileset, chai);
-		SCRIPTCLASS_ADD(Map, chai);
-		SCRIPTCLASS_ADD(Player, chai);
+		Typehelper::ScriptengineRegister(chai); //auto registration
 	}
 
 

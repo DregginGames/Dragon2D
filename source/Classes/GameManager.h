@@ -49,7 +49,15 @@ public:
 	//param:	e: the element to remove
 	void Remove(BaseClassPtr e);
 
+	//function: Save
+	//note: Saves the current state 
+	//param:name: name of the save
+	void Save(std::string name);
 
+	//function: Load
+	//note: Loads the current state
+	//param:	name: name of the save to load
+	void Load(std::string name);
 
 	//function: CurrentManager()
 	//note: Returns the current manager
@@ -89,6 +97,8 @@ D2DCLASS_SCRIPTINFO_MEMBER(GameManager, Add)
 D2DCLASS_SCRIPTINFO_MEMBER(GameManager, Remove)
 D2DCLASS_SCRIPTINFO_MEMBER(GameManager, CurrentManager)
 D2DCLASS_SCRIPTINFO_MEMBER(GameManager, Quit)
+D2DCLASS_SCRIPTINFO_MEMBER(GameManager, Load)
+D2DCLASS_SCRIPTINFO_MEMBER(GameManager, Save)
 D2DCLASS_SCRIPTINFO_END
 
 //class: GameManagerException

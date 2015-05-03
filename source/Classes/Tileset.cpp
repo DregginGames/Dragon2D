@@ -3,6 +3,7 @@
 #include "Env.h"
 namespace Dragon2D
 {
+	D2DCLASS_REGISTER(Tileset);
 	Tileset::Tileset()
 		: name(""), defaultId(0), tiles()
 	{
@@ -177,7 +178,7 @@ namespace Dragon2D
 	}
 
 	//Batched Tilesets for FASTÖR RENARING
-
+	D2DCLASS_REGISTER(BatchedTileset);
 	BatchedTileset::BatchedTileset()
 		: Tileset()
 	{
@@ -250,6 +251,7 @@ namespace Dragon2D
 	}
 
 	//Animated Tileset
+	D2DCLASS_REGISTER(AnimatedTileset);
 	AnimatedTileset::AnimatedTileset()
 		: currentAnimation(""), paused(true), curAnimPos(0), curTile(0), ticksToNextFrame(0)
 	{

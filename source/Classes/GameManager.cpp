@@ -145,5 +145,29 @@ void GameManager::Quit()
 	isRunning = false;
 }
 
+void GameManager::Save(std::string name)
+{
+	SaveState root;
+	root.SetName("root");
+	for (auto e : elements) {
+		SaveStatePtr elemState;
+		e->SaveObjectState(elemState);
+		root.AddChild(elemState);
+	}
+	root.SaveToFile(std::string("save/") + name + ".sav");
+}
+
+void GameManager::Load(std::string name)
+{
+	SaveStatePtr root(new SaveState(std::string("save/") + name + ".sav"));
+	for (auto e : root->GetChildren()) {
+		BaseClassPtr elem = Typehelper::Create(e->GetName());
+		if (elem) {
+			elem->RestoreObjectState(e);
+			Add(elem);
+		}
+	}
+}
+
 
 }; //namespace Dragon2D

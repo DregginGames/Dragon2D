@@ -113,4 +113,68 @@ namespace Dragon2D
 	{
 		ticks++;
 	}
+
+	void BaseClass::RestoreObjectState(SaveStatePtr &in, int startfield)
+	{
+		if (in) {
+			renderLayer = in->GetData<int>(startfield++);
+			hasInputsRegisterd = in->GetData<bool>(startfield++);
+
+			for (auto c : in->GetChildren()) {
+				BaseClassPtr child = Typehelper::Create(c->GetName());
+				if (child) {
+					child->RestoreObjectState(c);
+					AddChild(child);
+				}
+			}
+		}
+	}
+
+	void BaseClass::SaveObjectState(SaveStatePtr &out, int startfield)
+	{
+		//We are called from a baseclass
+		CreateSaveStateIfEmpty(out, "BaseClass");
+		out->SetData<unsigned int>(startfield++, renderLayer);
+		out->SetData<unsigned int>(startfield++, renderLayer);
+		for (auto c : children) {
+			SaveStatePtr childState;
+			c->SaveObjectState(childState);
+			out->AddChild(childState);
+		}
+	}
+
+	//typehelper foo
+	std::vector<std::function<void(chaiscript::ChaiScript&)>>* Typehelper::scriptfuncs = NULL;
+	std::map<std::string, std::function<BaseClassPtr(void)>>* Typehelper::createfuncs = NULL; 
+
+	Typehelper::Typehelper(std::string name, std::function<void(chaiscript::ChaiScript&)>scriptFunc, std::function<BaseClassPtr(void)> createFunc)
+	{
+		if (!scriptfuncs) {
+			scriptfuncs = new std::vector <std::function<void(chaiscript::ChaiScript&)>>();
+		}
+		if (!createfuncs) {
+			createfuncs = new std::map <std::string, std::function<BaseClassPtr(void)>>();
+		}
+		if (scriptFunc) {
+			scriptfuncs->push_back(scriptFunc);
+		}
+		if (createFunc) {
+			(*createfuncs)[name] = createFunc; 
+		}
+	}
+
+	BaseClassPtr Typehelper::Create(std::string name) 
+	{
+		if ((*createfuncs)[name]) {
+			return (*createfuncs)[name]();
+		}
+		return BaseClassPtr();
+	}
+
+	void Typehelper::ScriptengineRegister(chaiscript::ChaiScript&chai) 
+	{
+		for (auto f : (*scriptfuncs)) {
+			f(chai);
+		}
+	}
 }; //namespace Dragon2D

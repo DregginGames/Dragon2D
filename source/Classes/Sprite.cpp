@@ -3,7 +3,7 @@
 
 namespace Dragon2D
 {
-
+	D2DCLASS_REGISTER(Sprite);
 	Sprite::Sprite()
 		: programName("defaultSprite"), textureName(), textureOffset(.0f, .0f, 1.f, 1.f)
 	{

@@ -119,4 +119,13 @@ namespace Dragon2D
 		}
 	}
 
+	chaiscript::ChaiScript& ScriptEngine::Chai()
+	{
+		if (activeEngine == nullptr) {
+			throw ScriptEngineException("Cannot access chaiscruotscript without valid engine!");
+		}
+
+		return activeEngine->chai;
+	}
+
 }; //namespace Dragon2D

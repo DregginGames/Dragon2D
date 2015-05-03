@@ -35,26 +35,40 @@
 
 
 namespace Dragon2D {
-//Standart definitions, macros and classes 
+	//Standart definitions, macros and classes 
 
 
-//class: Exception
-//note: Dragon2D exception base class.
-//note: Dosnt use std::string cause you MUST NOT use std::string as an possible-exception class wtihin a exception cause it could cause terminate()!
-class Exception
-{
-public:
-	Exception() {}
-	Exception(const char* whatStringText) : whatString(whatStringText) { }
-	~Exception() throw() {};
+	//class: Exception
+	//note: Dragon2D exception base class.
+	//note: Dosnt use std::string cause you MUST NOT use std::string as an possible-exception class wtihin a exception cause it could cause terminate()!
+	class Exception
+	{
+	public:
+		Exception() {}
+		Exception(const char* whatStringText) : whatString(whatStringText) { }
+		~Exception() throw() {};
 
-	void SetWhat(const char* newWhatString) { whatString = newWhatString; }
-	virtual const char* what(void) const throw() {
-		return whatString; };
+		void SetWhat(const char* newWhatString) { whatString = newWhatString; }
+		virtual const char* what(void) const throw() {
+			return whatString;
+		};
 
-private:
-	const char* whatString; 
-};
+	private:
+		const char* whatString;
+	};
 
-}
+#ifndef __func__
+#define __func__ __FUNCTION__
+#endif
+
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+#define Assert(c) (!(c) ? throw Exception("Assert at line"TOSTRING(__LINE__)" in "__func__" in "__FILE__": "#c) : (c))
+#ifdef _DEBUG
+#define DebugAssert(c) Assert(c)
+#else
+#define DebugAssert(c) 
+#endif
+
+}; //namspace Dragon2D
 

@@ -1,8 +1,9 @@
 #include "Map.h"
 #include "Env.h"
+#include "ScriptEngine.h"
 namespace Dragon2D
 {
-
+	D2DCLASS_REGISTER(Map);
 	Map::Map()
 		: name(""), forceStreamTeleport(false), keepTileRatio(true), tilesize(0.0f),
 		walkarea(0), width(0), height(0), ox(0), oy(0), dox(0), doy(0), ticksLeftMapMovement(0), movementLength(0), mapMovementOffset(0)
@@ -58,6 +59,10 @@ namespace Dragon2D
 						Env::Out() << "WARNING: unknown map info tag in map file: " << infotag.GetName() << "! " << filename << std::endl;
 					}
 				}
+			}
+			//scriiipt
+			else if (c.GetName() == "script") {
+				mapscript = c.GetData();
 			}
 			//Tile- and streamdata
 			else if (c.GetName() == "mapdata")
@@ -148,6 +153,21 @@ namespace Dragon2D
 							}
 						}
 					}
+					//trigger layer. dont be tumblr here
+					else if (layertype == "triggerlayer") {
+						auto triggerTags = l.GetChildren();
+						for (auto triggerTag : triggerTags) {
+							if (triggerTag.GetName() == "triggerbox") {
+								MapTriggerBox box;
+								box.x = atoi(triggerTag.GetAttribute("x").c_str());
+								box.y = atoi(triggerTag.GetAttribute("y").c_str());
+								box.w = atoi(triggerTag.GetAttribute("w").c_str());
+								box.h = atoi(triggerTag.GetAttribute("h").c_str());
+								box.name = triggerTag.GetAttribute("name");
+								triggers.push_back(box);
+							}
+						}
+					}
 					//thats not a layer
 					else {
 						Env::Out() << "WARNING: unknown layer tag in map file: " << l.GetName() << "! " << filename << std::endl;
@@ -181,6 +201,9 @@ namespace Dragon2D
 		tilesize[2] = ceilf(tilesize[2] / res.x)*res.x;
 		tilesize[3] = ceilf(tilesize[3] / res.y)*res.y;
 		tilesize.y = ceilf(tilesize.y / res.y)*res.y;
+
+		//Run the mapscript
+		ScriptEngine::RawEval(mapscript);
 	}
 
 	void Map::Render()
@@ -232,6 +255,18 @@ namespace Dragon2D
 				Move(0, my - doy + walkarea.y - (width + oy), 20);
 			}
 		}
+
+		//trigger foo
+		if (focusedObject) {
+			int mx, my;
+			focusedObject->GetMapPosition(mx, my);
+			for (auto t : triggers) {
+				if (mx >= t.x&&mx <= t.x + t.w&&my >= t.y && my <= t.y + t.h) {
+					ScriptEngine::RawEval(std::string("On") + t.name + "()"); //Run the callback for this trigger
+				}
+			}
+		}
+
 		if (ticksLeftMapMovement > 0) {
 			float dx = (float)dox*(float)(movementLength-ticksLeftMapMovement) / (float)movementLength;
 			float dy = (float)doy*(float)(movementLength - ticksLeftMapMovement) / (float)movementLength;

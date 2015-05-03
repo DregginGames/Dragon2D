@@ -510,24 +510,25 @@ GLProgramResource::GLProgramResource(std::string name, std::string file)
 	while (std::regex_search(s, m, configMakroRe)) {
 		std::string configName = m[1];
 		GLuint newShader = 0;
+		std::string shaderVersion = "#version 330 core\n";
 		//check the config macos
 		if (configName == "CONFIG_HAS_VERTEX") {
-			newShader =  _CompileShader(std::string("#define CONTROL_COMPILE_VERTEX\n") + instring, GL_VERTEX_SHADER);
+			newShader = _CompileShader(shaderVersion+std::string("#define CONTROL_COMPILE_VERTEX\n") + instring, GL_VERTEX_SHADER);
 		}
 		else if (configName == "CONFIG_HAS_FRAGMENT") {
-			newShader = _CompileShader(std::string("#define CONTROL_COMPILE_FRAGMENT\n") + instring, GL_FRAGMENT_SHADER);
+			newShader = _CompileShader(shaderVersion+std::string("#define CONTROL_COMPILE_FRAGMENT\n") + instring, GL_FRAGMENT_SHADER);
 		}
 		else if (configName == "CONFIG_HAS_GEOMETRY") {
-			newShader = _CompileShader(std::string("#define CONTROL_COMPILE_GEOMETRY\n") + instring, GL_GEOMETRY_SHADER);
+			newShader = _CompileShader(shaderVersion+std::string("#define CONTROL_COMPILE_GEOMETRY\n") + instring, GL_GEOMETRY_SHADER);
 		}
 		else if (configName == "CONFIG_HAS_TESS_EVALUATION") {
-			newShader = _CompileShader(std::string("#define CONTROL_COMPILE_TESS_EVALUATION\n") + instring, GL_TESS_EVALUATION_SHADER);
+			newShader = _CompileShader(shaderVersion+std::string("#define CONTROL_COMPILE_TESS_EVALUATION\n") + instring, GL_TESS_EVALUATION_SHADER);
 		}
 		else if (configName == "CONFIG_HAS_TESS_CONTROL") {
-			newShader = _CompileShader(std::string("#define CONTROL_COMPILE_VERTEX_TESS_CONTROL\n") + instring, GL_TESS_CONTROL_SHADER);
+			newShader = _CompileShader(shaderVersion+std::string("#define CONTROL_COMPILE_VERTEX_TESS_CONTROL\n") + instring, GL_TESS_CONTROL_SHADER);
 		}
 		else if (configName == "CONFIG_HAS_COMPUTE") {
-			newShader = _CompileShader(std::string("#define CONTROL_COMPILE_VERTEX_COMPUTE\n") + instring, GL_COMPUTE_SHADER);
+			newShader = _CompileShader(shaderVersion+std::string("#define CONTROL_COMPILE_VERTEX_COMPUTE\n") + instring, GL_COMPUTE_SHADER);
 		}
 		else {
 			Env::Err() << "WARNING: unknown shader config makro: " << configName << std::endl;

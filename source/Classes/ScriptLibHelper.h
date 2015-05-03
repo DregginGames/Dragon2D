@@ -64,6 +64,8 @@ namespace Dragon2D {
 
 #define D2DCLASS_SCRIPTINFO_END chai.add(m); }
 
+#define D2DCLASS_NOSCRIPT(classname) inline void ScriptInfo_##name(chaiscript::ChaiScript&chai) {}
+
 	//function: ScriptInfo_vec4
 	//note: script-helper for glm::vec4
 	void ScriptInfo_vec4(chaiscript::ChaiScript&chai);

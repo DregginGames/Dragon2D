@@ -4,6 +4,7 @@
 
 namespace Dragon2D
 {
+	D2DCLASS_REGISTER(Music);  
 	int Music::curChannel = -1;
 	Music::Music()
 		: name("")

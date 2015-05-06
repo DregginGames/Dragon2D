@@ -63,4 +63,9 @@ namespace Dragon2D
 			Load(name);
 		}
 	}
+
+	TailTipUI::XMLLoader& Ui::GetLoader()
+	{
+		return xmlloader;
+	}
 }; //namespace Dragon2D

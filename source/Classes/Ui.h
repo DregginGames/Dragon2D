@@ -25,6 +25,8 @@ namespace Dragon2D {
 		virtual void SaveObjectState(SaveStatePtr &out, int startfield = 0) override;
 		virtual void RestoreObjectState(SaveStatePtr &in, int startfield = 0) override;
 
+		virtual TailTipUI::XMLLoader& GetLoader();
+
 	private:
 		std::string name;
 		TailTipUI::XMLLoader xmlloader;
@@ -35,5 +37,6 @@ namespace Dragon2D {
 	D2DCLASS_SCRIPTINFO_BEGIN(Ui, BaseClass)
 		D2DCLASS_SCRIPTINFO_MEMBER(Ui, Load)
 		D2DCLASS_SCRIPTINFO_MEMBER(Ui, AddCallback)
+		D2DCLASS_SCRIPTINFO_MEMBER(Ui, GetLoader)
 	D2DCLASS_SCRIPTINFO_END
 };

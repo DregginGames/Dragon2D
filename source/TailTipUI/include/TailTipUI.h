@@ -35,6 +35,8 @@ namespace TailTipUI {
 	typedef std::function<void(void)> TextBufferResetFunctionType;
 	//callback set for getting input buffer
 	typedef std::function<std::string(void)> GetTextBufferFunctionType;
+	//callback set for overwriting input buffer
+	typedef std::function<void(std::string)> SetTextBufferFunctionType;
 
 	//default font loader
 	TTF_Font* defaultFontLoader(std::string name, int size);
@@ -96,7 +98,7 @@ namespace TailTipUI {
 
 		static void SetTextBufferResetCallback(TextBufferResetFunctionType c);
 		static void SetGetTextBufferCallback(GetTextBufferFunctionType c);
-
+		static void SetTextBufferSetCallback(SetTextBufferFunctionType c);
 		//function: GetMouseInfo
 		//note: Used to get the mouseposition. 
 		static glm::vec4 GetMouseInfo();
@@ -115,6 +117,7 @@ namespace TailTipUI {
 
 		static void ResetTextBuffer();
 		static std::string GetTextBuffer();
+		static void SetTextBuffer(std::string t);
 
 		//var: width. width of the render-window
 		static int width;
@@ -134,6 +137,8 @@ namespace TailTipUI {
 		static TextBufferResetFunctionType textBufferResetCallback;
 		//var: getTextBufferCallback. 
 		static GetTextBufferFunctionType getTextBufferCallback;
+		//var: setTextBuffer`Callback
+		static SetTextBufferFunctionType setTextBufferCallback;
 	};
 
 	//class: StandaloneSetup

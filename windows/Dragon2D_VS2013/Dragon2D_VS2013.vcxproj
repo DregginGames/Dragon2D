@@ -95,42 +95,42 @@
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.7.0\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Slow|Win32'">
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.7.0\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.7.0\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.7.0\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Slow|x64'">
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.7.0\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)..\..\engine\</OutDir>
     <IntDir>$(SolutionDir)..\..\build\</IntDir>
     <TargetName>Dragon2D</TargetName>
-    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.6.0\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\source\TailTipUI\include\;$(SolutionDir)..\..\source\HoardXML\include\;$(SolutionDir)..\..\source\Classes\;$(SolutionDir)..\..\source\;$(SolutionDir)..\..\source\chaiscript 5.7.0\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\source\TailTipUI\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

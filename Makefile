@@ -1,4 +1,4 @@
-INCPATHS=-Isource/HoardXML/include -I"source/chaiscript 5.6.0/include" -Isource/TailTipUI/include -Isource -Isource/Classes
+INCPATHS=-Isource/HoardXML/include -I"source/chaiscript 5.7.0/include" -Isource/TailTipUI/include -Isource -Isource/Classes
 CXXFLAGS= --std=c++14 $(INCPATHS) -DDEBUG -g -c -Wall
 RELEASEFLAGS= --std=c++14 $(INCPATHS) -DRELEASE -O3 -c -Wall
 LDFLAGS=-Lsource/TailTipUI/bin -lTailTipUI -lGL -lGLEW -ldl -lpthread -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer 

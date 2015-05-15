@@ -6,11 +6,16 @@
 
 namespace Dragon2D {
 
+	
+
 	//class: Ui
 	//note: Holds a UI-tree form TailTipUI
 	D2DCLASS(Ui, public BaseClass)
 	{
 	public:
+		//note: type for chaiscript UI callbacks
+		typedef std::function<void(UiPtr, TailTipUI::GeneralElement*, TailTipUI::XMLLoader*)> UiEventCallback;
+
 		Ui();
 		Ui(std::string name);
 		~Ui();
@@ -20,7 +25,7 @@ namespace Dragon2D {
 
 		virtual void Load(std::string name);
 
-		virtual void AddCallback(std::string name, TailTipUI::XMLLoaderEventCallback c);
+		virtual void AddCallback(std::string name, UiEventCallback c);
 
 		virtual void SaveObjectState(SaveStatePtr &out, int startfield = 0) override;
 		virtual void RestoreObjectState(SaveStatePtr &in, int startfield = 0) override;

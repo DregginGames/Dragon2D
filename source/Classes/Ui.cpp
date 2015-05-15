@@ -43,9 +43,14 @@ namespace Dragon2D
 		BaseClass::Update();
 	}
 
-	void Ui::AddCallback(std::string name, TailTipUI::XMLLoaderEventCallback c)
+	void Ui::AddCallback(std::string name, UiEventCallback c)
 	{
-		xmlloader.RegisterCallback(name, c);
+		TailTipUI::XMLLoaderEventCallback f = [this, c](TailTipUI::GeneralElement*e, TailTipUI::XMLLoader*l) { 
+			auto p = std::dynamic_pointer_cast<Ui>(this->Ptr());
+			c(p, e, l); 
+		};
+
+		xmlloader.RegisterCallback(name, f);
 	}
 
 	void Ui::SaveObjectState(SaveStatePtr &out, int startfield)

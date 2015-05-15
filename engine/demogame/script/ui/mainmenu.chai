@@ -1,4 +1,4 @@
-def StartNewGameFromMenuCallback(UIElement e, XMLUI loader) {
+def StartNewGameFromMenuCallback(Ui ui, UIElement e, XMLUI loader) {
 	loader.GetElementById("mainmenu").SetHidden(true);
 	loader.GetElementById("ingameui").SetHidden(false);
 	GlobalMap("testmap").Load("testmap");
@@ -8,11 +8,11 @@ def StartNewGameFromMenuCallback(UIElement e, XMLUI loader) {
 	GlobalMap("testmap").Move(-4,-4,300);
 }
 
-def evalCommand (UIElement e, XMLUI loader) {
+def evalCommand (Ui ui, UIElement e, XMLUI loader) {
 	RawEval(e.GetName());
 }
 
-def QuitGameFromMenuCallback(UIElement e, XMLUI loader) {
+def QuitGameFromMenuCallback(Ui ui, UIElement e, XMLUI loader) {
 	CurrentManager().Quit();
 }
 

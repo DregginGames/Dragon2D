@@ -33,4 +33,12 @@ namespace Dragon2D
 		AudioResource &res = Env::GetResourceManager().GetAudioResource(name);
 		curChannel = Mix_FadeInChannel(-1,res.GetChunk(),loops,fadetime);
 	}	
+
+	void Music::Stop(int fadetime)
+	{
+		if (curChannel != -1) {
+			Mix_FadeOutChannel(curChannel, fadetime);
+		}
+		curChannel = -1;
+	}
 }; //namespace Dragon2D

@@ -15,6 +15,7 @@ namespace Dragon2D
 		
 		void Load(std::string name);
 		void Play(int fadetime, int loops);
+		void Stop(int fadetime = 0);
 	private:
 		std::string name;
 		static int curChannel;

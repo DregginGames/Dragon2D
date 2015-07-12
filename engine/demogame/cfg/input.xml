@@ -1,6 +1,0 @@
-<input name="up" key="w" />
-<input name="down" key="s" />
-<input name="right" key="d" />
-<input name="left" key="a" />
-<input name="menu" key="KEY_ESC" />
-<input name="interact" key="e" />

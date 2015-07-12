@@ -1,4 +1,0 @@
-Starting Init of the ENV
-Loading Settings
-CRITICAL ERROR: 
-	Cannot open a settings file!

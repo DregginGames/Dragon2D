@@ -1,5 +1,0 @@
-Created and (c) Malte Kieﬂling 2015
-All files/work/media in this Project are (if not specified in a different way, see the README.txt in the 3rdPartyInfo folder) are licend onder the terms you see below:
-
-This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. 
-To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/4.0/.

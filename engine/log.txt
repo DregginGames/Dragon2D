@@ -1,0 +1,6 @@
+Logger started [2015-Jul-26 00:14:06.879549] 
+Engine startup...
+Engine started!
+Reached mainloop!
+Exitted mainloop!
+Engine shutdown!

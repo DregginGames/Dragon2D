@@ -3,8 +3,11 @@
 */
 module d2d.engine;
 
+import std.datetime;
+
 import d2d.logger;
 import d2d.settings;
+import d2d.root;
 
 /// The engine class loads the basic system. Also the main loop lives here
 class Engine  
@@ -17,6 +20,8 @@ class Engine
         Logger.init(Settings.get("logfile"));
 
         Logger.log("Engine startup...");
+        root = new Root();
+
 
         Logger.log("Engine started!");
     }
@@ -31,11 +36,38 @@ class Engine
     void run()
     {
         Logger.log("Reached mainloop!");
+        
+        // this... clock will be used for the gameloops ticking. 
+        long curtime = Clock.currStdTime();
 
+        try {
+            while (true) {
+
+                //only update every tick
+                if ( Clock.currStdTime() - curtime >= ticksize) {
+                    root.propagateUpdate();
+                    curtime = Clock.currStdTime();
+                }
+                
+                //render always (frame rate limits this). Basically allocates the time for the ticks.
+                root.propagateRender(); 
+            }
+        }
+        catch (Exception e)
+        {
+            //execptions that escape the mainloop are... critical. 
+            Logger.log("CRITICAL FAILURE - EXCEPTION");
+            throw e;
+        }
 
         Logger.log("Exitted mainloop!");  
     }
 
 private:
     
+    /// ticksize is length if a tick i hnsecs (100 ns). We use 30 ticks per second.
+    immutable long ticksize = 10000 / 30;
+
+    /// the engine root object
+    Root root;
 }

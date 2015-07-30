@@ -1,7 +1,7 @@
 /**
   d2d.settings manages all settings - from command line arguments to the config files of the engine
   */
-module d2d.settings;
+module d2d.util.settings;
 
 import file = std.file;
 
@@ -12,6 +12,18 @@ class ArgumentListInvalidException : Exception
 {
     /// ctor 
     this(string err)  
+    {
+        super(err);
+    }
+};
+
+/**
+    This Exception is thrown in case that a setting simply does not exist. SHOULD NO be thrown in release
+  */
+class UnknownSettingException : Exception 
+{
+    /// cotr 
+    this(string err)
     {
         super(err);
     }
@@ -34,6 +46,9 @@ class Settings
         cmdValues["engineCfgDir"] = "cfg/";
         cmdValues["gameCfg"] = "game.cfg";
         cmdValues["engineCfg"] = "engine.cfg";
+        cmdValues["gameResourceDir"] = "resources/";
+        cmdValues["engineResourceDir"] = "resources/";
+
 
         //read args
         for (size_t i = 1; i<args.length; i++) {
@@ -67,10 +82,11 @@ class Settings
         Get returns a property with the name "name". 
 
         After checking command line arguments (wich can overwrite EVERY property, it goes from file to file and searches for each property. 
-        Also, if a file has a prefix name (SettingFile.name), it also checks if the property exists with the given prefix. 
-
+        Also, if a file has a prefix name (SettingFile.name), it also checks if the property exists with the given prefix.  
+    Throws:
+        UnknownSettingException if a setting is not found. Carefully adding stuff should avoid this!
       */
-    static string get(string name) nothrow 
+    static string get(string name) 
     {
         //the commandline can overwrite any setting from anywhere
         auto p = (name in cmdValues);
@@ -90,8 +106,13 @@ class Settings
                 return *withPrefix;
             }
         }
+        
+        debug
+        {
+            throw new UnknownSettingException("Unknown Setting " ~ name);
+        }
 
-        //default is errorish, but shouldnt kill the engine, so..
+        //default is errorish, but shouldnt kill the engine - at least in release, so..
         return "invalid";
     }
 

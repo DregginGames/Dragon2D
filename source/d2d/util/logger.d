@@ -1,7 +1,7 @@
 /**
     d2d.logger holds the basic functions for logging. It supports several output methods. 
   */
-module d2d.logger; 
+module d2d.util.logger; 
 
 import std.stdio;
 import file = std.file;

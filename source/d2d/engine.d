@@ -5,10 +5,10 @@ module d2d.engine;
 
 import std.datetime;
 
-import d2d.logger;
-import d2d.settings;
-import d2d.root;
-
+import d2d.util.logger;
+import d2d.util.settings;
+import d2d.core.root;
+import d2d.system.env;
 /// The engine class loads the basic system. Also the main loop lives here
 class Engine  
 {
@@ -21,7 +21,7 @@ class Engine
 
         Logger.log("Engine startup...");
         root = new Root();
-
+        root.addChild(new Env());
 
         Logger.log("Engine started!");
     }
@@ -41,7 +41,7 @@ class Engine
         long curtime = Clock.currStdTime();
 
         try {
-            while (true) {
+            while (root.alive) {
 
                 //only update every tick
                 if ( Clock.currStdTime() - curtime >= ticksize) {

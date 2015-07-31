@@ -7,6 +7,7 @@ import std.datetime;
 
 import d2d.util.logger;
 import d2d.util.settings;
+import d2d.system.script;
 import d2d.core.root;
 import d2d.system.env;
 /// The engine class loads the basic system. Also the main loop lives here
@@ -39,7 +40,10 @@ class Engine
         
         // this... clock will be used for the gameloops ticking. 
         long curtime = Clock.currStdTime();
-
+        
+        // t-t-t-t-test
+        Script test = new Script("startup");
+        test.Run(root);
         try {
             while (root.alive) {
 

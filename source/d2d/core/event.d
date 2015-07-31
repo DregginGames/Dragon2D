@@ -45,16 +45,16 @@ private:
 class SDLEvent : Event
 {
     this(SDL_Event e) {
-        event = e;
+        _event = e;
     }
 
     /// gives the sdl event
-    @property SDL_Event sdlEvent() const
+    @property SDL_Event event() const
     {
-        return event;
+        return _event;
     }
 private:
-    SDL_Event event;
+    SDL_Event _event;
 }
 
 /// event fired in case the engine shall be killed

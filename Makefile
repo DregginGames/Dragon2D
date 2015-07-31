@@ -9,10 +9,10 @@ release:
 	rdmd --build-only -I./deps/ -of./engine/Dragon2D -O -release -boundscheck=off source/game.d
 	strip ./engine/Dragon2D
 
-scriptdebug:
+scriptdebug: scriptdir
 	cd game/scriptbuild/ ; \
 	find ../script -name *.d -exec dmd -I../../deps/ -I../../source/ -fPIC -shared -debug -g -defaultlib= {} \;
-script:	
+script:	scriptdir
 	cd game/scriptbuild/ ; \
 	find ../script -name *.d -exec dmd -I../../deps/ -I../../source/ -fPIC -shared -release -O -defaultlib= {} \;
 
@@ -25,8 +25,16 @@ pack: release script
 	find . -name *.d -exec rm {} \; ; \
 	find . -name *.o -exec rm {} \; ; 
 
+cleanall: clean docclean
+
 clean: 
 	rm -rf ./pack/ 
 	rm -rf ./engine/Dragon2D 
 	rm -rf ./game/scriptbuild/*
 	find . -name log.txt -exec rm {} \;	
+
+docclean:	
+	rm -rf ./doc/
+
+scriptdir:
+	mkdir -p game/scriptbuild

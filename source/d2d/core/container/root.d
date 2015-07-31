@@ -1,7 +1,7 @@
 /**
     d2d.root holds the root element of the engine 
     */
-module d2d.core.root;
+module d2d.core.container.root;
 
 import d2d.core.base;
 

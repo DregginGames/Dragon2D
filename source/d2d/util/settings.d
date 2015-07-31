@@ -83,10 +83,13 @@ class Settings
 
         After checking command line arguments (wich can overwrite EVERY property, it goes from file to file and searches for each property. 
         Also, if a file has a prefix name (SettingFile.name), it also checks if the property exists with the given prefix.  
+    Params:
+        name = the name of the setting to get 
+        canBeEmpty = if true (default is false) get wont throw an exception if the setting is not found but insted will return emptystring.  
     Throws:
         UnknownSettingException if a setting is not found. Carefully adding stuff should avoid this!
       */
-    static string get(string name) 
+    static string get(string name, bool canBeEmpty=false) 
     {
         //the commandline can overwrite any setting from anywhere
         auto p = (name in cmdValues);
@@ -107,6 +110,9 @@ class Settings
             }
         }
         
+        if (canBeEmpty) {
+            return "";
+        }
         debug
         {
             throw new UnknownSettingException("Unknown Setting " ~ name);

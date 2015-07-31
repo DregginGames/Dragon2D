@@ -7,9 +7,11 @@ import std.datetime;
 
 import d2d.util.logger;
 import d2d.util.settings;
-import d2d.system.script;
-import d2d.core.root;
+import d2d.core.container.root;
+import d2d.core.container.gamecontainer;
+import d2d.core.io;
 import d2d.system.env;
+import d2d.system.script;
 /// The engine class loads the basic system. Also the main loop lives here
 class Engine  
 {
@@ -22,9 +24,19 @@ class Engine
 
         Logger.log("Engine startup...");
         root = new Root();
-        root.addChild(new Env());
-
+        auto env = new Env();
+        auto iotransformer = new IOTransformer();
+        auto gamecontainer = new GameContainer();
+        env.addChild(iotransformer);
+        env.addChild(gamecontainer);
+        root.addChild(env);
         Logger.log("Engine started!");
+        
+        //load and run the startup script 
+        Logger.log("Running startup script");
+        Script startup = new Script("startup");
+        startup.run(gamecontainer);
+        Logger.log("Startup script complete");
     }
 
     /// 
@@ -35,15 +47,12 @@ class Engine
 
     /// Holds the mainloop. Renders every frame, updates every tick. 
     void run()
-    {
+    {   
         Logger.log("Reached mainloop!");
         
         // this... clock will be used for the gameloops ticking. 
         long curtime = Clock.currStdTime();
         
-        // t-t-t-t-test
-        Script test = new Script("startup");
-        test.Run(root);
         try {
             while (root.alive) {
 

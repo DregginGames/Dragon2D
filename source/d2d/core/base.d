@@ -88,8 +88,8 @@ class Base
             return;
         }
         
-        //do we recive events
-        if (canReciveEvents) {
+        //do we recive events and are we the source? 
+        if (canReciveEvents && e.source != this) {
             pendingEvents ~= e;
         }
 

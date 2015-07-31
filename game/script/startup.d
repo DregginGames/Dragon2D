@@ -11,6 +11,4 @@ static this()
 
 extern (C) void run(Base obj)
 {
-    import std.stdio;
-    writeln(obj.id);
 }

@@ -3,7 +3,10 @@
   */
 module d2d.core.io; 
 
+import std.conv;
 import derelict.sdl2.sdl;
+import gl3n.linalg;
+
 import d2d.core.event;
 import d2d.core.base;
 import d2d.util.settings; 
@@ -45,6 +48,7 @@ private:
     SDLEvent _sdlevent; 
 }
 
+/// Fired every time a button is pressed
 class KeyDownEvent : KeyEvent 
 {
     this(string name, SDL_Keycode key, SDLEvent sdlevent) 
@@ -53,6 +57,7 @@ class KeyDownEvent : KeyEvent
     }
 }   
 
+/// Fired every time a button is released 
 class KeyUpEvent : KeyEvent 
 {
     this(string name, SDL_Keycode key, SDLEvent sdlevent)
@@ -61,6 +66,121 @@ class KeyUpEvent : KeyEvent
     }
 }
 
+/// Fire(not directly) every time anything happens with the mouse
+abstract class MouseEvent : Event, IOEvent 
+{
+    /// takes name and (normalized and normal) position
+    this(string name, SDLEvent sdlevent, vec2i pos, vec2 npos) 
+    {
+        _name = name;
+        _sdlevent = sdlevent;
+        _pos = pos;
+        _npos = npos;
+    }
+
+    /// Gets the name of the event
+    @property string name() const 
+    {
+        return _name;
+    }
+
+    /// Gets the original sdl event
+    @property SDLEvent sdlevent() 
+    {
+        return sdlevent;
+    }
+
+    /// Gets the position of the mouse
+    @property vec2i pos()
+    {
+        return _pos;
+    }
+
+    /// Gets the normalized positoin of the mouse
+    @property vec2 npos()
+    {
+        return _npos;
+    }
+private:
+    /// the original sdl eevent
+    SDLEvent _sdlevent;
+    /// the name
+    string _name;
+    /// the position of the mouse
+    vec2i   _pos;    
+    /// the normalized position of the mouse
+    vec2    _npos;
+}
+
+/// Fired(not directly) every time a mousebutton is changed
+abstract class MouseButtonEvent : MouseEvent
+{
+    /// ctor takes name and pos and the button that changed
+    this(string name, SDLEvent sdlevent, vec2i pos, vec2 npos, int button)
+    {
+        super(name, sdlevent, pos, npos);
+        _button = button;
+    }
+
+    /// Gets the button that has been pressed
+    @property int button() 
+    {
+        return _button;
+    }
+
+private: 
+    /// the mouse button that changed
+    int _button;    
+}
+
+/// Fired every time a mouse button is pressed
+class MouseButtonDownEvent : MouseButtonEvent 
+{
+    /// ctor takes same args as MouseButtonEvent
+    this(string name, SDLEvent sdlevent, vec2i pos, vec2 npos, int button)
+    {
+        super(name, sdlevent, pos, npos, button);
+    }
+}
+
+/// Fired every time a mouse button is released
+class MouseButtonUpEvent : MouseButtonEvent 
+{
+    /// ctor takes same args as MouseBUttonEvent
+    this(string name, SDLEvent sdlevent, vec2i pos, vec2 npos, int button)
+    {
+        super(name, sdlevent, pos, npos, button);
+    }   
+}
+
+/// Fired every time the mouse is moved
+class MouseMotionEvent : MouseEvent 
+{
+    /// ctor takes many arguments, similar to MouseEvent but having additionally the relative mouse position 
+    this(string name, SDLEvent sdlevent, vec2i pos, vec2 npos, vec2i rel, vec2 nrel)
+    {
+        super(name, sdlevent, pos, npos);
+        _rel = rel;
+        _nrel = nrel;
+    }
+
+    /// Gets the relative mouse movement
+    @property vec2i rel()
+    {
+        return _rel;
+    }
+
+    /// Gets the normalized relative mouse movement
+    @property vec2  nrel()
+    {
+        return _nrel;
+    }
+private:
+    /// the relative mouse movement
+    vec2i _rel;
+    /// the normalized relative mouse movement
+    vec2 _nrel;
+}
 /// IOTransformer transforms sdl input events to the engine internal Mouse and Key events 
 class IOTransformer : Base 
 {
@@ -73,23 +193,52 @@ class IOTransformer : Base
     /// transforms every sdl input event into an IOEvent 
     override void update()
     {
+        // Get Screen Res for normalization 
+        float width = cast(float) to!int(Settings.get("res.x"));
+        float height = cast(float) to!int(Settings.get("res.y"));
+
         auto events = pollEvents();
         foreach (ref e; events) {
             if (cast(SDLEvent) e) {
                 import std.string; //needed for tge stringification of the string event type meh 
                 auto sdlevent = cast(SDLEvent) e; 
+                auto mevent = sdlevent.event.motion;
+                auto mbevent = sdlevent.event.button;
+                auto keyevent = sdlevent.event.key;
+                
                 switch (sdlevent.event.type) {
                     case SDL_KEYDOWN: 
-                        auto key = sdlevent.event.key.keysym.sym;
+                        auto key = keyevent.keysym.sym;
                         string keyname = fromStringz(SDL_GetKeyName(key)).idup;
                         fireEvent(new KeyDownEvent(Settings.get(keyname, true), key, sdlevent));
                         break;
                     case SDL_KEYUP:
-                        auto key = sdlevent.event.key.keysym.sym;
+                        auto key = keyevent.keysym.sym;
                         string keyname = fromStringz(SDL_GetKeyName(key)).idup;
                         fireEvent(new KeyUpEvent(Settings.get(keyname, true), key, sdlevent));
                         break;
-                    default:
+                    case SDL_MOUSEMOTION:
+                        string eventname = Settings.get("motionEvent", true);
+                        auto pos = vec2i(mevent.x, mevent.y);
+                        auto nops = vec2(cast(float)(pos.x)/width, cast(float)(pos.y)/height);
+                        auto rel = vec2i(mevent.xrel, mevent.yrel);
+                        auto nrel = vec2(cast(float)(rel.x)/width, cast(float)(rel.y)/height);
+                        fireEvent(new MouseMotionEvent(eventname, sdlevent, pos, nops, rel, nrel));
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        auto buttonId = mbevent.button;
+                        auto pos = vec2i(mbevent.x, mbevent.y);
+                        auto npos = vec2(cast(float)(pos.x)/width, cast(float)(pos.y)/height);
+                        string eventname = Settings.get("mouse" ~ toImpl!string(buttonId), true);
+                        fireEvent(new MouseButtonDownEvent(eventname, sdlevent, pos, npos, buttonId));
+                        break;
+                    case SDL_MOUSEBUTTONUP:
+                        auto buttonId = mbevent.button;
+                        auto pos = vec2i(mbevent.x, mbevent.y);
+                        auto npos = vec2(cast(float)(pos.x)/width, cast(float)(pos.y)/height);
+                        string eventname = Settings.get("mouse" ~ toImpl!string(buttonId), true);
+                        break;
+                    default: 
                         break;
                 }
             }

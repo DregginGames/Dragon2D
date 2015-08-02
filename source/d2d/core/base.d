@@ -68,7 +68,6 @@ class Base
         if (child.parent) {
             child.parent.removeChild(child);
         }
-
         childObjects[child.id] = child;
         child.parent = this;
     }
@@ -107,9 +106,9 @@ class Base
     }
 
     /// fixed obj id of this object
-    final @property long id()
+    final @property size_t id()
     {
-        return maxObjId;
+        return objId;
     }
 
     /// gets the parent object of this object
@@ -176,10 +175,10 @@ protected
     
 private:
     /// every engine object has an object id, this is the current maximum
-    static long maxObjId = 0;
+    static size_t maxObjId = 0;
 
     /// the object id of the engine object
-    immutable long objId;
+    immutable size_t objId;
 
     /// the child objects, key is the object id
     Base[long]  childObjects;

@@ -26,45 +26,45 @@ class ResourceTypeInvalidException : Exception
   */
 class Resource 
 {
-    // ctor. is private because resources never should be crated directly. 
-    private this(string name)
+    // ctor. is protected because resources never should be crated directly. 
+    protected this(string name)
     {   
-        this.resourceName = name;
+        this._name = name;
     }
 
     /// gets the name of this resource
     @property final string name() const
     {
-        return this.resourceName;
+        return this._name;
     }
 
     /// returns if this object was deleted. 
     @property final bool deleted() const 
     {
-        return this.deleted;
+        return this._deleted;
     }
 
     /// gets the time when this obj was deleted
     @property final long deletetime() const 
     {
-        return this.timeDeleted;    
+        return this._deletetime;    
     }
 
     /// sets the delteTime
-    @property final long deletewaittime(long newVal)
+    @property final long deletewait(long newVal)
     {
-        return this.deleteWaitTime = newVal;
+        return this._deletewait = newVal;
     }
 
     /// gets the time how long this object will survive a deletion
-    @property final long deletewaittime()
+    @property final long deletewait()
     {
-        return this.deleteWaitTime;
+        return this.deletewait;
     }
 
     final static T create(T) (string name) 
     {
-        checkFree():
+        checkFree();
         auto p = (name in resources);
         if (p is null) {
             T newRes = new T(name);
@@ -73,9 +73,9 @@ class Resource
         }   
         if (cast(T) (*p)) {
             // save deleted objects
-            if (p.isDeleted) {
-                p.isDeleted = false;
-                p.timeDeleted = 0;
+            if (p._deleted) {
+                p._deleted = false;
+                p._deletetime = 0;
             }
             return cast(T)(*p);
         }
@@ -103,21 +103,21 @@ class Resource
     {
         auto p = (name in resources);
         if (p !is null) {
-            p.deleteTime = Clock.currStdTime();
-            p.isDeleted = true;
+            p._deletetime = Clock.currStdTime();
+            p._deleted = true;
         }
         checkFree(); 
     }
 
 private:
     /// the name of the resource
-    string resourceName;
+    string  _name;
     /// the time this object survives after deletion - default is 30 seconds (= 30000ms = 300000000hns)
-    long    deleteWaitTime = 300000000;
+    long    _deletewait = 300000000;
     /// the time this object was delete 
-    long    timeDeleted;
+    long    _deletetime;
     /// if the object was deleted 
-    bool    isDeleted = false;
+    bool    _deleted = false;
 
     /// static vars for resource management
     static {    
@@ -129,8 +129,8 @@ private:
         final static void checkFree() 
         {
             foreach(key; resources.keys) {
-                if(resources[key].isDeleted 
-                  && (currStdTime()-resources[key].deleteTime) > resources[key].deleteWaitTime) {
+                if(resources[key]._deleted 
+                  && (Clock.currStdTime()-resources[key]._deletetime) > resources[key]._deletewait) {
                     resources.remove(key);
                 }
             }

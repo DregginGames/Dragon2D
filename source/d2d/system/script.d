@@ -21,9 +21,9 @@ class UnknownScriptException : Exception
 {
     // sets the error
     
-    public this(string name) 
+    public this(string name, string err) 
     {
-        super("Cannot load script with the name " ~ name);   
+        super("Cannot load script with the name " ~ name ~ " (" ~ err ~ ") \n\n make shure that the engine modules you use are either already being used in the engine itself or have a line in d2d.game.knownclasses! \n" );   
     }
 }
 
@@ -42,7 +42,7 @@ class Script
         }
         catch(Exception e)
         {
-            throw new UnknownScriptException(name);
+            throw new UnknownScriptException(name, e.msg);
         }     
 
         // every module must have a run function

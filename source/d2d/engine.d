@@ -12,6 +12,10 @@ import d2d.core.container.gamecontainer;
 import d2d.core.io;
 import d2d.system.env;
 import d2d.system.script;
+
+/// This import is basically a helper-import that makes shure that every class used by Dragon2D and the script engine is linked into the binary
+import d2d.game.knownclasses;
+
 /// The engine class loads the basic system. Also the main loop lives here
 class Engine  
 {
@@ -27,6 +31,7 @@ class Engine
         auto env = new Env();
         auto iotransformer = new IOTransformer();
         auto gamecontainer = new GameContainer();
+        
         env.addChild(iotransformer);
         env.addChild(gamecontainer);
         root.addChild(env);

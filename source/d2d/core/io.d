@@ -153,6 +153,31 @@ class MouseButtonUpEvent : MouseButtonEvent
     }   
 }
 
+/// Fired every tome the scrollwheel is moved
+class MouseWheelEvent : MouseEvent
+{
+    this(string name, SDLEvent sdlevent)
+    {
+        super(name, sdlevent, vec2i(0), vec2(0));
+        _movement = vec2i(sdlevent.event.wheel.x, sdlevent.event.wheel.y);
+        /// TODO(WORKS IN SDL 2.0.4) TO BE ADDED
+        version(none) {
+            if (sdlevent.event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED) {
+                _movement *= -1;
+            }
+        }
+    }  
+
+    /// returns the movement offset of the mousewheel
+    @property vec2i movement() 
+    {
+        return _movement;
+    }   
+private:
+    ///x and the y movement of the mousewheel
+    vec2i   _movement;
+}
+
 /// Fired every time the mouse is moved
 class MouseMotionEvent : MouseEvent 
 {
@@ -196,9 +221,8 @@ class IOTransformer : Base
         // Get Screen Res for normalization 
         float width = cast(float) to!int(Settings.get("res.x"));
         float height = cast(float) to!int(Settings.get("res.y"));
-
         auto events = pollEvents();
-        foreach (ref e; events) {
+        foreach (e; events) {
             if (cast(SDLEvent) e) {
                 import std.string; //needed for tge stringification of the string event type meh 
                 auto sdlevent = cast(SDLEvent) e; 
@@ -237,7 +261,11 @@ class IOTransformer : Base
                         auto pos = vec2i(mbevent.x, mbevent.y);
                         auto npos = vec2(cast(float)(pos.x)/width, cast(float)(pos.y)/height);
                         string eventname = Settings.get("mouse" ~ toImpl!string(buttonId), true);
+                        fireEvent(new MouseButtonUpEvent(eventname, sdlevent, pos, npos, buttonId));
                         break;
+                    case SDL_MOUSEWHEEL:
+                        string eventname = Settings.get("mousewheel", true);
+                        fireEvent(new MouseWheelEvent(eventname, sdlevent));
                     default: 
                         break;
                 }

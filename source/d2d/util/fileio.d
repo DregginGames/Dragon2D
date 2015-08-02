@@ -18,34 +18,35 @@ class FileResource
     /// flushes a file to the system 
     void flush()
     {
-        if(!isModified || isInvalid) {
+        if(!_modified || _invalid) {
             return;
         }
 
         write(file, data);
-        isModified = false;
+        _modified = false;
     }
 
     /// flushes a file to the system and them removes cached data 
     void flushAndClean()
     {
-        if(isInvalid) {
+        if(_invalid) {
             return;
         }
         flush();
         data.length = 0;
+        _read = false;
     }
 
     /// gets the date of i file. if not yet done, reads them from the file system 
     T[] getData(T=ubyte) ()
     {
-        if(isInvalid) {
+        if(_invalid) {
             return null;
         }
 
         if(!isRead) {
             data = read(file);
-            isRead = true;
+            _read = true;
         }
         return cast(T[]) data;
     }
@@ -92,7 +93,7 @@ class FileResource
 
         // ok ok new resource 
         auto newResource = new FileResource;
-        newResource.name = resourceString;
+        newResource._name = resourceString;
 
         // we need to transfor the string into a path. 
         string basename = "";
@@ -122,25 +123,54 @@ class FileResource
         }
 
         if (filePath == "") {
-            newResource.isInvalid = true;
+            newResource._invalid = true;
         }
         else {
-            newResource.file = filePath;
+            newResource._file = filePath;
         }
         return resources[newResource.name] = newResource;
     }
 
+    /// gets the name of the file resource
+    @property string name() 
+    {
+        return _name;
+    }
+
+    /// gets the file that this resource belongs to
+    @property string file()
+    {
+        return _file;
+    }
+
+    /// gets if the file resource is invalid
+    @property bool invalid()
+    {
+        return _invalid;
+    }
+
+    /// gets if the resource has been read
+    @property bool read()
+    {
+        return _read;
+    }
+
+    /// get if the resource was modified
+    @property bool modified() 
+    {
+        return _modified;
+    }
 private:
     /// name of the file resource
-    string name;
+    string _name;
     /// name of the file that this resource belongs to 
-    string file;
+    string _file;
     /// if the file was read
-    bool    isRead = false; 
+    bool    _read = false; 
     /// if true the file has been modifed since the init/flush
-    bool    isModified = false;
+    bool    _modified = false;
     /// if true the resource is invalid and all operations dont have an effect 
-    bool    isInvalid = false; 
+    bool    _invalid = false; 
     /// the actual data
     void[]  data;
 

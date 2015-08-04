@@ -27,14 +27,11 @@ class Engine
         Logger.init(Settings.get("logfile"));
 
         Logger.log("Engine startup...");
-        root = new Root();
-        auto env = new Env();
-        auto iotransformer = new IOTransformer();
         auto gamecontainer = new GameContainer();
-        
-        env.addChild(iotransformer);
-        env.addChild(gamecontainer);
-        root.addChild(env);
+        root = new Root()
+            .addChild(new Env()
+                .addChild(new IOTransformer())
+                .addChild(gamecontainer));
         Logger.log("Engine started!");
         
         //load and run the startup script 

@@ -59,17 +59,16 @@ class Base
     }
 
     /// add a child to this object. Resets the parent of the object to add.
-    void addChild(Base child)
+    T addChild(this T)(Base child)
     {
-        if (child.parent == this) {
-            return;
-        }
-        
-        if (child.parent) {
+        if (child.parent && child.parent != this) {
             child.parent.removeChild(child);
         }
+
         childObjects[child.id] = child;
         child.parent = this;
+
+        return cast(T) this;
     }
 
     /// Fires an event, moves it up in the object hirarchy and propagetes it through

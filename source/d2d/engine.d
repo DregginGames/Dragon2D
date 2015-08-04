@@ -27,14 +27,11 @@ class Engine
         Logger.init(Settings.get("logfile"));
 
         Logger.log("Engine startup...");
-        root = new Root();
-        auto env = new Env();
-        auto iotransformer = new IOTransformer();
         auto gamecontainer = new GameContainer();
-        
-        env.addChild(iotransformer);
-        env.addChild(gamecontainer);
-        root.addChild(env);
+        root = new Root()
+            .addChild(new Env()
+                .addChild(new IOTransformer())
+                .addChild(gamecontainer));
         Logger.log("Engine started!");
         
         //load and run the startup script 
@@ -58,24 +55,19 @@ class Engine
         // this... clock will be used for the gameloops ticking. 
         long curtime = Clock.currStdTime();
         
-        try {
-            while (root.alive) {
+        //execptions that escape the mainloop are... critical. 
+        scope(failure) Logger.log("CRITICAL FAILURE - EXCEPTION");
 
-                //only update every tick
-                if ( Clock.currStdTime() - curtime >= ticksize) {
-                    root.propagateUpdate();
-                    curtime = Clock.currStdTime();
-                }
-                
-                //render always (frame rate limits this). Basically allocates the time for the ticks.
-                root.propagateRender(); 
+        while (root.alive) {
+
+            //only update every tick
+            if ( Clock.currStdTime() - curtime >= ticksize) {
+                root.propagateUpdate();
+                curtime = Clock.currStdTime();
             }
-        }
-        catch (Exception e)
-        {
-            //execptions that escape the mainloop are... critical. 
-            Logger.log("CRITICAL FAILURE - EXCEPTION");
-            throw e;
+
+            //render always (frame rate limits this). Basically allocates the time for the ticks.
+            root.propagateRender();
         }
 
         Logger.log("Exitted mainloop!");  

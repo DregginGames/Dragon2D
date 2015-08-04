@@ -37,25 +37,16 @@ class Base
     /// Propagates an update thru the object hirarchy
     void propagateUpdate()
     {
-        // paused object dont update
-        if (isPaused) {
-            return;
-        }
-        update();
-
-        foreach(ref c; childObjects) {
-            c.propagateUpdate();        
-        }   
+        propagate(
+            (b) { b.update(); },
+            (b) => !b.isPaused
+        );
     }
 
     /// Propagates the rendering through the object hirarchy
     void propagateRender()
     {
-        render();
-
-        foreach(ref c; childObjects) {
-            c.propagateRender();
-        }
+        propagate((b) { b.render(); });
     }
 
     /// add a child to this object. Resets the parent of the object to add.
@@ -81,20 +72,10 @@ class Base
     /// propagate an event throgh the object hirarchy
     void propagateEvent(Event e)
     {
-        //if paused we dont do anything
-        if (isPaused) {
-            return;
-        }
-        
-        //do we recive events and are we the source? 
-        if (canReciveEvents && e.source != this) {
-            pendingEvents ~= e;
-        }
-
-        //propagate the event
-        foreach(ref c; childObjects) {
-            c.propagateEvent(e);
-        }   
+        propagate(
+            (b) { if(b.canReciveEvents && e.source != b) b.pendingEvents ~= e; },
+            (b) => !b.isPaused
+        );
     }
 
     /// removes a child from this object
@@ -171,7 +152,18 @@ protected
         pendingEvents.length = 0; 
         return scpy;
     }
-    
+
+    void propagate(void delegate(Base) action) { propagate(action, (b) => true); }
+    void propagate(void delegate(Base) action, bool delegate(Base) test) {
+      if(!test(this)) return;
+
+      action(this);
+
+      foreach(ref c; childObjects) {
+          c.propagate(action, test);
+      }
+    }
+
 private:
     /// every engine object has an object id, this is the current maximum
     static size_t maxObjId = 0;

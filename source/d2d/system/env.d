@@ -163,6 +163,7 @@ class Env : Base
     /// Env update only polls the events (and refieres them)
     override void update()
     {
+		import std.stdio; 
         SDL_Event e;
         while (SDL_PollEvent(&e)) {
             SDLEvent event = new SDLEvent(e);
@@ -182,13 +183,10 @@ class Env : Base
     }
 
     /**
-      Overloaded PropagateRender because we need to put the buffer swap after everything was renderd.
-      Env might be the only place where PropagateRender needs to be overloaded
+      Should be the last post-render that is called and swaps all buffers.
      */
-    override void propagateRender()
+    override void postRender()
     {
-        //render everything
-        super.propagateRender();
         // swap buffers
         SDL_GL_SwapWindow(window);
     }   

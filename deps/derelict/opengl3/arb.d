@@ -3517,7 +3517,7 @@ package void loadARB( GLVersion glversion )
         if( isExtSupported( glversion, "GL_ARB_draw_indirect" )) load_ARB_draw_indirect();
         if( isExtSupported( glversion, "GL_ARB_gpu_shader_fp64" )) load_ARB_gpu_shader_fp64();
         if( isExtSupported( glversion, "GL_ARB_sample_shading")) load_ARB_sample_shading();
-        if( isExtSupported( glversion, "GL_ARB_shader_subroutine" )) load_ARB_shader_subroutine();
+    //    if( isExtSupported( glversion, "GL_ARB_shader_subroutine" )) load_ARB_shader_subroutine(); NOTE: Removed in Dragon2D 0.3 because caused problems and, in fact, is not used.
         if( isExtSupported( glversion, "GL_ARB_tessellation_shader" )) load_ARB_tessellation_shader();
         if( isExtSupported( glversion, "GL_ARB_transform_feedback2" )) load_ARB_transform_feedback2();
         if( isExtSupported( glversion, "GL_ARB_transform_feedback3" )) load_ARB_transform_feedback3();

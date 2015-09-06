@@ -1,0 +1,400 @@
+Logger started [2015-Sep-06 17:58:24.2842165] 
+Engine startup...
+Logger started [2015-Sep-06 18:00:36.4737773] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:01:02.7362795] 
+Engine startup...
+Done SDL init
+Logger started [2015-Sep-06 18:02:16.8385179] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:04:39.36667] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:04:56.7406637] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:06:58.5776324] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:09:14.015379] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Engine shutdown!
+Logger started [2015-Sep-06 18:10:09.122531] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Engine shutdown!
+Logger started [2015-Sep-06 18:10:19.5341265] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:11:50.9733565] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:12:32.64474] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:13:20.008449] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:13:52.1792891] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:15:09.5457142] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:19:38.6821079] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:20:10.5979334] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:20:57.1255946] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Logger started [2015-Sep-06 18:21:56.0429645] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:23:23.5669706] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:24:27.3336178] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Logger started [2015-Sep-06 18:43:23.7416167] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Killing engine!
+Exitted mainloop!
+Engine shutdown!
+Logger started [2015-Sep-06 18:47:04.1932258] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:47:54.0340765] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:48:40.6037401] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:49:11.6965185] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:54:06.3203701] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:55:04.7657129] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:56:20.6400527] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:56:26.922412] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:56:44.6224244] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-06 18:58:05.5700544] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+event!
+Logger started [2015-Sep-06 18:59:38.6783798] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.KillEngineEvent
+Killing engine!
+Exitted mainloop!
+Engine shutdown!

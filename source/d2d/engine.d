@@ -7,21 +7,19 @@ import std.datetime;
 
 import d2d.util.logger;
 import d2d.util.settings;
+import d2d.core.callback;
 import d2d.core.container.root;
 import d2d.core.container.gamecontainer;
 import d2d.core.io;
 import d2d.system.env;
-import d2d.system.script;
-
-/// This import is basically a helper-import that makes shure that every class used by Dragon2D and the script engine is linked into the binary
-import d2d.game.knownclasses;
 
 /// The engine class loads the basic system. Also the main loop lives here
 class Engine  
 {
     
     /// Loads the settings and the root element and populates it with the base system classes 
-    this(char[][] args) 
+	/// StartupCallback is called in the last stage before the mainloop and its Object Parameter is the gamecontainer.
+    this(char[][] args, ObjectCallback startupCallback) 
     {
         Settings.init(args);
         Logger.init(Settings.get("logfile"));
@@ -33,12 +31,13 @@ class Engine
                 .addChild(new IOTransformer())
                 .addChild(gamecontainer));
         Logger.log("Engine started!");
-        
-        //load and run the startup script 
-        Logger.log("Running startup script");
-        Script startup = new Script("startup");
-        startup.run(gamecontainer);
-        Logger.log("Startup script complete");
+
+		if (!startupCallback(gamecontainer)) {
+			Logger.log("Startup failed!");
+			Logger.log("Trying to run the engine, though the state may already be corrupted.");
+		} else {
+			Logger.log("Startup successfull!");
+		}
     }
 
     /// 
@@ -59,7 +58,7 @@ class Engine
         scope(failure) Logger.log("CRITICAL FAILURE - EXCEPTION");
 
         while (root.alive) {
-
+			import std.stdio;
             //only update every tick
             if ( Clock.currStdTime() - curtime >= ticksize) {
                 root.propagateUpdate();
@@ -75,8 +74,8 @@ class Engine
 
 private:
     
-    /// ticksize is length if a tick i hnsecs (100 ns). We use 30 ticks per second.
-    immutable long ticksize = 10000 / 30;
+    /// ticksize is length of a tick i hnsecs (100 ns). We use ~30 ticks per second.
+    immutable long ticksize = 10000000/30;
 
     /// the engine root object
     Root root;

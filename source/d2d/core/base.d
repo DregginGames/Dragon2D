@@ -15,8 +15,8 @@ class Base
     this() 
     {
         // first set the object id 
-        objId = maxObjId;
-        maxObjId++;
+        _id = maxId;
+        maxId++;
     }    
 
     /// Base destructor
@@ -29,24 +29,42 @@ class Base
     {
     }
 
+	// preRender is called before all children and the object is renderd.
+	void preRender()
+	{
+	}
+
     /// Render is called every frame
     void render()
     {
     }
 
+	/// postRender is called after all children and the object were renderd.
+	void postRender()
+	{
+	}
+
     /// Propagates an update thru the object hirarchy
-    void propagateUpdate()
+    final void propagateUpdate()
     {
         propagate(
             (b) { b.update(); },
-            (b) => !b.isPaused
+            (b) => !b._paused
         );
     }
 
     /// Propagates the rendering through the object hirarchy
-    void propagateRender()
+	// cant use the propagate because render has additional pre- and post functions.
+    final void propagateRender()
     {
-        propagate((b) { b.render(); });
+		this.preRender();
+
+		this.render();
+        foreach(ref c; _children) {
+			c.propagateRender();
+		}
+
+		this.postRender();
     }
 
     /// add a child to this object. Resets the parent of the object to add.
@@ -56,7 +74,7 @@ class Base
             child.parent.removeChild(child);
         }
 
-        childObjects[child.id] = child;
+        _children[child.id] = child;
         child.parent = this;
 
         return cast(T) this;
@@ -70,11 +88,11 @@ class Base
     }
 
     /// propagate an event throgh the object hirarchy
-    void propagateEvent(Event e)
+    final void propagateEvent(Event e)
     {
         propagate(
             (b) { if(b.canReciveEvents && e.source != b) b.pendingEvents ~= e; },
-            (b) => !b.isPaused
+            (b) => !b._paused
         );
     }
 
@@ -82,31 +100,31 @@ class Base
     final void removeChild(Base child)
     {
         child.parent = null;
-        childObjects.remove(child.id);
+        _children.remove(child.id);
     }
 
     /// fixed obj id of this object
     final @property size_t id()
     {
-        return objId;
+        return _id;
     }
 
     /// gets the parent object of this object
     final @property Base parent()
     {
-        return parentObject;
+        return _parent;
     }
 
     /// sets the parent object of this object
     final @property Base parent(Base newParent)
     {
-        return parentObject = newParent;
+        return _parent = newParent;
     }
 
     /// gets the child objects of this object
     final @property Base[long] children()
     {
-        return childObjects;
+        return _children;
     }
 
     /// if this object accepts events
@@ -118,19 +136,19 @@ class Base
     /// pauses/unpauses the object
     final @property bool paused()
     {
-        return isPaused;
+        return _paused;
     }
 
     final @property bool paused(bool paused)
     {   
-        return isPaused = paused;
+        return _paused = paused;
     }
 
     /// the "root" is the root of the element tree wich this object is a member
     final @property Base root()
     {
         // i am root!
-        if (parentObject is null) {
+        if (_parent is null) {
             return this;
         }
         //go up
@@ -153,35 +171,35 @@ protected
         return scpy;
     }
 
-    void propagate(void delegate(Base) action) { propagate(action, (b) => true); }
-    void propagate(void delegate(Base) action, bool delegate(Base) test) {
+    final void propagate(void delegate(Base) action) { propagate(action, (b) => true); }
+    final void propagate(void delegate(Base) action, bool delegate(Base) test) {
       if(!test(this)) return;
 
       action(this);
 
-      foreach(ref c; childObjects) {
+      foreach(ref c; _children) {
           c.propagate(action, test);
       }
     }
 
 private:
     /// every engine object has an object id, this is the current maximum
-    static size_t maxObjId = 0;
+    static size_t maxId = 0;
 
     /// the object id of the engine object
-    immutable size_t objId;
+    immutable size_t _id;
 
     /// the child objects, key is the object id
-    Base[long]  childObjects;
+    Base[long]  _children;
 
     /// the parent object
-    Base    parentObject;
+    Base    _parent;
 
     /// if true the object can recive events
     bool    canReciveEvents = false;
 
     /// if true the object is paused; no child objects or the object is updated or renderd, can recive any events or anything.
-    bool    isPaused = false;
+    bool    _paused = false;
 
     /// the current pending events
     Event[] pendingEvents;

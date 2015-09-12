@@ -2,7 +2,7 @@
 *.visualdproj
 log.txt
 engine/Dragon2D
-.dub
+.dub/*
 *.exe
 *.a
 *.obj

@@ -1,1 +1,7 @@
-
+log.txt
+engine/Dragon2D
+.dub
+*.exe
+*.a
+*.obj
+*.selections.json

@@ -116,10 +116,11 @@ class Settings
         debug
         {
             throw new UnknownSettingException("Unknown Setting " ~ name);
-        }
-
-        //default is errorish, but shouldnt kill the engine - at least in release, so..
-        return "invalid";
+		}
+		else {
+			//default is errorish, but shouldnt kill the engine - at least in release, so..
+			return "invalid";
+		}
     }
 
     /// loads a setting file

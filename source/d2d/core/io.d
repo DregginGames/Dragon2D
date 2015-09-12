@@ -266,6 +266,7 @@ class IOTransformer : Base
                     case SDL_MOUSEWHEEL:
                         string eventname = Settings.get("mousewheel", true);
                         fireEvent(new MouseWheelEvent(eventname, sdlevent));
+						break;
                     default: 
                         break;
                 }

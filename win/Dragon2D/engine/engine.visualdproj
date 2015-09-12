@@ -214,8 +214,17 @@
     <Folder name="dbg">
      <File path="..\..\..\source\d2d\core\dbg\eventdebug.d" />
     </Folder>
+    <Folder name="render">
+     <File path="..\..\..\source\d2d\core\render\renderable.d" />
+     <File path="..\..\..\source\d2d\core\render\renderer.d" />
+     <File path="..\..\..\source\d2d\core\render\util.d" />
+     <File path="..\..\..\source\d2d\core\render\view.d" />
+    </Folder>
     <Folder name="resources">
      <File path="..\..\..\source\d2d\core\resources\texture.d" />
+    </Folder>
+    <Folder name="services">
+     <File path="..\..\..\source\d2d\core\services\scheduler.d" />
     </Folder>
     <File path="..\..\..\source\d2d\core\base.d" />
     <File path="..\..\..\source\d2d\core\callback.d" />

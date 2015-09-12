@@ -12,6 +12,7 @@ import d2d.core.container.root;
 import d2d.core.container.gamecontainer;
 import d2d.core.io;
 import d2d.system.env;
+import d2d.core.services.scheduler;
 
 /// The engine class loads the basic system. Also the main loop lives here
 class Engine  
@@ -29,6 +30,7 @@ class Engine
         root = new Root()
             .addChild(new Env()
                 .addChild(new IOTransformer())
+				.addChild(new Scheduler())
                 .addChild(gamecontainer));
         Logger.log("Engine started!");
 
@@ -60,14 +62,18 @@ class Engine
         while (root.alive) {
 			import std.stdio;
             //only update every tick
-            if ( Clock.currStdTime() - curtime >= ticksize) {
+            while ( Clock.currStdTime() - curtime >= ticksize) {
+				root.preTickDelete();
                 root.propagateUpdate();
-                curtime = Clock.currStdTime();
+                curtime += ticksize;
             }
 
             //render always (frame rate limits this). Basically allocates the time for the ticks.
             root.propagateRender();
         }
+
+		// propagate the deletion event becase then the exit is cleaner: all services are removed
+		root.setDeleted();
 
         Logger.log("Exitted mainloop!");  
     }

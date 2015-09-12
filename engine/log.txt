@@ -398,3 +398,609 @@ event: d2d.core.event.KillEngineEvent
 Killing engine!
 Exitted mainloop!
 Engine shutdown!
+Logger started [2015-Sep-07 21:52:31.2000752] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+Logger started [2015-Sep-07 21:53:11.6732621] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+Logger started [2015-Sep-07 21:54:23.1115495] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.KillEngineEvent
+Killing engine!
+Exitted mainloop!
+Engine shutdown!
+Logger started [2015-Sep-07 21:54:38.4095713] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.KillEngineEvent
+Killing engine!
+Exitted mainloop!
+Engine shutdown!
+Logger started [2015-Sep-07 21:55:18.239881] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.KillEngineEvent
+Killing engine!
+Logger started [2015-Sep-07 21:56:36.5511566] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+Logger started [2015-Sep-07 21:57:58.3235044] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.KillEngineEvent
+Killing engine!
+Exitted mainloop!
+Engine shutdown!
+Logger started [2015-Sep-07 21:59:49.2403642] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.KillEngineEvent
+Killing engine!
+Exitted mainloop!
+Engine shutdown!
+Logger started [2015-Sep-07 22:00:07.1645871] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.KillEngineEvent
+Killing engine!
+Exitted mainloop!
+Engine shutdown!
+Logger started [2015-Sep-07 22:24:30.8506586] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+Logger started [2015-Sep-07 22:43:15.4169114] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.io.MouseMotionEvent
+event: d2d.core.event.SDLEvent
+event: d2d.core.event.SDLEvent
+Logger started [2015-Sep-07 22:43:40.9679879] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 22:51:53.1775246] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 22:52:20.7065859] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 22:53:25.8948668] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 22:53:54.038955] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 22:54:28.8822271] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 22:54:46.7823264] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 22:57:29.9680272] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 22:59:53.1195022] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 23:03:00.8028382] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 23:04:14.1372296] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 23:08:02.9820656] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 23:08:15.8665291] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 23:12:02.8270124] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 23:16:07.5265958] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 23:16:30.469772] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 23:17:46.0896701] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 23:18:29.8748996] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!
+Logger started [2015-Sep-07 23:23:10.8575805] 
+Engine startup...
+Done SDL init
+Dont Video init
+Done Audio init
+Done Image init
+Done Font init
+Engine started!
+Startup successfull!
+Reached mainloop!

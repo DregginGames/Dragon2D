@@ -5,6 +5,16 @@ module d2d.core.base;
 
 import d2d.core.event;
 
+/// exception thrown when something unlogical is done with the base class or its child objects, services, ...
+class ObjectLogicException : Exception
+{
+    /// ctor
+    this(string err)
+    {
+        super(err);
+    }
+}
+
 /**
   Base is the base interaface for all engine classes. 
   It has the methods that are basically needed by every part of the system. 
@@ -21,7 +31,8 @@ class Base
 
     /// Base destructor
     ~this() 
-    {   
+    {
+		
     } 
 
     /// Update is called every tick (1/30 of a second). 
@@ -103,6 +114,48 @@ class Base
         _children.remove(child.id);
     }
 
+	/** marks an object for deletion. It immediatly removes the service (if existant) and also marks all children for deletion!
+		Deletion means removal from object hirarchy and services. 
+		However if the object is stored somewhere else it also has to be removed manually there (should never ever happen).
+	*/
+	final void setDeleted()
+	{
+		_deleted = true;
+
+		if (_isService) {
+			removeService();
+		}
+		foreach(ref c; _children) {
+			c.setDeleted();
+		}
+	}
+
+	/**
+		PreTickDelte removes all objects that are makred for deletion from the hirachy. If an objects had children, these are deleted, too. 
+	*/
+	final void preTickDelete()
+	{
+		propagate(
+			(b) {
+				foreach(ref c; b.children) {
+					if (c.deleted) {
+						b.removeChild(c);
+					}
+				}
+			});
+	}
+
+	/// Gets a service by its name. Syntax is getService!ServiceClass(name)
+	final static T getService (T) (string name) 
+	{
+		auto exsisting = name in _services;
+		if(exsisting) {
+			return cast(T)(*exsisting);
+		}
+
+		throw new ObjectLogicException("Cannot get an unknown service (" ~ name ~ ")!");
+	}
+
     /// fixed obj id of this object
     final @property size_t id()
     {
@@ -144,6 +197,12 @@ class Base
         return _paused = paused;
     }
 
+	/// returns if the object will be deleted before the next tick
+	final @property bool deleted()
+	{
+		return _deleted;
+	}
+
     /// the "root" is the root of the element tree wich this object is a member
     final @property Base root()
     {
@@ -154,7 +213,8 @@ class Base
         //go up
         return this.parent.root;
     }
-protected
+
+protected:
 
     /// Enables event reciving for this object. Should be called in the constructor of classes that want it.
     final void enableEventHandling()
@@ -171,6 +231,7 @@ protected
         return scpy;
     }
 
+	/// Propagates event actions
     final void propagate(void delegate(Base) action) { propagate(action, (b) => true); }
     final void propagate(void delegate(Base) action, bool delegate(Base) test) {
       if(!test(this)) return;
@@ -182,9 +243,38 @@ protected
       }
     }
 
+	/// Registers a class as a service that can be accessed by its name. Should be called by classes that want to be deleted
+	final void registerAsService(string name)
+	{
+		if (!_isService) {
+			auto exsisting = name in _services;
+			if (!exsisting) {
+				_services[name] = this;
+				_serviceName = name;
+				_isService = true;
+			}
+		}
+		else {
+			throw new ObjectLogicException("Cannot create 2 services of the same name (" ~ name ~ ")!");
+		}
+	}
+
+	/// Removes a service
+	final void removeService() 
+	{
+		if (_isService) {
+			_services.remove(_serviceName);
+		}
+		else {
+			throw new ObjectLogicException("Cannot un-service an object that never was a service!");
+		}
+	}
 private:
     /// every engine object has an object id, this is the current maximum
     static size_t maxId = 0;
+
+	/// the known services
+	static Base[string] _services;
 
     /// the object id of the engine object
     immutable size_t _id;
@@ -200,6 +290,14 @@ private:
 
     /// if true the object is paused; no child objects or the object is updated or renderd, can recive any events or anything.
     bool    _paused = false;
+
+	/// if the object is a service
+	bool	_isService = false;
+	/// name of the service
+	string  _serviceName;
+	
+	/// true if an object is marked for deletion
+	bool	_deleted = false;
 
     /// the current pending events
     Event[] pendingEvents;

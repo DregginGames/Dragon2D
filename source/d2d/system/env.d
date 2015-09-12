@@ -146,6 +146,7 @@ class Env : Base
         }
         log("Done Font init");
 
+		registerAsService("d2d.env");
         //we are done here!
     }   
 

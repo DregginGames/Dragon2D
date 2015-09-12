@@ -1,3 +1,5 @@
+*.sln
+*.visualdproj
 log.txt
 engine/Dragon2D
 .dub

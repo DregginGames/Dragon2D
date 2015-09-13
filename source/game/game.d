@@ -3,6 +3,8 @@ import d2d.engine;
 import d2d.core.base;
 import d2d.core.dbg.eventdebug;
 import d2d.core.services.scheduler;
+import d2d.core.resource;
+import d2d.core.resources.glprogram;
 
 int main(char[][] args)
 {
@@ -16,6 +18,7 @@ bool onStartup(Base base)
 	//base.addChild(new EventDebugger());
 	auto s = base.getService!Scheduler("d2d.scheduler");
 	s.setTimeout(20, &func, 1, 3);
+    auto r = Resource.create!GLProgram("shader.default");
 	return true;
 }
 

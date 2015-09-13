@@ -31,6 +31,53 @@ class View
 		return _worldToView;
 	}
 
+    /// The world-position of the view
+    @property vec2 pos()
+    {
+        return _pos;
+    } 
+    @property vec2 pos(vec2 p)
+    {   
+        _pos = p;
+        _updateWorldToView();
+        return _pos;
+    }
+
+    /// The world-size (visible area of the world) of the view
+    @property vec2 size()
+    {
+        return _size;
+    }
+    @property vec2 size(vec2 s)
+    {
+        _size = s;
+        _updateWorldToView();
+        return _size;
+    }
+
+    /// The screen-position of the view (!lower-left corner, -1..1!)
+    @property vec2 viewportPos()
+    {
+        return _viewportPos;
+    }
+    @property vec2 viewportPos(vec2 p)
+    {
+        _viewportPos = p;
+        _updateWorldToView();
+        return _viewportPos;
+    }
+
+    /// The screen-size of the view (!-1..1!) 
+    @property vec2 viewportSize()
+    {
+        return _viewportSize;
+    }
+    @property vec2 viewportSize(vec2 s)
+    {
+        _viewportSize = s;
+        _updateWorldToView();
+        return _viewportSize;
+    }
 
 protected:
 

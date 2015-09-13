@@ -44,14 +44,14 @@ class FileResource
             return null;
         }
 
-        if(!isRead) {
-            data = read(file);
+        if(!_read) {
+            data = std.file.read(file);
             _read = true;
         }
         return cast(T[]) data;
     }
 
-    /// sets the data of this file. Since data are overwritten in the end logically causes isRead to be set to true. Flush is needed to store them to the system!
+    /// sets the data of this file. Since data are overwritten in the end logically causes _read to be set to true. Flush is needed to store them to the system!
     void setData(T=ubyte) (T[] data) 
     {
         if(isInvalid) {
@@ -59,7 +59,7 @@ class FileResource
         }
         data = cast(void[]) data;
         isModified = true;
-        isRead = true;
+        _read = true;
     }
 
 // static stuff for file resource management below 

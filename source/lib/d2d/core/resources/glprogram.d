@@ -3,6 +3,9 @@
   */
 module d2d.core.resources.glprogram;
 
+import std.string;
+import std.regex;
+
 import derelict.opengl3.gl3;
 
 import d2d.core.resource;
@@ -57,31 +60,42 @@ struct Uniform
     /// Creates the uniform and binds the assignment function. 
     this (string type, string ident, string arr, GLuint program) 
     {
-        import std.string;
-        import std.regex;
         _location = glGetUniformLocation(program, toStringz(ident));
         // break type into "typename[N]" where n is a nuber. used for vecSOMETHING etc. 
         auto r = regex(r"([A-z]*)([2-4])");
         auto c = matchFirst(type, r);
         auto baseType = c[1];
-        int typeN = to!int(c[2]);
+        auto typeN = c[2];
 
         // this might be the uglyest switch statement ive ever made. 
         switch (type) {
         // Basic types
         case "bool": 
+            _vecFunc = cast(glVecFunc)glUniform1uiv;
             break;
         case "int":
+            _vecFunc = cast(glVecFunc)glUniform1iv;
             break;
         case "uint":
+            _vecFunc = cast(glVecFunc)glUniform1uiv;
             break;
         case "float":
+            _vecFunc = cast(glVecFunc)glUniform1fv;
             break;
         case "double":
+            _vecFunc = cast(glVecFunc)glUniform1fv;
             break;
         case "vec":
-            vecUniformFunc!"f"(typeN);
+            _vecFunc = vecUniformFunc!"f"(typeN);
+            break;
+        case "bvec":
+            _vecFunc = vecUniformFunc!"ui"(typeN);
+            break;
+        case "ivec":
+            _vecFunc = vecUniformFunc!"i"(typeN);
+            break;
         default: // assume integer
+            _vecFunc = cast(glVecFunc)glUniform1fv;
             break;
         }
     }
@@ -94,47 +108,47 @@ struct Uniform
 private:
     /// the location of the uniform in the assinged shader
     GLuint _location = 0;
+
+    /// the size of the uniform data - 1 for normal values and >1 for arrays
+    uint _arrSize = 1;
+    /// the function in case this is a vector(or just value) based uniform
+    glVecFunc _vecFunc = null;
 }
 
 /// Extracts all uniforms from a given shader source
-private Uniform[] extractUniforms (string source, GLuint program)
+private Uniform[string] extractUniforms (string source, GLuint program)
 {
-    import std.regex;
-    Uniform[] uniforms;
     auto r = regex(r"uniform\s+(\w*)\s+(\w*)\s*?\[?\s*(\d*)\s*]?\s*;");
     auto matches = matchAll(source, r);
+    Uniform[string] uniforms;
     foreach (m; matches) {
-        uniforms ~= Uniform(m[1], m[2], m[3], program);
+        uniforms[m[1]] = Uniform(m[1], m[2], m[3], program);
     }       
 
     return uniforms;
 }
 
 /// helper for vector functions that should reduce code-duplication
-private glVecFunc vecUniformFunc(string typeIdent)(const int num) 
+private glVecFunc vecUniformFunc(string typeIdent)(string num) 
 {
     switch (num) {
-        case 1:
-            mixin(vecMixin!(typeIdent, 1));
-            break;
-        case 2:
-            mixin(vecMixin!(typeIdent, 2));
-            break;
-        case 3:
-            mixin(vecMixin!(typeIdent, 3));
-            break;
-        case 4:
-            mixin(vecMixin!(typeIdent, 4));
-            break;
+        case "1":
+            mixin(vecMixin!(typeIdent, "1"));
+        case "2":
+            mixin(vecMixin!(typeIdent, "2"));
+        case "3":
+            mixin(vecMixin!(typeIdent, "3"));
+        case "4":
+            mixin(vecMixin!(typeIdent, "4"));
         default: 
-            mixin(vecMixin!(typeIdent, 1));
+            mixin(vecMixin!(typeIdent, "1"));
     }
 
     assert(0);
 }
 
-private template vecMixin(string typeIdent, int num)
+private template vecMixin(string typeIdent, string num)
 {
-        const char[] vecMixin = "return glUniform" ~ to!string(num) ~ typeIdent ~ "v;";
+        const char[] vecMixin = "return cast(glVecFunc) (glUniform" ~ num ~ typeIdent ~ "v);";
 }
 

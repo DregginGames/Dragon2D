@@ -58,11 +58,12 @@ class Env : Base
 
         //The setting should have loaded the configs at the initialization 
         //read all the basic stuff
-        screenResolution = 0;
-        screenResolution.x = to!int(Settings.get("res.x")); 
-        screenResolution.y = to!int(Settings.get("res.y"));
-        isFullscreen = to!bool(Settings.get("window.fullscreen"));
-        title = Settings.get("window.title");
+        _resolution = 0;
+        _resolution.x = to!int(Settings.get("res.x")); 
+        _resolution.y = to!int(Settings.get("res.y"));
+		_aspectRatio = to!float(_resolution.x) / to!float(_resolution.y);
+        _fullscreen = to!bool(Settings.get("window.fullscreen"));
+        _title = Settings.get("window.title");
         
         //Init base systems
         int sdlSuccess = SDL_Init(SDL_INIT_EVERYTHING);
@@ -82,18 +83,18 @@ class Env : Base
         SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
        
         //trying if the window can be created is a little ugly
-        window = windowCreate();   
-        if (window is null) {
+        _window = windowCreate();   
+        if (_window is null) {
             log("Forcing color depth to 16 bits");
             //most likely the color depth shit. Try 16 bits
             SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-            window = windowCreate();
-            if(window is null) {
+            _window = windowCreate();
+            if(_window is null) {
                 log("Forcing windowed mode");
                 //dont give up hope yet! force windowed mode
-                isFullscreen = false;
-                window = windowCreate();
-                if(window is null) {
+                _fullscreen = false;
+                _window = windowCreate();
+                if(_window is null) {
                     log("Sorry i messed up the window creation :(");
                     //ok we messed up
                     throw new InitializationErrorException("Could not create window!");
@@ -102,8 +103,8 @@ class Env : Base
         }
         
         //make the context 
-        context = SDL_GL_CreateContext(window);
-        if (!context) {
+        _context = SDL_GL_CreateContext(_window);
+        if (!_context) {
             //this is fatal
             throw new InitializationErrorException("Could not create context");
         }
@@ -156,8 +157,8 @@ class Env : Base
         TTF_Quit();
         IMG_Quit();
         Mix_Quit();
-        SDL_GL_DeleteContext(context);
-        SDL_DestroyWindow(window);
+        SDL_GL_DeleteContext(_context);
+        SDL_DestroyWindow(_window);
         SDL_Quit();
     }   
 
@@ -189,32 +190,52 @@ class Env : Base
     override void postRender()
     {
         // swap buffers
-        SDL_GL_SwapWindow(window);
+        SDL_GL_SwapWindow(_window);
     }   
-     
+    
+	/// returns the resolution of the screen
+	final @property vec2i resolution()
+	{
+		return _resolution;
+	}
+
+	/// returns the aspect ratio of the window
+	final @property float aspectRatio()
+	{
+		return _aspectRatio;
+	}
+
+	/// returns the title of the engine window
+	final @property string title()
+	{
+		return _title;
+	}
 
 private:
     //System basic stuff 
     /// the window
-    SDL_Window* window;
+    SDL_Window*		_window;
     /// the opengl context
-    SDL_GLContext   context;
+    SDL_GLContext   _context;
     //more specific things (window title, resolution)
     
     /// the resolution of the screen (/render context/window/...)
-    vec2i   screenResolution;
+    vec2i   _resolution;
+	/// the aspect ration of the screen (calculated once)
+	float	_aspectRatio;
+
     /// if the engine runs in fullscreen mode
-    bool    isFullscreen;
+    bool    _fullscreen;
     /// title of the engine window
-    string  title;
+    string  _title;
 
     /// windowCreate is a helper that creates a window based on the settings. Used to reduce code duplication
     SDL_Window* windowCreate() 
     {
-        return SDL_CreateWindow(toStringz(title), 
+        return SDL_CreateWindow(toStringz(_title), 
                 SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
-                screenResolution.x, screenResolution.y, 
-                SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | (isFullscreen ? SDL_WINDOW_FULLSCREEN : 0)
+                _resolution.x, _resolution.y, 
+                SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | (_fullscreen ? SDL_WINDOW_FULLSCREEN : 0)
                 );
     }
 }

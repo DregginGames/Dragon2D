@@ -2,6 +2,7 @@
 	d2d.core.render.view holds the view classes that manage the rendering of the scene on screen.
 */
 module d2d.core.render.view;
+
 import gl3n.linalg;
 import gl3n.math;
 
@@ -79,6 +80,16 @@ class View
         return _viewportSize;
     }
 
+	/// returns the zindex of the view. Higher zindex means later rendering -> on top
+	@property uint zindex()
+	{
+		return _zindex;
+	}
+	/// sets the zindex
+	@property uint zindex(uint z)
+	{
+		return _zindex = z;
+	}
 protected:
 
 	void _updateWorldToView()

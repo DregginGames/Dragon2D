@@ -13,6 +13,7 @@ import d2d.core.container.gamecontainer;
 import d2d.core.io;
 import d2d.system.env;
 import d2d.core.services.scheduler;
+import d2d.core.render.renderer;
 
 /// The engine class loads the basic system. Also the main loop lives here
 class Engine  
@@ -31,7 +32,8 @@ class Engine
             .addChild(new Env()
                 .addChild(new IOTransformer())
 				.addChild(new Scheduler())
-                .addChild(gamecontainer));
+                .addChild(gamecontainer))
+				.addChild(new Renderer());
         Logger.log("Engine started!");
 
 		if (!startupCallback(gamecontainer)) {

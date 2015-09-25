@@ -24,7 +24,7 @@ class Engine
     this(char[][] args, ObjectCallback startupCallback) 
     {
         Settings.init(args);
-        Logger.init(Settings.get("logfile"));
+        Logger.init(Settings.get("logfile").str);
 
         Logger.log("Engine startup...");
         auto gamecontainer = new GameContainer();

@@ -59,11 +59,11 @@ class Env : Base
         //The setting should have loaded the configs at the initialization 
         //read all the basic stuff
         _resolution = 0;
-        _resolution.x = to!int(Settings.get("res.x")); 
-        _resolution.y = to!int(Settings.get("res.y"));
+        _resolution.x = cast(int) Settings["window"].object["width"].integer; 
+        _resolution.y = cast(int) Settings["window"].object["height"].integer;
 		_aspectRatio = to!float(_resolution.x) / to!float(_resolution.y);
-        _fullscreen = to!bool(Settings.get("window.fullscreen"));
-        _title = Settings.get("window.title");
+        _fullscreen = Settings["window"].object["fullscreen"].integer != 0;
+        _title = Settings["title"].str;
         
         //Init base systems
         int sdlSuccess = SDL_Init(SDL_INIT_EVERYTHING);
@@ -111,7 +111,7 @@ class Env : Base
         //reload opengl for all extensions etc. 
         DerelictGL3.reload();
         //vsync 
-        SDL_GL_SetSwapInterval(to!uint(Settings.get("window.vsync")));
+        SDL_GL_SetSwapInterval(cast(int) Settings["window"].object["vsync"].integer);
 
         log("Dont Video init");
 
@@ -125,7 +125,7 @@ class Env : Base
             throw new InitializationErrorException("Could not init audio");
         }
         //FIXME: really put this in a config?
-        Mix_AllocateChannels(to!int(Settings.get("audio.channels")));
+        Mix_AllocateChannels(cast(int) Settings["audio"].object["channels"].integer);
         log("Done Audio init");
         
         //sdl image

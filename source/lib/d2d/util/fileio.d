@@ -109,8 +109,8 @@ class FileResource
 
         // resources can be searched for in 3 places: the engine resource directory, the game resource directory and in the run directory (wich should be the root for engine and game but whatsoever) 
         string filePath;
-        string enginePath = Settings.get("engineDir") ~ Settings.get("engineResourceDir") ~ pathExtension;
-        string gamePath = Settings.get("gameDir") ~ Settings.get("gameResourceDir") ~ pathExtension;
+        string enginePath = Settings.get("engineDir").str ~ Settings.get("engineResourceDir").str ~ pathExtension;
+        string gamePath = Settings.get("gameDir").str ~ Settings.get("gameResourceDir").str ~ pathExtension;
         string generalPath = "./" ~ pathExtension;
         
         // game > engine > genral path 

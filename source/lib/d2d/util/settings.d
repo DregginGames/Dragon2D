@@ -4,6 +4,7 @@
 module d2d.util.settings;
 
 import file = std.file;
+public import std.json;
 
 /**
   This Exception is thrown in case that the command line argument list is invalid
@@ -40,14 +41,16 @@ class Settings
     static void init(in char[][] args)
     {
         //put defaults 
-        cmdValues["gameDir"] = "game/";
-        cmdValues["engineDir"] = "engine/";
-        cmdValues["gameCfgDir"] = "cfg/";
-        cmdValues["engineCfgDir"] = "cfg/";
-        cmdValues["gameCfg"] = "game.cfg";
-        cmdValues["engineCfg"] = "engine.cfg";
-        cmdValues["gameResourceDir"] = "resources/";
-        cmdValues["engineResourceDir"] = "resources/";
+        jsonBody = ["cmd": JSONValue( [
+            "gameDir": "game/",
+            "engineDir": "engine/",
+            "gameCfgDir": "cfg/",
+            "engineCfgDir": "cfg/",
+            "gameCfg": "game.cfg",
+            "engineCfg": "engine.cfg",
+            "gameResourceDir": "resources/",
+            "engineResourceDir": "resources/"
+        ])];
 
 
         //read args
@@ -59,59 +62,55 @@ class Settings
                     throw new ArgumentListInvalidException(("No value given for " ~ arg).idup);
                 }
                 auto value = args[i];
-                cmdValues[arg[1..$].idup] = value.idup;
+                jsonBody["cmd"].object[arg[1..$].idup] = JSONValue(value.idup);
             }
             else {
                 throw new ArgumentListInvalidException(("Invalid syntax for argument " ~ arg).idup);
             }
         }
-        
+
         //the logfile is a bit confusing cause its default lives in engineDir... 
-        auto logfile = ("logfile" in cmdValues);
+        auto logfile = ("logfile" in jsonBody["cmd"].object);
         if(logfile is null) {
-            cmdValues["logfile"] = cmdValues["engineDir"] ~ "log.txt";
+            auto filestr = jsonBody["cmd"].object["engineDir"].str ~ "log.txt";
+            jsonBody["cmd"].object["logfile"] = JSONValue(filestr);
         }
     
         //load the default files 
-        loadFile(cmdValues["engineDir"]~cmdValues["engineCfgDir"]~cmdValues["engineCfg"]);
-        loadFile(cmdValues["gameDir"]~cmdValues["gameCfgDir"]~cmdValues["gameCfg"]);
-        loadFile(cmdValues["gameDir"]~"game.init");
+        loadFile(jsonBody["cmd"].object["engineDir"].str~jsonBody["cmd"].object["engineCfgDir"].str~jsonBody["cmd"].object["engineCfg"].str);
+        loadFile(jsonBody["cmd"].object["gameDir"].str~jsonBody["cmd"].object["gameCfgDir"].str~jsonBody["cmd"].object["gameCfg"].str);
+        loadFile(jsonBody["cmd"].object["gameDir"].str~"game.init");
+
+        auto foo = toJSON(&jsonBody, true);
+        foo = foo;
     }
 
     /**
         Get returns a property with the name "name". 
 
-        After checking command line arguments (wich can overwrite EVERY property, it goes from file to file and searches for each property. 
-        Also, if a file has a prefix name (SettingFile.name), it also checks if the property exists with the given prefix.  
+        After checking command line arguments (wich can overwrite EVERY property, it goes from file to file and searches for each property.  
     Params:
         name = the name of the setting to get 
         canBeEmpty = if true (default is false) get wont throw an exception if the setting is not found but insted will return emptystring.  
     Throws:
         UnknownSettingException if a setting is not found. Carefully adding stuff should avoid this!
       */
-    static string get(string name, bool canBeEmpty=false) 
+    static JSONValue get(string name, bool canBeEmpty=false) 
     {
-        //the commandline can overwrite any setting from anywhere
-        auto p = (name in cmdValues);
-        if (p !is null) {
-            return *p;
-        } 
-
-        //search the setting files. first match hits. 
-        foreach (ref f; settingFiles) {
-            //check for both prefixname.settingname and pure settingname
-            auto noPrefix = (name in f.values);
-            auto withPrefix = ( f.name ~ "." ~ name in f.values);
-            if (noPrefix !is null) {
-                return *noPrefix;
-            } 
-            else if(withPrefix !is null) {
-                return *withPrefix;
+        //search the setting files. first match hits. Every Memeber of value is an object representing a file
+        foreach (ref o; jsonBody.object) {
+            if (o.type == JSON_TYPE.NULL) {
+                continue;
             }
+            //check for both prefixname.settingname and pure settingname
+            auto obj = (name in o.object);
+            if (obj !is null) {
+                return *obj;
+            } 
         }
         
         if (canBeEmpty) {
-            return "";
+            return JSONValue(["":""]);
         }
         debug
         {
@@ -119,115 +118,40 @@ class Settings
 		}
 		else {
 			//default is errorish, but shouldnt kill the engine - at least in release, so..
-			return "invalid";
+			return JSONValue(["invalid":"invalid"]);
 		}
     }
 
     /// loads a setting file
     static void loadFile(string name)
     {
-        settingFiles ~= SettingFile(name);
+        try {
+            char[] data = cast(char[])file.read(name);
+            jsonBody.object[name] = parseJSON(data);
+        } 
+        catch (Exception e) {
+            debug {
+                throw e;    // only in debug we want to know about the failing file-reads
+            }
+        }
     }
     
     /// saves the setting state (all setting files) of the current instance
     static void save()
     {
-        foreach (ref f; settingFiles) {
-            f.save();
+        foreach (string key, ref o; jsonBody.object) {
+            if ("cmd" != key) {
+                file.write(key, toJSON(&o,true));
+            }
         }
     } 
 
+    /// the get operator for [name]-access
+    static JSONValue opIndex(string name)
+    {
+        return get(name, true);
+    }
+
 private:
-    static SettingFile[] settingFiles;
-    static string[string] cmdValues;
-}
-
-/**
-    Internal representation of setting files. 
-    The syntax of a setting file is: "key: value \n" 
-    there is one special key, called nameprefix, wich prefixes all settings in the file its value. 
-  */
-private struct SettingFile
-{
-    /// ctor takes the file that should be loaded as argument
-    this(string filename) 
-    {
-        this.filename = filename;
-        load();
-    }
-
-    void load() {
-        import file = std.file;
-        import std.string;
-        try {
-            char[] data = cast(char[])file.read(filename);
-            auto lines = splitLines(data);
-            string[string] rawValues;
-            foreach (ref line; lines) {
-                auto splitpos = indexOf(line, ":");
-                // simply ignore invalid lines 
-                if (splitpos != -1) {
-                    char[] l = strip(line[0..splitpos]);
-                    char[] r = strip(line[splitpos+1..$]);
-                    if (l == "nameprefix") {
-                        name = l.idup;
-                    }
-                    else {
-                        rawValues[l.idup] = r.idup;
-                    }
-                }
-            }
-            //set date to values
-            foreach (string key, string val; rawValues)
-            {
-                if (name!="") {
-                    values[(name ~ "." ~ key).idup] = val.idup;
-                }
-                else {
-                    values[key.idup] = val.idup;
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            // dont throw in release build but fail silently
-            debug {
-                throw e;
-            }
-        }
-    }
-
-    /// saves settings to the given file
-    void save()
-    {
-        try {
-            char[] outstring;
-            if (name != "") {
-                outstring = ("nameprefix:" ~ name ~ "\n").dup;
-            }
-            foreach (string key, string val; values) {
-                outstring ~= (key ~ ":" ~ val).dup;
-            }
-            import file = std.file;
-            file.write(filename, outstring);
-        }
-        catch(Exception e)
-        {
-            // also here: dont throw in release 
-            debug {
-                throw e;
-            }
-        }
-    }
-
-    /// just an alias function for load. might get extras later in time.
-    void reload()
-    {
-        load();
-    }
-   
-   
-    string name; 
-    string filename;
-    string[string] values;
+    static JSONValue jsonBody;
 }

@@ -219,8 +219,8 @@ class IOTransformer : Base
     override void update()
     {
         // Get Screen Res for normalization 
-        float width = cast(float) to!int(Settings.get("res.x"));
-        float height = cast(float) to!int(Settings.get("res.y"));
+        float width = cast(float) Settings["window"].object["width"].integer;
+        float height = cast(float) Settings["window"].object["height"].integer;
         auto events = pollEvents();
         foreach (e; events) {
             if (cast(SDLEvent) e) {
@@ -234,15 +234,15 @@ class IOTransformer : Base
                     case SDL_KEYDOWN: 
                         auto key = keyevent.keysym.sym;
                         string keyname = fromStringz(SDL_GetKeyName(key)).idup;
-                        fireEvent(new KeyDownEvent(Settings.get(keyname, true), key, sdlevent));
+                        fireEvent(new KeyDownEvent(Settings["keybinding"].object[keyname].str, key, sdlevent));
                         break;
                     case SDL_KEYUP:
                         auto key = keyevent.keysym.sym;
                         string keyname = fromStringz(SDL_GetKeyName(key)).idup;
-                        fireEvent(new KeyUpEvent(Settings.get(keyname, true), key, sdlevent));
+                        fireEvent(new KeyUpEvent(Settings["keybinding"].object[keyname].str, key, sdlevent));
                         break;
                     case SDL_MOUSEMOTION:
-                        string eventname = Settings.get("motionEvent", true);
+                        string eventname = Settings["keybinding"].object["mousemotion"].str;
                         auto pos = vec2i(mevent.x, mevent.y);
                         auto nops = vec2(cast(float)(pos.x)/width, cast(float)(pos.y)/height);
                         auto rel = vec2i(mevent.xrel, mevent.yrel);
@@ -253,18 +253,18 @@ class IOTransformer : Base
                         auto buttonId = mbevent.button;
                         auto pos = vec2i(mbevent.x, mbevent.y);
                         auto npos = vec2(cast(float)(pos.x)/width, cast(float)(pos.y)/height);
-                        string eventname = Settings.get("mouse" ~ toImpl!string(buttonId), true);
+                        string eventname = Settings["keybinding"].object["mouse" ~ toImpl!string(buttonId)].str;
                         fireEvent(new MouseButtonDownEvent(eventname, sdlevent, pos, npos, buttonId));
                         break;
                     case SDL_MOUSEBUTTONUP:
                         auto buttonId = mbevent.button;
                         auto pos = vec2i(mbevent.x, mbevent.y);
                         auto npos = vec2(cast(float)(pos.x)/width, cast(float)(pos.y)/height);
-                        string eventname = Settings.get("mouse" ~ toImpl!string(buttonId), true);
+                        string eventname = Settings["keybinding"].object["mouse" ~ toImpl!string(buttonId)].str;
                         fireEvent(new MouseButtonUpEvent(eventname, sdlevent, pos, npos, buttonId));
                         break;
                     case SDL_MOUSEWHEEL:
-                        string eventname = Settings.get("mousewheel", true);
+                        string eventname = Settings["keybinding"].object["mousewheel"].str;
                         fireEvent(new MouseWheelEvent(eventname, sdlevent));
 						break;
                     default: 

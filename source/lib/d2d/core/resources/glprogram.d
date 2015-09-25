@@ -14,8 +14,8 @@ import d2d.util.fileio;
 import d2d.util.logger;
 
 //some aliases for function types
-alias glVecFunc = void function (GLint, GLsizei, void*);
-alias glMatFunc = void function (GLint, GLsizei, bool, void*);
+alias glVecFunc = extern (C) void function (GLint, GLsizei, void*);
+alias glMatFunc = extern (C) void function (GLint, GLsizei, bool, void*);
 /// A GLProgram that loads uniform bindings automaically
 class GLProgram : Resource
 {
@@ -82,6 +82,19 @@ class GLProgram : Resource
         super(name);
     }
     
+	/// Sets the Data for a uniform. Does nothing if the Uniform does not exist.
+	void setUniformValue (T) (string name, T* valuePtr)
+	{
+		auto p = name in _uniforms;
+		if(!(p is null)) {
+			p.setUniformValue!T(valuePtr);
+		}
+	}
+
+	void bind()
+	{
+		glUseProgram(_program);
+	}
 private:
     /// the default version for all shaders. Is appended after load.
     static string _shaderDefaultVersion = "#version 330\n";
@@ -162,7 +175,7 @@ struct Uniform
 			_vecFunc(_location, _arrSize, cast(void*)valuePtr);
 		}
 		else if (null != _matFunc) {
-			_matFunc(_location, _arrSize, false, cast(void*)valuePtr);
+			_matFunc(_location, _arrSize, true, cast(void*)valuePtr);
 		}
 	}
 
@@ -190,7 +203,7 @@ private Uniform[string] extractUniforms (string source, GLuint program)
     auto matches = matchAll(source, r);
     Uniform[string] uniforms;
     foreach (m; matches) {
-        uniforms[m[1]] = Uniform(m[1], m[2], m[3], program);
+        uniforms[m[2]] = Uniform(m[1], m[2], m[3], program);
     }       
 
     return uniforms;

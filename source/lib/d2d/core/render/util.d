@@ -18,10 +18,10 @@ import d2d.system.env;
 mat4 genOrtographicProjection(float width, float height, float near = 0.0, float far = 100.0)
 {
 	return mat4(
-		[ 1.0f/width, 0.0f, 0.0f],
-		[ 0.0f, 1.0f/height, 0.0f, 0.0f],
-		[ 0.0f, 0.0f, -(2.0f/(far-near)), -((far+near)/(far-near))],
-		[ 0.0f, 0.0f, 0.0f, 1.0f]);
+		[ 1.0f/width, 0.0f, 0.0f, 0.0f,
+		  0.0f, 1.0f/height, 0.0f, 0.0f,
+		  0.0f, 0.0f, -(2.0f/(far-near)), -((far+near)/(far-near)),
+		  0.0f, 0.0f, 0.0f, 1.0f]);
 }
 
 /**
@@ -45,23 +45,24 @@ mat4 gen2DModelToWorld(vec2 modelPos, float alpha = 0.0f, float scale = 1.0f)
 }
 
 /**
-	Creates 2 vertex arrays: one for the points (-0.5..0.5) and one wich is the uvs in the given range
+	Creates 2 vertex arrays: one for the points (x or y-0.5..x or y+0.5) and one wich is the uvs in the given range
 */
-void genUVMappedVertexArray(out vec4[] vertices, out vec2[] uvs, float x=0.0f, float y=0.0f, float w=1.0f, float h=1.0f)
+void genUVMappedVertexArray(out vec4[] vertices, out vec2[] uvs, float x=0.0f, float y=0.0f, float uvx=0.0f, float uvy=0.0f, float uvw=1.0f, float uvh=1.0f)
 {
 	//order: lower left, lower right, upper left, lower right, upper right, upper left
-	vertices ~= vec4(-0.5f, -0.5f, 0.0f, 1.0f);
-	uvs ~= vec2(x, y);
-	vertices ~= vec4(0.5f, -0.5f, 0.0f, 1.0f);
-	uvs ~= vec2(x+w, y);
-	vertices ~= vec4(-0.5f, 0.5f, 0.0f, 1.0f);
-	uvs ~= vec2(x, y+h);
-	vertices ~= vec4(0.5f, -0.5f, 0.0f, 1.0f);
-	uvs ~= vec2(x+w, y);
-	vertices ~= vec4(0.5f, 0.5f, 0.0f, 1.0f);
-	uvs ~= vec2(x+w, y+h);
-	vertices ~= vec4(-0.5f, 0.5f, 0.0f, 1.0f);
-	uvs ~= vec2(x+w, y);
+    
+	vertices ~= vec4(x-0.5f, y-0.5f, 0.0f, 1.0f);
+	uvs ~= vec2(uvx, uvy+uvh);
+	vertices ~= vec4(x+0.5f, y-0.5f, 0.0f, 1.0f);
+	uvs ~= vec2(uvx+uvw, uvy+uvh);
+	vertices ~= vec4(x-0.5f, y+0.5f, 0.0f, 1.0f);
+	uvs ~= vec2(uvx, uvy);
+	vertices ~= vec4(x-0.5f, y+0.5f, 0.0f, 1.0f);
+	uvs ~= vec2(uvx, uvy);
+	vertices ~= vec4(x+0.5f, y+0.5f, 0.0f, 1.0f);
+	uvs ~= vec2(uvx+uvw, uvy);
+	vertices ~= vec4(x+0.5f, y-0.5f, 0.0f, 1.0f);
+	uvs ~= vec2(uvx+uvw, uvy+uvh);
 }	
 
 /**
@@ -99,10 +100,10 @@ vec2i toPixel(vec2 pos, bool clampUpper = false)
 }
 
 /**
-	Creates an rectangle wich has the same aspect ration as the window.
+	Calculates the side-lengths for a rectange that has the same aspect ration as the window.
 	It takes the height as reference for the calculation
 */
-vec2 aspectRatioRectangle(float height)
+vec2 aspectRatioRectangleRange(float height)
 {
 	auto ar = Base.getService!Env("d2d.env").aspectRatio;
 	return vec2(ar * height, height);

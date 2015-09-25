@@ -5,7 +5,7 @@
 #ifdef STAGE_VERTEX
 	void main() 
 	{
-		gl_Position = MVP * in_pos;
+		gl_Position =  MVP*in_pos;
 		UV = in_uv;
 	}
 #endif

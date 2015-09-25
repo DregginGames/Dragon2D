@@ -178,18 +178,13 @@ class Env : Base
         }
     }
 
-    /// first reder that is called and does something. clean the screen!
-    override void render()
-    {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    }
-
     /**
       Should be the last post-render that is called and swaps all buffers.
      */
     override void postRender()
     {
-        // swap buffers
+        // swap buffers.
+		// doesnt belong into the render because reasons. 
         SDL_GL_SwapWindow(_window);
     }   
     

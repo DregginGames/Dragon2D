@@ -29,10 +29,9 @@ abstract class Renderable
 		glDeleteVertexArrays(1, &_vao);
 	}
 
-	/// Performs an actual render on screen.
+	/// Performs an actual render on screen. 
 	void render(ref View view)
 	{
-		
 	}
 
 	@property GLuint vao()

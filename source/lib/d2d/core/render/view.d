@@ -27,7 +27,7 @@ class View
 
 
 	/// Retrun the Projection matrix for this view
-	@property mat4 worldToView()
+	@property const mat4 worldToView()
 	{
 		return _worldToView;
 	}

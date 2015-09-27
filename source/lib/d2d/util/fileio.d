@@ -180,6 +180,9 @@ private:
     /// returns first file ing gamePath with Basename is name (without extension) or emptystring
     static string makeFilePath(in string basePath, in string basename) 
     {
+        if (!exists(basePath)) {
+            return "";
+        }
         try {
             auto gameFiles = dirEntries(basePath.idup, (basename ~ ".*").idup, SpanMode.shallow);
             // FIXME: a little diry here

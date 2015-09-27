@@ -6,6 +6,7 @@ import d2d.core.resource;
 import d2d.core.resources.glprogram;
 import d2d.game.simple.camera;
 import d2d.game.simple.sprite;
+import d2d.game.io.cursor;
 
 int main(char[][] args)
 {
@@ -19,6 +20,7 @@ bool onStartup(Base base)
 	import std.stdio;
 	base.addChild(new Camera(2.0f));
 	base.addChild(new Sprite("texture.test"));
+    base.addChild(new Cursor());
     auto r = Resource.create!GLProgram("shader.default");
 	return true;
 }

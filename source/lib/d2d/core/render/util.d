@@ -46,23 +46,24 @@ mat4 gen2DModelToWorld(vec2 modelPos, float alpha = 0.0f, float scale = 1.0f)
 
 /**
 	Creates 2 vertex arrays: one for the points (x or y-0.5..x or y+0.5) and one wich is the uvs in the given range
+    Calling this function multiple times on the same arrays will add new quads to them - usefull for batching.
 */
-void genUVMappedVertexArray(out vec4[] vertices, out vec2[] uvs, float x=0.0f, float y=0.0f, float uvx=0.0f, float uvy=0.0f, float uvw=1.0f, float uvh=1.0f)
+void genUVMappedVertexArray(out vec4[] vertices, out vec2[] uvs, vec2 pos = 0, vec2 uvpos = 0, vec2 uvsize = vec2(1.0f, 1.0f))
 {
 	//order: lower left, lower right, upper left, lower right, upper right, upper left
     
-	vertices ~= vec4(x-0.5f, y-0.5f, 0.0f, 1.0f);
-	uvs ~= vec2(uvx, uvy+uvh);
-	vertices ~= vec4(x+0.5f, y-0.5f, 0.0f, 1.0f);
-	uvs ~= vec2(uvx+uvw, uvy+uvh);
-	vertices ~= vec4(x-0.5f, y+0.5f, 0.0f, 1.0f);
-	uvs ~= vec2(uvx, uvy);
-	vertices ~= vec4(x-0.5f, y+0.5f, 0.0f, 1.0f);
-	uvs ~= vec2(uvx, uvy);
-	vertices ~= vec4(x+0.5f, y+0.5f, 0.0f, 1.0f);
-	uvs ~= vec2(uvx+uvw, uvy);
-	vertices ~= vec4(x+0.5f, y-0.5f, 0.0f, 1.0f);
-	uvs ~= vec2(uvx+uvw, uvy+uvh);
+	vertices ~= vec4(pos.x-0.5f, pos.y-0.5f, 0.0f, 1.0f);
+	uvs ~= vec2(uvpos.x, uvpos.y+uvsize.y);
+	vertices ~= vec4(pos.x+0.5f, pos.y-0.5f, 0.0f, 1.0f);
+	uvs ~= vec2(uvpos.x+uvsize.x, uvpos.y+uvsize.y);
+	vertices ~= vec4(pos.x-0.5f, pos.y+0.5f, 0.0f, 1.0f);
+	uvs ~= vec2(uvpos.x, uvpos.y);
+	vertices ~= vec4(pos.x-0.5f, pos.y+0.5f, 0.0f, 1.0f);
+	uvs ~= vec2(uvpos.x, uvpos.y);
+	vertices ~= vec4(pos.x+0.5f, pos.y+0.5f, 0.0f, 1.0f);
+	uvs ~= vec2(uvpos.x+uvsize.x, uvpos.y);
+	vertices ~= vec4(pos.x+0.5f, pos.y-0.5f, 0.0f, 1.0f);
+	uvs ~= vec2(uvpos.x+uvsize.x, uvpos.y+uvsize.y);
 }	
 
 /**

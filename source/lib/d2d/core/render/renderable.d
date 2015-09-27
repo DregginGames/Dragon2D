@@ -13,7 +13,15 @@ import d2d.core.render.view;
 	Renderable is abstract base for all types of /renderables/. 
 	A Renderable is an object that actually is renderd on screen, like a circle, a textured quad, a tile map, ....
 	Its one of the few structures that life outside the Base-class hirarchy
-
+    
+    An importand concept of Renderables is the detail level. The higher this level is, the higher the level of the View needs to be to be able to see this object. 
+    Here is a reccomendation for the detail levels:
+        00..19: Application-level - always-visible things: Debug information, Alerts, ....
+        20..39: Map-level - map-baisc stuff like terrain
+        40..59: Map-detail-level - advaned stuff like Buildings, details, flowers, ... 
+        60..79: Actor-level - everything that actually does things like NPCs, players, ...
+        80+: UI-Level - the user interface. Above that... whatever 
+ 
 */
 abstract class Renderable
 {
@@ -39,7 +47,17 @@ abstract class Renderable
 		return _vao;
 	}
 
-protected:
+    /// The detail Level. The higher this level is, the higher the level of a view needs to be to see this object
+    @property int detailLevel()
+    {
+        return _detailLevel;
+    }
+    @property int detailLevel(int l)
+    {
+        return _detailLevel = l;
+    }
+
+    protected:
 	/// binds the this objects vao
 	void _bindVAO()
 	{
@@ -65,6 +83,7 @@ private:
 	GLuint _vao;
 	/// the stored VAO for binding
 	GLuint _vaoStored;
-
+    /// the detail level
+    int _detailLevel = 25; // imagine everything is a map
 
 }

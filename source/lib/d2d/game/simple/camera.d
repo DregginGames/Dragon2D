@@ -17,6 +17,7 @@ class Camera : Entity
 		_height = height;
 		auto size = aspectRatioRectangleRange(height);
 		_view = new View(vec2(0.0f,0.0f), size);
+        _view.detailLevel = 100; //we want to see everything!
 	}
 
 	/// tje height of the cameras view

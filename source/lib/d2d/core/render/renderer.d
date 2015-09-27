@@ -50,7 +50,9 @@ class Renderer : Base
 			glViewport(viewportPos.x, viewportPos.y, viewportSize.x, viewportSize.y);
 
 			foreach(ref o; _objects) {
-				o.render(v);
+                if (v.detailLevel >= o.detailLevel) {
+				    o.render(v);
+                }
 			}
 		}
 

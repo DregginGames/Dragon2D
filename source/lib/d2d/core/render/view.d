@@ -90,8 +90,20 @@ class View
 	{
 		return _zindex = z;
 	}
+
+    /// returns the detail level that this view can see
+    @property int detailLevel()
+    {
+        return _detailLevel;
+    }
+    @property int detailLevel(int l)
+    {
+        return _detailLevel = l;
+    }
+
 protected:
 
+    /// Updates the world to view Matrix
 	void _updateWorldToView()
 	{
 		_worldToView = gen2DWorldToView(_pos)*genOrtographicProjection(_size.x, _size.y);
@@ -108,6 +120,8 @@ private:
 	vec2 _viewportSize;
 	/// higer z-index means renderd later -> above other views
 	uint _zindex = 0;
+    /// the detail level
+    uint _detailLevel = 19; // see d2d.core.render.renderable
 
 	/// this generated member is the WorldToView matrix for this view
 	mat4 _worldToView;

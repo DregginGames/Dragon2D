@@ -106,7 +106,7 @@ protected:
     /// Updates the world to view Matrix
 	void _updateWorldToView()
 	{
-		_worldToView = gen2DWorldToView(_pos)*genOrtographicProjection(_size.x, _size.y);
+		_worldToView = genOrtographicProjection(_size.x, _size.y)*gen2DWorldToView(_pos);
 	}
 
 private:

@@ -17,7 +17,7 @@ abstract class Entity : Base
 	enum PositionMode {
 		absolute = 0,	/// position is absolute in world space
 		relative = 1,	/// position is relative to the parent, in world space. if no parent is set, it acts like absolute
-		parentBound = 3, /// position is the same as the parent; acts like absolute if no parent is set
+		parentBound = 3, /// position is the same as the parent; acts like absolute if no parent is set         /__ Why is this 3??
 	};
 
 	/**
@@ -29,31 +29,37 @@ abstract class Entity : Base
 	}
 	@property vec2 pos(vec2 p)
 	{
-		return _pos = pos;
-
+		return _pos = p;
 	}
+
+    /** 
+        The position-mode of this object
+    */
+    @property PositionMode positionMode()
+    {
+        return positionMode;
+    }
+    @property PositionMode positionMode(PositionMode mode)
+    {
+        return _positionMode = mode;
+    }
 
 	/**
 		The absolute position of this object
 	*/
 	@property vec2 absolutePos()
 	{
-		switch (_positionMode) {
-			case PositionMode.absolute:
-				return _pos;
-			case PositionMode.relative:
-				if (!(this.parent is null) && !(cast(Entity)this.parent is null)) {
-					return (cast(Entity)this.parent).absolutePos + _pos;
-				}
-				break;
-			case PositionMode.parentBound:
-				if (!(this.parent is null) && !(cast(Entity)this.parent is null)) {
-					return (cast(Entity)this.parent).absolutePos;
-				}
-				break;
-			default:	//just ignore this
-				break;
-		}
+        if (!(this.parent is null) && (cast(Entity)this.parent)) {
+            auto p = (cast(Entity)this.parent);
+		    switch (_positionMode) {
+			    case PositionMode.relative:
+                    return p.absolutePos + _pos;
+			    case PositionMode.parentBound:
+					return p.absolutePos;
+			    default:	//just ignore this
+				    break;
+		    }
+        }
 
 		return _pos;
 	}

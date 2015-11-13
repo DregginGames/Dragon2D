@@ -9,6 +9,7 @@ import d2d.core.render.view;
 import d2d.core.render.util;
 import d2d.core.render.renderer;
 import d2d.game.entity;
+
 /// A simple fullscreen camera. 
 class Camera : Entity
 {
@@ -30,11 +31,16 @@ class Camera : Entity
 		return _height = h;
 	}
 
+    @property View view()
+    {
+        _view.pos = this.absolutePos; //needed to give an updated view back
+        return _view;
+    }
+
 	override void render()
 	{
-		_view.pos = this.absolutePos;
 		auto renderer = getService!Renderer("d2d.renderer");
-		renderer.pushView(_view);
+		renderer.pushView(this.view);
 	}
 private:
 	/// the height of the cameras view

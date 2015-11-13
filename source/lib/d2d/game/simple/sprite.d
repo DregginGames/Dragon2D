@@ -17,6 +17,7 @@ class Sprite : Entity
 	override void render()
 	{
 		auto renderer = getService!Renderer("d2d.renderer");
+        _quad.pos = this.absolutePos;
 		renderer.pushObject(_quad);
 	}
 

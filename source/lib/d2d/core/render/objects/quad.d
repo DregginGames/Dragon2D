@@ -55,7 +55,7 @@ class TexturedQuad : Renderable
 		auto prg = Resource.create!GLProgram(_program);
 		prg.bind();
 		auto m = gen2DModelToWorld(_pos, _rotation, _size);
-        auto mvp = m*view.worldToView;
+        auto mvp = view.worldToView*m;
         prg.setUniformValue("MVP", mvp.value_ptr);
 		auto texid = tex.texid;
 		prg.setUniformValue("textureSampler", &texid);
@@ -77,6 +77,18 @@ class TexturedQuad : Renderable
     {
         return _uvVBO;
     }
+
+    /**
+    The position of this quad.    /-- totally not stolen from entity.d
+	*/
+	@property vec2 pos()
+	{
+		return _pos;
+	}
+	@property vec2 pos(vec2 p)
+	{
+		return _pos = p;
+	}
 
 protected:
     /// Fills the UV- and Vertex buffers with thier Data. 

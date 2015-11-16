@@ -11,8 +11,38 @@ import d2d.core.resource;
 import d2d.util.fileio;
 import d2d.util.logger;
 
+/// Simple wrapper for GLuint that automatically calls glDeleteTextures - avoids nasty leeks
+class GPUTexture
+{
+    this() 
+    {
+        glGenTextures(1,&_texId);
+    }
+
+    this(GLuint texId) 
+    {
+        _texId = texId;
+    }
+
+    ~this()
+    {
+        if (_texId != 0) {
+            glDeleteTextures(1,&_texId);
+        }
+    }
+
+    ///Only gets the ID. The id cant be changed after creation
+    @property GLuint id() {
+        return _texId;
+    }
+
+
+private:
+    GLuint _texId;
+}
+
 /// Helper function to create a  Opengl Texture from an SDL_Surface 
-private GLuint SurfaceToTexture(SDL_Surface* surface)
+GLuint SurfaceToTexture(SDL_Surface* surface)
 {
     ///juuust to make shure
     if (surface is null) {
@@ -63,7 +93,7 @@ class Texture : Resource
             if (surface is null) {
                 Logger.log("Could not load image " ~ fresource.file ~ " for " ~ name ~ " - " ~ fromStringz(IMG_GetError()));
             } else {
-                _texid = SurfaceToTexture(surface);
+                _tex = new GPUTexture(SurfaceToTexture(surface));
                 SDL_FreeSurface(surface);
             }
         } else {
@@ -72,17 +102,11 @@ class Texture : Resource
         super(name);
     }
 
-    ~this()
+    @property GPUTexture gpuTexture()
     {
-        if(_texid != 0) {
-            glDeleteTextures(1, &_texid);
-        }
-    }
-    @property GLuint texid()
-    {
-        return _texid;
+        return _tex;
     }   
 private:
     /// the id of the texture
-    GLuint _texid;
+    GPUTexture _tex;
 }

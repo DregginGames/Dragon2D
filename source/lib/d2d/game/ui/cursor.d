@@ -1,7 +1,7 @@
 /**
     d2d.game.io.cursor holds the cursor-functions
 */
-module d2d.game.io.cursor;
+module d2d.game.ui.cursor;
 
 import gl3n.linalg;
 
@@ -48,6 +48,7 @@ class WorldCursor : Cursor
         this.positionMode = PositionMode.relative;
     }
     
+    /// Returns the position of the cursor in world-coordinates
     override @property vec2 absolutePos()
     {
         if (!(this.parent is null) && (cast(Camera)this.parent)) {

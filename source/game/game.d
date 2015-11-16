@@ -4,9 +4,10 @@ import d2d.core.base;
 import d2d.core.dbg.eventdebug;
 import d2d.core.resource;
 import d2d.core.resources.glprogram;
+import d2d.core.resources.font;
 import d2d.game.simple.camera;
 import d2d.game.simple.sprite;
-import d2d.game.io.cursor;
+import d2d.game.ui.cursor;
 import d2d.game.entity;
 import gl3n.linalg;
 
@@ -30,6 +31,5 @@ bool onStartup(Base base)
     camera.addChild(cursor);
     base.addChild(sprite);
     base.addChild(camera);
-    auto r = Resource.create!GLProgram("shader.default");
 	return true;
 }

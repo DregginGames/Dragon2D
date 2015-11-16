@@ -16,14 +16,12 @@ import d2d.core.resource;
 /**
 	A simple textured quad
 */
-class TexturedQuad : Renderable
+class RawTexturedQuad : Renderable
 {
-	this(string texture, string program="shader.default")
+	this(string program="shader.default")
 	{
 		// we dont store the resources, we just get them. allows reloading on demand etc. 
-		_texture = texture;
 		_program = program;
-		Resource.preload!Texture(_texture);
 		Resource.preload!GLProgram(_program);       
 		_bindVAO();
 		glGenBuffers(1, &_vertexVBO);
@@ -45,19 +43,17 @@ class TexturedQuad : Renderable
 	{
 		glDeleteBuffers(1, &_vertexVBO);
 		glDeleteBuffers(1, &_uvVBO);
-		Resource.free(_texture);
 		Resource.free(_program);
 
 	}
 	override void render(ref View view)
 	{
-		auto tex = Resource.create!Texture(_texture);
 		auto prg = Resource.create!GLProgram(_program);
 		prg.bind();
 		auto m = gen2DModelToWorld(_pos, _rotation, _size);
         auto mvp = view.worldToView*m;
         prg.setUniformValue("MVP", mvp.value_ptr);
-		auto texid = tex.texid;
+        auto texid = _tex.id;
 		prg.setUniformValue("textureSampler", &texid);
 
 		//actually render 
@@ -90,13 +86,41 @@ class TexturedQuad : Renderable
 		return _pos = p;
 	}
 
+    /**
+        The texture of this quad
+    */
+    @property GPUTexture texture()
+    {
+        return _tex;
+    }
+    @property GPUTexture texture(GPUTexture tex)
+    {
+        return _tex=tex;
+    }
+        
+    /**
+        The uv-offset of this quad
+    */
+    void getUVOffset(out vec2 uvpos, out vec2 uvsize)
+    {
+        uvpos = _uvpos;
+        uvsize = _uvsize;
+    }
+
+    void setUVOffset(vec2 uvpos, vec2 uvsize)
+    {
+        _uvpos = uvpos;
+        _uvsize = uvsize;
+        _setVBO();
+    }
+
 protected:
     /// Fills the UV- and Vertex buffers with thier Data. 
     void _setVBO()
     {
         vec4[] vertices;
 		vec2[] uvs;
-		genUVMappedVertexArray(vertices, uvs);
+		genUVMappedVertexArray(vertices, uvs, vec2(0,0), _uvpos, _uvsize);
 
         glBindBuffer(GL_ARRAY_BUFFER, _vertexVBO);
 		glBufferData(GL_ARRAY_BUFFER, vec4.sizeof*vertices.length, vertices.ptr, GL_STATIC_DRAW);
@@ -107,10 +131,10 @@ protected:
         glBindBuffer(GL_ARRAY_BUFFER,  0);
     }
 private:
+    /// this quads texture
+    GPUTexture _tex;
 	/// this quads program
 	string _program;
-	/// this quads texture
-	string _texture;
 	/// the position of this quad.
 	vec2	_pos = 0;
 	/// the size of this quad
@@ -121,6 +145,34 @@ private:
 	GLuint  _vertexVBO;
 	/// the vbo for the uv mapping
 	GLuint	_uvVBO;
+    /// the uv-offset
+    vec2 _uvpos;
+    vec2 _uvsize = vec2(1.0f,1.0f);
+}
+
+class TexturedQuad : RawTexturedQuad
+{
+    this(string texture, string program="shader.default")
+    {
+        _texture = texture;
+        Resource.preload!Texture(_texture);
+        super(program);
+    }
+
+    override void render(ref View view) 
+    {
+        auto tex = Resource.create!Texture(_texture);
+        this.texture=tex.gpuTexture;
+        super.render(view);
+    }
+
+    ~this()
+    {
+        Resource.free(_texture);
+    }
+private:
+    /// this quads texture
+	string _texture;
 }
 
 /**

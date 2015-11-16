@@ -5,8 +5,10 @@ module d2d.core.render.util;
 
 import std.conv;
 import std.math;
+import std.algorithm;
 
 import gl3n.linalg;
+import derelict.sdl2.sdl; 
 
 import d2d.core.base;
 import d2d.system.env;
@@ -108,4 +110,15 @@ vec2 aspectRatioRectangleRange(float height)
 {
 	auto ar = Base.getService!Env("d2d.env").aspectRatio;
 	return vec2(ar * height, height);
+}
+
+/// Generates an SDL color from an opengl color
+SDL_Color sdlColor(vec4 col)
+{
+    SDL_Color sdlcol;
+    sdlcol.r = cast(ubyte)rint(max(0.0f,min(1.0f,col.r))*255f);
+    sdlcol.g = cast(ubyte)rint(max(0.0f,min(1.0f,col.g))*255f);
+    sdlcol.b = cast(ubyte)rint(max(0.0f,min(1.0f,col.b))*255f);
+    sdlcol.a = cast(ubyte)rint(max(0.0f,min(1.0f,col.a))*255f);
+    return sdlcol;
 }

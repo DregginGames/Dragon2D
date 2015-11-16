@@ -32,29 +32,42 @@ class Text : Renderable
         _font = font;
     }
 
-    this(string text,  string font, Font.FontSize size=Font.FontSize.medium, string shader="shader.default")
+    this(string text,  string font, float height = 1.0f, Font.FontSize size=Font.FontSize.medium, string shader="shader.default")
     {
         this(font, shader);
+        _text = text;
+        _size = size;
+        _height = height;
         // do the loading
     }
 
-protected:
-    void regenerate()   //does what the name says. regenerates the quads for the text rendering
-    {
+    
 
+protected:
+    void regenerate()   //does what the name says. regenerates the quads for the text rendering. Dont run near companion.
+    {
+        auto col = sdlColor(_color);
     }
 private:
-    // The maximal length of the text. if not set (<=0), the whole text will render in one line until its end, no matter how long it is
+    /// The maximal length of the text. if not set (<=0), the whole text will render in one line until its end, no matter how long it is
     float _maxlength = 0.0f;
-    // If the text will break on linefeeds. If set to true, multiline text becomes possible
+    /// If the text will break on linefeeds. If set to true, multiline text becomes possible
     bool _linebreak = false;
-    // The maximal height of a text - used when _linebreak is true. if set (>=0) the textnoxes height wont exeed a specific value
+    /// The maximal height of a text - used when _linebreak is true. if set (>=0) the textnoxes height wont exeed a specific value
     float _maxheight = 0.0f;
-    // Specifes how text-overflows will be handled
+    /// Specifes how text-overflows will be handled
     OverflowBehaviour _overflow = OverflowBehaviour.showBegin;
-    
+    /// The size of the text
+    float _height = 1.0f;
+    /// THe color of the tet
+    vec4 _color = vec4(1.0f,1.0f,1.0f,1.0f);
+
     string _shader;
     string _font;
-
+    Font.FontSize _size;
     TexturedQuad[] _renderObjects;
+
+    //the actual tetxt
+    string _text;
+    //
 }

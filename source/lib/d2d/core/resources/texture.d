@@ -49,6 +49,7 @@ GLuint SurfaceToTexture(SDL_Surface* surface)
         return 0;
     }
     GLenum textureFormat = GL_BGR;
+    GLenum internalFormat = GL_RGB8;
     if (surface.format.BytesPerPixel == 4) {
         if(surface.format.Rmask == 0x000000ff) {
             textureFormat = GL_RGBA;
@@ -56,6 +57,7 @@ GLuint SurfaceToTexture(SDL_Surface* surface)
         else {
             textureFormat = GL_BGRA;
         }
+        internalFormat = GL_RGBA8;
     } else {
         if(surface.format.Rmask == 0x000000ff) {
             textureFormat = GL_RGB;
@@ -63,6 +65,7 @@ GLuint SurfaceToTexture(SDL_Surface* surface)
         else {
             textureFormat = GL_BGR;
         }
+        internalFormat = GL_RGB8;
     }
 
     GLuint texId = 0;
@@ -73,9 +76,9 @@ GLuint SurfaceToTexture(SDL_Surface* surface)
         return 0;
     }
     glBindTexture(GL_TEXTURE_2D, texId);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface.w, surface.h, 0, textureFormat, GL_UNSIGNED_BYTE, surface.pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, surface.w, surface.h, 0, textureFormat, GL_UNSIGNED_BYTE, surface.pixels);
     return texId;
 }
 

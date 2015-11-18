@@ -38,6 +38,7 @@ class GLProgram : Resource
 			//compile and link
 			auto vShader = compileShader(vSource.idup, GL_VERTEX_SHADER);
 			auto fShader = compileShader(fSource.idup, GL_FRAGMENT_SHADER);
+            
 			if (0 != vShader && 0 != fShader) {
 				_program = glCreateProgram();
 				glAttachShader(_program, vShader);
@@ -62,6 +63,7 @@ class GLProgram : Resource
 					Logger.log(infoLog);
 					Logger.log("FOR SOURCE FILE (ignore the #define on top)");
 					Logger.log(vSource);
+                    
 				}
 				else {
 					//last step is extracting and binding the uniforms
@@ -71,17 +73,21 @@ class GLProgram : Resource
 				glDeleteShader(fShader);
 			} else {
 				Logger.log("Could not compile shaders for " ~ name);
-			}
-
-            
-			
+			}	
         }
         else {
             Logger.log("Could not load shader " ~ name ~"!");
         }
+            
+
         super(name);
     }
     
+    GLuint getAttribute(string name) 
+    {
+        return glGetAttribLocation(_program, toStringz(name));
+    }
+
 	/// Sets the Data for a uniform. Does nothing if the Uniform does not exist.
 	void setUniformValue (T) (string name, T* valuePtr)
 	{
@@ -89,6 +95,7 @@ class GLProgram : Resource
 		if(!(p is null)) {
 			p.setUniformValue!T(valuePtr);
 		}
+        
 	}
 
 	void bind()
@@ -97,7 +104,7 @@ class GLProgram : Resource
 	}
 private:
     /// the default version for all shaders. Is appended after load.
-    static string _shaderDefaultVersion = "#version 330\n";
+    static string _shaderDefaultVersion = "#version 100\n";
     /// the default defines for the vertex- and fragment stage
     static string _vertexDefine = "#define STAGE_VERTEX\n";
     static string _fragmentDefine = "#define STAGE_FRAGMENT\n";
@@ -131,7 +138,7 @@ struct Uniform
         switch (baseType) {
         // Basic types
 		case "sampler":  //sampler does have some a suffix but that dosnt change the fact its an integer. 
-			_vecFunc = cast(glVecFunc)glUniform1uiv;
+			_vecFunc = cast(glVecFunc)glUniform1iv;
 			break;
         case "bool": 
             _vecFunc = cast(glVecFunc)glUniform1uiv;

@@ -5,7 +5,7 @@
 #ifdef STAGE_VERTEX
 	void main() 
 	{
-		gl_Position =  MVP*in_pos;
+		gl_Position = MVP*in_pos;
 		UV = in_uv;
 	}
 #endif
@@ -13,6 +13,7 @@
 #ifdef STAGE_FRAGMENT
 	void main()
 	{
-		outColor = texture(textureSampler, UV);
+		//gl_FragColor = vec4(1.0,UV.x,UV.y,1.0);
+		gl_FragColor = texture2D(textureSampler, UV);
 	}
 #endif

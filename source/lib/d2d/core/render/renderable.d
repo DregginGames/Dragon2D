@@ -7,6 +7,7 @@ import gl3n.linalg;
 import gl3n.math;
 import derelict.opengl3.gl3;
 
+import d2d.util.logger;
 import d2d.core.render.view;
 
 /**
@@ -29,12 +30,14 @@ abstract class Renderable
 	this()
 	{
 		glGenVertexArrays(1, &_vao);
+        
 	}
 
 	/// Cleanup
 	~this()
 	{
 		glDeleteVertexArrays(1, &_vao);
+        
 	}
 
 	/// Performs an actual render on screen. 

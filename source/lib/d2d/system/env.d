@@ -76,9 +76,10 @@ class Env : Base
         
         //set the gl specific settings. 
         //also try out some settings because not everything works every time
-        //TODO: gl version based on config? is that needed?
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+        //TODO: gl version based on config? is that needed? NOO! Because will just use gl es
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
         SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
         SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
        
@@ -101,7 +102,7 @@ class Env : Base
                 }
             }
         }
-        
+
         //make the context 
         _context = SDL_GL_CreateContext(_window);
         if (!_context) {
@@ -114,15 +115,22 @@ class Env : Base
         SDL_GL_SetSwapInterval(cast(int) Settings["window"].object["vsync"].integer);
 
         log("Dont Video init");
+        
 
         //if we survived until here, its time for audio, font and image! (the sdl media stuff)
         //audio 
         uint flags = MIX_INIT_OGG | MIX_INIT_MP3;
-        if (Mix_Init(flags) != flags) {
+        uint actualFlags = Mix_Init(flags);
+        if (actualFlags != flags) {
             //meh we messed up 
             log("Cannot init auio!");
             log(fromStringz(Mix_GetError()));
-            throw new InitializationErrorException("Could not init audio");
+            log("Will try OGG-only mode, but that WILL break things");
+            if (actualFlags&MIX_INIT_OGG) {
+                log("Ok, that worked. Still nothing sound related is good...");
+            } else {
+                throw new InitializationErrorException("Could not init audio");
+            }
         }
         //FIXME: really put this in a config?
         Mix_AllocateChannels(cast(int) Settings["audio"].object["channels"].integer);

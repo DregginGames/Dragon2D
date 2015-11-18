@@ -22,18 +22,25 @@ class RawTexturedQuad : Renderable
 	{
 		// we dont store the resources, we just get them. allows reloading on demand etc. 
 		_program = program;
-		Resource.preload!GLProgram(_program);       
+		Resource.preload!GLProgram(_program); 
+        auto prg = Resource.create!GLProgram(_program);
+        auto posAttr = prg.getAttribute("in_pos");
+        auto uvAttr = prg.getAttribute("in_uv");
+
 		_bindVAO();
 		glGenBuffers(1, &_vertexVBO);
 		glGenBuffers(1, &_uvVBO);       
         _setVBO();
-        glBindBuffer(GL_ARRAY_BUFFER, _vertexVBO);
-		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, cast(const void*)0);
-        glEnableVertexAttribArray(0);
 
-        glBindBuffer(GL_ARRAY_BUFFER, _uvVBO);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, cast(const void*)0);
+         glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, _vertexVBO);
+		glVertexAttribPointer(posAttr, 4, GL_FLOAT, GL_FALSE, 0, cast(const void*)0);
+       
+
         glEnableVertexAttribArray(1);
+        glBindBuffer(GL_ARRAY_BUFFER, _uvVBO);
+		glVertexAttribPointer(uvAttr, 2, GL_FLOAT, GL_FALSE, 0, cast(const void*)0);
+        
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		_unbindVAO();
@@ -53,8 +60,11 @@ class RawTexturedQuad : Renderable
 		auto m = gen2DModelToWorld(_pos, _rotation, _size);
         auto mvp = view.worldToView*m;
         prg.setUniformValue("MVP", mvp.value_ptr);
-        auto texid = _tex.id;
-		prg.setUniformValue("textureSampler", &texid);
+        //texture voodo
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, _tex.id);
+        int texPos = 0;
+        prg.setUniformValue("textureSampler", &texPos);
 
 		//actually render 
 		_bindVAO();
@@ -146,7 +156,7 @@ private:
 	/// the vbo for the uv mapping
 	GLuint	_uvVBO;
     /// the uv-offset
-    vec2 _uvpos;
+    vec2 _uvpos = vec2(0.0f,0.0f);
     vec2 _uvsize = vec2(1.0f,1.0f);
 }
 

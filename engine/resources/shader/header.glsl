@@ -3,8 +3,8 @@
 
 // These are the default input-variables used by the vertex shader.
 #ifdef STAGE_VERTEX
-    attribute in vec4 in_pos;
-    attribute in vec2 in_uv;
+    attribute vec4 in_pos;
+    attribute vec2 in_uv;
     uniform mat4 MVP; 
     // and some output
     varying vec2 UV;

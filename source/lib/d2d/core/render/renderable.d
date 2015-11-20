@@ -26,18 +26,18 @@ import d2d.core.render.view;
 */
 abstract class Renderable
 {
-	/// Creates a renderable. MUST be called first in child constructor in case that is somehow fucked up and needs to be done manually. 
+	/// Creates a renderable. Does nothing atm.
 	this()
 	{
-		glGenVertexArrays(1, &_vao);
-        
+		      
 	}
 
 	/// Cleanup
 	~this()
 	{
-		glDeleteVertexArrays(1, &_vao);
-        
+        if(_useVAO) {
+		    glDeleteVertexArrays(1, &_vao);
+        }
 	}
 
 	/// Performs an actual render on screen. 
@@ -61,32 +61,56 @@ abstract class Renderable
     }
 
     protected:
+
+    /// Activates the use of a object-specific VAO. Use with caution i guess
+    void _enableVAO()
+    {
+        if(!_useVAO) {
+            glGenVertexArrays(1, &_vao);
+            _useVAO = true;
+        }
+    }
+
+    /// Sets a custom VAO WITHOUT activating the VAO state (auto-deletion on destruction). So a class can use classwide VAOs (and buffers etc.) without having to rewrite the _bindVAO and _unbindVAO functions
+    void _setUnmanagedVAO(GLuint vao)
+    {
+        
+    }
+
 	/// binds the this objects vao
 	void _bindVAO()
 	{
-		GLuint boundVAO = 0;
-		glGetIntegerv(GL_VERTEX_ARRAY_BINDING, cast(int*)&boundVAO);
-		if (boundVAO != _vao) {
-			glBindVertexArray(_vao);
-		}
+        if(_useVAO||_unmanagedVAO) {
+		    GLuint boundVAO = 0;
+		    glGetIntegerv(GL_VERTEX_ARRAY_BINDING, cast(int*)&boundVAO);
+		    if (boundVAO != _vao) {
+			    glBindVertexArray(_vao);
+		    }
 		_vaoStored = boundVAO;
+        }
 	}
 
 	/// unbinds this objects vao
 	void _unbindVAO()
 	{
-		if (_vaoStored != _vao) {
-			glBindVertexArray(_vaoStored);
-			_vaoStored = 0;
-		}
+        if(_useVAO||_unmanagedVAO) {
+		    if (_vaoStored != _vao) {
+			    glBindVertexArray(_vaoStored);
+			    _vaoStored = 0;
+		    }
+        }
 	}
 
 private:
-	/// the vertex array object
+	/// the vertex array object - used if activated
 	GLuint _vao;
-	/// the stored VAO for binding
+    /// if true we will use a VAO for this object. if not we dont care what comes next
+    bool _useVAO = false;
+    /// enables _bindVAO and other functions possible to be used with a custom-set VAO that is not managed by this class
+    bool _unmanagedVAO = false;
+	/// the stored VAO for binding and rebinding the last one etc.
 	GLuint _vaoStored;
     /// the detail level
     int _detailLevel = 25; // imagine everything is a map
-
+    
 }

@@ -18,6 +18,7 @@ import d2d.core.render.objects.quad;    //for them TexturedQuad
 public import d2d.core.resources.font; //is this ugly? yes this is ugly. i feel good. 
 
 // Holds a text, renders it on screen and manages the width-thingy
+// Uses RawTexturedQuad, but does so many things that i belive it deserves to be a renderable
 class Text : Renderable
 {
     enum OverflowBehaviour {
@@ -47,6 +48,7 @@ protected:
     void regenerate()   //does what the name says. regenerates the quads for the text rendering. Dont run near companion.
     {
         auto col = sdlColor(_color);
+
     }
 private:
     /// The maximal length of the text. if not set (<=0), the whole text will render in one line until its end, no matter how long it is

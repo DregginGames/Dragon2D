@@ -30,7 +30,7 @@ class RawTexturedQuad : Renderable
 		_bindVAO();
 		glGenBuffers(1, &_vertexVBO);
 		glGenBuffers(1, &_uvVBO);       
-        _setVBO();
+        _setupClassVAO();
 
          glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, _vertexVBO);
@@ -152,9 +152,9 @@ private:
 	/// the rotation of this quad (around z!)
 	float	_rotation = 0.0f;
 	/// the vbo for the vertices
-	GLuint  _vertexVBO;
+	static  GLuint  _vertexClasswideVBO;
 	/// the vbo for the uv mapping
-	GLuint	_uvVBO;
+	static  GLuint _uvClasswideVBO;
     /// the uv-offset
     vec2 _uvpos = vec2(0.0f,0.0f);
     vec2 _uvsize = vec2(1.0f,1.0f);
@@ -193,6 +193,7 @@ class TexturedQuadBatch : TexturedQuad
     this(string texture, string program="shalder.default")
     {
         super(texture, program);
+        _enableVAO();
     }
 
     /// Adds a new Textured Quad to the set. Changes made here need to be flusehed with flush().

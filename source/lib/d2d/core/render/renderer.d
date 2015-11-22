@@ -46,8 +46,11 @@ class Renderer : Base
 			// we clamp the viewport to the pixel-grid. Overlapping is better than a black gap, and overlapped things will simply be invisible.
 			vec2i viewportPos = toPixel(v.viewportPos);
 			vec2i viewportSize = toPixel(v.viewportSize, true);
-			glViewport(viewportPos.x, viewportPos.y, viewportSize.x, viewportSize.y);
-
+            if(_currViewportPos != viewportPos || _currViewportSize != viewportSize) {
+			    glViewport(viewportPos.x, viewportPos.y, viewportSize.x, viewportSize.y);
+                _currViewportPos = viewportPos;
+                _currViewportSize = viewportSize;
+            }        
 			foreach(ref o; _objects) {
                 if (v.detailLevel >= o.detailLevel) {
 				    o.render(v);
@@ -63,6 +66,9 @@ private:
 	/// The views
 	View[] _views;
 
+    /// Cached viewport offset
+    vec2i _currViewportPos = vec2i(0,0);
+    vec2i _currViewportSize = vec2i(0,0);
 	/// The scene objects
 	Renderable[] _objects;
 

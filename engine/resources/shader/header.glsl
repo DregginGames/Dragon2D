@@ -14,5 +14,14 @@
 #ifdef STAGE_FRAGMENT 
 	precision mediump float;
     uniform sampler2D textureSampler;
+	uniform vec2 uvpos; // Used for UV offsetting. a bit ugly but the alternative is altering buffers.
+	uniform vec2 uvsize;
     varying vec2 UV;
+	
+	// Calculates an offset UV - used by everythig quad-based to give an example
+	// i think its extreamly ugly, but the alternative is altering buffers...
+	vec2 calcOffsetUV(vec2 inUV) 
+	{
+		return uvpos+vec2(UV.x*uvsize.x,UV.y*uvsize.y);
+	}
 #endif //STAGE_FRAGMENT

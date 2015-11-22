@@ -43,6 +43,8 @@ class RawTexturedQuad : Renderable
 		auto m = gen2DModelToWorld(_pos, _rotation, _size);
         auto mvp = view.worldToView*m;
         prg.setUniformValue("MVP", mvp.value_ptr);
+        prg.setUniformValue("uvpos", _uvpos.value_ptr);
+        prg.setUniformValue("uvsize", _uvsize.value_ptr);
 
         _tex.bind();
         int texPos = 0;

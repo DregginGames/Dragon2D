@@ -21,7 +21,10 @@ bool onStartup(Base base)
 {
 	import std.stdio;
     auto cursor = new WorldCursor();
-    auto camera = new Camera(4.0f);
+    auto camera = new Camera(2.0f);
+    auto camera2 = new Camera(2.0f);
+    camera2.view.viewportPos = vec2(0.9,0.9);
+    camera2.view.viewportSize = vec2(.1,.1);
     auto sprite = new Sprite("texture.test");
     sprite.pos = vec2(-1,-1);
     auto sprite2 = new Sprite("texture.test");
@@ -30,5 +33,6 @@ bool onStartup(Base base)
     camera.addChild(cursor);
     base.addChild(sprite);
     base.addChild(camera);
+    base.addChild(camera2);
 	return true;
 }

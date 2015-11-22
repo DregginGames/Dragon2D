@@ -13,6 +13,6 @@
 	void main()
 	{
 		//gl_FragColor = vec4(1.0,UV.x,UV.y,1.0);
-		gl_FragColor = texture2D(textureSampler, UV);
+		gl_FragColor = texture2D(textureSampler, calcOffsetUV(UV));
 	}
 #endif

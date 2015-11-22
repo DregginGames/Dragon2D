@@ -27,7 +27,7 @@ class GLSLProgram : Resource
             //generate the source
             auto header = "//GENERATED SHADER FILE\n//shader.default\n" 
                 ~ programHeaderResource.getData!char();
-            auto source = fresource.getData!char();
+            auto source = header ~ fresource.getData!char();
             auto vSource = Program.versionString ~ _vertexDefine ~ source.idup;
             auto fSource = Program.versionString ~ _fragmentDefine ~ source.idup;
 

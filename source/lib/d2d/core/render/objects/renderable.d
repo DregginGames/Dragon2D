@@ -89,10 +89,12 @@ protected:
                     auto p = typeid(this).toHash() in _classwideVAO;
                     if (!p) {
                         _classwideVAO[typeid(this).toHash()] = new VAO;
+                        _vboInitClassScope();
                     }
                     break;
                 case VAOMode.objectScope:
                     _vao = new VAO();
+                    _vboInit();
                     break;
                 default:
                     break;

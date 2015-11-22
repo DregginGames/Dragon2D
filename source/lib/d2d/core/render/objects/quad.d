@@ -22,71 +22,37 @@ class RawTexturedQuad : Renderable
 	this(string program="shader.default")
 	{
         //lets keep things simple
-        _setupVAO(Renderable.VAOMode.classWide);
+        _setupVAO(Renderable.VAOMode.classScope);
 
 		// we dont store the resources, we just get them. allows reloading on demand etc. 
 		_program = program;
 		Resource.preload!GLSLProgram(_program); 
-        auto prg = Resource.create!GLSLProgram(_program);
-        auto posAttr = prg.getAttribute("in_pos");
-        auto uvAttr = prg.getAttribute("in_uv");
-
-		_bindVAO();
-		glGenBuffers(1, &_vertexVBO);
-		glGenBuffers(1, &_uvVBO);       
-        _setupClassVAO();
-
-         glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, _vertexVBO);
-		glVertexAttribPointer(posAttr, 4, GL_FLOAT, GL_FALSE, 0, cast(const void*)0);
        
-
-        glEnableVertexAttribArray(1);
-        glBindBuffer(GL_ARRAY_BUFFER, _uvVBO);
-		glVertexAttribPointer(uvAttr, 2, GL_FLOAT, GL_FALSE, 0, cast(const void*)0);
-        
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		_unbindVAO();
 	}
 
 	~this()
 	{
-		glDeleteBuffers(1, &_vertexVBO);
-		glDeleteBuffers(1, &_uvVBO);
 		Resource.free(_program);
 
 	}
 	override void render(ref View view)
 	{
-		auto prg = Resource.create!GLProgram(_program);
+		auto prg = Resource.create!GLSLProgram(_program).program;
 		prg.bind();
+        vao.bind();
 		auto m = gen2DModelToWorld(_pos, _rotation, _size);
         auto mvp = view.worldToView*m;
         prg.setUniformValue("MVP", mvp.value_ptr);
-        //texture voodo
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, _tex.id);
+
+        _tex.bind();
         int texPos = 0;
         prg.setUniformValue("textureSampler", &texPos);
-
-		//actually render 
-		_bindVAO();
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		_unbindVAO();
+        
+        prg.drawArrays(prg.DrawMode.triangles, _drawOffset.x,_drawOffset.y); //we use a vector for the offset, x is position, y is length in this case
+        
 		//somethin somethin might be needed dont know still in concept
 		super.render(view);
 	}
-
-    /// Vertices and UVs 
-    @property GLuint vertexVBO()
-    {
-        return _vertexVBO;
-    }
-    @property GLuint uvVBO()
-    {
-        return _uvVBO;
-    }
 
     /**
     The position of this quad.    /-- totally not stolen from entity.d
@@ -125,25 +91,24 @@ class RawTexturedQuad : Renderable
     {
         _uvpos = uvpos;
         _uvsize = uvsize;
-        _setVBO();
     }
 
 protected:
     /// Fills the UV- and Vertex buffers with thier Data. 
-    void _setVBO()
+    override void _vboInitClassScope()
     {
         vec4[] vertices;
 		vec2[] uvs;
-		genUVMappedVertexArray(vertices, uvs, vec2(0,0), _uvpos, _uvsize);
+		genUVMappedVertexArray(vertices, uvs);
 
-        glBindBuffer(GL_ARRAY_BUFFER, _vertexVBO);
-		glBufferData(GL_ARRAY_BUFFER, vec4.sizeof*vertices.length, vertices.ptr, GL_STATIC_DRAW);
-
-        glBindBuffer(GL_ARRAY_BUFFER, _uvVBO);
-		glBufferData(GL_ARRAY_BUFFER, vec2.sizeof*uvs.length, uvs.ptr, GL_STATIC_DRAW);
-
-        glBindBuffer(GL_ARRAY_BUFFER,  0);
+        Buffer vertex = new Buffer();
+        Buffer uv = new Buffer();
+        vertex.setData(vertices.ptr, vec4.sizeof*vertices.length);
+        uv.setData(uvs.ptr, vec2.sizeof*uvs.length);
+        vao.attatchBuffer(0,vertex,4);
+        vao.attatchBuffer(1,uv,2);
     }
+
 private:
     /// this quads texture
     GPUTexture _tex;
@@ -155,13 +120,13 @@ private:
 	float	_size = 1.0f;
 	/// the rotation of this quad (around z!)
 	float	_rotation = 0.0f;
-	/// the vbo for the vertices
-	static  GLuint  _vertexClasswideVBO;
-	/// the vbo for the uv mapping
-	static  GLuint _uvClasswideVBO;
     /// the uv-offset
     vec2 _uvpos = vec2(0.0f,0.0f);
     vec2 _uvsize = vec2(1.0f,1.0f);
+
+protected:
+    /// Offset for the draw call. For RawTexture defaults to 0,6 - the stuff needed for a square
+    vec2i _drawOffset = vec2i(0,6);
 }
 
 class TexturedQuad : RawTexturedQuad
@@ -196,8 +161,8 @@ class TexturedQuadBatch : TexturedQuad
 {
     this(string texture, string program="shalder.default")
     {
+        _setupVAO(Renderable.VAOMode.objectScope);
         super(texture, program);
-        _enableVAO();
     }
 
     /// Adds a new Textured Quad to the set. Changes made here need to be flusehed with flush().
@@ -229,11 +194,22 @@ class TexturedQuadBatch : TexturedQuad
     /// Changes the buffers to reflect the changes made to this Batch
     void flush()
     {
-        _setVBO();
+        _updateBuffers();
     }
 
 protected:
-    override void _setVBO()
+    override void _vboInit()
+    {
+        _vertexBuffer = new Buffer();
+        _uvBuffer = new Buffer();
+        
+        _updateBuffers();
+
+        vao.attatchBuffer(0,_vertexBuffer,4);
+        vao.attatchBuffer(1,_uvBuffer,2);
+    }
+
+    void _updateBuffers()
     {
         if( 0 == _quads.length) { //we are empty? we are lazy.
             return; 
@@ -244,16 +220,17 @@ protected:
         foreach(ref q; _quads) {
             genUVMappedVertexArray(vertices, uvs, q.pos, q.uvpos, q.uvsize);
         }
-        
-        glBindBuffer(GL_ARRAY_BUFFER, _vertexVBO);
-		glBufferData(GL_ARRAY_BUFFER, vec4.sizeof*vertices.length, vertices.ptr, GL_STATIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, _uvVBO);
-		glBufferData(GL_ARRAY_BUFFER, vec2.sizeof*uvs.length, uvs.ptr, GL_STATIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER,  0);
+        _vertexBuffer.setData(vertices.ptr, vec4.sizeof*vertices.length);
+        _uvBuffer.setData(uvs.ptr, vec2.sizeof*uvs.length);
+
+        _drawOffset = vec2i(0,vertices.length);
     }
 private:
     ulong _maxQuadId = 0;
     BatchQuad[ulong] _quads;
+    Buffer _vertexBuffer;
+    Buffer _uvBuffer;
+
 }
 
 /**

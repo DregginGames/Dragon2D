@@ -31,8 +31,8 @@ abstract class Renderable
     enum VAOMode {
         unspecified = 0, /// default. equals none in behaviour, but makes a cleaner case for "my parent class will manage this"
         none = 1,   /// no vao at all. usefull for more abstract thigs (like text wich onlly utilizes other things
-        classWide = 2,  /// usefull for basically everything "simple" - primitives
-        objectWide = 3, // /every object has its own vao. usefull for batches, complex models, ....
+        classScope = 2,  /// usefull for basically everything "simple" - primitives
+        objectScope = 3, // /every object has its own vao. usefull for batches, complex models, ....
     }
 
 	/// Creates a renderable. Does nothing atm.
@@ -53,14 +53,14 @@ abstract class Renderable
 	@property VAO vao()
 	{
         switch(_vaoMode) {
-            case VAOMode.classWide:
+            case VAOMode.classScope:
                 return _classwideVAO[typeid(this).toHash()];
-            case VAPMode.objectWide:
+            case VAOMode.objectScope:
                 return _vao;
             default:
                 break;
         }
-		throw Exception("Can't access an VAO of an renderable in unspecified or none mode!");
+		throw new Exception("Can't access an VAO of an renderable in unspecified or none mode!");
         assert(0);
 	}
 
@@ -85,19 +85,30 @@ protected:
                     break;
                 case VAOMode.none:
                     break;
-                case VAOMode.classWide:
+                case VAOMode.classScope:
                     auto p = typeid(this).toHash() in _classwideVAO;
                     if (!p) {
                         _classwideVAO[typeid(this).toHash()] = new VAO;
                     }
                     break;
-                case VAOMode.objectWide:
+                case VAOMode.objectScope:
                     _vao = new VAO();
                     break;
                 default:
                     break;
             }
         }
+    }
+
+    /// Called by setupVAO if the mode fór VBO is objectScope
+    void _vboInit()
+    {
+    }
+
+    /// Called by setupVAO if the mode for VBO is classScope
+    /// Note: Not static because needs access to this for the call to this.vao
+    void _vboInitClassScope()
+    {
     }
 
 private:

@@ -25,7 +25,7 @@ class Texture : Resource
             if (surface is null) {
                 Logger.log("Could not load image " ~ fresource.file ~ " for " ~ name ~ " - " ~ fromStringz(IMG_GetError()));
             } else {
-                _tex = GPUTexture(surface, true);              
+                _tex = new GPUTexture(surface, true);              
             }
         } else {
             Logger.log("Could not load texture " ~ name);

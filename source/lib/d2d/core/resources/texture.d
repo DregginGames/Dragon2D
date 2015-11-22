@@ -3,84 +3,13 @@
   */
 module d2d.core.resources.texture;
 
-import derelict.opengl3.gl3;
-import derelict.sdl2.image;
-import derelict.sdl2.sdl;
-
 import d2d.core.resource;
 import d2d.util.fileio;
 import d2d.util.logger;
 
-/// Simple wrapper for GLuint that automatically calls glDeleteTextures - avoids nasty leeks
-class GPUTexture
-{
-    this() 
-    {
-        glGenTextures(1,&_texId);
-    }
-
-    this(GLuint texId) 
-    {
-        _texId = texId;
-    }
-
-    ~this()
-    {
-        if (_texId != 0) {
-            glDeleteTextures(1,&_texId);
-        }
-    }
-
-    ///Only gets the ID. The id cant be changed after creation
-    @property GLuint id() {
-        return _texId;
-    }
-
-
-private:
-    GLuint _texId;
-}
-
-/// Helper function to create a  Opengl Texture from an SDL_Surface 
-GLuint SurfaceToTexture(SDL_Surface* surface)
-{
-    ///juuust to make shure
-    if (surface is null) {
-        return 0;
-    }
-    GLenum textureFormat = GL_BGR;
-    GLenum internalFormat = GL_RGB8;
-    if (surface.format.BytesPerPixel == 4) {
-        if(surface.format.Rmask == 0x000000ff) {
-            textureFormat = GL_RGBA;
-        }
-        else {
-            textureFormat = GL_BGRA;
-        }
-        internalFormat = GL_RGBA8;
-    } else {
-        if(surface.format.Rmask == 0x000000ff) {
-            textureFormat = GL_RGB;
-        }
-        else {
-            textureFormat = GL_BGR;
-        }
-        internalFormat = GL_RGB8;
-    }
-
-    GLuint texId = 0;
-    glGenTextures(1, &texId);
-    //not good but might happen 
-    if (texId == 0) {
-        Logger.log("Texture generation failed.");
-        return 0;
-    }
-    glBindTexture(GL_TEXTURE_2D, texId);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, surface.w, surface.h, 0, textureFormat, GL_UNSIGNED_BYTE, surface.pixels);
-    return texId;
-}
+import derelict.sdl2.sdl;
+import derelict.sdl2.image;
+import d2d.core.render.lowlevel.gputexture;
 
 /// A simple opengl texture loaded from a file 
 class Texture : Resource
@@ -96,8 +25,7 @@ class Texture : Resource
             if (surface is null) {
                 Logger.log("Could not load image " ~ fresource.file ~ " for " ~ name ~ " - " ~ fromStringz(IMG_GetError()));
             } else {
-                _tex = new GPUTexture(SurfaceToTexture(surface));
-                SDL_FreeSurface(surface);
+                _tex = GPUTexture(surface, true);              
             }
         } else {
             Logger.log("Could not load texture " ~ name);

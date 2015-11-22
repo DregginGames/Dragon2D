@@ -7,11 +7,11 @@ module d2d.core.render.objects.text;
 import gl3n.linalg;
 import derelict.opengl3.gl3;
 
-import d2d.core.render.view;
+import d2d.core.render.objects.view;
 import d2d.core.render.util;
-import d2d.core.render.renderable;
+import d2d.core.render.objects.renderable;
 import d2d.core.resources.texture;
-import d2d.core.resources.glprogram;
+import d2d.core.resources.glslprogram;
 import d2d.core.resource;
 import d2d.core.render.objects.quad;    //for them TexturedQuad
 

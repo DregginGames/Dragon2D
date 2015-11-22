@@ -5,7 +5,7 @@ module d2d.game.simple.camera;
 
 import gl3n.linalg;
 
-import d2d.core.render.view;
+import d2d.core.render.objects.view;
 import d2d.core.render.util;
 import d2d.core.render.renderer;
 import d2d.game.entity;

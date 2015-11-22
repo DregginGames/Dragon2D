@@ -1,7 +1,7 @@
 /**
 	d2d.core.render.view holds the view classes that manage the rendering of the scene on screen.
 */
-module d2d.core.render.view;
+module d2d.core.render.objects.view;
 
 import gl3n.linalg;
 import gl3n.math;

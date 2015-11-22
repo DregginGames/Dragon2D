@@ -1,7 +1,4 @@
-/**
-  d2d.core.resources.glprogram holds the resource that represents a glprogram;
-  */
-module d2d.core.resources.glprogram;
+module d2d.core.render.lowlevel.program;
 
 import std.string;
 import std.regex;
@@ -9,42 +6,38 @@ import std.conv;
 
 import derelict.opengl3.gl3;
 
-import d2d.core.resource;
-import d2d.util.fileio;
 import d2d.util.logger;
 
 //some aliases for function types
 alias glVecFunc = extern (C) void function (GLint, GLsizei, void*);
 alias glMatFunc = extern (C) void function (GLint, GLsizei, bool, void*);
-/// A GLProgram that loads uniform bindings automaically
-class GLProgram : Resource
-{
-    ///Loads a shader from a shader source file 
-    this(string name) 
-    {
-        auto fresource = FileResource.getFileResource(name);
-        auto programHeaderResource = FileResource.getFileResource("shader.header");
-        if (programHeaderResource.invalid) {
-            throw new Exception("Default shader header not found. Check engine files!");
-        }
-        if (!fresource.invalid) {
-            //generate the source
-            auto header = "//GENERATED SHADER FILE\n//shader.default\n" 
-                ~ programHeaderResource.getData!char();
-            auto source = header ~ "// " ~ name ~ "\n" ~ fresource.getData!char();
-            auto vSource = _shaderDefaultVersion ~ _vertexDefine ~ source;
-            auto fSource = _shaderDefaultVersion ~ _fragmentDefine ~ source;
 
-			//compile and link
-			auto vShader = compileShader(vSource.idup, GL_VERTEX_SHADER);
-			auto fShader = compileShader(fSource.idup, GL_FRAGMENT_SHADER);
-            
+/// an opengl program - loads uniforms automatically and does magic to get thier type-setter right
+class Program 
+{
+    enum DrawMode {
+        points = GL_POINTS,
+        lineStrip = GL_LINE_STRIP,
+        lineLoop = GL_LINE_LOOP,
+        lines = GL_LINES,
+        triangleStrip = GL_TRIANGLE_STRIP,
+        triangleFan = GL_TRIANGLE_FAN,
+        triangles = GL_TRIANGLES,
+        patches = GL_PATCHES
+    }
+
+    ///Loads a shader from a shader source file -- TODO: uniforms only from vertexSource might be a bad idea...
+    this(string vertexSource, string fragmentSource) 
+    {
+			auto vShader = compileShader(vertexSource.idup, GL_VERTEX_SHADER);
+			auto fShader = compileShader(fragmentSource.idup, GL_FRAGMENT_SHADER);
+
 			if (0 != vShader && 0 != fShader) {
 				_program = glCreateProgram();
 				glAttachShader(_program, vShader);
 				glAttachShader(_program, fShader);
 				glLinkProgram(_program);
-				
+
 				// Ugly error check
 				GLint isLinked = 0;
 				glGetProgramiv(_program, GL_LINK_STATUS, cast(int *)&isLinked);
@@ -61,59 +54,76 @@ class GLProgram : Resource
 					// log them all
 					Logger.log("Could not link program:");
 					Logger.log(infoLog);
-					Logger.log("FOR SOURCE FILE (ignore the #define on top)");
-					Logger.log(vSource);
-                    
 				}
 				else {
 					//last step is extracting and binding the uniforms
-					_uniforms = extractUniforms(source.idup, _program); 
+					_uniforms = extractUniforms(vertexSource.idup, _program); 
+                    _valid = true;
 				}
 				glDeleteShader(vShader);
 				glDeleteShader(fShader);
-			} else {
-				Logger.log("Could not compile shaders for " ~ name);
-			}	
-        }
-        else {
-            Logger.log("Could not load shader " ~ name ~"!");
-        }
-            
-
-        super(name);
+			}
     }
-    
+
     GLuint getAttribute(string name) 
     {
-        return glGetAttribLocation(_program, toStringz(name));
+        return _valid ? glGetAttribLocation(_program, toStringz(name)) : 0;
     }
 
 	/// Sets the Data for a uniform. Does nothing if the Uniform does not exist.
 	void setUniformValue (T) (string name, T* valuePtr)
 	{
+        if(!_valid) {
+            return;
+        }
+        bind();
+
 		auto p = name in _uniforms;
 		if(!(p is null)) {
 			p.setUniformValue!T(valuePtr);
 		}
-        
+
 	}
+
+    ///Initiates a draw - classic array draw
+    void drawArrays(DrawMode mode, int first, size_t count)
+    {
+        if(_valid) {
+            bind();
+            glDrawArrays(mode, first, count);
+        }
+    }
 
 	void bind()
 	{
-		glUseProgram(_program);
+        if(_valid && _currBoundProgram != _program) {
+		    glUseProgram(_program);
+            _currBoundProgram = _program;
+        }
 	}
-private:
-    /// the default version for all shaders. Is appended after load.
-    static string _shaderDefaultVersion = "#version 100\n";
-    /// the default defines for the vertex- and fragment stage
-    static string _vertexDefine = "#define STAGE_VERTEX\n";
-    static string _fragmentDefine = "#define STAGE_FRAGMENT\n";
 
+    @property GLuint id()
+    {
+        return _program;
+    }
+
+    @property bool valid()
+    {
+        return _valid;
+    }
+private:
     /// The ID of the program
     GLuint _program = 0; 
-
 	/// The uniforms of the program
 	Uniform[string] _uniforms;
+    /// If things could not be compiled this will be false
+    bool _valid = false;
+    /// The program that is bound
+    static GLuint _currBoundProgram = 0;
+
+public:
+    /// version of the glsl shader version being used
+    static string versionString = "#version 100\n";
 }
 
 /// Holds/Represents a uniform. Based on the uniform type it automatically selects the assignment function
@@ -136,43 +146,43 @@ struct Uniform
 
         // this might be the uglyest switch statement ive ever made. 
         switch (baseType) {
-        // Basic types
-		case "sampler":  //sampler does have some a suffix but that dosnt change the fact its an integer. 
-			_vecFunc = cast(glVecFunc)glUniform1iv;
-			break;
-        case "bool": 
-            _vecFunc = cast(glVecFunc)glUniform1uiv;
-            break;
-        case "int":
-            _vecFunc = cast(glVecFunc)glUniform1iv;
-            break;
-        case "uint":
-            _vecFunc = cast(glVecFunc)glUniform1uiv;
-            break;
-        case "float":
-            _vecFunc = cast(glVecFunc)glUniform1fv;
-            break;
-        case "double":
-            _vecFunc = cast(glVecFunc)glUniform1fv;
-            break;
-        case "vec":
-            _vecFunc = vecUniformFunc!"f"(typeN);
-            break;
-        case "bvec":
-            _vecFunc = vecUniformFunc!"ui"(typeN);
-            break;
-        case "ivec":
-            _vecFunc = vecUniformFunc!"i"(typeN);
-            break;
-		case "uvec":
-			_vecFunc = vecUniformFunc!"ui"(typeN);
-			break;
-		case "mat":
-			_matFunc = matUniformFunc(typeN);
-			break;
-        default: // assume integer
-            _vecFunc = cast(glVecFunc)glUniform1fv;
-            break;
+            // Basic types
+            case "sampler":  //sampler does have some a suffix but that dosnt change the fact its an integer. 
+                _vecFunc = cast(glVecFunc)glUniform1iv;
+                break;
+            case "bool": 
+                _vecFunc = cast(glVecFunc)glUniform1uiv;
+                break;
+            case "int":
+                _vecFunc = cast(glVecFunc)glUniform1iv;
+                break;
+            case "uint":
+                _vecFunc = cast(glVecFunc)glUniform1uiv;
+                break;
+            case "float":
+                _vecFunc = cast(glVecFunc)glUniform1fv;
+                break;
+            case "double":
+                _vecFunc = cast(glVecFunc)glUniform1fv;
+                break;
+            case "vec":
+                _vecFunc = vecUniformFunc!"f"(typeN);
+                break;
+            case "bvec":
+                _vecFunc = vecUniformFunc!"ui"(typeN);
+                break;
+            case "ivec":
+                _vecFunc = vecUniformFunc!"i"(typeN);
+                break;
+            case "uvec":
+                _vecFunc = vecUniformFunc!"ui"(typeN);
+                break;
+            case "mat":
+                _matFunc = matUniformFunc(typeN);
+                break;
+            default: // assume integer
+                _vecFunc = cast(glVecFunc)glUniform1fv;
+                break;
         }
     }
 
@@ -217,8 +227,8 @@ private Uniform[string] extractUniforms (string source, GLuint program)
 }
 
 /** The following functions are really ugly. The alternative would be to create an associative array.
-	However even with optimization that array would need some catching in case of invalid shader code, and it would actually do a lookup.
-	Also someone would have to pre-propulate the array. This is probably faster but in my opinion way easyer (Malte, September 2015. Famous last words)
+However even with optimization that array would need some catching in case of invalid shader code, and it would actually do a lookup.
+Also someone would have to pre-propulate the array. This is probably faster but in my opinion way easyer (Malte, September 2015. Famous last words)
 */
 
 /// helper for vector functions that should reduce code-duplication
@@ -281,8 +291,8 @@ private template matMixin(string num)
 	const char[] matMixin = "return cast(glMatFunc) (glUniformMatrix" ~ num ~ "fv);";
 }
 /**
-	Compiles a shader source.
-	In case of an error it logs the error.
+Compiles a shader source.
+In case of an error it logs the error.
 */	
 private GLuint compileShader(string source, GLenum type)
 {

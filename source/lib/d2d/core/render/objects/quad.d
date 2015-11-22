@@ -6,11 +6,12 @@ module d2d.core.render.objects.quad;
 import gl3n.linalg;
 import derelict.opengl3.gl3;
 
-import d2d.core.render.view;
+import d2d.core.render.objects.view;
 import d2d.core.render.util;
-import d2d.core.render.renderable;
+import d2d.core.render.objects.renderable;
+import d2d.core.render.lowlevel;
 import d2d.core.resources.texture;
-import d2d.core.resources.glprogram;
+import d2d.core.resources.glslprogram;
 import d2d.core.resource;
 
 /**
@@ -20,10 +21,13 @@ class RawTexturedQuad : Renderable
 {
 	this(string program="shader.default")
 	{
+        //lets keep things simple
+        _setupVAO(Renderable.VAOMode.classWide);
+
 		// we dont store the resources, we just get them. allows reloading on demand etc. 
 		_program = program;
-		Resource.preload!GLProgram(_program); 
-        auto prg = Resource.create!GLProgram(_program);
+		Resource.preload!GLSLProgram(_program); 
+        auto prg = Resource.create!GLSLProgram(_program);
         auto posAttr = prg.getAttribute("in_pos");
         auto uvAttr = prg.getAttribute("in_uv");
 

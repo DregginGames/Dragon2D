@@ -9,9 +9,7 @@ import gl3n.linalg;
 import derelict.opengl3.gl3;
 
 import d2d.core.base;
-import d2d.core.render.view;
-import d2d.core.render.renderable;
-import d2d.core.render.util;
+import d2d.core.render.objects;
 
 /// The renderer manages the finalized rendering of all classes within the engine; it abstracts all calls to the graphics api away from the engine
 class Renderer : Base

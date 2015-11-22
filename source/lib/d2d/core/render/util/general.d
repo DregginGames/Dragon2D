@@ -1,7 +1,7 @@
 /**
 	d2d.core.render.util provides utulity functions for 2D and 3D rendering
 */
-module d2d.core.render.util;
+module d2d.core.render.util.general;
 
 import std.conv;
 import std.math;

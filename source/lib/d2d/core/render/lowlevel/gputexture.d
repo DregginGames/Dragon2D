@@ -35,6 +35,21 @@ private GLuint SurfaceToTexture(SDL_Surface* surface)
         }
         internalFormat = GL_RGB8;
     }
+    // FIXME: this is necercary due to glTexImage2D in Opengl es 2.0 cannot convert texture formats
+    ubyte[] orig = (cast(ubyte*)surface.pixels)[0..(surface.w*surface.h*surface.format.BytesPerPixel)];
+    ubyte[] copy = orig;
+    if(textureFormat==GL_BGR||textureFormat==GL_BGRA) {
+        ///swap them bytes  
+        copy.length = orig.length;
+        for(int i=0; i<copy.length;i+=surface.format.BytesPerPixel) {
+            ubyte tmp = copy[i];
+            copy[i] = copy[i+2];
+            copy[i+2] = tmp;
+        }
+        textureFormat = textureFormat==GL_BGR ? GL_RGB : GL_RGBA;
+    } else {
+        copy = orig;
+    }   
 
     GLuint texId = 0;
     glGenTextures(1, &texId);
@@ -46,7 +61,7 @@ private GLuint SurfaceToTexture(SDL_Surface* surface)
     glBindTexture(GL_TEXTURE_2D, texId);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, surface.w, surface.h, 0, textureFormat, GL_UNSIGNED_BYTE, surface.pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, surface.w, surface.h, 0, textureFormat, GL_UNSIGNED_BYTE, copy.ptr);
     return texId;
 }
 
@@ -112,6 +127,9 @@ class GPUTexture
     /// Binds texture if not already bound.
     void bind(uint unit = 0)
     {
+        if(_texId==0) {
+            return;
+        }
         auto b = _target in _currTexBinding;
         if (b) {
             if(*b!=0 && *b==_texId) {

@@ -46,6 +46,11 @@ class Font : Resource
         super(name);
     }
 
+    TTF_Font* getFont(FontSize size)
+    {
+        return _font[size];
+    }
+
     ~this()
     {
         foreach(ref f; _font) {

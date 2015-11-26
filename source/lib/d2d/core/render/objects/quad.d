@@ -15,29 +15,110 @@ import d2d.core.resources.glslprogram;
 import d2d.core.resource;
 
 /**
+    Baseclass for all quads
+*/
+abstract class Quad : Renderable
+{
+    this(string program="shader.default")
+    {
+        _setupVAO(Renderable.VAOMode.classScope);
+        _program = program;
+        Resource.preload!GLSLProgram(_program); 
+    }
+
+    ~this()
+    {
+        Resource.free(_program);
+    }
+
+    /// The program of this quad
+    @property GLSLProgram program()
+    {
+        return Resource.create!GLSLProgram(_program);
+    }
+
+    /**
+    The position of this quad.    /-- totally not stolen from entity.d
+	*/
+	@property vec2 pos()
+	{
+		return _pos;
+	}
+	@property vec2 pos(vec2 p)
+	{
+		return _pos = p;
+	}
+protected:
+    override void _vboInitClassScope()
+    {
+        vec4[] vertices;
+		vec2[] uvs;
+		genUVMappedVertexArray(vertices, uvs);
+
+        Buffer vertex = new Buffer();
+        vertex.setData(vertices.ptr, vec4.sizeof*vertices.length);
+        vao.attatchBuffer(0,vertex,4);
+    }
+private:
+    string _program;
+    vec2   _pos;
+}
+
+/**
+    A simple single colored 
+*/
+class ColoredQuad : Quad
+{
+    this(string program="shader.color")
+    {
+        super(program);
+    }
+
+    this(vec4 color, string program="shader.color")
+    {
+        this(program);
+        _color = color;
+    }
+
+    override void render(ref View view) 
+    {
+        auto prg = this.program.program;
+		prg.bind();
+        vao.bind();
+		auto m = gen2DModelToWorld(_pos, 0, 0);
+        auto mvp = view.worldToView*m;
+        prg.setUniformValue("MVP", mvp.value_ptr);
+        prg.setUniformValue("color", _color.value_ptr);
+        prg.drawArrays(prg.DrawMode.triangles, 0,6);
+    }
+
+    /// The color of the quad
+    @property vec4 color()
+    {
+        return _color;
+    }
+    @property vec4 color(vec4 c)
+    {
+        return _color = c;
+    }
+
+private:
+    vec4 _color;
+}
+
+/**
 	A simple textured quad
 */
-class RawTexturedQuad : Renderable
+class RawTexturedQuad : Quad
 {
 	this(string program="shader.default")
 	{
-        //lets keep things simple
-        _setupVAO(Renderable.VAOMode.classScope);
-
-		// we dont store the resources, we just get them. allows reloading on demand etc. 
-		_program = program;
-		Resource.preload!GLSLProgram(_program); 
-       
+        super(program);       
 	}
 
-	~this()
-	{
-		Resource.free(_program);
-
-	}
 	override void render(ref View view)
 	{
-		auto prg = Resource.create!GLSLProgram(_program).program;
+		auto prg = this.program.program;
 		prg.bind();
         vao.bind();
 		auto m = gen2DModelToWorld(_pos, _rotation, _size);
@@ -56,17 +137,7 @@ class RawTexturedQuad : Renderable
 		super.render(view);
 	}
 
-    /**
-    The position of this quad.    /-- totally not stolen from entity.d
-	*/
-	@property vec2 pos()
-	{
-		return _pos;
-	}
-	@property vec2 pos(vec2 p)
-	{
-		return _pos = p;
-	}
+    
 
     /**
         The texture of this quad
@@ -114,10 +185,6 @@ protected:
 private:
     /// this quads texture
     GPUTexture _tex;
-	/// this quads program
-	string _program;
-	/// the position of this quad.
-	vec2	_pos = 0;
 	/// the size of this quad
 	float	_size = 1.0f;
 	/// the rotation of this quad (around z!)

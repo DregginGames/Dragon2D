@@ -119,7 +119,7 @@ class Text : Renderable
         
         foreach(ref line;_lines) {
             auto m = gen2DModelToWorld(_pos+line.pos);
-            auto sm = m.scale(line.size.x,line.size.y,1.0f);
+            m.scale(line.size.x,line.size.y,1.0f);
             auto mvp = view.worldToView*m;
             prg.setUniformValue("MVP", mvp.value_ptr);
             line.tex.bind();
@@ -189,7 +189,7 @@ protected:
                 case Positioning.centered:
                     break;
                 case Positioning.left:
-                    line.pos.x=w/2.0;
+                    //line.pos.x=w/4.0;
                     break;
                 case Positioning.right:
                     line.pos.x=0.0-w/2.0;

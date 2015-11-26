@@ -9,6 +9,7 @@ import d2d.game.simple.sprite;
 import d2d.game.ui.cursor;
 import d2d.game.entity;
 import d2d.game.ui.text;
+import d2d.game.dbg.grid;
 import gl3n.linalg;
 
 int main(char[][] args)
@@ -41,7 +42,9 @@ bool onStartup(Base base)
     settings.height = 0.5;
     settings.maxwidth = 2.0;
     settings.linebreak = true;
+    settings.positioning = t.text.Positioning.left;
     t.text.settings = settings;
     base.addChild(t);
+    base.addChild(new Grid(vec4(0.2f,0.0f,1.0f,.5f)));
 	return true;
 }

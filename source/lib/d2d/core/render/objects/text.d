@@ -27,10 +27,53 @@ private struct Line {
     GPUTexture tex;
 }
 
+private struct TextSplitSettings
+{
+    TTF_Font* font;
+    Text.OverflowBehaviour overflow;
+    float height = 0.0;
+    float maxwidth = 0.0;
+    bool breakWords = true;
+    bool parseControl = false;
+}
+
 // Holds a text, renders it on screen and manages the width-thingy
 // Uses RawTexturedQuad, but does so many things that i belive it deserves to be a renderable
 class Text : Renderable
 {
+
+    /** This struct holds the settings for structs.
+    Why this is needed you would ask? There are two ways to update text object. After every setting changed, the text needs to be rebuilt.
+    That takes time. See the functions why thats not an easy thing. Next would be: why dont flush() the text? 
+    Flushing the text after each change forces one to carry the whole flush function, along with the setters to the object hierarchy. Thats not nice.
+    I decidet it would be much nicer to just carry the Setting struct - a thing that cant be broken that easyly and the setter then takes care of the updates. 
+    */
+    public struct TextSettings
+    {
+        /// The maximal length of the text. if not set (<=0), the whole text will render in one line until its end, no matter how long it is
+        float maxwidth = 0.0f;
+        /// If the text will break on linefeeds. If set to true, multiline text becomes possible
+        bool linebreak = false;
+        /// The maximal height of a text - used when linebreak is true. if set (>=0) the textnoxes height wont exeed a specific value
+        float maxheight = 0.0f;
+        /// Specifes how text-overflows will be handled
+        OverflowBehaviour overflow = OverflowBehaviour.showBegin;
+        /// Offset-factor between different lines. 
+        float lineOffset = 0.5;
+        /// The size of the text
+        float height = 1.0f;
+        /// THe color of the text
+        vec4 color = vec4(1.0f,1.0f,1.0f,1.0f);    
+        /// Positioning of the text.
+        Positioning positioning = Positioning.centered;
+        /// font resource name
+        string font;
+        /// font size name
+        Font.FontSize size = Font.FontSize.medium;
+        //the raw text
+        string text = "";
+    }
+
     enum OverflowBehaviour {
         showBegin,
         showEnd,
@@ -47,7 +90,7 @@ class Text : Renderable
     {
         _setupVAO(VAOMode.classScope);
         _program = program;
-        _font = font;
+        _settings.font = font;
         Resource.preload!Font(font);
         Resource.preload!GLSLProgram(program);
     }
@@ -55,9 +98,9 @@ class Text : Renderable
     this(string text,  string font, float height, Font.FontSize size=Font.FontSize.medium, string shader="shader.default")
     {
         this(font, shader);
-        _text = text;
-        _size = size;
-        _height = height;
+        _settings.text = text;
+        _settings.size = size;
+        _settings.height = height;
         regenerate();
     }
 
@@ -88,78 +131,37 @@ class Text : Renderable
         return _pos=p;
     }
 
-    @property float height()
+    @property TextSettings settings()
     {
-        return _height;
+        return _settings;
     }
-    @property float height(float h)
+    @property TextSettings settings(TextSettings s)
     {
-        _height = h;
+        _settings = s;
         regenerate();
-        return _height;
-    }
-
-    @property float maxwidth()
-    {
-        return _maxwidth;
-    }
-    @property float maxwidth(float m)
-    {
-        _maxwidth = m;
-        regenerate();
-        return _maxwidth;
-    }
-
-    @property float maxheight()
-    {
-        return _maxheight;
-    }
-    @property float maxheight(float h)
-    {
-        _maxheight = h;
-        regenerate();
-        return h;
-    }
-
-    @property bool linebreak()
-    {
-        return _linebreak;
-    }
-    @property bool linebreak(bool b)
-    {
-        _linebreak = b;
-        regenerate();
-        return _linebreak;
-    }
-    /// The lineoffset is the factpr for the additional distance between lines that is added if linebreak is enabled
-    /// the actual distance is calculated height*lineOffset
-    @property float lineOffset(float f)
-    {
-        return _lineOffset = f;
-    }
-    @property float lineOffset()
-    {
-        return _lineOffset;
+        return _settings;
     }
 protected:
     //does what the name says with the text. regenerates the quads for the text rendering. Dont run near companion.
     void regenerate()  
     {
-        auto font = Resource.create!Font(_font).getFont(_size);
+        auto font = Resource.create!Font(_settings.font).getFont(_settings.size);
 
-        char[] textLeft = _text.dup;
+        char[] textLeft = _settings.text.dup;
         _lines.length = 0;
 
-        if(_maxwidth <= 0.0f) {
+        if(_settings.maxwidth <= 0.0f) {
             Line line;
             line.text = textLeft.idup;
             _lines ~= line;
         }
         else {
+            TextSplitSettings splitSettings = { font, _settings.linebreak ? OverflowBehaviour.showBegin : _settings.overflow, 
+                                        _settings.height, _settings.maxwidth, !_settings.linebreak, _settings.linebreak };
             do {
-                string res = stripTextOnLength(textLeft,font,_linebreak ? OverflowBehaviour.showBegin : _overflow,_height,_maxwidth);
+                string res = stripTextOnLength(textLeft,splitSettings);
                 Line line;
-                line.pos = vec2(0.0,0.0-cast(float)_lines.length*(_height+_lineOffset*_height));
+                line.pos = vec2(0.0,0.0-cast(float)_lines.length*(_settings.height+_settings.lineOffset*_settings.height));
                 
                 if(res.length==0) {
                     line.text = textLeft.idup;
@@ -168,16 +170,16 @@ protected:
                 }
                 line.text = res;
                 _lines ~= line;
-            } while(textLeft.length!=0 && _linebreak);
+            } while(textLeft.length!=0 && _settings.linebreak);
         }
 
-        auto col = sdlColor(_color);
+        auto col = sdlColor(_settings.color);
         foreach(ref line; _lines) {
             auto surface = TTF_RenderUTF8_Blended(font,toStringz(line.text),col);
             line.tex = new GPUTexture(surface);
-            float w = _height * cast(float)surface.w / cast(float)surface.h;
-            line.size = vec2(w,_height);
-            final switch(_position) {
+            float w = _settings.height * cast(float)surface.w / cast(float)surface.h;
+            line.size = vec2(w,_settings.height);
+            final switch(_settings.positioning) {
                 case Positioning.centered:
                     break;
                 case Positioning.left:
@@ -205,43 +207,23 @@ protected:
     }
 
 private:
-    /// The maximal length of the text. if not set (<=0), the whole text will render in one line until its end, no matter how long it is
-    float _maxwidth = 0.0f;
-    /// If the text will break on linefeeds. If set to true, multiline text becomes possible
-    bool _linebreak = false;
-    /// The maximal height of a text - used when _linebreak is true. if set (>=0) the textnoxes height wont exeed a specific value
-    float _maxheight = 0.0f;
-    /// Specifes how text-overflows will be handled
-    OverflowBehaviour _overflow = OverflowBehaviour.showBegin;
-    /// Offset-factor between different lines. 
-    float _lineOffset = 0.5;
-    /// The size of the text
-    float _height = 1.0f;
-    /// THe color of the tet
-    vec4 _color = vec4(1.0f,1.0f,1.0f,1.0f);
-    /// the position of the text
-    vec2 _pos;
-    /// Positioning of the text.
-    Positioning _position = Positioning.centered;
     /// program resource name
     string _program;
-    /// font resource name
-    string _font;
-    /// font size name
-    Font.FontSize _size;
+    /// the position of the text
+    vec2 _pos;
     /// holds the renderable lines
-    Line[] _lines;
-    //the raw text
-    string _text;
+    Line[] _lines;    
+    /// The text settings. See The TextSettings struct
+    TextSettings _settings;
 }
 
 // sets str to the stuff thats left of the input string and returns the string that matches or is smaller then the max length
 // It tries NOT to break words
-private string stripTextOnLength(ref char[] str, TTF_Font* font, Text.OverflowBehaviour overflow, float height, float maxlen)
+private string stripTextOnLength(ref char[] str, TextSplitSettings settings)
 {
     int w,h;
-    TTF_SizeUTF8(font,toStringz(str),&w,&h);
-    if(height * cast(float)w/cast(float)h <= maxlen || maxlen <= 0.0f || str.length < 2) {
+    TTF_SizeUTF8(settings.font,toStringz(str),&w,&h);
+    if(settings.height * cast(float)w/cast(float)h <= settings.maxwidth || settings.maxwidth <= 0.0f || str.length < 2) {
         auto tmp = str.idup;
         str.length = 0;
         return tmp;
@@ -253,17 +235,17 @@ private string stripTextOnLength(ref char[] str, TTF_Font* font, Text.OverflowBe
     while(p<=str.length) {
         auto a = str[0..p];
         auto b = str[p..str.length];
-        TTF_SizeUTF8(font,toStringz(a),&w,&h);
-        float lena = height * cast(float)w/cast(float)h;
-        TTF_SizeUTF8(font,toStringz(b),&w,&h);
-        float lenb = height * cast(float)w/cast(float)h;
+        TTF_SizeUTF8(settings.font,toStringz(a),&w,&h);
+        float lena = settings.height * cast(float)w/cast(float)h;
+        TTF_SizeUTF8(settings.font,toStringz(b),&w,&h);
+        float lenb = settings.height * cast(float)w/cast(float)h;
 
-        if(overflow == Text.OverflowBehaviour.showBegin) {
-            if(lena>maxlen) {
+        if(settings.overflow == Text.OverflowBehaviour.showBegin) {
+            if(lena>settings.maxwidth) {
                 p = p-1;
                 size_t breakpos = p;
                 //try to find whitespace
-                while(breakpos>0) {
+                while(breakpos>0&&settings.breakWords == false) {
                     if(isWhite(str[breakpos])) {
                         result = str[0..breakpos].idup;
                         str = str[breakpos..str.length];
@@ -276,11 +258,11 @@ private string stripTextOnLength(ref char[] str, TTF_Font* font, Text.OverflowBe
                 str = str[p..str.length];
                 break;
             }
-        } else if (overflow == Text.OverflowBehaviour.showEnd) {
-            if(lenb<=maxlen) {
+        } else if (settings.overflow == Text.OverflowBehaviour.showEnd) {
+            if(lenb<=settings.maxwidth) {
                 size_t breakpos = p;
                 //try to find whitespace
-                while(breakpos<str.length) {
+                while(breakpos<str.length&&settings.breakWords == false) {
                     if(isWhite(str[breakpos])) {
                         result = str[0..breakpos].idup;
                         str = str[breakpos..str.length];
@@ -297,5 +279,4 @@ private string stripTextOnLength(ref char[] str, TTF_Font* font, Text.OverflowBe
     }
 
     return result;
-
 }

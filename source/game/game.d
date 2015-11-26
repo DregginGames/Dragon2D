@@ -37,9 +37,11 @@ bool onStartup(Base base)
     base.addChild(camera2);
 
     auto t = new Text("font.Roboto-Medium", "Sabberschinkenschnitzel World centered text");
-    t.text.height = 0.5;
-    t.text.maxwidth = 2.0;
-    t.text.linebreak = true;
+    auto settings = t.text.settings;
+    settings.height = 0.5;
+    settings.maxwidth = 2.0;
+    settings.linebreak = true;
+    t.text.settings = settings;
     base.addChild(t);
 	return true;
 }

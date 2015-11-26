@@ -35,6 +35,7 @@ private struct TextSplitSettings
     float maxwidth = 0.0;
     bool breakWords = true;
     bool parseControl = false;
+    float scroll = 0.0; 
 }
 
 // Holds a text, renders it on screen and manages the width-thingy
@@ -58,6 +59,10 @@ class Text : Renderable
         float maxheight = 0.0f;
         /// Specifes how text-overflows will be handled
         OverflowBehaviour overflow = OverflowBehaviour.showBegin;
+        /// How far the text is scrolled - if overflow is scroll. Better use texts scrollUp and scrollDown functions since these dont regenerate the text. 
+        float scroll = 0.0;
+        /// How big a single scrolling unit is (basically how far one line is in world coordinates. yes. )
+        float scrollUnit = 0.0;
         /// Offset-factor between different lines. 
         float lineOffset = 0.5;
         /// The size of the text
@@ -157,7 +162,8 @@ protected:
         }
         else {
             TextSplitSettings splitSettings = { font, _settings.linebreak ? OverflowBehaviour.showBegin : _settings.overflow, 
-                                        _settings.height, _settings.maxwidth, !_settings.linebreak, _settings.linebreak };
+                                        _settings.height, _settings.maxwidth, !_settings.linebreak, _settings.linebreak,
+                                        _settings.scroll };
             do {
                 string res = stripTextOnLength(textLeft,splitSettings);
                 Line line;
@@ -274,6 +280,9 @@ private string stripTextOnLength(ref char[] str, TextSplitSettings settings)
                 str = b;
                 break;
             }
+        }
+        else if (settings.overflow == Text.OverflowBehaviour.scroll) {
+            throw new Exception("Scrolling not yet implement - hit the programmer with a brick please");
         }
         p++;
     }

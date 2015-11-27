@@ -113,7 +113,7 @@ class Env : Base
         DerelictGL3.reload();
         //vsync 
         SDL_GL_SetSwapInterval(cast(int) Settings["window"].object["vsync"].integer);
-        //glEnable(GL_BLEND);
+        glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         log("Dont Video init");

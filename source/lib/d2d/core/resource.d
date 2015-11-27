@@ -99,14 +99,14 @@ class Resource
     }   
 
     /// frees a resource. note that it isnt freed until curtime - delteTime is > deleteWaitTime (all in seconds) 
+    /// Call in destructors - its totally safe (i hope so now)
     final static void free(string name)
     {
         auto p = (name in resources);
         if (p !is null) {
             p._deletetime = Clock.currStdTime();
             p._deleted = true;
-        }
-        checkFree(); 
+        } 
     }
 
 private:
@@ -124,8 +124,9 @@ private:
         /// the array of existing resources
         Resource[string] resources;
 
-        /// called on every resource action, makes shure resources are actually removed
+        /// called on every resource allocation, makes shure resources are actually removed
         /// referenes wont be deleted so the object is still useable until noone uses it
+        /// FIXME: cant be called on resource freeings because these might happen from inside the gc wich then causes bad things to happen
         final static void checkFree() 
         {
             foreach(key; resources.keys) {

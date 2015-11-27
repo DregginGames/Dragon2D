@@ -25,15 +25,14 @@ bool onStartup(Base base)
     auto cursor = new WorldCursor();
     auto camera = new Camera(4.0f);
     auto camera2 = new Camera(4.0f);
-    camera2.view.viewportPos = vec2(0.9,0.9);
-    camera2.view.viewportSize = vec2(.1,.1);
+    camera2.view.viewportPos = vec2(0.8,0.8);
+    camera2.view.viewportSize = vec2(.2,.2);
     auto sprite = new Sprite("texture.test");
     sprite.pos = vec2(-1,-1);
     auto sprite2 = new Sprite("texture.test");
     cursor.addChild(sprite2);
     sprite2.positionMode = Entity.PositionMode.parentBound;
     camera.addChild(cursor);
-    base.addChild(sprite);
     base.addChild(camera);
     base.addChild(camera2);
 

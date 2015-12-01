@@ -215,8 +215,8 @@ class IOTransformer : Base
         enableEventHandling(); 
     }
 
-    /// transforms every sdl input event into an IOEvent 
-    override void update()
+    /// transforms every sdl input event into an IOEvent in the preUpdate phase 
+    override void preUpdate()
     {
         // Get Screen Res for normalization 
         float width = cast(float) Settings["window"].object["width"].integer;

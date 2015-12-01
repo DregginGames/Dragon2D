@@ -35,6 +35,20 @@ class Base
 		
     } 
 
+    /* preUpdate is called before update is called
+        Should be used to process events, inputs etc. 
+        Also put everything that might fire events that should be processed immediatly
+    */
+    void preUpdate()
+    {
+    }
+
+    /// postUpdate is called after update is called
+    /// Avoid fireing events here. Here you should do things that dont affect other objects but need the full interaction with the rest of the world in before.
+    void postUpdate()
+    {
+    }
+
     /// Update is called every tick (1/30 of a second). 
     void update()
     {
@@ -59,7 +73,15 @@ class Base
     final void propagateUpdate()
     {
         propagate(
+            (b) { b.preUpdate(); },
+            (b) => !b._paused
+        );
+        propagate(
             (b) { b.update(); },
+            (b) => !b._paused
+        );
+        propagate(
+            (b) { b.postUpdate(); },
             (b) => !b._paused
         );
     }

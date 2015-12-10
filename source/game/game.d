@@ -1,3 +1,10 @@
+/**
+    Main entry point for a game. Here a game should define its "scripting".
+    This includes game logic, ui handlers, ...
+    
+*/
+module game;
+
 //import d2d.engine;
 import d2d.engine;
 import d2d.core.base;

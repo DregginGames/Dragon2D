@@ -24,6 +24,12 @@
             "sourcePaths": ["source/uieditor/"],
             "importPaths": ["source/uieditor/"],
         },
+        {
+            "name": "docs",
+            "targetType": "library",
+            "sourcePaths": ["source/"],
+            "importPaths": ["source/"],
+        }
     ],
 	
     "workingDirectory": "./",

@@ -1,15 +1,32 @@
 ﻿{
 	"name": "dragon2d",
-	"description": "Dragon2D - A 2D RPG Engine written in D2",
+	"description": "Dragon2D - A 2D RPG Engine",
 	"authors": ["Malte Kießling"],
 	"licence": "MIT",
     "version": "0.3.0-alpha",
-	"targetType": "executable",
-	"sourcePaths": ["source/game/"],
-	"importPaths": ["source/game/"],
-	"targetPath": "engine",
-	"targetName": "Dragon2D",
-	"workingDirectory": "./",
+	"sourcePaths": [],
+    "importPaths": [],
+    
+    "configurations": [
+        {
+            "name": "game",
+            "targetType": "executable",
+            "targetPath": "engine",
+            "targetName": "Dragon2D",           
+            "sourcePaths": ["source/game/"],
+            "importPaths": ["source/game/"],
+        },
+        {
+            "name": "uieditor",
+            "targetType": "executable",
+            "targetPath": "engine",
+            "targetName": "uieditor",           
+            "sourcePaths": ["source/uieditor/"],
+            "importPaths": ["source/uieditor/"],
+        },
+    ],
+	
+    "workingDirectory": "./",
 	"dependencies": {
 		"dragon2d:d2dlib": "*"
 	},

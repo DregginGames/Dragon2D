@@ -1,0 +1,10 @@
+rm -rf .dub 
+rm -rf docs 
+rm -rf *.html
+rm -rf docs.json 
+rm -rf releasePackage 
+rm -rf engine/*.exe 
+rm -rf engine/*.lib 
+rm -rf engine/*.so 
+rm -rf engine/Dragon2D
+rm -rf engine/uieditor 

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>API documentation</title>
+		<link rel="stylesheet" type="text/css" href="./styles/ddox.css"/>
+		<link rel="stylesheet" href="./prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="./scripts/jquery.js">/**/</script>
+		<script type="text/javascript" src="./prettify/prettify.js">/**/</script>
+		<script type="text/javascript" src="./scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="prettyPrint(); setupDdox();">
+		<nav id="main-nav">
+						<ul class="tree-view">
+							<li class=" tree-view">
+								<a href="#" class="package">d2d</a>
+						<ul class="tree-view">
+							<li class="collapsed tree-view">
+								<a href="#" class="package">core</a>
+						<ul class="tree-view">
+							<li class="collapsed tree-view">
+								<a href="#" class="package">container</a>
+						<ul class="tree-view">
+							<li>
+								<a href="./d2d/core/container/gamecontainer.html" class=" module">gamecontainer</a>
+							</li>
+							<li>
+								<a href="./d2d/core/container/root.html" class=" module">root</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">dbg</a>
+						<ul class="tree-view">
+							<li>
+								<a href="./d2d/core/dbg/eventdebug.html" class=" module">eventdebug</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">render</a>
+						<ul class="tree-view">
+							<li class="collapsed tree-view">
+								<a href="#" class="package">lowlevel</a>
+						<ul class="tree-view">
+							<li>
+								<a href="./d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
+							</li>
+							<li>
+								<a href="./d2d/core/render/lowlevel/gputexture.html" class=" module">gputexture</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">objects</a>
+						<ul class="tree-view">
+							<li>
+								<a href="./d2d/core/render/objects/quad.html" class=" module">quad</a>
+							</li>
+							<li>
+								<a href="./d2d/core/render/objects/renderable.html" class=" module">renderable</a>
+							</li>
+							<li>
+								<a href="./d2d/core/render/objects/text.html" class=" module">text</a>
+							</li>
+							<li>
+								<a href="./d2d/core/render/objects/view.html" class=" module">view</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">util</a>
+						<ul class="tree-view">
+							<li>
+								<a href="./d2d/core/render/util/general.html" class=" module">general</a>
+							</li>
+						</ul>
+							</li>
+							<li>
+								<a href="./d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
+							</li>
+							<li>
+								<a href="./d2d/core/render/objects.html" class=" module">objects</a>
+							</li>
+							<li>
+								<a href="./d2d/core/render/renderer.html" class=" module">renderer</a>
+							</li>
+							<li>
+								<a href="./d2d/core/render/util.html" class=" module">util</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">resources</a>
+						<ul class="tree-view">
+							<li>
+								<a href="./d2d/core/resources/font.html" class=" module">font</a>
+							</li>
+							<li>
+								<a href="./d2d/core/resources/glslprogram.html" class=" module">glslprogram</a>
+							</li>
+							<li>
+								<a href="./d2d/core/resources/texture.html" class=" module">texture</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">services</a>
+						<ul class="tree-view">
+							<li>
+								<a href="./d2d/core/services/scheduler.html" class=" module">scheduler</a>
+							</li>
+						</ul>
+							</li>
+							<li>
+								<a href="./d2d/core/base.html" class=" module">base</a>
+							</li>
+							<li>
+								<a href="./d2d/core/callback.html" class=" module">callback</a>
+							</li>
+							<li>
+								<a href="./d2d/core/event.html" class=" module">event</a>
+							</li>
+							<li>
+								<a href="./d2d/core/io.html" class=" module">io</a>
+							</li>
+							<li>
+								<a href="./d2d/core/resource.html" class=" module">resource</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">game</a>
+						<ul class="tree-view">
+							<li class="collapsed tree-view">
+								<a href="#" class="package">dbg</a>
+						<ul class="tree-view">
+							<li>
+								<a href="./d2d/game/dbg/grid.html" class=" module">grid</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">simple</a>
+						<ul class="tree-view">
+							<li>
+								<a href="./d2d/game/simple/camera.html" class=" module">camera</a>
+							</li>
+							<li>
+								<a href="./d2d/game/simple/sprite.html" class=" module">sprite</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">ui</a>
+						<ul class="tree-view">
+							<li>
+								<a href="./d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="./d2d/game/ui/text.html" class=" module">text</a>
+							</li>
+							<li>
+								<a href="./d2d/game/ui/uielement.html" class=" module">uielement</a>
+							</li>
+							<li>
+								<a href="./d2d/game/ui/uievent.html" class=" module">uievent</a>
+							</li>
+						</ul>
+							</li>
+							<li>
+								<a href="./d2d/game/entity.html" class=" module">entity</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">system</a>
+						<ul class="tree-view">
+							<li>
+								<a href="./d2d/system/env.html" class=" module">env</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">util</a>
+						<ul class="tree-view">
+							<li>
+								<a href="./d2d/util/fileio.html" class=" module">fileio</a>
+							</li>
+							<li>
+								<a href="./d2d/util/logger.html" class=" module">logger</a>
+							</li>
+							<li>
+								<a href="./d2d/util/settings.html" class=" module">settings</a>
+							</li>
+						</ul>
+							</li>
+							<li>
+								<a href="./d2d/engine.html" class=" module">engine</a>
+							</li>
+						</ul>
+							</li>
+							<li>
+								<a href="./game.html" class=" module">game</a>
+							</li>
+						</ul>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<p>
+						<input id="symbolSearch" type="text" placeholder="Search for symbols" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+					</p>
+	<ul id="symbolSearchResults" style="display: none"></ul>
+	<script type="application/javascript" src="./symbols.js"></script>
+	<script type="application/javascript">
+var symbolSearchRootDir = "./";
+$('#symbolSearchPane').show();
+	</script>
+				</div>
+		</nav>
+		<div id="main-contents">
+			<h1>API documentation</h1>
+			<table>
+				<col class="caption"/>
+				<tr>
+					<th>Module</th>
+					<th>Description</th>
+				</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/container/gamecontainer.html">d2d.core.container.gamecontainer</a>
+				</td>
+				<td>
+A pure container class wich is the top-node of the game-related classes
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/container/root.html">d2d.core.container.root</a>
+				</td>
+				<td>
+d2d.root holds the root element of the engine
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/dbg/eventdebug.html">d2d.core.dbg.eventdebug</a>
+				</td>
+				<td>
+d2d.core.debug.eventdebug holds helpers to debug the event system
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/render/lowlevel/buffer.html">d2d.core.render.lowlevel.buffer</a>
+				</td>
+				<td>
+Holds the abstraction layer for buffer objects
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/render/lowlevel/gputexture.html">d2d.core.render.lowlevel.gputexture</a>
+				</td>
+				<td>
+Contains the abstraction for gls textures
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/render/objects/quad.html">d2d.core.render.objects.quad</a>
+				</td>
+				<td>
+Simple renderables for rendering quads on screen
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/render/objects/renderable.html">d2d.core.render.objects.renderable</a>
+				</td>
+				<td>
+d2d.core.render.renderable holds the base classes for object rendering.
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/render/objects/text.html">d2d.core.render.objects.text</a>
+				</td>
+				<td>
+Renders text on screen
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/render/objects/view.html">d2d.core.render.objects.view</a>
+				</td>
+				<td>
+d2d.core.render.view holds the view classes that manage the rendering of the scene on screen.
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/render/util/general.html">d2d.core.render.util.general</a>
+				</td>
+				<td>
+d2d.core.render.util provides utulity functions for 2D and 3D rendering
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/render/lowlevel.html">d2d.core.render.lowlevel</a>
+				</td>
+				<td>
+Package file for all lowlevel stuff
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/render/objects.html">d2d.core.render.objects</a>
+				</td>
+				<td>
+The package module that *should* contain all valid render objects
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/render/renderer.html">d2d.core.render.renderer</a>
+				</td>
+				<td>
+<code class="prettyprint lang-d">d2d.core.render.renderer</code> holds the classes used to render the whole engine.
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/render/util.html">d2d.core.render.util</a>
+				</td>
+				<td>
+Package header that includes all render utility files
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/resources/font.html">d2d.core.resources.font</a>
+				</td>
+				<td>
+Holds a font resource
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/resources/glslprogram.html">d2d.core.resources.glslprogram</a>
+				</td>
+				<td>
+d2d.core.resources.glprogram holds the resource that represents a glprogram;
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/resources/texture.html">d2d.core.resources.texture</a>
+				</td>
+				<td>
+<code class="prettyprint lang-d">d2d.core.resources.texture</code> holds the texture resource types
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/services/scheduler.html">d2d.core.services.scheduler</a>
+				</td>
+				<td>
+<code class="prettyprint lang-d">d2d.core.services.scheduler</code> manages the scheudling of function calles and other timed mechanisms
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/base.html">d2d.core.base</a>
+				</td>
+				<td>
+d2d.base holds the base interfaces needed by most of the classes.
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/callback.html">d2d.core.callback</a>
+				</td>
+				<td>
+<code class="prettyprint lang-d">d2d.core.callback</code> holds the types and few functions needed for Dragon2Ds callback system
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/event.html">d2d.core.event</a>
+				</td>
+				<td>
+<code class="prettyprint lang-d">d2d.core.event</code> holds the basic event class and the container for native sdl events
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/io.html">d2d.core.io</a>
+				</td>
+				<td>
+<code class="prettyprint lang-d">d2d.core.io</code> holds the classes that abstract the interaction with the user
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/core/resource.html">d2d.core.resource</a>
+				</td>
+				<td>
+<code class="prettyprint lang-d">d2d.core.resource</code> contains the bases for all resources used by d2d
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/game/dbg/grid.html">d2d.game.dbg.grid</a>
+				</td>
+				<td>
+Holds the debug class for grid rendering
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/game/simple/camera.html">d2d.game.simple.camera</a>
+				</td>
+				<td>
+<code class="prettyprint lang-d">d2d.game.simple.camera</code> holds the default camera class
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/game/simple/sprite.html">d2d.game.simple.sprite</a>
+				</td>
+				<td>
+<code class="prettyprint lang-d">d2d.game.simple.sprite</code> holds the sprite class: a simple class to display images on screen
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/game/ui/cursor.html">d2d.game.ui.cursor</a>
+				</td>
+				<td>
+d2d.game.io.cursor holds the cursor-functions
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/game/ui/text.html">d2d.game.ui.text</a>
+				</td>
+				<td>
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/game/ui/uielement.html">d2d.game.ui.uielement</a>
+				</td>
+				<td>
+Abstract base for all ui elements.
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/game/ui/uievent.html">d2d.game.ui.uievent</a>
+				</td>
+				<td>
+Holds all ui events or events related to ui
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/game/entity.html">d2d.game.entity</a>
+				</td>
+				<td>
+<code class="prettyprint lang-d">d2d.game.entity</code> holds the base class for all objects actually appearing ingame: entitys
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/system/env.html">d2d.system.env</a>
+				</td>
+				<td>
+<code class="prettyprint lang-d">d2d.system.env</code> holds the enviourment of D2D - opengl, sdl, sound system and all this stuff get insitialized by the env class.
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/util/fileio.html">d2d.util.fileio</a>
+				</td>
+				<td>
+<code class="prettyprint lang-d">d2d.util.fileio</code> provides structs and functions for efficient file resoure management
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/util/logger.html">d2d.util.logger</a>
+				</td>
+				<td>
+d2d.logger holds the basic functions for logging. It supports several output methods.
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/util/settings.html">d2d.util.settings</a>
+				</td>
+				<td>
+d2d.settings manages all settings - from command line arguments to the config files of the engine
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/engine.html">d2d.engine</a>
+				</td>
+				<td>
+The <code class="prettyprint lang-d">d2d.engine</code> module conains the absoute basesystem of the Draon2D engine.
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./game.html">game</a>
+				</td>
+				<td>
+Main entry point for a <code class="prettyprint lang-d">game</code>. Here a <code class="prettyprint lang-d">game</code> should define its "scripting".
+    This includes <code class="prettyprint lang-d">game</code> logic, ui handlers, ...
+
+				</td>
+			</tr>
+			</table>
+			<section>
+				<h2>Authors</h2>
+			</section>
+			<section>
+				<h2>Copyright</h2>
+			</section>
+			<section>
+				<h2>License</h2>
+			</section>
+		</div>
+	</body>
+</html>

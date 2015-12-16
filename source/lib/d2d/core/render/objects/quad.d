@@ -292,7 +292,7 @@ protected:
         _vertexBuffer.setData(vertices.ptr, vec4.sizeof*vertices.length);
         _uvBuffer.setData(uvs.ptr, vec2.sizeof*uvs.length);
 
-        _drawOffset = vec2i(0,vertices.length);
+        _drawOffset = vec2i(0,cast(int)vertices.length);
     }
 private:
     ulong _maxQuadId = 0;

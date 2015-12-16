@@ -86,11 +86,11 @@ class Program
 	}
 
     ///Initiates a draw - classic array draw
-    void drawArrays(DrawMode mode, int first, size_t count)
+    void drawArrays(DrawMode mode, int first, int count)
     {
         if(_valid) {
             bind();
-            glDrawArrays(mode, first, count);
+            glDrawArrays(cast(uint)mode, first, count);
         }
     }
 

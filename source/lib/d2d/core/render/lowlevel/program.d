@@ -85,6 +85,18 @@ class Program
 
 	}
 
+    /*
+        Older OpenGL versions dont support GL_TRUE as transpose argument in glUniformMatrix!
+        so this is a ugly workaround until gl3n supports that. 
+        seeAlso: https://github.com/Dav1dde/gl3n/issues/68
+    */
+        import gl3n.linalg;
+    void setUniformValueMatrixWorkaround(string name, mat4 m) 
+    {
+        m.transpose();
+        setUniformValue(name,m.value_ptr);
+    }
+
     ///Initiates a draw - classic array draw
     void drawArrays(DrawMode mode, int first, int count)
     {
@@ -185,15 +197,16 @@ struct Uniform
                 break;
         }
     }
-
+    
 	void setUniformValue(T) (T* valuePtr)
 	{
 		if (null != _vecFunc) {
 			_vecFunc(_location, _arrSize, cast(void*)valuePtr);
 		}
 		else if (null != _matFunc) {
-			_matFunc(_location, _arrSize, true, cast(void*)valuePtr);
-		}
+			//_matFunc(_location, _arrSize, true, cast(void*)valuePtr);
+		    _matFunc(_location, _arrSize, false, cast(void*)valuePtr); // cant be true for 3rd arg, see the uniform workaround function (just search for workaround already)
+        }
 	}
 
     @property GLuint location()

@@ -121,7 +121,7 @@ class Text : Renderable
             auto m = gen2DModelToWorld(_pos+line.pos);
             m.scale(line.size.x,line.size.y,1.0f);
             auto mvp = view.worldToView*m;
-            prg.setUniformValue("MVP", mvp.value_ptr);
+            prg.setUniformValueMatrixWorkaround("MVP", mvp);
             line.tex.bind();
             prg.drawArrays(prg.DrawMode.triangles, 0,6);
         }

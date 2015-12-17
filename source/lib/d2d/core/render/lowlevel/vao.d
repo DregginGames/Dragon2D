@@ -50,12 +50,12 @@ class VAO
         Its needed to give the compontent size and the datatype that is used by that buffer because it cant be determinated by just accessing the buffer.
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     */
-    void attatchBuffer(uint index, Buffer buffer, int size, DataType type = DataType.floatType, size_t stride = 0, size_t pointer = 0)
+    void attatchBuffer(uint index, Buffer buffer, int size, DataType type = DataType.floatType, uint stride = 0, size_t pointer = 0)
     {
         bind();
         buffer.bind();
         glEnableVertexAttribArray(index);
-        glVertexAttribPointer(index, size, type, GL_TRUE, stride, cast(const void*)pointer);       
+        glVertexAttribPointer(index, size,cast(uint) type, GL_TRUE, stride, cast(const void*)pointer);       
         _attachedBuffers[index] = buffer;
     }
 

@@ -22,7 +22,7 @@ class FileResource
             return;
         }
 
-        write(file, data);
+        write(file, _data);
         _modified = false;
     }
 
@@ -33,7 +33,7 @@ class FileResource
             return;
         }
         flush();
-        data.length = 0;
+        _data.length = 0;
         _read = false;
     }
 
@@ -45,20 +45,20 @@ class FileResource
         }
 
         if(!_read) {
-            data = std.file.read(file);
+            _data = std.file.read(file);
             _read = true;
         }
-        return cast(T[]) data;
+        return cast(T[]) _data;
     }
 
     /// sets the data of this file. Since data are overwritten in the end logically causes _read to be set to true. Flush is needed to store them to the system!
     void setData(T=ubyte) (T[] data) 
     {
-        if(isInvalid) {
+        if(_invalid) {
             return;
         }
-        data = cast(void[]) data;
-        isModified = true;
+        _data = cast(ubyte[]) data;
+        _modified = true;
         _read = true;
     }
 
@@ -172,7 +172,7 @@ private:
     /// if true the resource is invalid and all operations dont have an effect 
     bool    _invalid = false; 
     /// the actual data
-    void[]  data;
+    void[]  _data;
 
     /// all file resources live here 
     static FileResource[string] resources;

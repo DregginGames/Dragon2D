@@ -34,6 +34,7 @@ bool onStartup(Base base)
     
 
     auto ui = new UI("ui.menu");
+    ui.store();
     camera.addChild(ui);
 
     base.addChild(camera);

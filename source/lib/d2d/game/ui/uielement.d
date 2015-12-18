@@ -38,6 +38,7 @@ abstract class UIElement : Base
     /// The data should only represent the current element, not 
     void load(JSONValue data)
     {
+        _name = data.object["name"].str;
         float x = data.object["x"].floating;
         float y = data.object["y"].floating;
         float w = data.object["w"].floating;
@@ -45,9 +46,10 @@ abstract class UIElement : Base
         _pos = vec2(x,y);
         _size = vec2(w,h);
         foreach(ref c; data.object["children"].array) {
-            auto newelem = Object.factory(c.object["className"].str);
-            if(newelem && cast(UIElement)newelem) {
-                (cast(UIElement)newelem).load(c);
+            auto newelem = fromClassname(c.object["className"].str);
+            if(newelem !is null) {
+                this.addChild(newelem);
+                newelem.load(c);
             }
         }
     }
@@ -62,10 +64,12 @@ abstract class UIElement : Base
     void store(ref JSONValue data)
     {
         data.object["className"] = to!string(typeid(this));
+        data.object["name"] = _name;
         data.object["x"] = _pos.x;
         data.object["y"] = _pos.y;
         data.object["w"] = _size.x;
         data.object["h"] = _size.y;
+        
         foreach(ref c; children) {
             if(cast(UIElement)c) {
                 JSONValue childData;
@@ -122,7 +126,7 @@ abstract class UIElement : Base
             auto p = cast(UIElement)this.parent;
             return vec2(p.absoluteSize.x*_size.x,p.absoluteSize.y*_size.y);
         }
-
+        
         return _size;
     }
 
@@ -145,8 +149,21 @@ abstract class UIElement : Base
     {
         return _focus;
     }
-
     
+    /**  
+        Acts around Object.factory to make sure generated objects are UIElements
+        Return: New UIElement of type named in s, null if not successfull.
+    */
+    static UIElement fromClassname(string s)
+    {
+        auto newelem = Object.factory(s);
+        if(newelem && cast(UIElement)newelem) {
+            return cast(UIElement)newelem;
+        }
+
+        return null;
+    }
+
 protected:
     /// Sets the focus of a element and unfocuses the current one
     void _setFocus() 

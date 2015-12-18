@@ -38,8 +38,7 @@ private struct TextSplitSettings
     float scroll = 0.0; 
 }
 
-// Holds a text, renders it on screen and manages the width-thingy
-// Uses RawTexturedQuad, but does so many things that i belive it deserves to be a renderable
+/// Holds a text, renders it on screen and manages the width-thingy
 class Text : Renderable
 {
 

@@ -118,7 +118,7 @@ private:
     long    _deletetime;
     /// if the object was deleted 
     bool    _deleted = false;
-
+    
     /// static vars for resource management
     static {    
         /// the array of existing resources

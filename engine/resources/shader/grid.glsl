@@ -18,7 +18,7 @@
 	{
 		float x = fract(not_uv.x*25.0);
 		float y = fract(not_uv.y*25.0);
-		if(x>0.98 || y>0.98) {
+		if(x>0.95 || y>0.95) {
 			gl_FragColor = color;
 		} else {
 			gl_FragColor = vec4(0.0);

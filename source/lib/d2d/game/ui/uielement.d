@@ -4,9 +4,12 @@
 
 module d2d.game.ui.uielement;
 
+import std.json;
+
 import gl3n.linalg;
 import d2d.core.base;
 import d2d.game.ui.uievent;
+import d2d.util.logger;
 
 /**
     A UI Element is a non-entity visual class that is part of the user interface. 
@@ -31,6 +34,46 @@ abstract class UIElement : Base
         _unfocus();
     }
 
+    /// Loads a element from stored json data. Should only be called by UI
+    /// The data should only represent the current element, not 
+    void load(JSONValue data)
+    {
+        float x = data.object["x"].floating;
+        float y = data.object["y"].floating;
+        float w = data.object["w"].floating;
+        float h = data.object["h"].floating;
+        _pos = vec2(x,y);
+        _size = vec2(w,h);
+        foreach(ref c; data.object["children"].array) {
+            auto newelem = Object.factory(c.object["className"].str);
+            if(newelem && cast(UIElement)newelem) {
+                (cast(UIElement)newelem).load(c);
+            }
+        }
+    }
+
+    /** 
+        Stores a ui element tree into json data structure
+        Overload for custom ui elements to store additional data. Make sure to call super.store(store) afterwards!
+        Dont call by hand, insted let UI do that for you. 
+        Params:
+            data = the JSONData struct that will be written into
+    */
+    void store(ref JSONValue data)
+    {
+        data.object["className"] = to!string(typeid(this));
+        data.object["x"] = _pos.x;
+        data.object["y"] = _pos.y;
+        data.object["w"] = _size.x;
+        data.object["h"] = _size.y;
+        foreach(ref c; children) {
+            if(cast(UIElement)c) {
+                JSONValue childData;
+                (cast(UIElement)c).store(childData);
+                data.object["children"].array ~= childData;
+            }
+        }
+    }
     /// The name of a ui object
     @property string name()
     {

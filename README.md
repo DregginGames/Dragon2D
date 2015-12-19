@@ -6,4 +6,4 @@ There are many reasons why i decided to use D. One is the safer design of the la
 Other reasons are the modular design and the readability. However i will cover this sometime in the future in the Dragon2D github wiki.
 
 ## How to install 
-Hnnnngggggggggg -> https://github.com/DregginGames/Dragon2D/wiki/Installation-Compilation-Running
+Hnnnngggggggggg -> https://github.com/DregginGames/Dragon2D/wiki/Building-and-the-outer-architechture

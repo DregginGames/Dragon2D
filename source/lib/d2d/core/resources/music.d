@@ -24,7 +24,7 @@ class Music : Resource
                 Logger.log("Could not load music file " ~ fresource.file ~ " for " ~ name ~ " - " ~ fromStringz(Mix_GetError()));
             }
         } else {
-            Logger.log("Could not load font "~ name);
+            Logger.log("Could not load music "~ name);
         }
 
         super(name);

@@ -134,7 +134,7 @@ class Env : Base
                 throw new InitializationErrorException("Could not init audio!");
             }
         }
-        if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) != 0) {
+        if (Mix_OpenAudio(44100 , MIX_DEFAULT_FORMAT, 2, 1024) != 0) {
             log("Cannot Open Audio:");
             log(fromStringz(Mix_GetError()));
             throw new InitializationErrorException("Could not init audio!");
@@ -214,12 +214,25 @@ class Env : Base
 	{
 		return _aspectRatio;
 	}
-
-	/// returns the title of the engine window
+    
+    /// returns the title of the engine window
 	final @property string title()
 	{
 		return _title;
 	}
+
+    /**
+    If the mouse cursor shall be displayed. 
+    */
+    final @property bool cursor() 
+    {
+        return SDL_ShowCursor(-1)==1;
+    }
+    /// Ditto
+    final @property bool cursor(bool b)
+    {
+        return SDL_ShowCursor(b ? 1 : 0)==1;
+    }
 
 private:
     //System basic stuff 

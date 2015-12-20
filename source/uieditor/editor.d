@@ -1,6 +1,7 @@
 //import d2d.engine;
 
 import d2d.engine;
+import d2d.system.env;
 import d2d.core.base;
 import d2d.core.dbg.eventdebug;
 import d2d.core.resource;
@@ -11,6 +12,7 @@ import d2d.game.ui.cursor;
 import d2d.game.entity;
 import d2d.game.ui.ui;
 import d2d.game.dbg.grid;
+import d2d.game.audio.sound;
 import gl3n.linalg;
 
 int main(char[][] args)
@@ -32,12 +34,19 @@ bool onStartup(Base base)
     sprite.positionMode = Entity.PositionMode.parentBound;
     camera.addChild(cursor);
     
+    //isnt our ugly drawn sprite a mouse cursor in theory :P
+    Base.getService!Env("d2d.env").cursor=false;
+
+    auto s = new Sound("sound.alan");
+    s.play();
+    
 
     auto ui = new UI("ui.menu");
     ui.store();
     camera.addChild(ui);
 
     base.addChild(camera);
+    base.addChild(s);
     base.addChild(new Grid(vec4(0.2f,0.0f,1.0f,.5f)));
 	return true;
 }

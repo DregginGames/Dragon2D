@@ -24,7 +24,7 @@ class Sample : Resource
                 Logger.log("Could not load sample file " ~ fresource.file ~ " for " ~ name ~ " - " ~ fromStringz(Mix_GetError()));
             }
         } else {
-            Logger.log("Could not load font "~ name);
+            Logger.log("Could not load sample  "~ name);
         }
 
         super(name);

@@ -131,8 +131,13 @@ class Env : Base
             if (actualFlags&MIX_INIT_OGG) {
                 log("Ok, that worked. Still nothing sound related is good...");
             } else {
-                throw new InitializationErrorException("Could not init audio");
+                throw new InitializationErrorException("Could not init audio!");
             }
+        }
+        if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) != 0) {
+            log("Cannot Open Audio:");
+            log(fromStringz(Mix_GetError()));
+            throw new InitializationErrorException("Could not init audio!");
         }
         //FIXME: really put this in a config?
         Mix_AllocateChannels(cast(int) Settings["audio"].object["channels"].integer);

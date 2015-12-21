@@ -12,7 +12,7 @@ import d2d.game.ui.cursor;
 import d2d.game.entity;
 import d2d.game.ui.ui;
 import d2d.game.dbg.grid;
-import d2d.game.audio.sound;
+import d2d.game.audio.music;
 import gl3n.linalg;
 
 int main(char[][] args)
@@ -35,9 +35,9 @@ bool onStartup(Base base)
     camera.addChild(cursor);
     
     //isnt our ugly drawn sprite a mouse cursor in theory :P
-    Base.getService!Env("d2d.env").cursor=false;
+    //Base.getService!Env("d2d.env").cursor=false;
 
-    auto s = new Sound("sound.alan");
+    auto s = new Music("sound.alan");
     s.play();
     
 

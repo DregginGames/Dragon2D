@@ -46,7 +46,7 @@ abstract class Renderable
 	}
 
 	/// Performs an actual render on screen. 
-	void render(ref View view)
+	void render(in View view)
 	{
 	}
 
@@ -69,9 +69,35 @@ abstract class Renderable
     {
         return _detailLevel;
     }
+    /// Ditto
     @property int detailLevel(int l)
     {
         return _detailLevel = l;
+    }
+
+    /// The position of this renderable in world-coordinates
+    @property vec2 pos()
+    {
+        return _pos;
+    }
+    /// Ditto
+    @property vec2 pos(vec2 p)
+    {
+        return _pos=p;
+    }
+
+    /**
+        Renderables can be set to ignore the effects of views (other than viewport), making, for them, -1..1 direkt mapping of screen space. 
+        This can be usefull for the user interface, debug text, things that should annoy people, generally everything you dont want to use in world but in screen coordinates
+    */
+    @property bool ignoreView()
+    {
+        return _ignoreView;
+    }
+    /// Ditto 
+    @property bool ignoreView(bool b) 
+    {
+        return _ignoreView = true;
     }
 
 protected:
@@ -124,4 +150,8 @@ private:
     /// the detail level
     int _detailLevel = 25; // imagine everything is a map
     
+    /// the position of the renderable
+    vec2 _pos = 0;
+    /// if the object ignoers the transformation of views 
+    bool _ignoreView;
 }

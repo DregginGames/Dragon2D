@@ -37,17 +37,6 @@ abstract class Quad : Renderable
         return Resource.create!GLSLProgram(_program);
     }
 
-    /**
-    The position of this quad.    /-- totally not stolen from entity.d
-	*/
-	@property vec2 pos()
-	{
-		return _pos;
-	}
-	@property vec2 pos(vec2 p)
-	{
-		return _pos = p;
-	}
 protected:
     override void _vboInitClassScope()
     {
@@ -61,7 +50,6 @@ protected:
     }
 private:
     string _program;
-    vec2   _pos;
 }
 
 /**
@@ -80,12 +68,12 @@ class ColoredQuad : Quad
         _color = color;
     }
 
-    override void render(ref View view) 
+    override void render(in View view) 
     {
         auto prg = this.program.program;
 		prg.bind();
         vao.bind();
-		auto m = gen2DModelToWorld(_pos, 0, 0);
+		auto m = gen2DModelToWorld(pos, 0, 0);
         auto mvp = view.worldToView*m;
         prg.setUniformValueMatrixWorkaround("MVP", mvp);
         prg.setUniformValue("color", _color.value_ptr);
@@ -116,12 +104,12 @@ class RawTexturedQuad : Quad
         super(program);       
 	}
 
-	override void render(ref View view)
+	override void render(in View view)
 	{
 		auto prg = this.program.program;
 		prg.bind();
         vao.bind();
-		auto m = gen2DModelToWorld(_pos, _rotation, _size);
+		auto m = gen2DModelToWorld(pos, _rotation, _size);
         auto mvp = view.worldToView*m;
         prg.setUniformValueMatrixWorkaround("MVP", mvp);
         prg.setUniformValue("uvpos", _uvpos.value_ptr);
@@ -207,7 +195,7 @@ class TexturedQuad : RawTexturedQuad
         super(program);
     }
 
-    override void render(ref View view) 
+    override void render(in View view) 
     {
         auto tex = Resource.create!Texture(_texture);
         this.texture=tex.gpuTexture;

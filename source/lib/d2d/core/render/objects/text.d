@@ -108,7 +108,7 @@ class Text : Renderable
         regenerate();
     }
 
-    override void render(ref View view) 
+    override void render(in View view) 
     {
         auto prg = Resource.create!GLSLProgram(_program).program;
 		prg.bind();
@@ -117,22 +117,13 @@ class Text : Renderable
         prg.setUniformValue("textureSampler", &texPos);
         
         foreach(ref line;_lines) {
-            auto m = gen2DModelToWorld(_pos+line.pos);
+            auto m = gen2DModelToWorld(pos+line.pos);
             m.scale(line.size.x,line.size.y,1.0f);
             auto mvp = view.worldToView*m;
             prg.setUniformValueMatrixWorkaround("MVP", mvp);
             line.tex.bind();
             prg.drawArrays(prg.DrawMode.triangles, 0,6);
         }
-    }
-
-    @property vec2 pos()
-    {
-        return _pos;
-    }
-    @property vec2 pos(vec2 p) 
-    {
-        return _pos=p;
     }
 
     @property TextSettings settings()
@@ -214,8 +205,6 @@ protected:
 private:
     /// program resource name
     string _program;
-    /// the position of the text
-    vec2 _pos;
     /// holds the renderable lines
     Line[] _lines;    
     /// The text settings. See The TextSettings struct

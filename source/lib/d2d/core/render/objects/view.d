@@ -33,7 +33,7 @@ class View
 	}
 
     /// The world-position of the view
-    @property vec2 pos()
+    @property vec2 pos() const
     {
         return _pos;
     } 
@@ -45,7 +45,7 @@ class View
     }
 
     /// The world-size (visible area of the world) of the view
-    @property vec2 size()
+    @property vec2 size() const
     {
         return _size;
     }
@@ -57,7 +57,7 @@ class View
     }
 
     /// The screen-position of the view (!lower-left corner, -1..1!)
-    @property vec2 viewportPos()
+    @property vec2 viewportPos() const
     {
         return _viewportPos;
     }
@@ -69,7 +69,7 @@ class View
     }
 
     /// The screen-size of the view (!-1..1!) 
-    @property vec2 viewportSize()
+    @property vec2 viewportSize() const
     {
         return _viewportSize;
     }
@@ -81,7 +81,7 @@ class View
     }
 
 	/// returns the zindex of the view. Higher zindex means later rendering -> on top
-	@property uint zindex()
+	@property uint zindex() const
 	{
 		return _zindex;
 	}
@@ -92,7 +92,7 @@ class View
 	}
 
     /// returns the detail level that this view can see
-    @property int detailLevel()
+    @property int detailLevel() const
     {
         return _detailLevel;
     }
@@ -125,4 +125,27 @@ private:
 
 	/// this generated member is the WorldToView matrix for this view
 	mat4 _worldToView;
+}
+
+/// This class is a helper for objects that will be only positioned in screen space
+final class ScreenSpaceView : View
+{
+    /// Creates a ScreenSpace view from a normal view
+    this(in View v) 
+    {
+        super(v.pos, v.size, v.viewportPos, v.viewportSize, v.zindex);
+    }
+
+    /// Returns mat4.identity so the ScreenSpace view causes no side effects but, well, the viewport
+    final override @property const mat4 worldToView() 
+    {
+        return mat4.identity;
+    }
+protected:
+    /// Generation is overwritten since it is not needed
+    final override void _updateWorldToView()
+    {
+    }
+
+    
 }

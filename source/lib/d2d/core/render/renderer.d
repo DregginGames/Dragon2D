@@ -51,9 +51,15 @@ class Renderer : Base
                 _currViewportPos = viewportPos;
                 _currViewportSize = viewportSize;
             }        
+            // some objects are renderd independendly of workd coordinates, so we want this thing
+            auto screenView = new ScreenSpaceView(v);
 			foreach(ref o; _objects) {
                 if (v.detailLevel >= o.detailLevel) {
-				    o.render(v);
+                    if (o.ignoreView) {
+                        o.render(screenView);
+                    } else {
+				        o.render(v);
+                    }
                 }
 			}
 		}

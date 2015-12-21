@@ -65,7 +65,7 @@ abstract class Renderable
 	}
 
     /// The detail Level. The higher this level is, the higher the level of a view needs to be to see this object
-    @property int detailLevel()
+    @property int detailLevel() const
     {
         return _detailLevel;
     }
@@ -76,7 +76,7 @@ abstract class Renderable
     }
 
     /// The position of this renderable in world-coordinates
-    @property vec2 pos()
+    @property vec2 pos() const
     {
         return _pos;
     }
@@ -90,7 +90,7 @@ abstract class Renderable
         Renderables can be set to ignore the effects of views (other than viewport), making, for them, -1..1 direkt mapping of screen space. 
         This can be usefull for the user interface, debug text, things that should annoy people, generally everything you dont want to use in world but in screen coordinates
     */
-    @property bool ignoreView()
+    @property bool ignoreView() const
     {
         return _ignoreView;
     }

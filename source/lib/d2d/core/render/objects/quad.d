@@ -81,7 +81,7 @@ class ColoredQuad : Quad
     }
 
     /// The color of the quad
-    @property vec4 color()
+    @property vec4 color() const
     {
         return _color;
     }

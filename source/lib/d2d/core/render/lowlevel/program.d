@@ -65,7 +65,7 @@ class Program
 			}
     }
 
-    GLuint getAttribute(string name) 
+    GLuint getAttribute(string name) const
     {
         return _valid ? glGetAttribLocation(_program, toStringz(name)) : 0;
     }

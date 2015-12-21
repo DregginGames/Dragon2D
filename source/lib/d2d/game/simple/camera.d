@@ -22,15 +22,17 @@ class Camera : Entity
 	}
 
 	/// tje height of the cameras view
-	@property float height()
+	@property float height() const
 	{
 		return _height;
 	}
+    /// Ditto
 	@property float height(float h)
 	{
 		return _height = h;
 	}
 
+    /// Returns the objects view. Not const becuase we need to change _view here
     @property View view()
     {
         _view.pos = this.absolutePos; //needed to give an updated view back

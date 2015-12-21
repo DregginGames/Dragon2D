@@ -23,7 +23,7 @@ abstract class Entity : Base
 	/**
 		The position of this object. 
 	*/
-	@property vec2 pos()
+	@property vec2 pos() const
 	{
 		return _pos;
 	}
@@ -35,7 +35,7 @@ abstract class Entity : Base
     /** 
         The position-mode of this object
     */
-    @property PositionMode positionMode()
+    @property PositionMode positionMode() const
     {
         return positionMode;
     }

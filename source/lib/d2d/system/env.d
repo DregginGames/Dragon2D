@@ -204,19 +204,19 @@ class Env : Base
     }   
     
 	/// returns the resolution of the screen
-	final @property vec2i resolution()
+	final @property vec2i resolution() const
 	{
 		return _resolution;
 	}
 
 	/// returns the aspect ratio of the window
-	final @property float aspectRatio()
+	final @property float aspectRatio() const
 	{
 		return _aspectRatio;
 	}
     
     /// returns the title of the engine window
-	final @property string title()
+	final @property string title() const
 	{
 		return _title;
 	}
@@ -224,7 +224,7 @@ class Env : Base
     /**
     If the mouse cursor shall be displayed. 
     */
-    final @property bool cursor() 
+    final @property bool cursor() const
     {
         return SDL_ShowCursor(-1)==1;
     }

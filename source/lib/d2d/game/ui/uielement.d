@@ -79,7 +79,7 @@ abstract class UIElement : Base
         }
     }
     /// The name of a ui object
-    @property string name()
+    @property string name() const
     {
         return _name;
     }
@@ -89,7 +89,7 @@ abstract class UIElement : Base
     }
 
     /// The position of a ui element
-    @property vec2 pos()
+    @property vec2 pos() const
     {
         return _pos;
     }
@@ -99,7 +99,7 @@ abstract class UIElement : Base
     }
 
     /// The size of a ui element
-    @property vec2 size()
+    @property vec2 size() const
     {
         return _size;
     }
@@ -135,17 +135,17 @@ abstract class UIElement : Base
         
     }
 
-    @property bool hovered()
+    @property bool hovered() const
     {
         return _hoverd;
     }
 
-    @property bool clicked()
+    @property bool clicked() const
     {
         return _clicked;
     }
 
-    @property bool focus()
+    @property bool focus() const
     {
         return _focus;
     }
@@ -187,7 +187,7 @@ protected:
 
     /// operates on relative postions. used to check if a ui element can be focused
     /// Override to return false if you want to make an object that cant be focused
-    bool _focusable(vec2 pos) 
+    bool _focusable(vec2 pos)
     {
         if(children.length==0) {
             return true;

@@ -70,7 +70,7 @@ class Buffer
         glBindBuffer(_target,_id);
     }
 
-    @property GLuint id()
+    @property GLuint id() const
     {
         return _id;
     }

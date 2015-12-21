@@ -168,7 +168,7 @@ class Base
 	}
 
 	/// Gets a service by its name. Syntax is getService!ServiceClass(name)
-	final static T getService (T) (string name) 
+	final static T getService (T) (string name)
 	{
 		auto exsisting = name in _services;
 		if(exsisting) {
@@ -179,7 +179,7 @@ class Base
 	}
 
     /// fixed obj id of this object
-    final @property size_t id()
+    final @property size_t id() const
     {
         return _id;
     }
@@ -203,13 +203,13 @@ class Base
     }
 
     /// if this object accepts events
-    final @property bool acceptsEvents()
+    final @property bool acceptsEvents() const
     {
         return canReciveEvents;
     }
 
     /// pauses/unpauses the object
-    final @property bool paused()
+    final @property bool paused() const
     {
         return _paused;
     }
@@ -220,7 +220,7 @@ class Base
     }
 
 	/// returns if the object will be deleted before the next tick
-	final @property bool deleted()
+	final @property bool deleted() const
 	{
 		return _deleted;
 	}

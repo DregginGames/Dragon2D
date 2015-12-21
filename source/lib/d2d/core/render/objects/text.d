@@ -126,7 +126,7 @@ class Text : Renderable
         }
     }
 
-    @property TextSettings settings()
+    @property TextSettings settings() const
     {
         return _settings;
     }

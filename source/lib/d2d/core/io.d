@@ -35,7 +35,7 @@ abstract class KeyEvent : Event, IOEvent
         return _name;
     }
 
-    @property SDLEvent sdlevent()  
+    @property SDLEvent sdlevent()
     {
         return _sdlevent;
     }
@@ -85,19 +85,19 @@ abstract class MouseEvent : Event, IOEvent
     }
 
     /// Gets the original sdl event
-    @property SDLEvent sdlevent() 
+    @property SDLEvent sdlevent() const
     {
         return sdlevent;
     }
 
     /// Gets the position of the mouse
-    @property vec2i pos()
+    @property vec2i pos() const
     {
         return _pos;
     }
 
     /// Gets the normalized positoin of the mouse
-    @property vec2 npos()
+    @property vec2 npos() const
     {
         return _npos;
     }
@@ -123,7 +123,7 @@ abstract class MouseButtonEvent : MouseEvent
     }
 
     /// Gets the button that has been pressed
-    @property int button() 
+    @property int button() const
     {
         return _button;
     }

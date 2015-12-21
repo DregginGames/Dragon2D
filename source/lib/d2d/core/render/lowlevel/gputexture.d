@@ -120,7 +120,8 @@ class GPUTexture
     }
 
     ///Only gets the ID. The id cant be changed after creation
-    @property GLuint id() {
+    @property GLuint id() const
+    {
         return _texId;
     }
 

@@ -62,8 +62,8 @@ class Text : Renderable
         float scroll = 0.0;
         /// How big a single scrolling unit is (basically how far one line is in world coordinates. yes. )
         float scrollUnit = 0.0;
-        /// Offset-factor between different lines. 
-        float lineOffset = 0.5;
+        /// Offset-factor between different lines. (This value is, lets say, random.)
+        float lineOffset = 0.1;
         /// The size of the text
         float height = 1.0f;
         /// THe color of the text
@@ -117,8 +117,8 @@ class Text : Renderable
         prg.setUniformValue("textureSampler", &texPos);
         
         foreach(ref line;_lines) {
-            auto m = gen2DModelToWorld(pos+line.pos);
-            m.scale(line.size.x,line.size.y,1.0f);
+            auto m = gen2DModelToWorld(pos+line.pos, 0.0, vec3(line.size.xy,0.0));
+            //m.scale(line.size.x,line.size.y,1.0f);
             auto mvp = view.worldToView*m;
             prg.setUniformValueMatrixWorkaround("MVP", mvp);
             line.tex.bind();

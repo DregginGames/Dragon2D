@@ -38,12 +38,12 @@ mat4 gen2DWorldToView(vec2 viewPosition, float viewBackoffset = 1.0f)
 /**
 	Creates a modelToWorld (or just model) matrix based on a given position in 2D space and rotation (around z) and scale (same for x- and y, for more complex compose matrix yourself).
 */
-mat4 gen2DModelToWorld(vec2 modelPos, float alpha = 0.0f, float scale = 1.0f)
+mat4 gen2DModelToWorld(vec2 modelPos, float alpha = 0.0f, vec3 scale = vec3(1.0f,1.0f,1.0f))
 {
 	return mat4.identity
-		.translate(modelPos.x, modelPos.y, 0.0)
-		.rotatez(alpha)
-		.scale(scale,scale, 1.0f);
+        .scale(scale.x,scale.y,scale.z)
+        .rotatez(alpha)
+		.translate(modelPos.x, modelPos.y, 0.0);	
 }
 
 /**

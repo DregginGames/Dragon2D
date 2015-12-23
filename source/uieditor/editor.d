@@ -13,6 +13,7 @@ import d2d.game.entity;
 import d2d.game.ui.ui;
 import d2d.game.dbg.grid;
 import d2d.game.audio.music;
+import d2d.game.ui.text;
 import gl3n.linalg;
 
 int main(char[][] args)
@@ -38,12 +39,23 @@ bool onStartup(Base base)
     //Base.getService!Env("d2d.env").cursor=false;
 
     auto s = new Music("sound.alan");
-    s.play();
+    //s.play();
     
 
     auto ui = new UI("ui.menu");
     ui.store();
     camera.addChild(ui);
+
+    auto t = new Text("font.Roboto-Medium", "Sabberschinkenschnitzel World centered text");
+    t.text.ignoreView = true;
+    auto settings = t.text.settings;
+    settings.height = 0.09;
+    settings.maxwidth = 0.3;
+    settings.linebreak = true;
+    settings.positioning = t.text.Positioning.left;
+    t.text.settings = settings;
+   
+    base.addChild(t);
 
     base.addChild(camera);
     base.addChild(s);

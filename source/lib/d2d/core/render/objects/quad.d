@@ -91,7 +91,7 @@ class ColoredQuad : Quad
     }
 
 private:
-    vec4 _color;
+    vec4 _color = 0.0f;
 }
 
 /**
@@ -109,7 +109,7 @@ class RawTexturedQuad : Quad
 		auto prg = this.program.program;
 		prg.bind();
         vao.bind();
-		auto m = gen2DModelToWorld(pos, _rotation, vec3(_size));
+		auto m = _standardModelToWorld();
         auto mvp = view.worldToView*m;
         prg.setUniformValueMatrixWorkaround("MVP", mvp);
         prg.setUniformValue("uvpos", _uvpos.value_ptr);
@@ -173,10 +173,6 @@ protected:
 private:
     /// this quads texture
     GPUTexture _tex;
-	/// the size of this quad
-	float	_size = 1.0f;
-	/// the rotation of this quad (around z!)
-	float	_rotation = 0.0f;
     /// the uv-offset
     vec2 _uvpos = vec2(0.0f,0.0f);
     vec2 _uvsize = vec2(1.0f,1.0f);

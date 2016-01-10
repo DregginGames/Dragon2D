@@ -11,6 +11,7 @@ import d2d.game.simple.sprite;
 import d2d.game.ui.cursor;
 import d2d.game.entity;
 import d2d.game.ui.ui;
+import d2d.game.ui.box;
 import d2d.game.dbg.grid;
 import d2d.game.audio.music;
 import d2d.game.ui.text;
@@ -43,9 +44,8 @@ bool onStartup(Base base)
     
 
     auto ui = new UI("ui.menu");
-    ui.store();
     camera.addChild(ui);
-
+    
     auto t = new Text("font.Roboto-Medium", "Sabberschinkenschnitzel World centered text");
     t.text.ignoreView = true;
     auto settings = t.text.settings;

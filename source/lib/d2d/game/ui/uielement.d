@@ -7,6 +7,8 @@ module d2d.game.ui.uielement;
 import std.json;
 
 import gl3n.linalg;
+
+import d2d.util.jsonutil;
 import d2d.core.base;
 import d2d.game.ui.uievent;
 import d2d.util.logger;
@@ -39,12 +41,8 @@ abstract class UIElement : Base
     void load(JSONValue data)
     {
         _name = data.object["name"].str;
-        float x = data.object["x"].floating;
-        float y = data.object["y"].floating;
-        float w = data.object["w"].floating;
-        float h = data.object["h"].floating;
-        _pos = vec2(x,y);
-        _size = vec2(w,h);
+        _pos = vectorFromJson!(vec2)(data.object["pos"]);
+        _size = vectorFromJson!(vec2)(data.object["size"]);
         foreach(ref c; data.object["children"].array) {
             auto newelem = fromClassname(c.object["className"].str);
             if(newelem !is null) {
@@ -63,29 +61,30 @@ abstract class UIElement : Base
     */
     void store(ref JSONValue data)
     {
-        data.object["className"] = to!string(typeid(this));
-        data.object["name"] = _name;
-        data.object["x"] = _pos.x;
-        data.object["y"] = _pos.y;
-        data.object["w"] = _size.x;
-        data.object["h"] = _size.y;
-        
+        data["className"] = to!string(typeid(this));
+        data["name"] = _name;
+        data["pos"] = vectorToJson(pos);
+        data["size"] = vectorToJson(size);
+        JSONValue[] iHateArrays;
+        data["children"] = iHateArrays;
         foreach(ref c; children) {
             if(cast(UIElement)c) {
                 JSONValue childData;
                 (cast(UIElement)c).store(childData);
-                data.object["children"].array ~= childData;
+                data["children"].array ~= childData;
             }
         }
     }
+
     /// The name of a ui object
     @property string name() const
     {
         return _name;
     }
+    /// Ditto
     @property string name(string n)
     {
-        return _name=name;
+        return _name=n;
     }
 
     /// The position of a ui element
@@ -93,6 +92,7 @@ abstract class UIElement : Base
     {
         return _pos;
     }
+    /// Ditto
     @property vec2 pos(vec2 p)
     {
         return _pos=p;
@@ -103,6 +103,7 @@ abstract class UIElement : Base
     {
         return _size;
     }
+    /// Ditto
     @property vec2 size(vec2 s)
     {
         return _size = s;
@@ -208,20 +209,20 @@ private:
     /// name of a ui element
     string _name;
     /// position of a ui element
-    vec2 _pos;
+    vec2 _pos = 0.0f;
     /// size of a ui element
-    vec2 _size;
+    vec2 _size = 1.0f;
     /// if true the element can be dragged around with the mouse
-    bool _dragable;
+    bool _dragable = false;
 
     // The floowing are interaction statuses of the element
     /// If the mouse is "hovering" above this object
-    bool _hoverd;
+    bool _hoverd = false;
     /// If the object is being clicked
-    bool _clicked;
+    bool _clicked = false;
     /// If the object is in focus. Only one ui element can be in focus at a time. see also _focus
-    bool _focus;
+    bool _focus = false;
     /// If the object is being dragged around
-    bool _dragged;
+    bool _dragged = false;
     static UIElement _focusedElement;
 }

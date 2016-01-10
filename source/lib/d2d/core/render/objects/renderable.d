@@ -10,6 +10,7 @@ import derelict.opengl3.gl3;
 import d2d.util.logger;
 import d2d.core.render.objects.view;
 import d2d.core.render.lowlevel.vao;
+import d2d.core.render.util;
 
 /**
 	Renderable is abstract base for all types of /renderables/. 
@@ -86,6 +87,28 @@ abstract class Renderable
         return _pos=p;
     }
 
+    /// The scale of this renderable in world-coordinates
+    @property vec3 scale() const
+    {
+        return _scale;
+    }
+    /// Ditto
+    @property vec3 scale(vec3 s)
+    {
+        return _scale=s;
+    }
+
+    /// The rotation of the renderable (around z axis)
+    @property float rotation() const
+    {
+        return _rotation;
+    }
+    /// Ditto
+    @property float rotation(float r)
+    {
+        return _rotation = r;
+    }
+
     /**
         Renderables can be set to ignore the effects of views (other than viewport), making, for them, -1..1 direkt mapping of screen space. 
         This can be usefull for the user interface, debug text, things that should annoy people, generally everything you dont want to use in world but in screen coordinates
@@ -139,6 +162,11 @@ protected:
     {
     }
 
+    /// Returns the model to world matrix for the combination of position, scale and rotation
+    final mat4 _standardModelToWorld() const
+    {
+        return gen2DModelToWorld(_pos, _rotation, _scale);
+    }
 private:
 	/// the vertex array object - used if activated
 	VAO _vao;
@@ -152,6 +180,11 @@ private:
     
     /// the position of the renderable
     vec2 _pos = 0;
+    /// the scale of the renderable
+    vec3 _scale = 1.0f;
+    /// the rotation of the renderable (around z - were 2d!)
+    float _rotation=0.0f;
+
     /// if the object ignoers the transformation of views 
     bool _ignoreView;
 }

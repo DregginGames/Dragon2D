@@ -13,47 +13,32 @@ import d2d.core.resource;
 import d2d.game.ui.uielement;
 
 /// Loads a UI from a file. 
-class UI : Base
+class UI : UIElement
 {
     /// Creates a new user interface.
-    this(string name) 
+    this(string n) 
     {
-        _name = name;
-        Resource.preload!JSONData(_name);
+        name = n;
+        Resource.preload!JSONData(name);
         load();        
     }
 
     /// (Re-)loads the useriterface. Also dosnt do anything if the file is invalid
     void load()
     {
-        auto r = Resource.create!JSONData(_name);
+        auto r = Resource.create!JSONData(name);
         if (r.data.type != JSON_TYPE.OBJECT) {
             return;
         }
-        auto elements = ("elements" in r.data.object);
-        if(elements !is null) {
-            foreach(ref e; elements.array) {
-                auto newelem = UIElement.fromClassname(e.object["className"].str);
-                if(newelem !is null) {
-                    this.addChild(newelem);
-                    newelem.load(e);
-                }
-            }
-        }
+        super.load(r.data);
     }
 
     /// Stores the ui tree below into the resource
     void store()
     {
-        JSONValue storedata = [ "name": _name ];
-        foreach(ref c; children) {
-            if (cast(UIElement)c) {
-                JSONValue elemdata;
-                (cast(UIElement)c).store(elemdata);
-                storedata.object["elements"].array ~= elemdata;
-            }
-        }
-        auto r = Resource.create!JSONData(_name);
+        JSONValue storedata = ["root" : true];
+        super.store(storedata);
+        auto r = Resource.create!JSONData(name);
         r.data = storedata;
         r.save();
     }
@@ -61,9 +46,7 @@ class UI : Base
     /// Cleans up
     ~this() 
     {
-        Resource.free(_name);    
+        Resource.free(name);    
     }
 private:
-    /// the name of this user interface
-    string _name;
 }

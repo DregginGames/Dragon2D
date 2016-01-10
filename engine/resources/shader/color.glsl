@@ -13,6 +13,6 @@
 	uniform vec4 color;
 	void main()
 	{
-		gl_FragColor = texture2D(color);
+		gl_FragColor = color;
 	}
 #endif

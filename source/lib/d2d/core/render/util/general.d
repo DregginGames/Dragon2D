@@ -17,7 +17,7 @@ import d2d.system.env;
 	Creates a Ortographic projection matrix 
 	Defaults near plane to be 0 units away and far plane to be 100 units away 
 */
-mat4 genOrtographicProjection(float width, float height, float near = 0.0, float far = 100.0)
+pure mat4 genOrtographicProjection(float width, float height, float near = 0.0, float far = 100.0)
 {
 	return mat4(
 		[ 1.0f/width, 0.0f, 0.0f, 0.0f,
@@ -29,7 +29,7 @@ mat4 genOrtographicProjection(float width, float height, float near = 0.0, float
 /**
 	Creates a worldToView (or just view) matrix based on a given positin in 2D space
 */
-mat4 gen2DWorldToView(vec2 viewPosition, float viewBackoffset = 1.0f)
+pure mat4 gen2DWorldToView(vec2 viewPosition, float viewBackoffset = 1.0f)
 {
 	return mat4.identity
 		.translate(-viewPosition.x,-viewPosition.y, 0);
@@ -38,7 +38,7 @@ mat4 gen2DWorldToView(vec2 viewPosition, float viewBackoffset = 1.0f)
 /**
 	Creates a modelToWorld (or just model) matrix based on a given position in 2D space and rotation (around z) and scale (same for x- and y, for more complex compose matrix yourself).
 */
-mat4 gen2DModelToWorld(vec2 modelPos, float alpha = 0.0f, vec3 scale = vec3(1.0f,1.0f,1.0f))
+pure mat4 gen2DModelToWorld(vec2 modelPos, float alpha = 0.0f, vec3 scale = vec3(1.0f,1.0f,1.0f))
 {
 	return mat4.identity
         .scale(scale.x,scale.y,scale.z)
@@ -50,7 +50,7 @@ mat4 gen2DModelToWorld(vec2 modelPos, float alpha = 0.0f, vec3 scale = vec3(1.0f
 	Creates 2 vertex arrays: one for the points (x or y-0.5..x or y+0.5) and one wich is the uvs in the given range
     Calling this function multiple times on the same arrays will add new quads to them - usefull for batching.
 */
-void genUVMappedVertexArray(out vec4[] vertices, out vec2[] uvs, vec2 pos = 0, vec2 uvpos = 0, vec2 uvsize = vec2(1.0f, 1.0f))
+pure void genUVMappedVertexArray(out vec4[] vertices, out vec2[] uvs, vec2 pos = 0, vec2 uvpos = 0, vec2 uvsize = vec2(1.0f, 1.0f))
 {
 	//order: lower left, lower right, upper left, lower right, upper right, upper left
     
@@ -113,7 +113,7 @@ vec2 aspectRatioRectangleRange(float height)
 }
 
 /// Generates an SDL color from an opengl color
-SDL_Color sdlColor(vec4 col)
+pure SDL_Color sdlColor(vec4 col)
 {
     SDL_Color sdlcol;
     sdlcol.r = cast(ubyte)rint(max(0.0f,min(1.0f,col.r))*255f);

@@ -7,6 +7,5 @@ script:
   - dub build -c uieditor
   - dub build -b ddox -c docs
   
-deploy:
-  provider: script
-  script: deploy.sh
+after_success: 
+  - bash ./deploy.sh

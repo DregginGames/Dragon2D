@@ -1,6 +1,6 @@
 set -e
 
-bash ./buildDocs
+bash ./buildDocs.sh
 
 git cofig user.name "dreggingames-bot"
 git config user.email "dreggongames-bot@mkalte.me"

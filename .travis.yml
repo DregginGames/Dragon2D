@@ -6,17 +6,4 @@ script:
   - dub build -c game
   - dub build -c uieditor
   - dub build -b ddox -c docs
-
-deploy:
-    skip_cleanup: true
-
-after_success:
-  - eval "$(ssh-agent -s)" #start the ssh agent
-  - chmod 600 .travis/deploy_key.pem # this key should have push access
-  - ssh-add .travis/deploy_key.pem
-  - git clone git@github.com:DregginGames/Dragon2D.git --branch gh-pages ./deploy
-  - rm -rf ./deploy/docs
-  - cp -a ./docs ./deploy/
-  - cd ./deploy
-  - git push origin gh-pages
   

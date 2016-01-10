@@ -2,8 +2,8 @@ set -e
 
 bash ./buildDocs.sh
 
-git config user.name "dreggingames-bot"
-git config user.email "dreggongames-bot@mkalte.me"
+git config --global user.name "dreggingames-bot"
+git config --global user.email "dreggingames-bot@mkalte.me"
 
 git clone "https://github.com/DregginGames/Dragon2D" --branch gh-pages pages
 

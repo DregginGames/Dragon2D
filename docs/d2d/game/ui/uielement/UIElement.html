@@ -100,6 +100,15 @@
 								<a href="../../../../d2d/core/resources/glslprogram.html" class=" module">glslprogram</a>
 							</li>
 							<li>
+								<a href="../../../../d2d/core/resources/jsondata.html" class=" module">jsondata</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/resources/music.html" class=" module">music</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/resources/sample.html" class=" module">sample</a>
+							</li>
+							<li>
 								<a href="../../../../d2d/core/resources/texture.html" class=" module">texture</a>
 							</li>
 						</ul>
@@ -133,6 +142,17 @@
 								<a href="#" class="package">game</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
+								<a href="#" class="package">audio</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/game/audio/music.html" class=" module">music</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/audio/sound.html" class=" module">sound</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
 								<a href="#" class="package">dbg</a>
 						<ul class="tree-view">
 							<li>
@@ -155,10 +175,16 @@
 								<a href="#" class="package">ui</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../../d2d/game/ui/box.html" class=" module">box</a>
+							</li>
+							<li>
 								<a href="../../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
 							</li>
 							<li>
 								<a href="../../../../d2d/game/ui/text.html" class=" module">text</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/ui/ui.html" class=" module">ui</a>
 							</li>
 							<li>
 								<a href="../../../../d2d/game/ui/uielement.html" class="selected module">uielement</a>
@@ -186,6 +212,9 @@
 						<ul class="tree-view">
 							<li>
 								<a href="../../../../d2d/util/fileio.html" class=" module">fileio</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/util/jsonutil.html" class=" module">jsonutil</a>
 							</li>
 							<li>
 								<a href="../../../../d2d/util/logger.html" class=" module">logger</a>
@@ -272,7 +301,7 @@ $('#symbolSearchPane').show();
 							<tr>
 								<td>
 									<a href="../../../../d2d/game/ui/uielement/UIElement.name.html" class="public property"><code>name</code></a>
-									<span class="tableEntryAnnotation">[get]</span>
+									<span class="tableEntryAnnotation">[get, set]</span>
 								</td>
 								<td class="typecol"><code class="prettyprint lang-d">string</code></td>
 								<td>The <code class="prettyprint lang-d">name</code> of a ui object
@@ -281,7 +310,7 @@ $('#symbolSearchPane').show();
 							<tr>
 								<td>
 									<a href="../../../../d2d/game/ui/uielement/UIElement.pos.html" class="public property"><code>pos</code></a>
-									<span class="tableEntryAnnotation">[get]</span>
+									<span class="tableEntryAnnotation">[get, set]</span>
 								</td>
 								<td class="typecol"><code class="prettyprint lang-d">gl3n.<wbr/>linalg.<wbr/>Vector!(float,2)</code></td>
 								<td>The position of a ui element
@@ -290,7 +319,7 @@ $('#symbolSearchPane').show();
 							<tr>
 								<td>
 									<a href="../../../../d2d/game/ui/uielement/UIElement.size.html" class="public property"><code>size</code></a>
-									<span class="tableEntryAnnotation">[get]</span>
+									<span class="tableEntryAnnotation">[get, set]</span>
 								</td>
 								<td class="typecol"><code class="prettyprint lang-d">gl3n.<wbr/>linalg.<wbr/>Vector!(float,2)</code></td>
 								<td>The <code class="prettyprint lang-d">size</code> of a ui element
@@ -328,17 +357,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/core/base/Base.id.html" class="public inherited property"><code>id</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">uint</code></td>
+								<td class="typecol"><code class="prettyprint lang-d">ulong</code></td>
 								<td>fixed obj <a href="../../../../d2d/core/base/Base.id.html"><code class="prettyprint lang-d">id</code></a> of this object
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/core/base/Base.parent.html" class="public inherited property"><code>parent</code></a>
-									<span class="tableEntryAnnotation">[set]</span>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html">Base</a></code></td>
-								<td>sets the <a href="../../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a> object of this object
 </td>
 							</tr>
 							<tr>
@@ -348,6 +368,15 @@ $('#symbolSearchPane').show();
 								</td>
 								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html">Base</a></code></td>
 								<td>gets the <a href="../../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a> object of this object
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.parent.html" class="public inherited property"><code>parent</code></a>
+									<span class="tableEntryAnnotation">[set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html">Base</a></code></td>
+								<td>sets the <a href="../../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a> object of this object
 </td>
 							</tr>
 							<tr>
@@ -377,6 +406,35 @@ $('#symbolSearchPane').show();
 							<tr>
 								<th>Name</th>
 								<th>Description</th>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/ui/uielement/UIElement.fromClassname.html" class="public">
+										<code>fromClassname</code>
+									</a>
+								</td>
+								<td>Acts around Object.factory to make sure generated objects are UIElements
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/ui/uielement/UIElement.load.html" class="public">
+										<code>load</code>
+									</a>
+								</td>
+								<td>Loads a element from stored json <a href="../../../../d2d/game/ui/uielement/UIElement.load.html#data"><code class="prettyprint lang-d">data</code></a>. Should only be called by UI
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/ui/uielement/UIElement.store.html" class="public">
+										<code>store</code>
+									</a>
+								</td>
+								<td>Stores a ui element tree into json <a href="../../../../d2d/game/ui/uielement/UIElement.store.html#data"><code class="prettyprint lang-d">data</code></a> structure
+        Overload for custom ui elements to <code class="prettyprint lang-d">store</code> additional <a href="../../../../d2d/game/ui/uielement/UIElement.store.html#data"><code class="prettyprint lang-d">data</code></a>. Make sure to call super.store(<code class="prettyprint lang-d">store</code>) afterwards!
+        Dont call by hand, insted let UI do that for you.
+</td>
 							</tr>
 							<tr>
 								<td>

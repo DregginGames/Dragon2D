@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Enum Entity.PositionMode</title>
+		<title>Function Entity.positionMode</title>
 		<link rel="stylesheet" type="text/css" href="../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../scripts/jquery.js">/**/</script>
@@ -100,6 +100,15 @@
 								<a href="../../../../d2d/core/resources/glslprogram.html" class=" module">glslprogram</a>
 							</li>
 							<li>
+								<a href="../../../../d2d/core/resources/jsondata.html" class=" module">jsondata</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/resources/music.html" class=" module">music</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/resources/sample.html" class=" module">sample</a>
+							</li>
+							<li>
 								<a href="../../../../d2d/core/resources/texture.html" class=" module">texture</a>
 							</li>
 						</ul>
@@ -133,6 +142,17 @@
 								<a href="#" class="package">game</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
+								<a href="#" class="package">audio</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/game/audio/music.html" class=" module">music</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/audio/sound.html" class=" module">sound</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
 								<a href="#" class="package">dbg</a>
 						<ul class="tree-view">
 							<li>
@@ -155,10 +175,16 @@
 								<a href="#" class="package">ui</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../../d2d/game/ui/box.html" class=" module">box</a>
+							</li>
+							<li>
 								<a href="../../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
 							</li>
 							<li>
 								<a href="../../../../d2d/game/ui/text.html" class=" module">text</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/ui/ui.html" class=" module">ui</a>
 							</li>
 							<li>
 								<a href="../../../../d2d/game/ui/uielement.html" class=" module">uielement</a>
@@ -186,6 +212,9 @@
 						<ul class="tree-view">
 							<li>
 								<a href="../../../../d2d/util/fileio.html" class=" module">fileio</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/util/jsonutil.html" class=" module">jsonutil</a>
 							</li>
 							<li>
 								<a href="../../../../d2d/util/logger.html" class=" module">logger</a>
@@ -220,51 +249,18 @@ $('#symbolSearchPane').show();
 				</div>
 		</nav>
 		<div id="main-contents">
-			<h1>Enum Entity.PositionMode</h1>
+			<h1>Function Entity.positionMode</h1>
 			<section>
-				<p>the position modes for Entities
+				<p>The position-mode of this object
 </p>
 
-					<p>The enum base type is
-						<code class="prettyprint lang-d">int</code>
-.
-					</p>
 					<section>
-						<h3>Enum members</h3>
-						<table>
-							<col class="caption"/>
-							<tr>
-								<th>Name</th>
-								<th>Description</th>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/game/entity/Entity.PositionMode.absolute.html">
-										<code>absolute</code>
-									</a>
-								</td>
-								<td>position is <code class="prettyprint lang-d">absolute</code> in world space
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/game/entity/Entity.PositionMode.parentBound.html">
-										<code>parentBound</code>
-									</a>
-								</td>
-								<td>position is the same as the <a href="../../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a>; acts like <a href="../../../../d2d/game/entity/Entity.PositionMode.absolute.html"><code class="prettyprint lang-d">absolute</code></a> if no <a href="../../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a> is set         /_ Why is this 3??
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/game/entity/Entity.PositionMode.relative.html">
-										<code>relative</code>
-									</a>
-								</td>
-								<td>position is <code class="prettyprint lang-d">relative</code> to the <a href="../../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a>, in world space. if no <a href="../../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a> is set, it acts like <a href="../../../../d2d/game/entity/Entity.PositionMode.absolute.html"><code class="prettyprint lang-d">absolute</code></a>
-</td>
-							</tr>
-						</table>
+						<h3>Prototype</h3>
+						<div class="prototype">
+							<code class="prettyprint lang-d">
+<a href="../../../../d2d/game/entity/Entity.PositionMode.html">Entity.<wbr/>PositionMode</a> positionMode() @property const;
+							</code>
+						</div>
 					</section>
 
 			</section>

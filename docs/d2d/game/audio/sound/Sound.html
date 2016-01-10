@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Class Sound</title>
+		<link rel="stylesheet" type="text/css" href="../../../../styles/ddox.css"/>
+		<link rel="stylesheet" href="../../../../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../../../../scripts/jquery.js">/**/</script>
+		<script type="text/javascript" src="../../../../prettify/prettify.js">/**/</script>
+		<script type="text/javascript" src="../../../../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="prettyPrint(); setupDdox();">
+		<nav id="main-nav">
+						<ul class="tree-view">
+							<li class=" tree-view">
+								<a href="#" class="package">d2d</a>
+						<ul class="tree-view">
+							<li class="collapsed tree-view">
+								<a href="#" class="package">core</a>
+						<ul class="tree-view">
+							<li class="collapsed tree-view">
+								<a href="#" class="package">container</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/core/container/gamecontainer.html" class=" module">gamecontainer</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/container/root.html" class=" module">root</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">dbg</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/core/dbg/eventdebug.html" class=" module">eventdebug</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">render</a>
+						<ul class="tree-view">
+							<li class="collapsed tree-view">
+								<a href="#" class="package">lowlevel</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/render/lowlevel/gputexture.html" class=" module">gputexture</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">objects</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/core/render/objects/quad.html" class=" module">quad</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/render/objects/renderable.html" class=" module">renderable</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/render/objects/text.html" class=" module">text</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/render/objects/view.html" class=" module">view</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">util</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/core/render/util/general.html" class=" module">general</a>
+							</li>
+						</ul>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/render/objects.html" class=" module">objects</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/render/renderer.html" class=" module">renderer</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/render/util.html" class=" module">util</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">resources</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/core/resources/font.html" class=" module">font</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/resources/glslprogram.html" class=" module">glslprogram</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/resources/jsondata.html" class=" module">jsondata</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/resources/music.html" class=" module">music</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/resources/sample.html" class=" module">sample</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/resources/texture.html" class=" module">texture</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">services</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/core/services/scheduler.html" class=" module">scheduler</a>
+							</li>
+						</ul>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/base.html" class=" module">base</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/callback.html" class=" module">callback</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/event.html" class=" module">event</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/io.html" class=" module">io</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/core/resource.html" class=" module">resource</a>
+							</li>
+						</ul>
+							</li>
+							<li class=" tree-view">
+								<a href="#" class="package">game</a>
+						<ul class="tree-view">
+							<li class=" tree-view">
+								<a href="#" class="package">audio</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/game/audio/music.html" class=" module">music</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/audio/sound.html" class="selected module">sound</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">dbg</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/game/dbg/grid.html" class=" module">grid</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">simple</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/game/simple/camera.html" class=" module">camera</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/simple/sprite.html" class=" module">sprite</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">ui</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/game/ui/box.html" class=" module">box</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/ui/text.html" class=" module">text</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/ui/ui.html" class=" module">ui</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/ui/uielement.html" class=" module">uielement</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/ui/uievent.html" class=" module">uievent</a>
+							</li>
+						</ul>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/entity.html" class=" module">entity</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">system</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/system/env.html" class=" module">env</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
+								<a href="#" class="package">util</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/util/fileio.html" class=" module">fileio</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/util/jsonutil.html" class=" module">jsonutil</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/util/logger.html" class=" module">logger</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/util/settings.html" class=" module">settings</a>
+							</li>
+						</ul>
+							</li>
+							<li>
+								<a href="../../../../d2d/engine.html" class=" module">engine</a>
+							</li>
+						</ul>
+							</li>
+							<li>
+								<a href="../../../../game.html" class=" module">game</a>
+							</li>
+						</ul>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<p>
+						<input id="symbolSearch" type="text" placeholder="Search for symbols" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+					</p>
+	<ul id="symbolSearchResults" style="display: none"></ul>
+	<script type="application/javascript" src="../../../../symbols.js"></script>
+	<script type="application/javascript">
+var symbolSearchRootDir = "../../../../";
+$('#symbolSearchPane').show();
+	</script>
+				</div>
+		</nav>
+		<div id="main-contents">
+			<h1>Class Sound</h1>
+			<section>
+				<p>A sound
+</p>
+
+					<section>
+						<h3>Inherits from</h3>
+						<ul>
+							<li>
+								<code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html">Base</a></code>
+ (base class)
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Constructors</h3>
+						<table>
+							<col class="caption"/>
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/audio/sound/Sound.this.html" class="public">
+										<code>this</code>
+									</a>
+								</td>
+								<td>Creates a sound from the given resource name
+</td>
+							</tr>
+						</table>
+					</section>
+					<section>
+						<h3>Properties</h3>
+						<table>
+							<col class="caption"/>
+							<tr>
+								<th>Name</th>
+								<th>Type</th>
+								<th>Description</th>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/audio/sound/Sound.playing.html" class="public property"><code>playing</code></a>
+									<span class="tableEntryAnnotation">[get]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td>If the sound has been <a href="../../../../d2d/game/audio/sound/Sound.started.html"><code class="prettyprint lang-d">started</code></a> and is not <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a>
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/audio/sound/Sound.samplePaused.html" class="public property"><code>samplePaused</code></a>
+									<span class="tableEntryAnnotation">[get]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td>If the sound is <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a>. Since <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a> is reserved by base, this name is a bit silly
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/audio/sound/Sound.started.html" class="public property"><code>started</code></a>
+									<span class="tableEntryAnnotation">[get]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td>If the sound is <code class="prettyprint lang-d">started</code>, regardless if it later has been <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a> or not
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/audio/sound/Sound.volume.html" class="public property"><code>volume</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">int</code></td>
+								<td>The <code class="prettyprint lang-d">volume</code> with wich the sound should be played, from 0-128. Values above or below will map to the nearest valid value
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.acceptsEvents.html" class="public inherited property"><code>acceptsEvents</code></a>
+									<span class="tableEntryAnnotation">[get]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td>if this object accepts events
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.children.html" class="public inherited property"><code>children</code></a>
+									<span class="tableEntryAnnotation">[get]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html">Base</a>[long]</code></td>
+								<td>gets the child objects of this object
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.deleted.html" class="public inherited property"><code>deleted</code></a>
+									<span class="tableEntryAnnotation">[get]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td>returns if the object will be <a href="../../../../d2d/core/base/Base.deleted.html"><code class="prettyprint lang-d">deleted</code></a> before the next tick
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.id.html" class="public inherited property"><code>id</code></a>
+									<span class="tableEntryAnnotation">[get]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">ulong</code></td>
+								<td>fixed obj <a href="../../../../d2d/core/base/Base.id.html"><code class="prettyprint lang-d">id</code></a> of this object
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.parent.html" class="public inherited property"><code>parent</code></a>
+									<span class="tableEntryAnnotation">[set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html">Base</a></code></td>
+								<td>sets the <a href="../../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a> object of this object
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.parent.html" class="public inherited property"><code>parent</code></a>
+									<span class="tableEntryAnnotation">[get]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html">Base</a></code></td>
+								<td>gets the <a href="../../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a> object of this object
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.paused.html" class="public inherited property"><code>paused</code></a>
+									<span class="tableEntryAnnotation">[get]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td>pauses/unpauses the object
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.root.html" class="public inherited property"><code>root</code></a>
+									<span class="tableEntryAnnotation">[get]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html">Base</a></code></td>
+								<td>the "<a href="../../../../d2d/core/base/Base.root.html"><code class="prettyprint lang-d">root</code></a>" is the <a href="../../../../d2d/core/base/Base.root.html"><code class="prettyprint lang-d">root</code></a> of the element tree wich this object is a member
+</td>
+							</tr>
+						</table>
+					</section>
+					<section>
+						<h3>Methods</h3>
+						<table>
+							<col class="caption"/>
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/audio/sound/Sound.pause.html" class="public">
+										<code>pause</code>
+									</a>
+								</td>
+								<td>This will <code class="prettyprint lang-d">pause</code> a paying <a href="../../../../d2d/game/audio/sound/Sound.html"><code class="prettyprint lang-d">Sound</code></a>.
+        If the sound is already <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a> or not <a href="../../../../d2d/game/audio/sound/Sound.playing.html"><code class="prettyprint lang-d">playing</code></a>, this will have no effect
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/audio/sound/Sound.play.html" class="public">
+										<code>play</code>
+									</a>
+								</td>
+								<td>Will start <a href="../../../../d2d/game/audio/sound/Sound.playing.html"><code class="prettyprint lang-d">playing</code></a> the sound from the beginning.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/audio/sound/Sound.resume.html" class="public">
+										<code>resume</code>
+									</a>
+								</td>
+								<td>This will <code class="prettyprint lang-d">resume</code> a <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a> <a href="../../../../d2d/game/audio/sound/Sound.html"><code class="prettyprint lang-d">Sound</code></a>.
+        If the sound is not <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a> or not <a href="../../../../d2d/game/audio/sound/Sound.playing.html"><code class="prettyprint lang-d">playing</code></a> in the first place this will have no effect
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/audio/sound/Sound.stop.html" class="public">
+										<code>stop</code>
+									</a>
+								</td>
+								<td>Stops a <a href="../../../../d2d/game/audio/sound/Sound.started.html"><code class="prettyprint lang-d">started</code></a> sound.
+        If the sound is not <a href="../../../../d2d/game/audio/sound/Sound.started.html"><code class="prettyprint lang-d">started</code></a> (so can be <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a> but <a href="../../../../d2d/game/audio/sound/Sound.play.html"><code class="prettyprint lang-d">play</code></a> should have been called at least once), nothing will happen
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.addChild.html" class="public inherited">
+										<code>addChild</code>
+									</a>
+								</td>
+								<td>add a <a href="../../../../d2d/core/base/Base.addChild.html#child"><code class="prettyprint lang-d">child</code></a> to this object. Resets the <a href="../../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a> of the object to add.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.fireEvent.html" class="public inherited">
+										<code>fireEvent</code>
+									</a>
+								</td>
+								<td>Fires an event, moves it up in the object hirarchy and propagetes it through
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.getService.html" class="public inherited">
+										<code>getService</code>
+									</a>
+								</td>
+								<td>Gets a service by its <a href="../../../../d2d/core/base/Base.getService.html#name"><code class="prettyprint lang-d">name</code></a>. Syntax is <a href="../../../../d2d/core/base/Base.getService.html"><code class="prettyprint lang-d">getService</code></a>!ServiceClass(<a href="../../../../d2d/core/base/Base.getService.html#name"><code class="prettyprint lang-d">name</code></a>)
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.postRender.html" class="public inherited">
+										<code>postRender</code>
+									</a>
+								</td>
+								<td><a href="../../../../d2d/core/base/Base.postRender.html"><code class="prettyprint lang-d">postRender</code></a> is called after all <a href="../../../../d2d/core/base/Base.children.html"><code class="prettyprint lang-d">children</code></a> and the object were renderd.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.postUpdate.html" class="public inherited">
+										<code>postUpdate</code>
+									</a>
+								</td>
+								<td><a href="../../../../d2d/core/base/Base.postUpdate.html"><code class="prettyprint lang-d">postUpdate</code></a> is called after <a href="../../../../d2d/core/base/Base.update.html"><code class="prettyprint lang-d">update</code></a> is called
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.preTickDelete.html" class="public inherited">
+										<code>preTickDelete</code>
+									</a>
+								</td>
+								<td>PreTickDelte removes all objects that are makred for deletion from the hirachy. If an objects had <a href="../../../../d2d/core/base/Base.children.html"><code class="prettyprint lang-d">children</code></a>, these are <a href="../../../../d2d/core/base/Base.deleted.html"><code class="prettyprint lang-d">deleted</code></a>, too.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.propagateEvent.html" class="public inherited">
+										<code>propagateEvent</code>
+									</a>
+								</td>
+								<td><a href="../../../../d2d/core/base/Base.propagate.html"><code class="prettyprint lang-d">propagate</code></a> an event throgh the object hirarchy
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.propagateRender.html" class="public inherited">
+										<code>propagateRender</code>
+									</a>
+								</td>
+								<td>Propagates the rendering through the object hirarchy
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.propagateUpdate.html" class="public inherited">
+										<code>propagateUpdate</code>
+									</a>
+								</td>
+								<td>Propagates an <a href="../../../../d2d/core/base/Base.update.html"><code class="prettyprint lang-d">update</code></a> thru the object hirarchy
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.removeChild.html" class="public inherited">
+										<code>removeChild</code>
+									</a>
+								</td>
+								<td>removes a <a href="../../../../d2d/core/base/Base.removeChild.html#child"><code class="prettyprint lang-d">child</code></a> from this object
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.render.html" class="public inherited">
+										<code>render</code>
+									</a>
+								</td>
+								<td>Render is called every frame
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.setDeleted.html" class="public inherited">
+										<code>setDeleted</code>
+									</a>
+								</td>
+								<td>marks an object for deletion. It immediatly removes the service (if existant) and also marks all <a href="../../../../d2d/core/base/Base.children.html"><code class="prettyprint lang-d">children</code></a> for deletion!
+		Deletion means removal from object hirarchy and services.
+		However if the object is stored somewhere else it also has to be removed manually there (should never ever happen).
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.update.html" class="public inherited">
+										<code>update</code>
+									</a>
+								</td>
+								<td>Update is called every tick (1/30 of a second).
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.enableEventHandling.html" class="protected inherited">
+										<code>enableEventHandling</code>
+									</a>
+								</td>
+								<td>Enables event reciving for this object. Should be called in the constructor of classes that want it.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.pollEvents.html" class="protected inherited">
+										<code>pollEvents</code>
+									</a>
+								</td>
+								<td>returns the pending events and cleans
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.propagate.html" class="protected inherited">
+										<code>propagate</code>
+									</a>
+								</td>
+								<td>Propagates event actions
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.registerAsService.html" class="protected inherited">
+										<code>registerAsService</code>
+									</a>
+								</td>
+								<td>Registers a class as a service that can be accessed by its <a href="../../../../d2d/core/base/Base.registerAsService.html#name"><code class="prettyprint lang-d">name</code></a>. Should be called by classes that want to be <a href="../../../../d2d/core/base/Base.deleted.html"><code class="prettyprint lang-d">deleted</code></a>
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.removeService.html" class="protected inherited">
+										<code>removeService</code>
+									</a>
+								</td>
+								<td>Removes a service
+</td>
+							</tr>
+						</table>
+					</section>
+
+			</section>
+			<section>
+				<h2>Authors</h2>
+
+			</section>
+			<section>
+				<h2>Copyright</h2>
+
+			</section>
+			<section>
+				<h2>License</h2>
+
+			</section>
+		</div>
+	</body>
+</html>

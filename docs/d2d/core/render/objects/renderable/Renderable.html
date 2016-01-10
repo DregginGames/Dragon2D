@@ -100,6 +100,15 @@
 								<a href="../../../../../d2d/core/resources/glslprogram.html" class=" module">glslprogram</a>
 							</li>
 							<li>
+								<a href="../../../../../d2d/core/resources/jsondata.html" class=" module">jsondata</a>
+							</li>
+							<li>
+								<a href="../../../../../d2d/core/resources/music.html" class=" module">music</a>
+							</li>
+							<li>
+								<a href="../../../../../d2d/core/resources/sample.html" class=" module">sample</a>
+							</li>
+							<li>
 								<a href="../../../../../d2d/core/resources/texture.html" class=" module">texture</a>
 							</li>
 						</ul>
@@ -133,6 +142,17 @@
 								<a href="#" class="package">game</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
+								<a href="#" class="package">audio</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/game/audio/music.html" class=" module">music</a>
+							</li>
+							<li>
+								<a href="../../../../../d2d/game/audio/sound.html" class=" module">sound</a>
+							</li>
+						</ul>
+							</li>
+							<li class="collapsed tree-view">
 								<a href="#" class="package">dbg</a>
 						<ul class="tree-view">
 							<li>
@@ -155,10 +175,16 @@
 								<a href="#" class="package">ui</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../../../d2d/game/ui/box.html" class=" module">box</a>
+							</li>
+							<li>
 								<a href="../../../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
 							</li>
 							<li>
 								<a href="../../../../../d2d/game/ui/text.html" class=" module">text</a>
+							</li>
+							<li>
+								<a href="../../../../../d2d/game/ui/ui.html" class=" module">ui</a>
 							</li>
 							<li>
 								<a href="../../../../../d2d/game/ui/uielement.html" class=" module">uielement</a>
@@ -186,6 +212,9 @@
 						<ul class="tree-view">
 							<li>
 								<a href="../../../../../d2d/util/fileio.html" class=" module">fileio</a>
+							</li>
+							<li>
+								<a href="../../../../../d2d/util/jsonutil.html" class=" module">jsonutil</a>
 							</li>
 							<li>
 								<a href="../../../../../d2d/util/logger.html" class=" module">logger</a>
@@ -281,10 +310,47 @@ $('#symbolSearchPane').show();
 							<tr>
 								<td>
 									<a href="../../../../../d2d/core/render/objects/renderable/Renderable.detailLevel.html" class="public property"><code>detailLevel</code></a>
-									<span class="tableEntryAnnotation">[get]</span>
+									<span class="tableEntryAnnotation">[get, set]</span>
 								</td>
 								<td class="typecol"><code class="prettyprint lang-d">int</code></td>
 								<td>The detail Level. The higher this level is, the higher the level of a view needs to be to see this object
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../../d2d/core/render/objects/renderable/Renderable.ignoreView.html" class="public property"><code>ignoreView</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td>Renderables can be set to ignore the effects of views (other than viewport), making, for them, -1..1 direkt mapping of screen space.
+        This can be usefull for the user interface, debug text, things that should annoy people, generally everything you dont want to use in world but in screen coordinates
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../../d2d/core/render/objects/renderable/Renderable.pos.html" class="public property"><code>pos</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">gl3n.<wbr/>linalg.<wbr/>Vector!(float,2)</code></td>
+								<td>The position of this renderable in world-coordinates
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../../d2d/core/render/objects/renderable/Renderable.rotation.html" class="public property"><code>rotation</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">float</code></td>
+								<td>The <code class="prettyprint lang-d">rotation</code> of the renderable (around z axis)
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../../d2d/core/render/objects/renderable/Renderable.scale.html" class="public property"><code>scale</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">gl3n.<wbr/>linalg.<wbr/>Vector!(float,3)</code></td>
+								<td>The <code class="prettyprint lang-d">scale</code> of this renderable in world-coordinates
 </td>
 							</tr>
 						</table>
@@ -313,6 +379,15 @@ $('#symbolSearchPane').show();
 									</a>
 								</td>
 								<td>Sets the <a href="../../../../../d2d/core/render/objects/renderable/Renderable._setupVAO.html#mode"><code class="prettyprint lang-d">mode</code></a> with wich the classes VAO is managed. If set once, it cant be changed - means that there is a need to take care how the interaction with parten-classes is handled
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../../d2d/core/render/objects/renderable/Renderable._standardModelToWorld.html" class="protected">
+										<code>_standardModelToWorld</code>
+									</a>
+								</td>
+								<td>Returns the model to world matrix for the combination of position, <a href="../../../../../d2d/core/render/objects/renderable/Renderable.scale.html"><code class="prettyprint lang-d">scale</code></a> and <a href="../../../../../d2d/core/render/objects/renderable/Renderable.rotation.html"><code class="prettyprint lang-d">rotation</code></a>
 </td>
 							</tr>
 							<tr>

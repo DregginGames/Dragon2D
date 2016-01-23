@@ -73,7 +73,7 @@ class ColoredQuad : Quad
         auto prg = this.program.program;
 		prg.bind();
         vao.bind();
-		auto m = gen2DModelToWorld(pos);
+		auto m = _standardModelToWorld();
         auto mvp = view.worldToView*m;
         prg.setUniformValueMatrixWorkaround("MVP", mvp);
         prg.setUniformValue("color", _color.value_ptr);

@@ -68,6 +68,10 @@ class Engine
 				root.preTickDelete();
                 root.propagateUpdate();
                 curtime += ticksize;
+
+                // force garbage collection after every tick
+                import core.memory;
+                GC.collect();
             }
 
             //render always (frame rate limits this). Basically allocates the time for the ticks.

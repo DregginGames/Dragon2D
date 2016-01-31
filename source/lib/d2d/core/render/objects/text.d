@@ -114,6 +114,9 @@ class Text : Renderable
         regenerate();
     }
 
+    /**
+        Renders the text on screen
+    */
     override void render(in View view) 
     {
         auto prg = Resource.create!GLSLProgram(_program).program;
@@ -151,11 +154,13 @@ protected:
         char[] textLeft = _settings.text.dup;
         _lines.length = 0;
 
+        // No max width. weeeee
         if(_settings.maxwidth <= 0.0f) {
             Line line;
             line.text = textLeft.idup;
             _lines ~= line;
         }
+        // Break lines (or not) by using splitSettings and stripTextOnLength
         else {
             TextSplitSettings splitSettings = { font, _settings.linebreak ? OverflowBehaviour.showBegin : _settings.overflow, 
                                         _settings.height, _settings.maxwidth, !_settings.linebreak, _settings.linebreak,
@@ -176,6 +181,7 @@ protected:
         }
 
         auto col = sdlColor(_settings.color);
+        // Apply positioning
         foreach(ref line; _lines) {
             auto surface = TTF_RenderUTF8_Blended(font,toStringz(line.text),col);
             line.tex = new GPUTexture(surface);
@@ -191,7 +197,21 @@ protected:
                     line.pos.x=0.0-w/2.0;
                     break;
             }
-        }       
+        }     
+
+        // apply maxheight and vertical scrolling
+        auto allLinesHeight = settings.height*_lines.length;
+        if (settings.maxheight > 0.0f && settings.maxheight < allLinesHeight) {
+            float scroll = 0.0f;
+            if(settings.overflow != Text.OverflowBehaviour.scroll) {
+                scroll = settings.overflow==Text.OverflowBehaviour.showBegin ? 0.0f : 1.0f;
+            } else {
+                scroll = settings.scroll;
+            }
+            size_t maxLines = cast(size_t)(settings.maxheight/allLinesHeight * _lines.length);
+            size_t offset = cast(size_t)((_lines.length-maxLines)*scroll);
+            _lines = _lines[offset..offset+maxLines];
+        }
     }
 
     override void _vboInitClassScope()
@@ -240,7 +260,12 @@ private string stripTextOnLength(ref char[] str, TextSplitSettings settings)
         TTF_SizeUTF8(settings.font,toStringz(b),&w,&h);
         float lenb = settings.height * cast(float)w/cast(float)h;
 
-        if(settings.overflow == Text.OverflowBehaviour.showBegin) {
+        if(str[p-1]=='\n'&&settings.parseControl) {
+            result = str[0..p-1].idup;
+            str = str[p..str.length];
+            break;
+        }
+        else if(settings.overflow == Text.OverflowBehaviour.showBegin) {
             if(lena>settings.maxwidth) {
                 p = p-1;
                 size_t breakpos = p;

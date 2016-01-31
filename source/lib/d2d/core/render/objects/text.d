@@ -276,7 +276,14 @@ private string stripTextOnLength(ref char[] str, TextSplitSettings settings)
             }
         }
         else if (settings.overflow == Text.OverflowBehaviour.scroll) {
-            throw new Exception("Scrolling not yet implement - hit the programmer with a brick please");
+            if(lena>settings.maxwidth) {
+                // p is the mount of letters that fits into maxwidth
+                // therefore (str.length-p)*scroll + 0 is our scroll offset
+                size_t offset = cast(size_t)(cast(float)(str.length-p)*settings.scroll); 
+                result = str[offset..p+offset].idup;
+                str = str[p+offset..$];
+                return result;
+            }
         }
         p++;
     }

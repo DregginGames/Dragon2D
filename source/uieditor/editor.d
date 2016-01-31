@@ -50,9 +50,9 @@ bool onStartup(Base base)
     t.text.ignoreView = true;
     auto settings = t.text.settings;
     settings.height = 0.09;
-    settings.maxwidth = 0.3;
+    settings.maxwidth = 0.5;
     settings.linebreak = true;
-    settings.positioning = t.text.Positioning.left;
+    settings.positioning = t.text.Positioning.right;
     t.text.settings = settings;
    
     base.addChild(t);

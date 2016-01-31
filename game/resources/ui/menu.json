@@ -18,6 +18,25 @@
                 0.5,
                 0.5
             ]
+        },
+        {
+            "children": [],
+            "className": "d2d.game.ui.box.Box",
+            "color": [
+                1,
+                1,
+                0,
+                1
+            ],
+            "name": "",
+            "pos": [
+                0.1,
+                0.1
+            ],
+            "size": [
+                0.1,
+                0.1
+            ]
         }
     ],
     "className": "d2d.game.ui.ui.UI",

@@ -78,12 +78,18 @@ class Text : Renderable
         string text = "";
     }
 
+    /**
+        Behaviour for when the text runs over the boundires
+    */
     enum OverflowBehaviour {
         showBegin,
         showEnd,
         scroll
     }
     
+    /**
+        Centerd, left- or right bound text
+    */
     enum Positioning {
         centered,
         left,
@@ -179,7 +185,7 @@ protected:
                 case Positioning.centered:
                     break;
                 case Positioning.left:
-                    //line.pos.x=w/4.0;
+                    line.pos.x=w/2.0;
                     break;
                 case Positioning.right:
                     line.pos.x=0.0-w/2.0;

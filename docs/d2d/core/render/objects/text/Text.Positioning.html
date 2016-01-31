@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Struct Text.TextSettings</title>
+		<title>Enum Text.Positioning</title>
 		<link rel="stylesheet" type="text/css" href="../../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../../scripts/jquery.js">/**/</script>
@@ -249,119 +249,22 @@ $('#symbolSearchPane').show();
 				</div>
 		</nav>
 		<div id="main-contents">
-			<h1>Struct Text.TextSettings</h1>
+			<h1>Enum Text.Positioning</h1>
 			<section>
-				<p>This struct holds the settings for structs.
-    Why this is needed you would ask? There are two ways to update text object. After every setting changed, the text needs to be rebuilt.
-    That takes time. See the functions why thats not an easy thing. Next would be: why dont flush() the text?
-    Flushing the text after each change forces one to carry the whole flush function, along with the setters to the object hierarchy. Thats not nice.
-    I decidet it would be much nicer to just carry the Setting struct - a thing that cant be broken that easyly and the setter then takes care of the updates.
+				<p>Centerd, left- or right bound text
 </p>
 
+					<p>The enum base type is
+						<code class="prettyprint lang-d">int</code>
+.
+					</p>
 					<section>
-						<h3>Fields</h3>
+						<h3>Enum members</h3>
 						<table>
 							<col class="caption"/>
 							<tr>
 								<th>Name</th>
-								<th>Type</th>
 								<th>Description</th>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.color.html" class="public"><code>color</code></a>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d">gl3n.<wbr/>linalg.<wbr/>Vector!(float,4)</code></td>
-								<td>THe <code class="prettyprint lang-d">color</code> of the text
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.font.html" class="public"><code>font</code></a>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d">string</code></td>
-								<td><code class="prettyprint lang-d">font</code> resource name
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.height.html" class="public"><code>height</code></a>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d">float</code></td>
-								<td>The <a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.size.html"><code class="prettyprint lang-d">size</code></a> of the text
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.linebreak.html" class="public"><code>linebreak</code></a>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
-								<td>If the text will break on linefeeds. If set to true, multiline text becomes possible
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.lineOffset.html" class="public"><code>lineOffset</code></a>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d">float</code></td>
-								<td>Offset-factor between different lines. (This value is, lets say, random.)
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.maxheight.html" class="public"><code>maxheight</code></a>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d">float</code></td>
-								<td>The maximal <a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.height.html"><code class="prettyprint lang-d">height</code></a> of a text - used when <a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.linebreak.html"><code class="prettyprint lang-d">linebreak</code></a> is true. if set (&gt;=0) the textnoxes <a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.height.html"><code class="prettyprint lang-d">height</code></a> wont exeed a specific value
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.maxwidth.html" class="public"><code>maxwidth</code></a>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d">float</code></td>
-								<td>The maximal length of the text. if not set (&lt;=0), the whole text will <a href="../../../../../d2d/core/render/objects/text/Text.render.html"><code class="prettyprint lang-d">render</code></a> in one line until its end, no matter how long it is
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.overflow.html" class="public"><code>overflow</code></a>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../../d2d/core/render/objects/text/Text.OverflowBehaviour.html">Text.<wbr/>OverflowBehaviour</a></code></td>
-								<td>Specifes how text-overflows will be handled
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.positioning.html" class="public"><code>positioning</code></a>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../../d2d/core/render/objects/text/Text.Positioning.html">Text.<wbr/>Positioning</a></code></td>
-								<td><a href="../../../../../d2d/core/render/objects/text/Text.Positioning.html"><code class="prettyprint lang-d">Positioning</code></a> of the text.
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.scroll.html" class="public"><code>scroll</code></a>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d">float</code></td>
-								<td>How far the text is scrolled - if <a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.overflow.html"><code class="prettyprint lang-d">overflow</code></a> is <code class="prettyprint lang-d">scroll</code>. Better use texts scrollUp and scrollDown functions since these dont regenerate the text.
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.scrollUnit.html" class="public"><code>scrollUnit</code></a>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d">float</code></td>
-								<td>How big a single scrolling unit is (basically how far one line is in world coordinates. yes. )
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.size.html" class="public"><code>size</code></a>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d">d2d.<wbr/>core.<wbr/>resources.<wbr/>font.<wbr/>Font.<wbr/>FontSize</code></td>
-								<td><a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.font.html"><code class="prettyprint lang-d">font</code></a> <code class="prettyprint lang-d">size</code> name
-</td>
 							</tr>
 						</table>
 					</section>

@@ -170,6 +170,9 @@
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable._vboInitClassScope.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.OverflowBehaviour.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.Positioning.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.render.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.TextSettings.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.TextSettings.color.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.TextSettings.font.html</loc></url>
@@ -189,7 +192,6 @@
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable.ignoreView.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable.pos.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable.pos.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable.render.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable.rotation.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable.rotation.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable.scale.html</loc></url>

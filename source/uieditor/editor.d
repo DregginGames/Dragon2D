@@ -27,25 +27,15 @@ int main(char[][] args)
 bool onStartup(Base base)
 {
 	import std.stdio;
-    auto cursor = new WorldCursor();
+    // camera
     auto camera = new Camera(4.0f);
-    auto sprite = new Sprite("texture.test");
-    sprite.pos = vec2(-1,-1);
-    auto sprite2 = new Sprite("texture.test");
-    cursor.addChild(sprite);
-    sprite.positionMode = Entity.PositionMode.parentBound;
-    camera.addChild(cursor);
     
-    //isnt our ugly drawn sprite a mouse cursor in theory :P
-    //Base.getService!Env("d2d.env").cursor=false;
-
-    auto s = new Music("sound.alan");
-    //s.play();
     
-
+    // ui
     auto ui = new UI("ui.menu");
     camera.addChild(ui);
     
+    // Text
     auto t = new Text("font.Roboto-Medium", "Sabberschi\nnkensch\nnitzel World centered text");
     t.text.ignoreView = true;
     auto settings = t.text.settings;
@@ -57,11 +47,11 @@ bool onStartup(Base base)
     settings.maxheight = 0.1;
     settings.linebreak = true;
     t.text.settings = settings;
-   
     base.addChild(t);
 
     base.addChild(camera);
-    base.addChild(s);
+
     base.addChild(new Grid(vec4(0.2f,0.0f,1.0f,.5f)));
-	return true;
+	
+    return true;
 }

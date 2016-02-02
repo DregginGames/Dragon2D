@@ -21,21 +21,28 @@
         },
         {
             "children": [],
-            "className": "d2d.game.ui.box.Box",
+            "className": "d2d.game.ui.box.BorderBox",
             "color": [
-                1,
-                1,
-                0,
+                0.2,
+                0.2,
+                0.2,
                 1
             ],
             "name": "",
             "pos": [
-                0.1,
-                0.1
+                0,
+                0
             ],
             "size": [
-                0.1,
+                0.2,
                 0.1
+            ],
+            "borderWidth": 0.015,
+            "borderColor": [
+                0.6,
+                0.6,
+                0.6,
+                1
             ]
         }
     ],

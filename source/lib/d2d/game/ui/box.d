@@ -26,7 +26,7 @@ class Box : UIElement
     /// Renders a box
     override void render()
     {
-        _quad.scale = vec3(size.x,size.y, 1.0f);
+        _quad.scale = vec3(absoluteSize.x,absoluteSize.y, 1.0f);
         _quad.pos = absolutePos - absoluteSize/2.0;
         auto r = getService!Renderer("d2d.renderer");
         r.pushObject(_quad);
@@ -60,4 +60,70 @@ class Box : UIElement
 private:
     /// The ColoredQuad used to draw this ui box
     ColoredQuad _quad;
+}
+
+/**
+    A border box is a simple colored box with a border. 
+*/
+class BorderBox : Box
+{
+    /// Constructs a new borderd box
+    this() 
+    {
+        _borderQuad = new ColoredQuad();
+        _borderQuad.ignoreView = true;
+    }
+
+    /// Renders a borderd box
+    override void render()
+    {
+        _borderQuad.scale = vec3(absoluteSize.x*(1.0+_borderWidth*2),absoluteSize.y*(1.0+_borderWidth*2), 1.0f);
+        _borderQuad.pos = absolutePos - absoluteSize/2.0;
+
+        auto r = getService!Renderer("d2d.renderer");
+        r.pushObject(_borderQuad);
+        super.render();
+    }
+
+    /// Loads color data of border box
+    override void load(JSONValue data) 
+    {
+        _borderWidth = data["borderWidth"].type == JSON_TYPE.FLOAT ? data["borderWidth"].floating : data["borderWidth"].integer;
+        _borderQuad.color = vectorFromJson!(vec4)(data["borderColor"]);
+        super.load(data);
+    }
+
+    /// Stores color data of border box
+    override void store(ref JSONValue data) 
+    {
+        data["borderColor"] = vectorToJson(_borderQuad.color);
+        data["borderWidth"] = _borderWidth;
+        super.store(data);
+    }
+
+    /// Color of the border of this box
+    @property vec4 borderColor()
+    {
+        return _borderQuad.color;
+    }
+    /// Dittp
+    @property vec4 borderColor(vec4 c)
+    {
+        return _borderQuad.color=c;
+    }
+
+    /// The width of the border of this box - absolute
+    @property float borderWidth()
+    {
+        return _borderWidth;
+    }
+    /// Ditto
+    @property float borderWidth(float b)
+    {
+        return _borderWidth = b;
+    }
+
+private: 
+    ColoredQuad _borderQuad;
+    float       _borderWidth=0.01;
 }

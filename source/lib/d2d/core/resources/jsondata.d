@@ -20,7 +20,14 @@ class JSONData : Resource
     {
         auto fresource = FileResource.getFileResource(name);
         if (!fresource.invalid) {
-            _data = parseJSON(fresource.getData());
+            try {
+                _data = parseJSON(fresource.getData());
+            } 
+            catch (JSONException e)
+            {
+                Logger.log("Could not load JSONData" ~ name ~ " - file error:\n" ~ e.msg);
+                _data = JSONValue("");
+            }
         } else {
             Logger.log("Could not load JSONData "~ name);
         }

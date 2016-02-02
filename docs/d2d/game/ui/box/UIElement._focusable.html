@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function UIElement._focusable</title>
+		<title>UIElement._focusable - multiple declarations</title>
 		<link rel="stylesheet" type="text/css" href="../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../scripts/jquery.js">/**/</script>
@@ -249,8 +249,35 @@ $('#symbolSearchPane').show();
 				</div>
 		</nav>
 		<div id="main-contents">
-			<h1>Function UIElement._focusable</h1>
+			<h1>UIElement._focusable - multiple declarations</h1>
+			<ul>
+				<li>Function UIElement._focusable</li>
+				<li>Function UIElement._focusable</li>
+			</ul>
 			<section>
+				<h2>Function UIElement._focusable</h2>
+				<p>operates on relative postions. used to check if a ui element can be focused
+</p>
+<section><p>Override to return false if you want to make an object that cant be focused
+</p>
+</section>
+
+					<section>
+						<h3>Prototype</h3>
+						<div class="prototype">
+							<code class="prettyprint lang-d">
+bool _focusable(
+								<br/>
+&nbsp;&nbsp;gl3n.<wbr/>linalg.<wbr/>Vector!(float,2) pos
+								<br/>
+);
+							</code>
+						</div>
+					</section>
+
+			</section>
+			<section>
+				<h2>Function UIElement._focusable</h2>
 				<p>operates on relative postions. used to check if a ui element can be focused
 </p>
 <section><p>Override to return false if you want to make an object that cant be focused

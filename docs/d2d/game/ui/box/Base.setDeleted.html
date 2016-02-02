@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function Base.setDeleted</title>
+		<title>Base.setDeleted - multiple declarations</title>
 		<link rel="stylesheet" type="text/css" href="../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../scripts/jquery.js">/**/</script>
@@ -249,8 +249,30 @@ $('#symbolSearchPane').show();
 				</div>
 		</nav>
 		<div id="main-contents">
-			<h1>Function Base.setDeleted</h1>
+			<h1>Base.setDeleted - multiple declarations</h1>
+			<ul>
+				<li>Function Base.setDeleted</li>
+				<li>Function Base.setDeleted</li>
+			</ul>
 			<section>
+				<h2>Function Base.setDeleted</h2>
+				<p>marks an object for deletion. It immediatly removes the service (if existant) and also marks all <a href="../../../../d2d/core/base/Base.children.html"><code class="prettyprint lang-d">children</code></a> for deletion!
+		Deletion means removal from object hirarchy and services.
+		However if the object is stored somewhere else it also has to be removed manually there (should never ever happen).
+</p>
+
+					<section>
+						<h3>Prototype</h3>
+						<div class="prototype">
+							<code class="prettyprint lang-d">
+final void setDeleted();
+							</code>
+						</div>
+					</section>
+
+			</section>
+			<section>
+				<h2>Function Base.setDeleted</h2>
 				<p>marks an object for deletion. It immediatly removes the service (if existant) and also marks all <a href="../../../../d2d/core/base/Base.children.html"><code class="prettyprint lang-d">children</code></a> for deletion!
 		Deletion means removal from object hirarchy and services.
 		However if the object is stored somewhere else it also has to be removed manually there (should never ever happen).

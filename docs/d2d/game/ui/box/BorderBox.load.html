@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Base.postUpdate - multiple declarations</title>
+		<title>Function BorderBox.load</title>
 		<link rel="stylesheet" type="text/css" href="../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../scripts/jquery.js">/**/</script>
@@ -249,42 +249,20 @@ $('#symbolSearchPane').show();
 				</div>
 		</nav>
 		<div id="main-contents">
-			<h1>Base.postUpdate - multiple declarations</h1>
-			<ul>
-				<li>Function Base.postUpdate</li>
-				<li>Function Base.postUpdate</li>
-			</ul>
+			<h1>Function BorderBox.load</h1>
 			<section>
-				<h2>Function Base.postUpdate</h2>
-				<p><a href="../../../../d2d/core/base/Base.postUpdate.html"><code class="prettyprint lang-d">postUpdate</code></a> is called after <a href="../../../../d2d/core/base/Base.update.html"><code class="prettyprint lang-d">update</code></a> is called
+				<p>Loads <a href="../../../../d2d/game/ui/box/Box.color.html"><code class="prettyprint lang-d">color</code></a> <a href="../../../../d2d/game/ui/box/BorderBox.load.html#data"><code class="prettyprint lang-d">data</code></a> of border box
 </p>
-<section><p>Avoid fireing events here. Here you should do things that dont affect other objects but need the full interaction with the rest of the world in before.
-</p>
-</section>
 
 					<section>
 						<h3>Prototype</h3>
 						<div class="prototype">
 							<code class="prettyprint lang-d">
-void postUpdate();
-							</code>
-						</div>
-					</section>
-
-			</section>
-			<section>
-				<h2>Function Base.postUpdate</h2>
-				<p><a href="../../../../d2d/core/base/Base.postUpdate.html"><code class="prettyprint lang-d">postUpdate</code></a> is called after <a href="../../../../d2d/core/base/Base.update.html"><code class="prettyprint lang-d">update</code></a> is called
-</p>
-<section><p>Avoid fireing events here. Here you should do things that dont affect other objects but need the full interaction with the rest of the world in before.
-</p>
-</section>
-
-					<section>
-						<h3>Prototype</h3>
-						<div class="prototype">
-							<code class="prettyprint lang-d">
-void postUpdate();
+override void load(
+								<br/>
+&nbsp;&nbsp;std.<wbr/>json.<wbr/>JSONValue data
+								<br/>
+);
 							</code>
 						</div>
 					</section>

@@ -48,5 +48,11 @@ class UI : UIElement
     {
         Resource.free(name);    
     }
+
+    /// root dosnt annoy. amen.
+    override void preUpdate()
+    {
+
+    }
 private:
 }

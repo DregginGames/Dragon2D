@@ -8,10 +8,14 @@ import std.json;
 
 import gl3n.linalg;
 
-import d2d.util.jsonutil;
 import d2d.core.base;
+import d2d.core.io;
+import d2d.util.jsonutil;
+
 import d2d.game.ui.uievent;
 import d2d.util.logger;
+
+
 
 /**
     A UI Element is a non-entity visual class that is part of the user interface. 
@@ -131,8 +135,75 @@ abstract class UIElement : Base
         return _size;
     }
 
+    @property vec2 viewPos()
+    {
+        auto p = absolutePos*2.0-vec2(1,1);
+        p.y *= -1;
+        return p;
+    }
+
+    @property vec2 viewSize()
+    {
+        return absoluteSize*2.0;
+    }
+
     override void preUpdate()
     {
+        // we, per definition, are not clicked anymore
+        _clicked = false;
+
+        foreach(e; pollEvents()) {
+            // check for hovering. hovering ignores children completly
+            auto mm = cast(MouseMotionEvent)e;
+            if(mm) {
+                import std.stdio;
+                auto mp = mm.npos;
+                auto p = absolutePos;
+                auto s = absoluteSize;
+                if((p.x <= mp.x && p.x+s.x >= mp.x && p.y <= mp.y && p.y+s.y >= mp.y) != _hoverd) {
+                    _hoverd = !_hoverd;
+                    if(_hoverd) {
+                        fireEvent(new UiOnHoverEvent(this));
+                    }
+                }
+            }
+            // if any of our children are hoverd we, btw, ignore any other events because they go directly to our children. hover is the exception.
+            bool childIsHoverd = false;
+            foreach(c; children) {
+                auto e = cast(UIElement)c;
+                if(e && e.hovered) {
+                    childIsHoverd = true;
+                    break;
+                }
+            }
+            if(childIsHoverd) {
+                continue;
+            }
+            // if hoverd check for the clicking
+            else if (_hoverd) {
+                auto mc = cast(MouseButtonDownEvent)e;
+                if(mc) {
+                    switch (mc.button) {
+                        case MouseButtonEvent.MouseButtonId.MouseLeft:
+                            fireEvent(new UiOnClickEvent(this));
+                            _clicked = true;
+                            break;
+                        case MouseButtonEvent.MouseButtonId.MouseRight:
+                            fireEvent(new UiOnRightClickEvent(this));
+                            _clicked = true;
+                            break;
+                        default:
+                            _clicked = false;
+                            break;
+                    }
+                }
+            }
+            // and check for focus.
+            if (_clicked) {
+                _setFocus();
+            }
+        }
+        
         
     }
 
@@ -150,6 +221,8 @@ abstract class UIElement : Base
     {
         return _focus;
     }
+
+    
     
     /**  
         Acts around Object.factory to make sure generated objects are UIElements
@@ -175,6 +248,9 @@ protected:
         else if(_focusedElement) {
             _focusedElement._unfocus();
         }
+        _focus = true;
+        _focusedElement = this;
+        fireEvent(new UiOnFocusEvent(this));
     }
 
     /// Unfocuses this element if it is focused
@@ -197,7 +273,13 @@ protected:
         foreach(ref c; children) {
             auto p = cast(UIElement)c;
             if(p) {
-                if(p.pos.x <= pos.x && p.pos.y <= pos.y && p.pos.x+p.size.x>=p.pos.x && p.pos.y+p.size.y>=p.pos.y) {
+                if (
+                   p.pos.x <= pos.x 
+                   && p.pos.y <= pos.y 
+                   && p.pos.x+p.size.x>=p.pos.x 
+                   && p.pos.y+p.size.y>=p.pos.y
+                   )
+                   {
                     return false;
                 }
             }

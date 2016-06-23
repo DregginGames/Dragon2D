@@ -29,3 +29,23 @@ class EventDebugger : Base
 		}
 	}
 }
+
+class NoSDLEventDebugger : Base
+{
+    this()
+    {
+		debug {
+			enableEventHandling();
+		}
+	}
+
+    override void update()
+    {
+		foreach(e; pollEvents()) {
+            auto s = cast(SDLEvent)e;
+            if(s is null) {
+			    Logger.log("event: " ~ to!string(typeid(e)));
+            }
+		}
+	}
+}

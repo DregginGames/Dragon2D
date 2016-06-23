@@ -28,14 +28,14 @@ bool onStartup(Base base)
 {
 	import std.stdio;
     // camera
-    auto camera = new Camera(4.0f);
+    auto camera = new Camera(1.0f);
     
     
     // ui
     auto ui = new UI("ui.menu");
     camera.addChild(ui);
     
-    // Text
+    /*// Text
     auto t = new Text("font.Roboto-Medium", "Sabberschi\nnkensch\nnitzel World centered text");
     t.text.ignoreView = true;
     auto settings = t.text.settings;
@@ -48,10 +48,12 @@ bool onStartup(Base base)
     settings.linebreak = true;
     t.text.settings = settings;
     base.addChild(t);
-
+*/
     base.addChild(camera);
 
     base.addChild(new Grid(vec4(0.2f,0.0f,1.0f,.5f)));
 	
+    base.addChild(new NoSDLEventDebugger());
+
     return true;
 }

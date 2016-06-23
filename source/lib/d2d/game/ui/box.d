@@ -26,8 +26,8 @@ class Box : UIElement
     /// Renders a box
     override void render()
     {
-        _quad.scale = vec3(absoluteSize.x,absoluteSize.y, 1.0f);
-        _quad.pos = absolutePos - absoluteSize/2.0;
+        _quad.scale = vec3(viewSize.x,viewSize.y, 1.0f);
+        _quad.pos = viewPos+vec2(viewSize.x*0.5,-viewSize.y*0.5);
         auto r = getService!Renderer("d2d.renderer");
         r.pushObject(_quad);
     }
@@ -77,8 +77,8 @@ class BorderBox : Box
     /// Renders a borderd box
     override void render()
     {
-        _borderQuad.scale = vec3(absoluteSize.x*(1.0+_borderWidth*2),absoluteSize.y*(1.0+_borderWidth*2), 1.0f);
-        _borderQuad.pos = absolutePos - absoluteSize/2.0;
+        _borderQuad.scale = vec3(viewSize.x*(1.0+_borderWidth*2),viewSize.y*(1.0+_borderWidth*2), 1.0f);
+        _borderQuad.pos = viewPos-vec2(_borderWidth,_borderWidth);
 
         auto r = getService!Renderer("d2d.renderer");
         r.pushObject(_borderQuad);

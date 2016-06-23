@@ -115,6 +115,14 @@ private:
 /// Fired(not directly) every time a mousebutton is changed
 abstract class MouseButtonEvent : MouseEvent
 {
+    enum MouseButtonId {
+        MouseLeft = 0,
+        MouseRight = 1,
+        MouseWheelButton = 2,
+        MouseThumb1 = 3,
+        MOuseThumb2 = 4
+    };
+
     /// ctor takes name and pos and the button that changed
     this(string name, SDLEvent sdlevent, vec2i pos, vec2 npos, int button)
     {

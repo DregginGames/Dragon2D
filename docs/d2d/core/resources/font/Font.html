@@ -6,16 +6,15 @@
 		<link rel="stylesheet" type="text/css" href="../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../../../prettify/prettify.js">/**/</script>
 		<script type="text/javascript" src="../../../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">d2d</a>
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">core</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -44,6 +43,9 @@
 								<a href="#" class="package">lowlevel</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../../d2d/core/render/lowlevel.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../../d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
 							</li>
 							<li>
@@ -54,6 +56,9 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">objects</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/core/render/objects.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../d2d/core/render/objects/quad.html" class=" module">quad</a>
 							</li>
@@ -72,25 +77,19 @@
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../../d2d/core/render/util.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../../d2d/core/render/util/general.html" class=" module">general</a>
 							</li>
 						</ul>
 							</li>
 							<li>
-								<a href="../../../../d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
-							</li>
-							<li>
-								<a href="../../../../d2d/core/render/objects.html" class=" module">objects</a>
-							</li>
-							<li>
 								<a href="../../../../d2d/core/render/renderer.html" class=" module">renderer</a>
-							</li>
-							<li>
-								<a href="../../../../d2d/core/render/util.html" class=" module">util</a>
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">resources</a>
 						<ul class="tree-view">
 							<li>
@@ -178,7 +177,13 @@
 								<a href="../../../../d2d/game/ui/box.html" class=" module">box</a>
 							</li>
 							<li>
+								<a href="../../../../d2d/game/ui/button.html" class=" module">button</a>
+							</li>
+							<li>
 								<a href="../../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
 								<a href="../../../../d2d/game/ui/text.html" class=" module">text</a>
@@ -258,7 +263,7 @@ $('#symbolSearchPane').show();
 						<h3>Inherits from</h3>
 						<ul>
 							<li>
-								<code class="prettyprint lang-d"><a href="../../../../d2d/core/resource/Resource.html">Resource</a></code>
+								<code class="prettyprint lang-d"><a href="../../../../d2d/core/resource/Resource.html"><span class="typ">Resource</span></a></code>
  (base class)
 							</li>
 						</ul>
@@ -277,8 +282,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/core/resource/Resource.deleted.html" class="public inherited property"><code>deleted</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
-								<td>returns if this object was <a href="../../../../d2d/core/resource/Resource.deleted.html"><code class="prettyprint lang-d">deleted</code></a>.
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td>
+								<td>returns if this object was deleted.
 </td>
 							</tr>
 							<tr>
@@ -286,8 +291,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/core/resource/Resource.deletetime.html" class="public inherited property"><code>deletetime</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">long</code></td>
-								<td>gets the time when this obj was <a href="../../../../d2d/core/resource/Resource.deleted.html"><code class="prettyprint lang-d">deleted</code></a>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">long</span></code></td>
+								<td>gets the time when this obj was deleted
 </td>
 							</tr>
 							<tr>
@@ -295,7 +300,7 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/core/resource/Resource.deletewait.html" class="public inherited property"><code>deletewait</code></a>
 									<span class="tableEntryAnnotation">[set]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">long</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">long</span></code></td>
 								<td>sets the delteTime
 </td>
 							</tr>
@@ -304,7 +309,7 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/core/resource/Resource.deletewait.html" class="public inherited property"><code>deletewait</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">long</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">long</span></code></td>
 								<td>gets the time how long this object will survive a deletion
 </td>
 							</tr>
@@ -313,8 +318,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/core/resource/Resource.name.html" class="public inherited property"><code>name</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">string</code></td>
-								<td>gets the <a href="../../../../d2d/core/resource/Resource.name.html"><code class="prettyprint lang-d">name</code></a> of this resource
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">string</span></code></td>
+								<td>gets the name of this resource
 </td>
 							</tr>
 						</table>

@@ -6,16 +6,15 @@
 		<link rel="stylesheet" type="text/css" href="../../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../../../../prettify/prettify.js">/**/</script>
 		<script type="text/javascript" src="../../../../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">d2d</a>
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">core</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -37,12 +36,15 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">render</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
 								<a href="#" class="package">lowlevel</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/core/render/lowlevel.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../../d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
 							</li>
@@ -51,9 +53,12 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">objects</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/core/render/objects.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../../d2d/core/render/objects/quad.html" class=" module">quad</a>
 							</li>
@@ -72,21 +77,15 @@
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../../../d2d/core/render/util.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../../../d2d/core/render/util/general.html" class=" module">general</a>
 							</li>
 						</ul>
 							</li>
 							<li>
-								<a href="../../../../../d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
-							</li>
-							<li>
-								<a href="../../../../../d2d/core/render/objects.html" class=" module">objects</a>
-							</li>
-							<li>
 								<a href="../../../../../d2d/core/render/renderer.html" class=" module">renderer</a>
-							</li>
-							<li>
-								<a href="../../../../../d2d/core/render/util.html" class=" module">util</a>
 							</li>
 						</ul>
 							</li>
@@ -178,7 +177,13 @@
 								<a href="../../../../../d2d/game/ui/box.html" class=" module">box</a>
 							</li>
 							<li>
+								<a href="../../../../../d2d/game/ui/button.html" class=" module">button</a>
+							</li>
+							<li>
 								<a href="../../../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="../../../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
 								<a href="../../../../../d2d/game/ui/text.html" class=" module">text</a>
@@ -258,7 +263,7 @@ $('#symbolSearchPane').show();
 						<h3>Inherits from</h3>
 						<ul>
 							<li>
-								<code class="prettyprint lang-d"><a href="../../../../../d2d/core/render/objects/view/View.html">View</a></code>
+								<code class="prettyprint lang-d"><a href="../../../../../d2d/core/render/objects/view/View.html"><span class="typ">View</span></a></code>
  (base class)
 							</li>
 						</ul>
@@ -296,7 +301,7 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/view/ScreenSpaceView.worldToView.html" class="public property"><code>worldToView</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">gl3n.<wbr/>linalg.<wbr/>Matrix!(float,4,4)</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Matrix</span>!(float,4,4)</code></td>
 								<td>Returns mat4.identity so the ScreenSpace view causes no side effects but, well, the viewport
 </td>
 							</tr>
@@ -305,7 +310,7 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/view/View.detailLevel.html" class="public inherited property"><code>detailLevel</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">int</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">int</span></code></td>
 								<td>returns the detail level that this view can see
 </td>
 							</tr>
@@ -314,7 +319,7 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/view/View.pos.html" class="public inherited property"><code>pos</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">gl3n.<wbr/>linalg.<wbr/>Vector!(float,2)</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2)</code></td>
 								<td>The world-position of the view
 </td>
 							</tr>
@@ -323,8 +328,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/view/View.size.html" class="public inherited property"><code>size</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">gl3n.<wbr/>linalg.<wbr/>Vector!(float,2)</code></td>
-								<td>The world-<a href="../../../../../d2d/core/render/objects/view/View.size.html"><code class="prettyprint lang-d">size</code></a> (visible area of the world) of the view
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2)</code></td>
+								<td>The world-size (visible area of the world) of the view
 </td>
 							</tr>
 							<tr>
@@ -332,7 +337,7 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/view/View.viewportPos.html" class="public inherited property"><code>viewportPos</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">gl3n.<wbr/>linalg.<wbr/>Vector!(float,2)</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2)</code></td>
 								<td>The screen-position of the view (!lower-left corner, -1..1!)
 </td>
 							</tr>
@@ -341,8 +346,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/view/View.viewportSize.html" class="public inherited property"><code>viewportSize</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">gl3n.<wbr/>linalg.<wbr/>Vector!(float,2)</code></td>
-								<td>The screen-<a href="../../../../../d2d/core/render/objects/view/View.size.html"><code class="prettyprint lang-d">size</code></a> of the view (!-1..1!)
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2)</code></td>
+								<td>The screen-size of the view (!-1..1!)
 </td>
 							</tr>
 							<tr>
@@ -350,8 +355,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/view/View.zindex.html" class="public inherited property"><code>zindex</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">uint</code></td>
-								<td>returns the <a href="../../../../../d2d/core/render/objects/view/View.zindex.html"><code class="prettyprint lang-d">zindex</code></a> of the view. Higher <a href="../../../../../d2d/core/render/objects/view/View.zindex.html"><code class="prettyprint lang-d">zindex</code></a> means later rendering -&gt; on top
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span></code></td>
+								<td>returns the zindex of the view. Higher zindex means later rendering -&gt; on top
 </td>
 							</tr>
 							<tr>
@@ -359,8 +364,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/view/View.zindex.html" class="public inherited property"><code>zindex</code></a>
 									<span class="tableEntryAnnotation">[set]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">uint</code></td>
-								<td>sets the <a href="../../../../../d2d/core/render/objects/view/View.zindex.html"><code class="prettyprint lang-d">zindex</code></a>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span></code></td>
+								<td>sets the zindex
 </td>
 							</tr>
 						</table>

@@ -6,13 +6,12 @@
 		<link rel="stylesheet" type="text/css" href="../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../../prettify/prettify.js">/**/</script>
 		<script type="text/javascript" src="../../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">d2d</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -44,6 +43,9 @@
 								<a href="#" class="package">lowlevel</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../d2d/core/render/lowlevel.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
 							</li>
 							<li>
@@ -54,6 +56,9 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">objects</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../d2d/core/render/objects.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../d2d/core/render/objects/quad.html" class=" module">quad</a>
 							</li>
@@ -72,21 +77,15 @@
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../d2d/core/render/util.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../d2d/core/render/util/general.html" class=" module">general</a>
 							</li>
 						</ul>
 							</li>
 							<li>
-								<a href="../../../d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
-							</li>
-							<li>
-								<a href="../../../d2d/core/render/objects.html" class=" module">objects</a>
-							</li>
-							<li>
 								<a href="../../../d2d/core/render/renderer.html" class=" module">renderer</a>
-							</li>
-							<li>
-								<a href="../../../d2d/core/render/util.html" class=" module">util</a>
 							</li>
 						</ul>
 							</li>
@@ -178,7 +177,13 @@
 								<a href="../../../d2d/game/ui/box.html" class=" module">box</a>
 							</li>
 							<li>
+								<a href="../../../d2d/game/ui/button.html" class=" module">button</a>
+							</li>
+							<li>
 								<a href="../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
 								<a href="../../../d2d/game/ui/text.html" class=" module">text</a>
@@ -207,7 +212,7 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
 							<li>
@@ -251,14 +256,14 @@ $('#symbolSearchPane').show();
 		<div id="main-contents">
 			<h1>Class FileResource</h1>
 			<section>
-				<p>this class manages and reprresents all files that are <a href="../../../d2d/util/fileio/FileResource.read.html"><code class="prettyprint lang-d">read</code></a>/written to the system
+				<p>this class manages and reprresents all files that are read/written to the system
 </p>
 
 					<section>
 						<h3>Inherits from</h3>
 						<ul>
 							<li>
-								<code class="prettyprint lang-d">Object</code>
+								<code class="prettyprint lang-d"><span class="typ">Object</span></code>
  (base class)
 							</li>
 						</ul>
@@ -277,8 +282,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../d2d/util/fileio/FileResource.file.html" class="public property"><code>file</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">string</code></td>
-								<td>gets the <code class="prettyprint lang-d">file</code> that this resource belongs to
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">string</span></code></td>
+								<td>gets the file that this resource belongs to
 </td>
 							</tr>
 							<tr>
@@ -286,8 +291,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../d2d/util/fileio/FileResource.invalid.html" class="public property"><code>invalid</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
-								<td>gets if the <a href="../../../d2d/util/fileio/FileResource.file.html"><code class="prettyprint lang-d">file</code></a> resource is <code class="prettyprint lang-d">invalid</code>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td>
+								<td>gets if the file resource is invalid
 </td>
 							</tr>
 							<tr>
@@ -295,8 +300,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../d2d/util/fileio/FileResource.modified.html" class="public property"><code>modified</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
-								<td>get if the resource was <code class="prettyprint lang-d">modified</code>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td>
+								<td>get if the resource was modified
 </td>
 							</tr>
 							<tr>
@@ -304,8 +309,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../d2d/util/fileio/FileResource.name.html" class="public property"><code>name</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">string</code></td>
-								<td>gets the <code class="prettyprint lang-d">name</code> of the <a href="../../../d2d/util/fileio/FileResource.file.html"><code class="prettyprint lang-d">file</code></a> resource
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">string</span></code></td>
+								<td>gets the name of the file resource
 </td>
 							</tr>
 							<tr>
@@ -313,8 +318,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../d2d/util/fileio/FileResource.read.html" class="public property"><code>read</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
-								<td>gets if the resource has been <code class="prettyprint lang-d">read</code>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td>
+								<td>gets if the resource has been read
 </td>
 							</tr>
 						</table>
@@ -333,7 +338,7 @@ $('#symbolSearchPane').show();
 										<code>flush</code>
 									</a>
 								</td>
-								<td>flushes a <a href="../../../d2d/util/fileio/FileResource.file.html"><code class="prettyprint lang-d">file</code></a> to the system
+								<td>flushes a file to the system
 </td>
 							</tr>
 							<tr>
@@ -351,7 +356,7 @@ $('#symbolSearchPane').show();
 										<code>flushAndClean</code>
 									</a>
 								</td>
-								<td>flushes a <a href="../../../d2d/util/fileio/FileResource.file.html"><code class="prettyprint lang-d">file</code></a> to the system and them removes cached data
+								<td>flushes a file to the system and them removes cached data
 </td>
 							</tr>
 							<tr>
@@ -360,7 +365,7 @@ $('#symbolSearchPane').show();
 										<code>getData</code>
 									</a>
 								</td>
-								<td>gets the date of i <a href="../../../d2d/util/fileio/FileResource.file.html"><code class="prettyprint lang-d">file</code></a>. if not yet done, reads them from the <a href="../../../d2d/util/fileio/FileResource.file.html"><code class="prettyprint lang-d">file</code></a> system
+								<td>gets the date of i file. if not yet done, reads them from the file system
 </td>
 							</tr>
 							<tr>
@@ -369,8 +374,8 @@ $('#symbolSearchPane').show();
 										<code>getFileResource</code>
 									</a>
 								</td>
-								<td>returns a <a href="../../../d2d/util/fileio/FileResource.html"><code class="prettyprint lang-d">FileResource</code></a> for the given resource stirng
-        resource strings have the format resourcetype.name or resourcetype.subtpe.name or foo.bar.x.y.z - importand is that this is transformed into a path without <a href="../../../d2d/util/fileio/FileResource.file.html"><code class="prettyprint lang-d">file</code></a> extension (foo/bar/x/y/z.*).
+								<td>returns a FileResource for the given resource stirng
+        resource strings have the format resourcetype.name or resourcetype.subtpe.name or foo.bar.x.y.z - importand is that this is transformed into a path without file extension (foo/bar/x/y/z.*).
         THAT MEANS THAT FILENAMES WITHOUT EXTENSION MUST BE UNIQUE IN A DIRECTORY! THE FUNCTION WILL IGNORE ALL BUT THE FIRST ENTRY FOUND!
 </td>
 							</tr>
@@ -380,7 +385,7 @@ $('#symbolSearchPane').show();
 										<code>setData</code>
 									</a>
 								</td>
-								<td>sets the <a href="../../../d2d/util/fileio/FileResource.setData.html#data"><code class="prettyprint lang-d">data</code></a> of this <a href="../../../d2d/util/fileio/FileResource.file.html"><code class="prettyprint lang-d">file</code></a>. Since <a href="../../../d2d/util/fileio/FileResource.setData.html#data"><code class="prettyprint lang-d">data</code></a> are overwritten in the end logically causes read to be set to true. Flush is needed to store them to the system!
+								<td>sets the data of this file. Since data are overwritten in the end logically causes read to be set to true. Flush is needed to store them to the system!
 </td>
 							</tr>
 						</table>

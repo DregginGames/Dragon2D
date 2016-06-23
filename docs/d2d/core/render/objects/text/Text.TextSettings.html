@@ -6,16 +6,15 @@
 		<link rel="stylesheet" type="text/css" href="../../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../../../../prettify/prettify.js">/**/</script>
 		<script type="text/javascript" src="../../../../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">d2d</a>
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">core</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -37,12 +36,15 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">render</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
 								<a href="#" class="package">lowlevel</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/core/render/lowlevel.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../../d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
 							</li>
@@ -51,9 +53,12 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">objects</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/core/render/objects.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../../d2d/core/render/objects/quad.html" class=" module">quad</a>
 							</li>
@@ -72,21 +77,15 @@
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../../../d2d/core/render/util.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../../../d2d/core/render/util/general.html" class=" module">general</a>
 							</li>
 						</ul>
 							</li>
 							<li>
-								<a href="../../../../../d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
-							</li>
-							<li>
-								<a href="../../../../../d2d/core/render/objects.html" class=" module">objects</a>
-							</li>
-							<li>
 								<a href="../../../../../d2d/core/render/renderer.html" class=" module">renderer</a>
-							</li>
-							<li>
-								<a href="../../../../../d2d/core/render/util.html" class=" module">util</a>
 							</li>
 						</ul>
 							</li>
@@ -178,7 +177,13 @@
 								<a href="../../../../../d2d/game/ui/box.html" class=" module">box</a>
 							</li>
 							<li>
+								<a href="../../../../../d2d/game/ui/button.html" class=" module">button</a>
+							</li>
+							<li>
 								<a href="../../../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="../../../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
 								<a href="../../../../../d2d/game/ui/text.html" class=" module">text</a>
@@ -271,31 +276,31 @@ $('#symbolSearchPane').show();
 								<td>
 									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.color.html" class="public"><code>color</code></a>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">gl3n.<wbr/>linalg.<wbr/>Vector!(float,4)</code></td>
-								<td>THe <code class="prettyprint lang-d">color</code> of the text
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,4)</code></td>
+								<td>THe color of the text
 </td>
 							</tr>
 							<tr>
 								<td>
 									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.font.html" class="public"><code>font</code></a>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">string</code></td>
-								<td><code class="prettyprint lang-d">font</code> resource name
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">string</span></code></td>
+								<td>font resource name
 </td>
 							</tr>
 							<tr>
 								<td>
 									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.height.html" class="public"><code>height</code></a>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">float</code></td>
-								<td>The <a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.size.html"><code class="prettyprint lang-d">size</code></a> of the text
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">float</span></code></td>
+								<td>The size of the text
 </td>
 							</tr>
 							<tr>
 								<td>
 									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.linebreak.html" class="public"><code>linebreak</code></a>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td>
 								<td>If the text will break on linefeeds. If set to true, multiline text becomes possible
 </td>
 							</tr>
@@ -303,7 +308,7 @@ $('#symbolSearchPane').show();
 								<td>
 									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.lineOffset.html" class="public"><code>lineOffset</code></a>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">float</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">float</span></code></td>
 								<td>Offset-factor between different lines. (This value is, lets say, random.)
 </td>
 							</tr>
@@ -311,23 +316,23 @@ $('#symbolSearchPane').show();
 								<td>
 									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.maxheight.html" class="public"><code>maxheight</code></a>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">float</code></td>
-								<td>The maximal <a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.height.html"><code class="prettyprint lang-d">height</code></a> of a text - used when <a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.linebreak.html"><code class="prettyprint lang-d">linebreak</code></a> is true. if set (&gt;=0) the textnoxes <a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.height.html"><code class="prettyprint lang-d">height</code></a> wont exeed a specific value
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">float</span></code></td>
+								<td>The maximal height of a text - used when linebreak is true. if set (&gt;=0) the textnoxes height wont exeed a specific value
 </td>
 							</tr>
 							<tr>
 								<td>
 									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.maxwidth.html" class="public"><code>maxwidth</code></a>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">float</code></td>
-								<td>The maximal length of the text. if not set (&lt;=0), the whole text will <a href="../../../../../d2d/core/render/objects/text/Text.render.html"><code class="prettyprint lang-d">render</code></a> in one line until its end, no matter how long it is
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">float</span></code></td>
+								<td>The maximal length of the text. if not set (&lt;=0), the whole text will render in one line until its end, no matter how long it is
 </td>
 							</tr>
 							<tr>
 								<td>
 									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.overflow.html" class="public"><code>overflow</code></a>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../../d2d/core/render/objects/text/Text.OverflowBehaviour.html">Text.<wbr/>OverflowBehaviour</a></code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../../d2d/core/render/objects/text/Text.OverflowBehaviour.html"><span class="typ">Text<wbr/></span><span class="pun">.<wbr/></span><span class="typ">OverflowBehaviour</span></a></code></td>
 								<td>Specifes how text-overflows will be handled
 </td>
 							</tr>
@@ -335,23 +340,23 @@ $('#symbolSearchPane').show();
 								<td>
 									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.positioning.html" class="public"><code>positioning</code></a>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../../d2d/core/render/objects/text/Text.Positioning.html">Text.<wbr/>Positioning</a></code></td>
-								<td><a href="../../../../../d2d/core/render/objects/text/Text.Positioning.html"><code class="prettyprint lang-d">Positioning</code></a> of the text.
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../../d2d/core/render/objects/text/Text.Positioning.html"><span class="typ">Text<wbr/></span><span class="pun">.<wbr/></span><span class="typ">Positioning</span></a></code></td>
+								<td>Positioning of the text.
 </td>
 							</tr>
 							<tr>
 								<td>
 									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.scroll.html" class="public"><code>scroll</code></a>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">float</code></td>
-								<td>How far the text is scrolled - if <a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.overflow.html"><code class="prettyprint lang-d">overflow</code></a> is <code class="prettyprint lang-d">scroll</code>. Better use texts scrollUp and scrollDown functions since these dont regenerate the text.
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">float</span></code></td>
+								<td>How far the text is scrolled - if overflow is scroll. Better use texts scrollUp and scrollDown functions since these dont regenerate the text.
 </td>
 							</tr>
 							<tr>
 								<td>
 									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.scrollUnit.html" class="public"><code>scrollUnit</code></a>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">float</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">float</span></code></td>
 								<td>How big a single scrolling unit is (basically how far one line is in world coordinates. yes. )
 </td>
 							</tr>
@@ -359,8 +364,8 @@ $('#symbolSearchPane').show();
 								<td>
 									<a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.size.html" class="public"><code>size</code></a>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">d2d.<wbr/>core.<wbr/>resources.<wbr/>font.<wbr/>Font.<wbr/>FontSize</code></td>
-								<td><a href="../../../../../d2d/core/render/objects/text/Text.TextSettings.font.html"><code class="prettyprint lang-d">font</code></a> <code class="prettyprint lang-d">size</code> name
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">d2d<wbr/></span><span class="pun">.</span><span class="pln">core<wbr/></span><span class="pun">.</span><span class="pln">resources<wbr/></span><span class="pun">.</span><span class="pln">font<wbr/></span><span class="pun">.</span><span class="typ">Font<wbr/></span><span class="pun">.</span><span class="typ">FontSize</span></code></td>
+								<td>font size name
 </td>
 							</tr>
 						</table>

@@ -6,16 +6,15 @@
 		<link rel="stylesheet" type="text/css" href="../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../../../prettify/prettify.js">/**/</script>
 		<script type="text/javascript" src="../../../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">d2d</a>
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">core</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -37,12 +36,15 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">render</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
 								<a href="#" class="package">lowlevel</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/core/render/lowlevel.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
 							</li>
@@ -54,6 +56,9 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">objects</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/core/render/objects.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../d2d/core/render/objects/quad.html" class=" module">quad</a>
 							</li>
@@ -68,25 +73,19 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/core/render/util.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../d2d/core/render/util/general.html" class="selected module">general</a>
 							</li>
 						</ul>
 							</li>
 							<li>
-								<a href="../../../../d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
-							</li>
-							<li>
-								<a href="../../../../d2d/core/render/objects.html" class=" module">objects</a>
-							</li>
-							<li>
 								<a href="../../../../d2d/core/render/renderer.html" class=" module">renderer</a>
-							</li>
-							<li>
-								<a href="../../../../d2d/core/render/util.html" class=" module">util</a>
 							</li>
 						</ul>
 							</li>
@@ -178,7 +177,13 @@
 								<a href="../../../../d2d/game/ui/box.html" class=" module">box</a>
 							</li>
 							<li>
+								<a href="../../../../d2d/game/ui/button.html" class=" module">button</a>
+							</li>
+							<li>
 								<a href="../../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
 								<a href="../../../../d2d/game/ui/text.html" class=" module">text</a>
@@ -250,7 +255,7 @@ $('#symbolSearchPane').show();
 		</nav>
 		<div id="main-contents">
 			<h1>Module d2d.core.render.util.general</h1>
-			<p><a href="../../../../d2d/core/render/util.html"><code class="prettyprint lang-d">d2d.core.render.util</code></a> provides utulity functions for 2D and 3D rendering
+			<p>d2d.core.render.util provides utulity functions for 2D and 3D rendering
 </p>
 
 			<section></section>
@@ -269,7 +274,7 @@ $('#symbolSearchPane').show();
 							</a>
 						</td>
 						<td>Calculates the side-lengths for a rectange that has the same aspect ration as the window.
-	It takes the <a href="../../../../d2d/core/render/util/general/aspectRatioRectangleRange.html#height"><code class="prettyprint lang-d">height</code></a> as reference for the calculation
+	It takes the height as reference for the calculation
 </td>
 					</tr>
 					<tr>
@@ -278,7 +283,7 @@ $('#symbolSearchPane').show();
 								<code>gen2DModelToWorld</code>
 							</a>
 						</td>
-						<td>Creates a modelToWorld (or just model) matrix based on a given position in 2D space and rotation (around z) and <a href="../../../../d2d/core/render/util/general/gen2DModelToWorld.html#scale"><code class="prettyprint lang-d">scale</code></a> (same for x- and y, for more complex compose matrix yourself).
+						<td>Creates a modelToWorld (or just model) matrix based on a given position in 2D space and rotation (around z) and scale (same for x- and y, for more complex compose matrix yourself).
 </td>
 					</tr>
 					<tr>
@@ -297,7 +302,7 @@ $('#symbolSearchPane').show();
 							</a>
 						</td>
 						<td>Creates a Ortographic projection matrix
-	Defaults <a href="../../../../d2d/core/render/util/general/genOrtographicProjection.html#near"><code class="prettyprint lang-d">near</code></a> plane to be 0 units away and <a href="../../../../d2d/core/render/util/general/genOrtographicProjection.html#far"><code class="prettyprint lang-d">far</code></a> plane to be 100 units away
+	Defaults near plane to be 0 units away and far plane to be 100 units away
 </td>
 					</tr>
 					<tr>
@@ -306,7 +311,7 @@ $('#symbolSearchPane').show();
 								<code>genUVMappedVertexArray</code>
 							</a>
 						</td>
-						<td>Creates 2 vertex arrays: one for the points (x or y-0.5..x or y+0.5) and one wich is the <a href="../../../../d2d/core/render/util/general/genUVMappedVertexArray.html#uvs"><code class="prettyprint lang-d">uvs</code></a> in the given range
+						<td>Creates 2 vertex arrays: one for the points (x or y-0.5..x or y+0.5) and one wich is the uvs in the given range
     Calling this function multiple times on the same arrays will add new quads to them - usefull for batching.
 </td>
 					</tr>

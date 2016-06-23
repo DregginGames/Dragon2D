@@ -6,16 +6,15 @@
 		<link rel="stylesheet" type="text/css" href="../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../../prettify/prettify.js">/**/</script>
 		<script type="text/javascript" src="../../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">d2d</a>
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">core</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -44,6 +43,9 @@
 								<a href="#" class="package">lowlevel</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../d2d/core/render/lowlevel.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
 							</li>
 							<li>
@@ -54,6 +56,9 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">objects</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../d2d/core/render/objects.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../d2d/core/render/objects/quad.html" class=" module">quad</a>
 							</li>
@@ -72,21 +77,15 @@
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../d2d/core/render/util.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../d2d/core/render/util/general.html" class=" module">general</a>
 							</li>
 						</ul>
 							</li>
 							<li>
-								<a href="../../../d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
-							</li>
-							<li>
-								<a href="../../../d2d/core/render/objects.html" class=" module">objects</a>
-							</li>
-							<li>
 								<a href="../../../d2d/core/render/renderer.html" class=" module">renderer</a>
-							</li>
-							<li>
-								<a href="../../../d2d/core/render/util.html" class=" module">util</a>
 							</li>
 						</ul>
 							</li>
@@ -178,7 +177,13 @@
 								<a href="../../../d2d/game/ui/box.html" class=" module">box</a>
 							</li>
 							<li>
+								<a href="../../../d2d/game/ui/button.html" class=" module">button</a>
+							</li>
+							<li>
 								<a href="../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
 								<a href="../../../d2d/game/ui/text.html" class=" module">text</a>
@@ -257,12 +262,12 @@ $('#symbolSearchPane').show();
 					<section>
 						<h3>Prototype</h3>
 						<div class="prototype">
-							<code class="prettyprint lang-d">
-final void propagate(
+							<code class="lang-d">
+<span class="kwd">final </span><span class="typ">void</span> <span class="pln">propagate</span><span class="pun">(</span>
 								<br/>
-&nbsp;&nbsp;void delegate(<a href="../../../d2d/core/base/Base.html">Base</a>) action
+&nbsp;&nbsp;<span class="typ">void</span> <span class="kwd">delegate</span><span class="pun">(</span><a href="../../../d2d/core/base/Base.html"><span class="typ">Base</span></a><span class="pun">)</span> <span class="pln">action</span>
 								<br/>
-);
+<span class="pun">)</span><span class="pun">;</span>
 							</code>
 						</div>
 					</section>

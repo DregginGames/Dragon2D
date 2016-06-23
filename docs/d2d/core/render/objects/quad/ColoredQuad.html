@@ -6,16 +6,15 @@
 		<link rel="stylesheet" type="text/css" href="../../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../../../../prettify/prettify.js">/**/</script>
 		<script type="text/javascript" src="../../../../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">d2d</a>
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">core</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -37,12 +36,15 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">render</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
 								<a href="#" class="package">lowlevel</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/core/render/lowlevel.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../../d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
 							</li>
@@ -51,9 +53,12 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">objects</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/core/render/objects.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../../d2d/core/render/objects/quad.html" class="selected module">quad</a>
 							</li>
@@ -72,21 +77,15 @@
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../../../d2d/core/render/util.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../../../d2d/core/render/util/general.html" class=" module">general</a>
 							</li>
 						</ul>
 							</li>
 							<li>
-								<a href="../../../../../d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
-							</li>
-							<li>
-								<a href="../../../../../d2d/core/render/objects.html" class=" module">objects</a>
-							</li>
-							<li>
 								<a href="../../../../../d2d/core/render/renderer.html" class=" module">renderer</a>
-							</li>
-							<li>
-								<a href="../../../../../d2d/core/render/util.html" class=" module">util</a>
 							</li>
 						</ul>
 							</li>
@@ -178,7 +177,13 @@
 								<a href="../../../../../d2d/game/ui/box.html" class=" module">box</a>
 							</li>
 							<li>
+								<a href="../../../../../d2d/game/ui/button.html" class=" module">button</a>
+							</li>
+							<li>
 								<a href="../../../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="../../../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
 								<a href="../../../../../d2d/game/ui/text.html" class=" module">text</a>
@@ -258,7 +263,7 @@ $('#symbolSearchPane').show();
 						<h3>Inherits from</h3>
 						<ul>
 							<li>
-								<code class="prettyprint lang-d"><a href="../../../../../d2d/core/render/objects/quad/Quad.html">Quad</a></code>
+								<code class="prettyprint lang-d"><a href="../../../../../d2d/core/render/objects/quad/Quad.html"><span class="typ">Quad</span></a></code>
  (base class)
 							</li>
 						</ul>
@@ -277,8 +282,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/quad/ColoredQuad.color.html" class="public property"><code>color</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">gl3n.<wbr/>linalg.<wbr/>Vector!(float,4)</code></td>
-								<td>The <code class="prettyprint lang-d">color</code> of the quad
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,4)</code></td>
+								<td>The color of the quad
 </td>
 							</tr>
 							<tr>
@@ -286,7 +291,7 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/renderable/Renderable.detailLevel.html" class="public inherited property"><code>detailLevel</code></a>
 									<span class="tableEntryAnnotation">[get, set]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">int</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">int</span></code></td>
 								<td>The detail Level. The higher this level is, the higher the level of a view needs to be to see this object
 </td>
 							</tr>
@@ -295,7 +300,7 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/renderable/Renderable.ignoreView.html" class="public inherited property"><code>ignoreView</code></a>
 									<span class="tableEntryAnnotation">[get, set]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td>
 								<td>Renderables can be set to ignore the effects of views (other than viewport), making, for them, -1..1 direkt mapping of screen space.
         This can be usefull for the user interface, debug text, things that should annoy people, generally everything you dont want to use in world but in screen coordinates
 </td>
@@ -305,7 +310,7 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/renderable/Renderable.pos.html" class="public inherited property"><code>pos</code></a>
 									<span class="tableEntryAnnotation">[get, set]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">gl3n.<wbr/>linalg.<wbr/>Vector!(float,2)</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2)</code></td>
 								<td>The position of this renderable in world-coordinates
 </td>
 							</tr>
@@ -314,8 +319,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/quad/Quad.program.html" class="public inherited property"><code>program</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../../d2d/core/resources/glslprogram/GLSLProgram.html">GLSLProgram</a></code></td>
-								<td>The <a href="../../../../../d2d/core/render/objects/quad/Quad.program.html"><code class="prettyprint lang-d">program</code></a> of this quad
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../../d2d/core/resources/glslprogram/GLSLProgram.html"><span class="typ">GLSLProgram</span></a></code></td>
+								<td>The program of this quad
 </td>
 							</tr>
 							<tr>
@@ -323,8 +328,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/renderable/Renderable.rotation.html" class="public inherited property"><code>rotation</code></a>
 									<span class="tableEntryAnnotation">[get, set]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">float</code></td>
-								<td>The <a href="../../../../../d2d/core/render/objects/renderable/Renderable.rotation.html"><code class="prettyprint lang-d">rotation</code></a> of the renderable (around z axis)
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">float</span></code></td>
+								<td>The rotation of the renderable (around z axis)
 </td>
 							</tr>
 							<tr>
@@ -332,8 +337,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/objects/renderable/Renderable.scale.html" class="public inherited property"><code>scale</code></a>
 									<span class="tableEntryAnnotation">[get, set]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">gl3n.<wbr/>linalg.<wbr/>Vector!(float,3)</code></td>
-								<td>The <a href="../../../../../d2d/core/render/objects/renderable/Renderable.scale.html"><code class="prettyprint lang-d">scale</code></a> of this renderable in world-coordinates
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,3)</code></td>
+								<td>The scale of this renderable in world-coordinates
 </td>
 							</tr>
 						</table>
@@ -352,7 +357,7 @@ $('#symbolSearchPane').show();
 										<code>render</code>
 									</a>
 								</td>
-								<td>Performs an actual <a href="../../../../../d2d/core/render/objects/renderable/Renderable.render.html"><code class="prettyprint lang-d">render</code></a> on screen.
+								<td>Performs an actual render on screen.
 </td>
 							</tr>
 							<tr>
@@ -361,7 +366,7 @@ $('#symbolSearchPane').show();
 										<code>_setupVAO</code>
 									</a>
 								</td>
-								<td>Sets the <a href="../../../../../d2d/core/render/objects/renderable/Renderable._setupVAO.html#mode"><code class="prettyprint lang-d">mode</code></a> with wich the classes VAO is managed. If set once, it cant be changed - means that there is a need to take care how the interaction with parten-classes is handled
+								<td>Sets the mode with wich the classes VAO is managed. If set once, it cant be changed - means that there is a need to take care how the interaction with parten-classes is handled
 </td>
 							</tr>
 							<tr>
@@ -370,7 +375,7 @@ $('#symbolSearchPane').show();
 										<code>_standardModelToWorld</code>
 									</a>
 								</td>
-								<td>Returns the model to world matrix for the combination of position, <a href="../../../../../d2d/core/render/objects/renderable/Renderable.scale.html"><code class="prettyprint lang-d">scale</code></a> and <a href="../../../../../d2d/core/render/objects/renderable/Renderable.rotation.html"><code class="prettyprint lang-d">rotation</code></a>
+								<td>Returns the model to world matrix for the combination of position, scale and rotation
 </td>
 							</tr>
 							<tr>

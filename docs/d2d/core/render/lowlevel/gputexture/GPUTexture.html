@@ -6,16 +6,15 @@
 		<link rel="stylesheet" type="text/css" href="../../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../../../../prettify/prettify.js">/**/</script>
 		<script type="text/javascript" src="../../../../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">d2d</a>
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">core</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -37,12 +36,15 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">render</a>
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">lowlevel</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/core/render/lowlevel.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../../d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
 							</li>
@@ -54,6 +56,9 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">objects</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/core/render/objects.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../../d2d/core/render/objects/quad.html" class=" module">quad</a>
 							</li>
@@ -72,21 +77,15 @@
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../../../d2d/core/render/util.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../../../d2d/core/render/util/general.html" class=" module">general</a>
 							</li>
 						</ul>
 							</li>
 							<li>
-								<a href="../../../../../d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
-							</li>
-							<li>
-								<a href="../../../../../d2d/core/render/objects.html" class=" module">objects</a>
-							</li>
-							<li>
 								<a href="../../../../../d2d/core/render/renderer.html" class=" module">renderer</a>
-							</li>
-							<li>
-								<a href="../../../../../d2d/core/render/util.html" class=" module">util</a>
 							</li>
 						</ul>
 							</li>
@@ -178,7 +177,13 @@
 								<a href="../../../../../d2d/game/ui/box.html" class=" module">box</a>
 							</li>
 							<li>
+								<a href="../../../../../d2d/game/ui/button.html" class=" module">button</a>
+							</li>
+							<li>
 								<a href="../../../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="../../../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
 								<a href="../../../../../d2d/game/ui/text.html" class=" module">text</a>
@@ -258,7 +263,7 @@ $('#symbolSearchPane').show();
 						<h3>Inherits from</h3>
 						<ul>
 							<li>
-								<code class="prettyprint lang-d">Object</code>
+								<code class="prettyprint lang-d"><span class="typ">Object</span></code>
  (base class)
 							</li>
 						</ul>
@@ -277,7 +282,7 @@ $('#symbolSearchPane').show();
 										<code>this</code>
 									</a>
 								</td>
-								<td>Creates a <a href="../../../../../d2d/core/render/lowlevel/gputexture/GPUTexture.html"><code class="prettyprint lang-d">GPUTexture</code></a>
+								<td>Creates a GPUTexture
 </td>
 							</tr>
 							<tr>
@@ -295,7 +300,7 @@ $('#symbolSearchPane').show();
 										<code>this</code>
 									</a>
 								</td>
-								<td>Creates a GPU Texture from an SDL_Surface. If <a href="../../../../../d2d/core/render/lowlevel/gputexture/GPUTexture.this.html#free"><code class="prettyprint lang-d">free</code></a> is true, it will also automatically <a href="../../../../../d2d/core/render/lowlevel/gputexture/GPUTexture.this.html#free"><code class="prettyprint lang-d">free</code></a> the SDL Texture
+								<td>Creates a GPU Texture from an SDL_Surface. If free is true, it will also automatically free the SDL Texture
 </td>
 							</tr>
 						</table>
@@ -314,8 +319,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../../d2d/core/render/lowlevel/gputexture/GPUTexture.id.html" class="public property"><code>id</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">uint</code></td>
-								<td>Only gets the ID. The <code class="prettyprint lang-d">id</code> cant be changed after creation
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span></code></td>
+								<td>Only gets the ID. The id cant be changed after creation
 </td>
 							</tr>
 						</table>

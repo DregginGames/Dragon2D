@@ -6,16 +6,15 @@
 		<link rel="stylesheet" type="text/css" href="../../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../../../../prettify/prettify.js">/**/</script>
 		<script type="text/javascript" src="../../../../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">d2d</a>
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">core</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -37,12 +36,15 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">render</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
 								<a href="#" class="package">lowlevel</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/core/render/lowlevel.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../../d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
 							</li>
@@ -54,6 +56,9 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">objects</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/core/render/objects.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../../d2d/core/render/objects/quad.html" class=" module">quad</a>
 							</li>
@@ -68,25 +73,19 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/core/render/util.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../../d2d/core/render/util/general.html" class="selected module">general</a>
 							</li>
 						</ul>
 							</li>
 							<li>
-								<a href="../../../../../d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
-							</li>
-							<li>
-								<a href="../../../../../d2d/core/render/objects.html" class=" module">objects</a>
-							</li>
-							<li>
 								<a href="../../../../../d2d/core/render/renderer.html" class=" module">renderer</a>
-							</li>
-							<li>
-								<a href="../../../../../d2d/core/render/util.html" class=" module">util</a>
 							</li>
 						</ul>
 							</li>
@@ -178,7 +177,13 @@
 								<a href="../../../../../d2d/game/ui/box.html" class=" module">box</a>
 							</li>
 							<li>
+								<a href="../../../../../d2d/game/ui/button.html" class=" module">button</a>
+							</li>
+							<li>
 								<a href="../../../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="../../../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
 								<a href="../../../../../d2d/game/ui/text.html" class=" module">text</a>
@@ -257,14 +262,14 @@ $('#symbolSearchPane').show();
 					<section>
 						<h3>Prototype</h3>
 						<div class="prototype">
-							<code class="prettyprint lang-d">
-gl3n.<wbr/>linalg.<wbr/>Matrix!(float,4,4) gen2DWorldToView(
+							<code class="lang-d">
+<span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Matrix</span>!(float,4,4) <span class="pln">gen2DWorldToView</span><span class="pun">(</span>
 								<br/>
-&nbsp;&nbsp;gl3n.<wbr/>linalg.<wbr/>Vector!(float,2) viewPosition,
+&nbsp;&nbsp;<span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2) <span class="pln">viewPosition</span><span class="pun">,</span>
 								<br/>
-&nbsp;&nbsp;float viewBackoffset = 1.00000F
+&nbsp;&nbsp;<span class="typ">float</span> <span class="pln">viewBackoffset</span> <span class="pun">=</span> <span class="lit">1.00000F</span>
 								<br/>
-) pure;
+<span class="pun">)</span><span class="pln"> </span><span class="kwd">pure</span><span class="pun">;</span>
 							</code>
 						</div>
 					</section>

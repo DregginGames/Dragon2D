@@ -6,13 +6,12 @@
 		<link rel="stylesheet" type="text/css" href="./styles/ddox.css"/>
 		<link rel="stylesheet" href="./prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="./scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="./prettify/prettify.js">/**/</script>
 		<script type="text/javascript" src="./scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">d2d</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -44,6 +43,9 @@
 								<a href="#" class="package">lowlevel</a>
 						<ul class="tree-view">
 							<li>
+								<a href="./d2d/core/render/lowlevel.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="./d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
 							</li>
 							<li>
@@ -54,6 +56,9 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">objects</a>
 						<ul class="tree-view">
+							<li>
+								<a href="./d2d/core/render/objects.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="./d2d/core/render/objects/quad.html" class=" module">quad</a>
 							</li>
@@ -72,21 +77,15 @@
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
 							<li>
+								<a href="./d2d/core/render/util.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="./d2d/core/render/util/general.html" class=" module">general</a>
 							</li>
 						</ul>
 							</li>
 							<li>
-								<a href="./d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
-							</li>
-							<li>
-								<a href="./d2d/core/render/objects.html" class=" module">objects</a>
-							</li>
-							<li>
 								<a href="./d2d/core/render/renderer.html" class=" module">renderer</a>
-							</li>
-							<li>
-								<a href="./d2d/core/render/util.html" class=" module">util</a>
 							</li>
 						</ul>
 							</li>
@@ -178,7 +177,13 @@
 								<a href="./d2d/game/ui/box.html" class=" module">box</a>
 							</li>
 							<li>
+								<a href="./d2d/game/ui/button.html" class=" module">button</a>
+							</li>
+							<li>
 								<a href="./d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="./d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
 								<a href="./d2d/game/ui/text.html" class=" module">text</a>
@@ -261,7 +266,7 @@ $('#symbolSearchPane').show();
 					<a href="./d2d/core/container/gamecontainer.html">d2d.core.container.gamecontainer</a>
 				</td>
 				<td>
-A pure container class wich is the top-node of the <a href="./game.html"><code class="prettyprint lang-d">game</code></a>-related classes
+A pure container class wich is the top-node of the game-related classes
 
 				</td>
 			</tr>
@@ -342,7 +347,7 @@ d2d.core.render.view holds the view classes that manage the rendering of the sce
 					<a href="./d2d/core/render/util/general.html">d2d.core.render.util.general</a>
 				</td>
 				<td>
-<a href="./d2d/core/render/util.html"><code class="prettyprint lang-d">d2d.core.render.util</code></a> provides utulity functions for 2D and 3D rendering
+d2d.core.render.util provides utulity functions for 2D and 3D rendering
 
 				</td>
 			</tr>
@@ -369,7 +374,7 @@ The package module that *should* contain all valid render objects
 					<a href="./d2d/core/render/renderer.html">d2d.core.render.renderer</a>
 				</td>
 				<td>
-<code class="prettyprint lang-d">d2d.core.render.renderer</code> holds the classes used to render the whole engine.
+d2d.core.render.renderer holds the classes used to render the whole engine.
 
 				</td>
 			</tr>
@@ -432,7 +437,7 @@ Holds the sample resource
 					<a href="./d2d/core/resources/texture.html">d2d.core.resources.texture</a>
 				</td>
 				<td>
-<code class="prettyprint lang-d">d2d.core.resources.texture</code> holds the texture resource types
+d2d.core.resources.texture holds the texture resource types
 
 				</td>
 			</tr>
@@ -441,7 +446,7 @@ Holds the sample resource
 					<a href="./d2d/core/services/scheduler.html">d2d.core.services.scheduler</a>
 				</td>
 				<td>
-<code class="prettyprint lang-d">d2d.core.services.scheduler</code> manages the scheudling of function calles and other timed mechanisms
+d2d.core.services.scheduler manages the scheudling of function calles and other timed mechanisms
 
 				</td>
 			</tr>
@@ -459,7 +464,7 @@ d2d.base holds the base interfaces needed by most of the classes.
 					<a href="./d2d/core/callback.html">d2d.core.callback</a>
 				</td>
 				<td>
-<code class="prettyprint lang-d">d2d.core.callback</code> holds the types and few functions needed for Dragon2Ds callback system
+d2d.core.callback holds the types and few functions needed for Dragon2Ds callback system
 
 				</td>
 			</tr>
@@ -468,7 +473,7 @@ d2d.base holds the base interfaces needed by most of the classes.
 					<a href="./d2d/core/event.html">d2d.core.event</a>
 				</td>
 				<td>
-<code class="prettyprint lang-d">d2d.core.event</code> holds the basic event class and the container for native sdl events
+d2d.core.event holds the basic event class and the container for native sdl events
 
 				</td>
 			</tr>
@@ -477,7 +482,7 @@ d2d.base holds the base interfaces needed by most of the classes.
 					<a href="./d2d/core/io.html">d2d.core.io</a>
 				</td>
 				<td>
-<code class="prettyprint lang-d">d2d.core.io</code> holds the classes that abstract the interaction with the user
+d2d.core.io holds the classes that abstract the interaction with the user
 
 				</td>
 			</tr>
@@ -486,7 +491,7 @@ d2d.base holds the base interfaces needed by most of the classes.
 					<a href="./d2d/core/resource.html">d2d.core.resource</a>
 				</td>
 				<td>
-<code class="prettyprint lang-d">d2d.core.resource</code> contains the bases for all resources used by d2d
+d2d.core.resource contains the bases for all resources used by d2d
 
 				</td>
 			</tr>
@@ -496,7 +501,7 @@ d2d.base holds the base interfaces needed by most of the classes.
 				</td>
 				<td>
 Holds the classes and functions used to play musics
-Not for music, see <code class="prettyprint lang-d">d2d.game.audio.music</code>
+Not for music, see d2d.game.audio.music
 
 				</td>
 			</tr>
@@ -506,7 +511,7 @@ Not for music, see <code class="prettyprint lang-d">d2d.game.audio.music</code>
 				</td>
 				<td>
 Holds the classes and functions used to play sounds
-    Not for music, see <a href="./d2d/game/audio/music.html"><code class="prettyprint lang-d">d2d.game.audio.music</code></a>
+    Not for music, see d2d.game.audio.music
 
 				</td>
 			</tr>
@@ -524,7 +529,7 @@ Holds the debug class for grid rendering
 					<a href="./d2d/game/simple/camera.html">d2d.game.simple.camera</a>
 				</td>
 				<td>
-<code class="prettyprint lang-d">d2d.game.simple.camera</code> holds the default camera class
+d2d.game.simple.camera holds the default camera class
 
 				</td>
 			</tr>
@@ -533,7 +538,7 @@ Holds the debug class for grid rendering
 					<a href="./d2d/game/simple/sprite.html">d2d.game.simple.sprite</a>
 				</td>
 				<td>
-<code class="prettyprint lang-d">d2d.game.simple.sprite</code> holds the sprite class: a simple class to display images on screen
+d2d.game.simple.sprite holds the sprite class: a simple class to display images on screen
 
 				</td>
 			</tr>
@@ -548,10 +553,28 @@ Holds the box ui class
 			</tr>
 			<tr>
 				<td>
+					<a href="./d2d/game/ui/button.html">d2d.game.ui.button</a>
+				</td>
+				<td>
+Holds the button image class
+
+				</td>
+			</tr>
+			<tr>
+				<td>
 					<a href="./d2d/game/ui/cursor.html">d2d.game.ui.cursor</a>
 				</td>
 				<td>
 d2d.game.io.cursor holds the cursor-functions
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="./d2d/game/ui/image.html">d2d.game.ui.image</a>
+				</td>
+				<td>
+Holds the image class for the ui
 
 				</td>
 			</tr>
@@ -595,7 +618,7 @@ Holds all ui events or events related to ui
 					<a href="./d2d/game/entity.html">d2d.game.entity</a>
 				</td>
 				<td>
-<code class="prettyprint lang-d">d2d.game.entity</code> holds the base class for all objects actually appearing ingame: entitys
+d2d.game.entity holds the base class for all objects actually appearing ingame: entitys
 
 				</td>
 			</tr>
@@ -604,7 +627,7 @@ Holds all ui events or events related to ui
 					<a href="./d2d/system/env.html">d2d.system.env</a>
 				</td>
 				<td>
-<code class="prettyprint lang-d">d2d.system.env</code> holds the enviourment of D2D - opengl, sdl, sound system and all this stuff get insitialized by the env class.
+d2d.system.env holds the enviourment of D2D - opengl, sdl, sound system and all this stuff get insitialized by the env class.
 
 				</td>
 			</tr>
@@ -613,7 +636,7 @@ Holds all ui events or events related to ui
 					<a href="./d2d/util/fileio.html">d2d.util.fileio</a>
 				</td>
 				<td>
-<code class="prettyprint lang-d">d2d.util.fileio</code> provides structs and functions for efficient file resoure management
+d2d.util.fileio provides structs and functions for efficient file resoure management
 
 				</td>
 			</tr>
@@ -649,7 +672,7 @@ d2d.settings manages all settings - from command line arguments to the config fi
 					<a href="./d2d/engine.html">d2d.engine</a>
 				</td>
 				<td>
-The <code class="prettyprint lang-d">d2d.engine</code> module conains the absoute basesystem of the Draon2D engine.
+The d2d.engine module conains the absoute basesystem of the Draon2D engine.
 
 				</td>
 			</tr>
@@ -658,8 +681,8 @@ The <code class="prettyprint lang-d">d2d.engine</code> module conains the absout
 					<a href="./game.html">game</a>
 				</td>
 				<td>
-Main entry point for a <code class="prettyprint lang-d">game</code>. Here a <code class="prettyprint lang-d">game</code> should define its "scripting".
-    This includes <code class="prettyprint lang-d">game</code> logic, ui handlers, ...
+Main entry point for a game. Here a game should define its "scripting".
+    This includes game logic, ui handlers, ...
 
 				</td>
 			</tr>

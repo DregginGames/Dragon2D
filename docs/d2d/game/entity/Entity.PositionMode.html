@@ -6,13 +6,12 @@
 		<link rel="stylesheet" type="text/css" href="../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../../prettify/prettify.js">/**/</script>
 		<script type="text/javascript" src="../../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">d2d</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -44,6 +43,9 @@
 								<a href="#" class="package">lowlevel</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../d2d/core/render/lowlevel.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
 							</li>
 							<li>
@@ -54,6 +56,9 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">objects</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../d2d/core/render/objects.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../d2d/core/render/objects/quad.html" class=" module">quad</a>
 							</li>
@@ -72,21 +77,15 @@
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../d2d/core/render/util.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../d2d/core/render/util/general.html" class=" module">general</a>
 							</li>
 						</ul>
 							</li>
 							<li>
-								<a href="../../../d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
-							</li>
-							<li>
-								<a href="../../../d2d/core/render/objects.html" class=" module">objects</a>
-							</li>
-							<li>
 								<a href="../../../d2d/core/render/renderer.html" class=" module">renderer</a>
-							</li>
-							<li>
-								<a href="../../../d2d/core/render/util.html" class=" module">util</a>
 							</li>
 						</ul>
 							</li>
@@ -138,7 +137,7 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">game</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -178,7 +177,13 @@
 								<a href="../../../d2d/game/ui/box.html" class=" module">box</a>
 							</li>
 							<li>
+								<a href="../../../d2d/game/ui/button.html" class=" module">button</a>
+							</li>
+							<li>
 								<a href="../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
 								<a href="../../../d2d/game/ui/text.html" class=" module">text</a>
@@ -255,7 +260,7 @@ $('#symbolSearchPane').show();
 </p>
 
 					<p>The enum base type is
-						<code class="prettyprint lang-d">int</code>
+						<code class="prettyprint lang-d"><span class="typ">int</span></code>
 .
 					</p>
 					<section>
@@ -268,29 +273,23 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../d2d/game/entity/Entity.PositionMode.absolute.html">
-										<code>absolute</code>
-									</a>
+									<code>absolute</code>
 								</td>
-								<td>position is <code class="prettyprint lang-d">absolute</code> in world space
+								<td>position is absolute in world space
 </td>
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../d2d/game/entity/Entity.PositionMode.parentBound.html">
-										<code>parentBound</code>
-									</a>
+									<code>parentBound</code>
 								</td>
-								<td>position is the same as the <a href="../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a>; acts like <a href="../../../d2d/game/entity/Entity.PositionMode.absolute.html"><code class="prettyprint lang-d">absolute</code></a> if no <a href="../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a> is set         /_ Why is this 3??
+								<td>position is the same as the parent; acts like absolute if no parent is set         /_ Why is this 3??
 </td>
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../d2d/game/entity/Entity.PositionMode.relative.html">
-										<code>relative</code>
-									</a>
+									<code>relative</code>
 								</td>
-								<td>position is <code class="prettyprint lang-d">relative</code> to the <a href="../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a>, in world space. if no <a href="../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a> is set, it acts like <a href="../../../d2d/game/entity/Entity.PositionMode.absolute.html"><code class="prettyprint lang-d">absolute</code></a>
+								<td>position is relative to the parent, in world space. if no parent is set, it acts like absolute
 </td>
 							</tr>
 						</table>

@@ -6,13 +6,12 @@
 		<link rel="stylesheet" type="text/css" href="../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../../prettify/prettify.js">/**/</script>
 		<script type="text/javascript" src="../../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">d2d</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -44,6 +43,9 @@
 								<a href="#" class="package">lowlevel</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../d2d/core/render/lowlevel.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
 							</li>
 							<li>
@@ -54,6 +56,9 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">objects</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../d2d/core/render/objects.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../d2d/core/render/objects/quad.html" class=" module">quad</a>
 							</li>
@@ -72,21 +77,15 @@
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../d2d/core/render/util.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../d2d/core/render/util/general.html" class=" module">general</a>
 							</li>
 						</ul>
 							</li>
 							<li>
-								<a href="../../../d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
-							</li>
-							<li>
-								<a href="../../../d2d/core/render/objects.html" class=" module">objects</a>
-							</li>
-							<li>
 								<a href="../../../d2d/core/render/renderer.html" class=" module">renderer</a>
-							</li>
-							<li>
-								<a href="../../../d2d/core/render/util.html" class=" module">util</a>
 							</li>
 						</ul>
 							</li>
@@ -138,7 +137,7 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">game</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -171,14 +170,20 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">ui</a>
 						<ul class="tree-view">
 							<li>
 								<a href="../../../d2d/game/ui/box.html" class=" module">box</a>
 							</li>
 							<li>
+								<a href="../../../d2d/game/ui/button.html" class=" module">button</a>
+							</li>
+							<li>
 								<a href="../../../d2d/game/ui/cursor.html" class="selected module">cursor</a>
+							</li>
+							<li>
+								<a href="../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
 								<a href="../../../d2d/game/ui/text.html" class=" module">text</a>
@@ -268,7 +273,7 @@ $('#symbolSearchPane').show();
 								<code>Cursor</code>
 							</a>
 						</td>
-						<td>A <code class="prettyprint lang-d">Cursor</code> is an Entity wich has a position that is absolute and bound to the position of the users mouse
+						<td>A Cursor is an Entity wich has a position that is absolute and bound to the position of the users mouse
 </td>
 					</tr>
 					<tr>
@@ -277,7 +282,7 @@ $('#symbolSearchPane').show();
 								<code>WorldCursor</code>
 							</a>
 						</td>
-						<td>A Reconstructed <a href="../../../d2d/game/ui/cursor/Cursor.html"><code class="prettyprint lang-d">Cursor</code></a> is an Entity wich as a position that is relative to a <a href="../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a> camera. Sounds stragge?
+						<td>A Reconstructed Cursor is an Entity wich as a position that is relative to a parent camera. Sounds stragge?
     Its absolute position however is calculated by applying the actual position to the cameras size, letting this cursor represent the mouse in the 2dish 3d space.
 </td>
 					</tr>

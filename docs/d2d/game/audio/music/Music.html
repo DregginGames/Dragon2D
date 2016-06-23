@@ -6,13 +6,12 @@
 		<link rel="stylesheet" type="text/css" href="../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../../../prettify/prettify.js">/**/</script>
 		<script type="text/javascript" src="../../../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">d2d</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -44,6 +43,9 @@
 								<a href="#" class="package">lowlevel</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../../d2d/core/render/lowlevel.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../../d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
 							</li>
 							<li>
@@ -54,6 +56,9 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">objects</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/core/render/objects.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../d2d/core/render/objects/quad.html" class=" module">quad</a>
 							</li>
@@ -72,21 +77,15 @@
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../../d2d/core/render/util.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../../d2d/core/render/util/general.html" class=" module">general</a>
 							</li>
 						</ul>
 							</li>
 							<li>
-								<a href="../../../../d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
-							</li>
-							<li>
-								<a href="../../../../d2d/core/render/objects.html" class=" module">objects</a>
-							</li>
-							<li>
 								<a href="../../../../d2d/core/render/renderer.html" class=" module">renderer</a>
-							</li>
-							<li>
-								<a href="../../../../d2d/core/render/util.html" class=" module">util</a>
 							</li>
 						</ul>
 							</li>
@@ -138,10 +137,10 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">game</a>
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">audio</a>
 						<ul class="tree-view">
 							<li>
@@ -178,7 +177,13 @@
 								<a href="../../../../d2d/game/ui/box.html" class=" module">box</a>
 							</li>
 							<li>
+								<a href="../../../../d2d/game/ui/button.html" class=" module">button</a>
+							</li>
+							<li>
 								<a href="../../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="../../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
 								<a href="../../../../d2d/game/ui/text.html" class=" module">text</a>
@@ -258,7 +263,7 @@ $('#symbolSearchPane').show();
 						<h3>Inherits from</h3>
 						<ul>
 							<li>
-								<code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html">Base</a></code>
+								<code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html"><span class="typ">Base</span></a></code>
  (base class)
 							</li>
 						</ul>
@@ -296,8 +301,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/game/audio/music/Music.musicPaused.html" class="public property"><code>musicPaused</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
-								<td>If the music is <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a>. Since <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a> is reserved by base, this name is a bit silly
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td>
+								<td>If the music is paused. Since paused is reserved by base, this name is a bit silly
 </td>
 							</tr>
 							<tr>
@@ -305,8 +310,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/game/audio/music/Music.playing.html" class="public property"><code>playing</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
-								<td>If the music ist the active one, has been <a href="../../../../d2d/game/audio/music/Music.started.html"><code class="prettyprint lang-d">started</code></a> and is not <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td>
+								<td>If the music ist the active one, has been started and is not paused
 </td>
 							</tr>
 							<tr>
@@ -314,8 +319,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/game/audio/music/Music.started.html" class="public property"><code>started</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
-								<td>If the music is the active one and <code class="prettyprint lang-d">started</code>, regardless if it later has been <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a> or not
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td>
+								<td>If the music is the active one and started, regardless if it later has been paused or not
 </td>
 							</tr>
 							<tr>
@@ -323,8 +328,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/game/audio/music/Music.volume.html" class="public property"><code>volume</code></a>
 									<span class="tableEntryAnnotation">[get, set]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">int</code></td>
-								<td>The <code class="prettyprint lang-d">volume</code> with wich the music should be played, from 0-128. Values above or below will map to the nearest valid value
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">int</span></code></td>
+								<td>The volume with wich the music should be played, from 0-128. Values above or below will map to the nearest valid value
 </td>
 							</tr>
 							<tr>
@@ -332,7 +337,7 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/core/base/Base.acceptsEvents.html" class="public inherited property"><code>acceptsEvents</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td>
 								<td>if this object accepts events
 </td>
 							</tr>
@@ -341,7 +346,7 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/core/base/Base.children.html" class="public inherited property"><code>children</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html">Base</a>[long]</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html"><span class="typ">Base</span></a><span class="pun">[</span><span class="typ">long</span><span class="pun">]</span></code></td>
 								<td>gets the child objects of this object
 </td>
 							</tr>
@@ -350,8 +355,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/core/base/Base.deleted.html" class="public inherited property"><code>deleted</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
-								<td>returns if the object will be <a href="../../../../d2d/core/base/Base.deleted.html"><code class="prettyprint lang-d">deleted</code></a> before the next tick
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td>
+								<td>returns if the object will be deleted before the next tick
 </td>
 							</tr>
 							<tr>
@@ -359,8 +364,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/core/base/Base.id.html" class="public inherited property"><code>id</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">ulong</code></td>
-								<td>fixed obj <a href="../../../../d2d/core/base/Base.id.html"><code class="prettyprint lang-d">id</code></a> of this object
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">ulong</span></code></td>
+								<td>fixed obj id of this object
 </td>
 							</tr>
 							<tr>
@@ -368,8 +373,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/core/base/Base.parent.html" class="public inherited property"><code>parent</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html">Base</a></code></td>
-								<td>gets the <a href="../../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a> object of this object
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html"><span class="typ">Base</span></a></code></td>
+								<td>gets the parent object of this object
 </td>
 							</tr>
 							<tr>
@@ -377,8 +382,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/core/base/Base.parent.html" class="public inherited property"><code>parent</code></a>
 									<span class="tableEntryAnnotation">[set]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html">Base</a></code></td>
-								<td>sets the <a href="../../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a> object of this object
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html"><span class="typ">Base</span></a></code></td>
+								<td>sets the parent object of this object
 </td>
 							</tr>
 							<tr>
@@ -386,7 +391,7 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/core/base/Base.paused.html" class="public inherited property"><code>paused</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td>
 								<td>pauses/unpauses the object
 </td>
 							</tr>
@@ -395,8 +400,8 @@ $('#symbolSearchPane').show();
 									<a href="../../../../d2d/core/base/Base.root.html" class="public inherited property"><code>root</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html">Base</a></code></td>
-								<td>the "<a href="../../../../d2d/core/base/Base.root.html"><code class="prettyprint lang-d">root</code></a>" is the <a href="../../../../d2d/core/base/Base.root.html"><code class="prettyprint lang-d">root</code></a> of the element tree wich this object is a member
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html"><span class="typ">Base</span></a></code></td>
+								<td>the "root" is the root of the element tree wich this object is a member
 </td>
 							</tr>
 						</table>
@@ -415,8 +420,8 @@ $('#symbolSearchPane').show();
 										<code>pause</code>
 									</a>
 								</td>
-								<td>This will <code class="prettyprint lang-d">pause</code> a paying <a href="../../../../d2d/game/audio/music/Music.html"><code class="prettyprint lang-d">Music</code></a>.
-        If the music is already <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a> or not <a href="../../../../d2d/game/audio/music/Music.playing.html"><code class="prettyprint lang-d">playing</code></a>, this will have no effect
+								<td>This will pause a paying Music.
+        If the music is already paused or not playing, this will have no effect
 </td>
 							</tr>
 							<tr>
@@ -434,7 +439,7 @@ $('#symbolSearchPane').show();
 										<code>play</code>
 									</a>
 								</td>
-								<td>Will start <a href="../../../../d2d/game/audio/music/Music.playing.html"><code class="prettyprint lang-d">playing</code></a> the music from the beginning.
+								<td>Will start playing the music from the beginning.
 </td>
 							</tr>
 							<tr>
@@ -443,8 +448,8 @@ $('#symbolSearchPane').show();
 										<code>resume</code>
 									</a>
 								</td>
-								<td>This will <code class="prettyprint lang-d">resume</code> a <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a> <a href="../../../../d2d/game/audio/music/Music.html"><code class="prettyprint lang-d">Music</code></a>.
-        If the music is not <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a> or not <a href="../../../../d2d/game/audio/music/Music.playing.html"><code class="prettyprint lang-d">playing</code></a> in the first place this will have no effect
+								<td>This will resume a paused Music.
+        If the music is not paused or not playing in the first place this will have no effect
 </td>
 							</tr>
 							<tr>
@@ -462,8 +467,8 @@ $('#symbolSearchPane').show();
 										<code>stop</code>
 									</a>
 								</td>
-								<td>Stops a <a href="../../../../d2d/game/audio/music/Music.started.html"><code class="prettyprint lang-d">started</code></a> music.
-        If the music is not <a href="../../../../d2d/game/audio/music/Music.started.html"><code class="prettyprint lang-d">started</code></a> (so can be <a href="../../../../d2d/core/base/Base.paused.html"><code class="prettyprint lang-d">paused</code></a> but <a href="../../../../d2d/game/audio/music/Music.play.html"><code class="prettyprint lang-d">play</code></a> should have been called at least once), nothing will happen
+								<td>Stops a started music.
+        If the music is not started (so can be paused but play should have been called at least once), nothing will happen
 </td>
 							</tr>
 							<tr>
@@ -481,7 +486,7 @@ $('#symbolSearchPane').show();
 										<code>addChild</code>
 									</a>
 								</td>
-								<td>add a <a href="../../../../d2d/core/base/Base.addChild.html#child"><code class="prettyprint lang-d">child</code></a> to this object. Resets the <a href="../../../../d2d/core/base/Base.parent.html"><code class="prettyprint lang-d">parent</code></a> of the object to add.
+								<td>add a child to this object. Resets the parent of the object to add.
 </td>
 							</tr>
 							<tr>
@@ -499,7 +504,7 @@ $('#symbolSearchPane').show();
 										<code>getService</code>
 									</a>
 								</td>
-								<td>Gets a service by its <a href="../../../../d2d/core/base/Base.getService.html#name"><code class="prettyprint lang-d">name</code></a>. Syntax is <a href="../../../../d2d/core/base/Base.getService.html"><code class="prettyprint lang-d">getService</code></a>!ServiceClass(<a href="../../../../d2d/core/base/Base.getService.html#name"><code class="prettyprint lang-d">name</code></a>)
+								<td>Gets a service by its name. Syntax is getService!ServiceClass(name)
 </td>
 							</tr>
 							<tr>
@@ -508,7 +513,7 @@ $('#symbolSearchPane').show();
 										<code>postRender</code>
 									</a>
 								</td>
-								<td><a href="../../../../d2d/core/base/Base.postRender.html"><code class="prettyprint lang-d">postRender</code></a> is called after all <a href="../../../../d2d/core/base/Base.children.html"><code class="prettyprint lang-d">children</code></a> and the object were renderd.
+								<td>postRender is called after all children and the object were renderd.
 </td>
 							</tr>
 							<tr>
@@ -517,7 +522,7 @@ $('#symbolSearchPane').show();
 										<code>postUpdate</code>
 									</a>
 								</td>
-								<td><a href="../../../../d2d/core/base/Base.postUpdate.html"><code class="prettyprint lang-d">postUpdate</code></a> is called after <a href="../../../../d2d/core/base/Base.update.html"><code class="prettyprint lang-d">update</code></a> is called
+								<td>postUpdate is called after update is called
 </td>
 							</tr>
 							<tr>
@@ -526,7 +531,7 @@ $('#symbolSearchPane').show();
 										<code>preTickDelete</code>
 									</a>
 								</td>
-								<td>PreTickDelte removes all objects that are makred for deletion from the hirachy. If an objects had <a href="../../../../d2d/core/base/Base.children.html"><code class="prettyprint lang-d">children</code></a>, these are <a href="../../../../d2d/core/base/Base.deleted.html"><code class="prettyprint lang-d">deleted</code></a>, too.
+								<td>PreTickDelte removes all objects that are makred for deletion from the hirachy. If an objects had children, these are deleted, too.
 </td>
 							</tr>
 							<tr>
@@ -535,7 +540,7 @@ $('#symbolSearchPane').show();
 										<code>propagateEvent</code>
 									</a>
 								</td>
-								<td><a href="../../../../d2d/core/base/Base.propagate.html"><code class="prettyprint lang-d">propagate</code></a> an event throgh the object hirarchy
+								<td>propagate an event throgh the object hirarchy
 </td>
 							</tr>
 							<tr>
@@ -553,7 +558,7 @@ $('#symbolSearchPane').show();
 										<code>propagateUpdate</code>
 									</a>
 								</td>
-								<td>Propagates an <a href="../../../../d2d/core/base/Base.update.html"><code class="prettyprint lang-d">update</code></a> thru the object hirarchy
+								<td>Propagates an update thru the object hirarchy
 </td>
 							</tr>
 							<tr>
@@ -562,7 +567,7 @@ $('#symbolSearchPane').show();
 										<code>removeChild</code>
 									</a>
 								</td>
-								<td>removes a <a href="../../../../d2d/core/base/Base.removeChild.html#child"><code class="prettyprint lang-d">child</code></a> from this object
+								<td>removes a child from this object
 </td>
 							</tr>
 							<tr>
@@ -580,7 +585,7 @@ $('#symbolSearchPane').show();
 										<code>setDeleted</code>
 									</a>
 								</td>
-								<td>marks an object for deletion. It immediatly removes the service (if existant) and also marks all <a href="../../../../d2d/core/base/Base.children.html"><code class="prettyprint lang-d">children</code></a> for deletion!
+								<td>marks an object for deletion. It immediatly removes the service (if existant) and also marks all children for deletion!
 		Deletion means removal from object hirarchy and services.
 		However if the object is stored somewhere else it also has to be removed manually there (should never ever happen).
 </td>
@@ -627,7 +632,7 @@ $('#symbolSearchPane').show();
 										<code>registerAsService</code>
 									</a>
 								</td>
-								<td>Registers a class as a service that can be accessed by its <a href="../../../../d2d/core/base/Base.registerAsService.html#name"><code class="prettyprint lang-d">name</code></a>. Should be called by classes that want to be <a href="../../../../d2d/core/base/Base.deleted.html"><code class="prettyprint lang-d">deleted</code></a>
+								<td>Registers a class as a service that can be accessed by its name. Should be called by classes that want to be deleted
 </td>
 							</tr>
 							<tr>

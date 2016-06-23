@@ -6,16 +6,15 @@
 		<link rel="stylesheet" type="text/css" href="../../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../../../../prettify/prettify.js">/**/</script>
 		<script type="text/javascript" src="../../../../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">d2d</a>
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">core</a>
 						<ul class="tree-view">
 							<li class="collapsed tree-view">
@@ -37,12 +36,15 @@
 							</li>
 						</ul>
 							</li>
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">render</a>
 						<ul class="tree-view">
-							<li class=" tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">lowlevel</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/core/render/lowlevel.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../../d2d/core/render/lowlevel/buffer.html" class=" module">buffer</a>
 							</li>
@@ -54,6 +56,9 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">objects</a>
 						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/core/render/objects.html" class=" module">Package members</a>
+							</li>
 							<li>
 								<a href="../../../../../d2d/core/render/objects/quad.html" class=" module">quad</a>
 							</li>
@@ -72,21 +77,15 @@
 								<a href="#" class="package">util</a>
 						<ul class="tree-view">
 							<li>
+								<a href="../../../../../d2d/core/render/util.html" class=" module">Package members</a>
+							</li>
+							<li>
 								<a href="../../../../../d2d/core/render/util/general.html" class=" module">general</a>
 							</li>
 						</ul>
 							</li>
 							<li>
-								<a href="../../../../../d2d/core/render/lowlevel.html" class=" module">lowlevel</a>
-							</li>
-							<li>
-								<a href="../../../../../d2d/core/render/objects.html" class=" module">objects</a>
-							</li>
-							<li>
 								<a href="../../../../../d2d/core/render/renderer.html" class=" module">renderer</a>
-							</li>
-							<li>
-								<a href="../../../../../d2d/core/render/util.html" class=" module">util</a>
 							</li>
 						</ul>
 							</li>
@@ -178,7 +177,13 @@
 								<a href="../../../../../d2d/game/ui/box.html" class=" module">box</a>
 							</li>
 							<li>
+								<a href="../../../../../d2d/game/ui/button.html" class=" module">button</a>
+							</li>
+							<li>
 								<a href="../../../../../d2d/game/ui/cursor.html" class=" module">cursor</a>
+							</li>
+							<li>
+								<a href="../../../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
 								<a href="../../../../../d2d/game/ui/text.html" class=" module">text</a>
@@ -257,18 +262,18 @@ $('#symbolSearchPane').show();
 			</ul>
 			<section>
 				<h2>Function GPUTexture.this</h2>
-				<p>Creates a <a href="../../../../../d2d/core/render/lowlevel/gputexture/GPUTexture.html"><code class="prettyprint lang-d">GPUTexture</code></a>
+				<p>Creates a GPUTexture
 </p>
 
 					<section>
 						<h3>Prototype</h3>
 						<div class="prototype">
-							<code class="prettyprint lang-d">
-this(
+							<code class="lang-d">
+<span class="pln">this</span><span class="pun">(</span>
 								<br/>
-&nbsp;&nbsp;<a href="../../../../../d2d/core/render/lowlevel/gputexture/GPUTexture.TextureTarget.html">GPUTexture.<wbr/>TextureTarget</a> target = cast(TextureTarget)3553u
+&nbsp;&nbsp;<a href="../../../../../d2d/core/render/lowlevel/gputexture/GPUTexture.TextureTarget.html"><span class="typ">GPUTexture<wbr/></span><span class="pun">.<wbr/></span><span class="typ">TextureTarget</span></a> <span class="pln">target</span> <span class="pun">=</span> <span class="kwd">cast</span><span class="pun">(</span><span class="typ">TextureTarget</span><span class="pun">)</span><span class="lit">3553u</span>
 								<br/>
-);
+<span class="pun">)</span><span class="pun">;</span>
 							</code>
 						</div>
 					</section>
@@ -282,14 +287,14 @@ this(
 					<section>
 						<h3>Prototype</h3>
 						<div class="prototype">
-							<code class="prettyprint lang-d">
-this(
+							<code class="lang-d">
+<span class="pln">this</span><span class="pun">(</span>
 								<br/>
-&nbsp;&nbsp;uint texId,
+&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">texId</span><span class="pun">,</span>
 								<br/>
-&nbsp;&nbsp;<a href="../../../../../d2d/core/render/lowlevel/gputexture/GPUTexture.TextureTarget.html">GPUTexture.<wbr/>TextureTarget</a> target = cast(TextureTarget)3553u
+&nbsp;&nbsp;<a href="../../../../../d2d/core/render/lowlevel/gputexture/GPUTexture.TextureTarget.html"><span class="typ">GPUTexture<wbr/></span><span class="pun">.<wbr/></span><span class="typ">TextureTarget</span></a> <span class="pln">target</span> <span class="pun">=</span> <span class="kwd">cast</span><span class="pun">(</span><span class="typ">TextureTarget</span><span class="pun">)</span><span class="lit">3553u</span>
 								<br/>
-);
+<span class="pun">)</span><span class="pun">;</span>
 							</code>
 						</div>
 					</section>
@@ -297,20 +302,20 @@ this(
 			</section>
 			<section>
 				<h2>Function GPUTexture.this</h2>
-				<p>Creates a GPU Texture from an SDL_Surface. If <a href="../../../../../d2d/core/render/lowlevel/gputexture/GPUTexture.this.html#free"><code class="prettyprint lang-d">free</code></a> is true, it will also automatically <a href="../../../../../d2d/core/render/lowlevel/gputexture/GPUTexture.this.html#free"><code class="prettyprint lang-d">free</code></a> the SDL Texture
+				<p>Creates a GPU Texture from an SDL_Surface. If free is true, it will also automatically free the SDL Texture
 </p>
 
 					<section>
 						<h3>Prototype</h3>
 						<div class="prototype">
-							<code class="prettyprint lang-d">
-this(
+							<code class="lang-d">
+<span class="pln">this</span><span class="pun">(</span>
 								<br/>
-&nbsp;&nbsp;derelict.<wbr/>sdl2.<wbr/>types.<wbr/>SDL_Surface* surface,
+&nbsp;&nbsp;<span class="pln">derelict<wbr/></span><span class="pun">.</span><span class="pln">sdl2<wbr/></span><span class="pun">.</span><span class="pln">types<wbr/></span><span class="pun">.</span><span class="typ">SDL_Surface</span><span class="pun">*</span> <span class="pln">surface</span><span class="pun">,</span>
 								<br/>
-&nbsp;&nbsp;bool free = false
+&nbsp;&nbsp;<span class="typ">bool</span> <span class="pln">free</span> <span class="pun">=</span> <span class="kwd">false</span>
 								<br/>
-);
+<span class="pun">)</span><span class="pun">;</span>
 							</code>
 						</div>
 					</section>

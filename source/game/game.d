@@ -6,18 +6,7 @@
 module game;
 
 //import d2d.engine;
-import d2d.engine;
-import d2d.core.base;
-import d2d.core.dbg.eventdebug;
-import d2d.core.resource;
-import d2d.core.resources.font;
-import d2d.game.simple.camera;
-import d2d.game.simple.sprite;
-import d2d.game.ui.ui;
-import d2d.game.entity;
-import d2d.game.ui.text;
-import d2d.game.dbg.grid;
-import gl3n.linalg;
+import d2d;
 
 int main(char[][] args)
 {
@@ -29,12 +18,14 @@ int main(char[][] args)
 bool onStartup(Base base)
 {
 	import std.stdio;
-    auto camera = new Camera(4.0f);
-    base.addChild(camera);
-    base.addChild(new Grid(vec4(0.2f,0.0f,1.0f,.5f)));
+    auto camera = new Camera(1.0f);
+    
+    //base.addChild(new Grid(vec4(0.2f,0.0f,1.0f,.5f)));
 
     auto ui = new UI("ui.menu");
-    base.addChild(ui);
+    camera.addChild(ui);
+
+    base.addChild(camera);
 
 	return true;
 }

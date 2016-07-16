@@ -6,13 +6,7 @@ module d2d.core.render.objects.quad;
 import gl3n.linalg;
 import derelict.opengl3.gl3;
 
-import d2d.core.render.objects.view;
-import d2d.core.render.util;
-import d2d.core.render.objects.renderable;
-import d2d.core.render.lowlevel;
-import d2d.core.resources.texture;
-import d2d.core.resources.glslprogram;
-import d2d.core.resource;
+import d2d.core;
 
 /**
     Baseclass for all quads
@@ -271,7 +265,7 @@ protected:
 		vec2[] uvs;
 
         foreach(ref q; _quads) {
-            genUVMappedVertexArray(vertices, uvs, q.pos, q.uvpos, q.uvsize);
+            genUVMappedVertexArray(vertices, uvs, q.pos, q.uvpos, q.uvsize,q.size);
         }
         _vertexBuffer.setData(vertices.ptr, vec4.sizeof*vertices.length);
         _uvBuffer.setData(uvs.ptr, vec2.sizeof*uvs.length);
@@ -298,6 +292,7 @@ struct BatchQuad
 
     ulong   id = 0;
     vec2    pos;
+    vec2    size = vec2(1.0,1.0); // cause thats nice and all
     vec2    uvpos;
     vec2    uvsize;
 }

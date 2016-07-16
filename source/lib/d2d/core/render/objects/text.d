@@ -11,12 +11,7 @@ import gl3n.linalg;
 import derelict.opengl3.gl3;
 import derelict.sdl2.ttf;
 
-import d2d.core.render.objects.view;
-import d2d.core.render.util;
-import d2d.core.render.objects.renderable;
-import d2d.core.resources.glslprogram;
-import d2d.core.resource;
-import d2d.core.render.lowlevel;
+import d2d.core;
 
 public import d2d.core.resources.font; //is this ugly? yes this is ugly. i feel good. 
 

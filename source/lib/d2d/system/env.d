@@ -15,9 +15,7 @@ import gl3n.linalg;
 
 import d2d.core.base;
 import d2d.core.event;
-import d2d.util.logger;
-import d2d.util.settings;
-import d2d.util.fileio;
+import d2d.util;
 alias log = Logger.log;
 
 // on Posix based systems we need the dl library. Dont use linker flag cause that sucks 

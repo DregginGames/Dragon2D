@@ -109,6 +109,20 @@ class Resource
         } 
     }
 
+    /// reloads all exsisting resources
+    final static void reloadAll()
+    {
+        foreach(ref r; resources) {
+            r.reload();
+        }
+    }
+
+    /// reloads a resource. can be overloaded by a resource if it wants to be reloadable.
+    /// useful fo textures and similar things that might change on disk. 
+    void reload()
+    {
+    }
+
 private:
     /// the name of the resource
     string  _name;

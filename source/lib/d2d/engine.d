@@ -5,15 +5,9 @@ module d2d.engine;
 
 import std.datetime;
 
-import d2d.util.logger;
-import d2d.util.settings;
-import d2d.core.callback;
-import d2d.core.container.root;
-import d2d.core.container.gamecontainer;
-import d2d.core.io;
-import d2d.system.env;
-import d2d.core.services.scheduler;
-import d2d.core.render.renderer;
+// pollute all the namespace
+// usually we dont, but importing engine should enforce this once again. we need all classes to be compiled into the final binary
+public import d2d; 
 
 /// The engine class loads the basic system. Also the main loop lives here
 class Engine  

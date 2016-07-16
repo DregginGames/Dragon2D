@@ -8,9 +8,7 @@ import gl3n.math;
 import derelict.opengl3.gl3;
 
 import d2d.util.logger;
-import d2d.core.render.objects.view;
-import d2d.core.render.lowlevel.vao;
-import d2d.core.render.util;
+import d2d.core;
 
 /**
 	Renderable is abstract base for all types of /renderables/. 

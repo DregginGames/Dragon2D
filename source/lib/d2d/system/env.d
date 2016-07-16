@@ -132,7 +132,7 @@ class Env : Base
                 throw new InitializationErrorException("Could not init audio!");
             }
         }
-        if (Mix_OpenAudio(44100 , MIX_DEFAULT_FORMAT, 2, 1024) != 0) {
+        if (Mix_OpenAudio(48000, MIX_DEFAULT_FORMAT, 2, 1024) != 0) {
             log("Cannot Open Audio:");
             log(fromStringz(Mix_GetError()));
             throw new InitializationErrorException("Could not init audio!");

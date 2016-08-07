@@ -21,6 +21,23 @@ class Sprite : Entity
 		renderer.pushObject(_quad);
 	}
 
+protected:
+    @property TexturedQuad quad()
+    {
+        return _quad;
+    }
+
 private:
 	TexturedQuad _quad;
+}
+
+class UISprite : Sprite
+{
+    this(string texture)
+	{
+		super(texture);
+        quad.ignoreView = true;
+	}
+
+private:
 }

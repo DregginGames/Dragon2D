@@ -166,7 +166,7 @@ protected:
                 line.pos = vec2(0.0,0.0-cast(float)_lines.length*(_settings.height+_settings.lineOffset*_settings.height));
                 
                 if(res.length==0) {
-                    line.text = textLeft.idup;
+                    line.text = removechars(textLeft.idup,"\n\r");
                     _lines ~= line;
                     break;
                 }
@@ -239,9 +239,11 @@ private string stripTextOnLength(ref char[] str, TextSplitSettings settings)
     int w,h;
     TTF_SizeUTF8(settings.font,toStringz(str),&w,&h);
     if(settings.height * cast(float)w/cast(float)h <= settings.maxwidth || settings.maxwidth <= 0.0f || str.length < 2) {
-        auto tmp = str.idup;
-        str.length = 0;
-        return tmp;
+        if (!settings.parseControl || indexOf(str,'\n') == -1) {
+            auto tmp = str.idup;
+            str.length = 0;
+            return tmp;
+        }
     }
 
     size_t p = 1;
@@ -269,7 +271,7 @@ private string stripTextOnLength(ref char[] str, TextSplitSettings settings)
                     if(isWhite(str[breakpos])) {
                         result = str[0..breakpos].idup;
                         str = str[breakpos..str.length];
-                        return result;
+                        return removechars(result,"\n\r");
                     }
                     breakpos--;
                 }
@@ -286,7 +288,7 @@ private string stripTextOnLength(ref char[] str, TextSplitSettings settings)
                     if(isWhite(str[breakpos])) {
                         result = str[0..breakpos].idup;
                         str = str[breakpos..str.length];
-                        return result;
+                        return removechars(result,"\n\r");
                     }
                     breakpos++;
                 }
@@ -302,11 +304,11 @@ private string stripTextOnLength(ref char[] str, TextSplitSettings settings)
                 size_t offset = cast(size_t)(cast(float)(str.length-p)*settings.scroll); 
                 result = str[offset..p+offset].idup;
                 str = str[p+offset..$];
-                return result;
+                return removechars(result,"\n\r");
             }
         }
         p++;
     }
 
-    return result;
+    return removechars(result,"\n\r");
 }

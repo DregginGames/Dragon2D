@@ -114,6 +114,9 @@ class Text : Renderable
     */
     override void render(in View view) 
     {
+        if (strip(_settings.text)=="") {
+            return;
+        }
         auto prg = Resource.create!GLSLProgram(_program).program;
 		prg.bind();
         vao.bind();		
@@ -144,6 +147,9 @@ protected:
     //does what the name says with the text. regenerates the quads for the text rendering. Dont run near companion.
     void regenerate()  
     {
+        if (strip(_settings.text)=="") {
+            return;
+        }
         auto font = Resource.create!Font(_settings.font).getFont(_settings.size);
 
         char[] textLeft = _settings.text.dup;

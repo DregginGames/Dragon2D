@@ -196,6 +196,22 @@ class TexturedQuad : RawTexturedQuad
     {
         Resource.free(_texture);
     }
+
+    @property string texname()
+    {
+        return _texture;
+    }
+
+    @property string texname(string name)
+    {
+        if (name == _texture) {
+            return _texture;
+        }
+        Resource.free(_texture);
+        Resource.preload!Texture(name);
+        return _texture = name;
+    }
+
 private:
     /// this quads texture
 	string _texture;

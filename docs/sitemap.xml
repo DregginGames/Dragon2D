@@ -661,9 +661,7 @@
 <url><loc>http://127.0.0.1/d2d/game/ui/box/BorderBox.borderColor.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/box/BorderBox.borderWidth.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/box/BorderBox.borderWidth.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/game/ui/box/BorderBox.load.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/box/BorderBox.render.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/game/ui/box/BorderBox.store.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/box/BorderBox.this.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.absolutePos.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.absoluteSize.html</loc></url>
@@ -677,6 +675,7 @@
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.fromClassname.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.getService.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.id.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.load.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.name.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.name.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.parent.html</loc></url>
@@ -695,6 +694,7 @@
 <url><loc>http://127.0.0.1/d2d/core/base/Base.setDeleted.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.size.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.size.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.store.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.update.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.enableEventHandling.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.pollEvents.html</loc></url>
@@ -707,9 +707,7 @@
 <url><loc>http://127.0.0.1/d2d/game/ui/box/Box.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/box/Box.color.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/box/Box.color.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/game/ui/box/Box.load.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/box/Box.render.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/game/ui/box/Box.store.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/box/Box.this.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.absolutePos.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.absoluteSize.html</loc></url>
@@ -721,6 +719,7 @@
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.fromClassname.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.getService.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.id.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.load.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.name.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.name.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.parent.html</loc></url>
@@ -739,6 +738,7 @@
 <url><loc>http://127.0.0.1/d2d/core/base/Base.setDeleted.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.size.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.size.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.store.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.update.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.enableEventHandling.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.pollEvents.html</loc></url>
@@ -766,7 +766,7 @@
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.fromClassname.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.getService.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.id.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/game/ui/box/BorderBox.load.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.load.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.name.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.name.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.parent.html</loc></url>
@@ -786,7 +786,7 @@
 <url><loc>http://127.0.0.1/d2d/core/base/Base.setDeleted.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.size.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.size.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/game/ui/box/BorderBox.store.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/ui/uielement/UIElement.store.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.update.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.enableEventHandling.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.pollEvents.html</loc></url>

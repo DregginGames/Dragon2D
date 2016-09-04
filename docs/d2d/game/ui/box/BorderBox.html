@@ -469,29 +469,11 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../../d2d/game/ui/box/BorderBox.load.html" class="public">
-										<code>load</code>
-									</a>
-								</td>
-								<td>Loads color data of border box
-</td>
-							</tr>
-							<tr>
-								<td>
 									<a href="../../../../d2d/game/ui/box/BorderBox.render.html" class="public">
 										<code>render</code>
 									</a>
 								</td>
 								<td>Renders a borderd box
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/game/ui/box/BorderBox.store.html" class="public">
-										<code>store</code>
-									</a>
-								</td>
-								<td>Stores color data of border box
 </td>
 							</tr>
 							<tr>
@@ -528,6 +510,15 @@ $('#symbolSearchPane').show();
 									</a>
 								</td>
 								<td>Gets a service by its name. Syntax is getService!ServiceClass(name)
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/ui/uielement/UIElement.load.html" class="public inherited">
+										<code>load</code>
+									</a>
+								</td>
+								<td>Loads a element from stored json data. Should only be called by UI
 </td>
 							</tr>
 							<tr>
@@ -602,6 +593,17 @@ $('#symbolSearchPane').show();
 								<td>marks an object for deletion. It immediatly removes the service (if existant) and also marks all children for deletion!
 		Deletion means removal from object hirarchy and services.
 		However if the object is stored somewhere else it also has to be removed manually there (should never ever happen).
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/ui/uielement/UIElement.store.html" class="public inherited">
+										<code>store</code>
+									</a>
+								</td>
+								<td>Stores a ui element tree into json data structure
+        Overload for custom ui elements to store additional data. Make sure to call super.store(store) afterwards!
+        Dont call by hand, insted let UI do that for you.
 </td>
 							</tr>
 							<tr>

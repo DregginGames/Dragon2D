@@ -14,7 +14,7 @@ import d2d.util.jsonutil;
 
 import d2d.game.ui.uievent;
 import d2d.util.logger;
-
+import d2d.util.serialize;
 
 
 /**
@@ -28,7 +28,7 @@ import d2d.util.logger;
         Child lays on top of parent
         Absolute position ans size is relative to parents position and size
 */
-abstract class UIElement : Base
+abstract class UIElement : Base, Serializeable
 {
     this() 
     {
@@ -40,15 +40,28 @@ abstract class UIElement : Base
         _unfocus();
     }
 
+    void reload(JSONValue data) {
+        foreach(ref c; children) {
+            c.setDeleted();
+        }
+        load(data);
+    }
+
     /// Loads a element from stored json data. Should only be called by UI
     /// The data should only represent the current element, not 
     void load(JSONValue data)
     {
-        _name = data.object["name"].str;
-        _pos = vectorFromJson!(vec2)(data.object["pos"]);
-        _size = vectorFromJson!(vec2)(data.object["size"]);
-        foreach(ref c; data.object["children"].array) {
-            auto newelem = fromClassname(c.object["className"].str);
+        try {
+            this.deserialize(data);
+        } catch (Exception e) {
+            Logger.log("WARNING: Could not load a UI element - " ~ e.msg);
+        }
+        auto p = "children" in data.object;
+        if (!p) {
+            return;
+        }
+        foreach(ref c; p.array) {
+            auto newelem = fromClassname(c.object["typename"].str);
             if(newelem !is null) {
                 this.addChild(newelem);
                 newelem.load(c);
@@ -63,19 +76,15 @@ abstract class UIElement : Base
         Params:
             data = the JSONData struct that will be written into
     */
-    void store(ref JSONValue data)
+    void store(ref JSONValue dst)
     {
-        data["className"] = to!string(typeid(this));
-        data["name"] = _name;
-        data["pos"] = vectorToJson(pos);
-        data["size"] = vectorToJson(size);
+        dst = this.serialize();
         JSONValue[] iHateArrays;
-        data["children"] = iHateArrays;
+        dst["children"] = iHateArrays;
         foreach(ref c; children) {
             if(cast(UIElement)c) {
-                JSONValue childData;
-                (cast(UIElement)c).store(childData);
-                data["children"].array ~= childData;
+                JSONValue childData = (cast(UIElement)c).serialize();
+                dst["children"].array ~= childData;
             }
         }
     }
@@ -237,6 +246,8 @@ abstract class UIElement : Base
 
         return null;
     }
+
+    mixin createSerialize!(false,"_name","_pos","_size");
 
 protected:
     /// Sets the focus of a element and unfocuses the current one

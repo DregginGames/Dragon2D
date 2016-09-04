@@ -1,60 +1,32 @@
 {
-    "children": [
-        {
-            "children": [],
-            "className": "d2d.game.ui.box.Box",
-            "color": [
-                1,
-                0.5,
-                0,
-                1
-            ],
-            "name": "",
-            "pos": [
-                0.0,
-                0.0
-            ],
-            "size": [
-                0.5,
-                0.5
-            ]
-        },
-        {
-            "children": [],
-            "className": "d2d.game.ui.box.BorderBox",
-            "color": [
-                0.2,
-                0.2,
-                0.2,
-                1
-            ],
-            "name": "",
-            "pos": [
-                0,
-                0
-            ],
-            "size": [
-                0.2,
-                0.1
-            ],
-            "borderWidth": 0.015,
-            "borderColor": [
-                0.6,
-                0.6,
-                0.6,
-                1
-            ]
-        }
-    ],
-    "className": "d2d.game.ui.ui.UI",
-    "name": "ui.menu",
-    "pos": [
+    "_name": "ui.menu",
+    "_pos": [
         0,
         0
     ],
-    "root": true,
-    "size": [
+    "_size": [
         1,
         1
-    ]
+    ],
+    "children": [
+        {
+            "_name": "",
+            "_pos": [
+                0,
+                0
+            ],
+            "_quad.color": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "_size": [
+                0.5,
+                0.5
+            ],
+            "typename": "d2d.game.ui.box.Box"
+        }
+    ],
+    "typename": "d2d.game.ui.ui.UI"
 }

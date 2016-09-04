@@ -30,7 +30,7 @@ class UI : UIElement
         if (r.data.type != JSON_TYPE.OBJECT) {
             return;
         }
-        super.load(r.data);
+        super.reload(r.data);
     }
 
     /// Stores the ui tree below into the resource

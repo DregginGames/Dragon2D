@@ -6,7 +6,7 @@ module d2d.game.ui.box;
 import std.json;
 import gl3n.linalg;
 
-import d2d.util.jsonutil;
+import d2d.util.serialize;
 import d2d.core.render.objects.quad;
 import d2d.core.render.renderer;
 import d2d.game.ui.uielement;
@@ -42,21 +42,9 @@ class Box : UIElement
     {
         return _quad.color=c;
     }
-
-    /// Loads color data of box
-    override void load(JSONValue data) 
-    {
-        _quad.color = vectorFromJson!(vec4)(data["color"]);
-        super.load(data);
-    }
-
-    /// Stores color data of box
-    override void store(ref JSONValue data) 
-    {
-        data["color"] = vectorToJson(_quad.color);
-        super.store(data);
-    }
     
+    mixin createSerialize!(true,"_quad.color");
+
 private:
     /// The ColoredQuad used to draw this ui box
     ColoredQuad _quad;
@@ -84,23 +72,6 @@ class BorderBox : Box
         r.pushObject(_borderQuad);
         super.render();
     }
-
-    /// Loads color data of border box
-    override void load(JSONValue data) 
-    {
-        _borderWidth = data["borderWidth"].type == JSON_TYPE.FLOAT ? data["borderWidth"].floating : data["borderWidth"].integer;
-        _borderQuad.color = vectorFromJson!(vec4)(data["borderColor"]);
-        super.load(data);
-    }
-
-    /// Stores color data of border box
-    override void store(ref JSONValue data) 
-    {
-        data["borderColor"] = vectorToJson(_borderQuad.color);
-        data["borderWidth"] = _borderWidth;
-        super.store(data);
-    }
-
     /// Color of the border of this box
     @property vec4 borderColor()
     {
@@ -122,6 +93,8 @@ class BorderBox : Box
     {
         return _borderWidth = b;
     }
+
+    mixin createSerialize!(true,"_borderWidth","_borderQuad.color");
 
 private: 
     ColoredQuad _borderQuad;

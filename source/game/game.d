@@ -23,7 +23,11 @@ bool onStartup(Base base)
     //base.addChild(new Grid(vec4(0.2f,0.0f,1.0f,.5f)));
 
     auto ui = new UI("ui.menu");
+    //auto box = new Box();
+    //box.color;
+    //ui.addChild(box);
     camera.addChild(ui);
+    ui.store();
 
     base.addChild(camera);
 

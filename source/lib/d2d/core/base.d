@@ -244,6 +244,14 @@ protected:
         canReciveEvents = true;
     }
 
+    /// returns the pending events and does NOT clean them
+    final Event[] peekEvents()
+    {
+        Event[] scpy = pendingEvents.dup;
+
+        return scpy;
+    }
+
     /// returns the pending events and cleans
     final Event[] pollEvents()
     {

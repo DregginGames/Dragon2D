@@ -136,10 +136,15 @@ final class ScreenSpaceView : View
         super(v.pos, v.size, v.viewportPos, v.viewportSize, v.zindex);
     }
 
-    /// Returns mat4.identity so the ScreenSpace view causes no side effects but, well, the viewport
+    /// Returns mat4.identity so the ScreenSpace view causes no side effects
+    /// The aspect ratio however is kept, so -1,-1 is not a corner but the furthest point in a square on the screen!
     final override @property const mat4 worldToView() 
     {
-        return mat4.identity;
+        mat4 result = mat4.identity;
+        vec2 s = size();
+        double r = s.y/s.x;
+        result[0][0] = r;
+        return result;
     }
 protected:
     /// Generation is overwritten since it is not needed

@@ -16,3 +16,5 @@ docs.json
 *.html
 
 log.txt
+/.vs/dragon2d/v14/.suo
+/uieditor.trace

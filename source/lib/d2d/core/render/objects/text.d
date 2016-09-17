@@ -6,6 +6,7 @@ module d2d.core.render.objects.text;
 
 import std.string;
 import std.ascii;
+import std.utf;
 
 import gl3n.linalg;
 import derelict.opengl3.gl3;
@@ -16,6 +17,7 @@ import d2d.core;
 public import d2d.core.resources.font; //is this ugly? yes this is ugly. i feel good. 
 
 private struct Line {
+    int cutoff = 0;
     vec2 pos=vec2(0.0,0.0);
     vec2 size = vec2(1.0,1.0);
     string text;
@@ -32,6 +34,16 @@ private struct TextSplitSettings
     bool parseControl = false;
     float scroll = 0.0; 
 }
+
+// helper
+/*
+string removechars(string s, string chars)
+{
+    auto utf = s.representation.assumeUTF;
+    auto repl = std.string.removechars(utf,chars);
+    return repl;
+}
+*/
 
 /// Holds a text, renders it on screen and manages the width-thingy
 class Text : Renderable
@@ -122,7 +134,8 @@ class Text : Renderable
         vao.bind();		
         int texPos = 0;
         prg.setUniformValue("textureSampler", &texPos);
-        
+        prg.setUniformValue("uvpos", _uvpos.value_ptr);
+        prg.setUniformValue("uvsize", _uvsize.value_ptr);
         foreach(ref line;_lines) {
             auto m = gen2DModelToWorld(pos+line.pos, 0.0, vec3(line.size.xy,0.0));
             //m.scale(line.size.x,line.size.y,1.0f);
@@ -131,6 +144,41 @@ class Text : Renderable
             line.tex.bind();
             prg.drawArrays(prg.DrawMode.triangles, 0,6);
         }
+    }
+
+    /**
+        returns the position of possible cursor relative to the text
+        Relatively calculation heavy. maybe bake this?
+    */
+    vec2 getCursorPos(int line, int pos) 
+    {
+        if (nLines == 0) {
+            return vec2(0.0,0.0);
+        }
+        if (line >= nLines) {
+            line = nLines-1;
+        }
+        // apply cutoff
+        pos -= _lines[line].cutoff;
+        if (pos > count!char(_lines[line].text)) { // count is the utf point length and not the length in bytes
+            pos = count!char(_lines[line].text);
+        }
+        else if (pos <= 0) {
+            return this.pos;
+        }
+        //pos -= 1;
+        double y = this.pos.y+_settings.height*line;        
+        double x = this.pos.x;
+        if (pos!=0) {
+            pos = toUTFindex(_lines[line].text,pos); // because we dont want to get in-between-byte point but the whole chars. umlüte früen süsch.
+            string str = _lines[line].text[0..pos]; 
+            int w,h;
+            auto font = Resource.create!(Font)(settings.font);
+            TTF_SizeUTF8(font.getFont(settings.size),toStringz(str),&w,&h);
+            x += settings.height * cast(float)w/cast(float)h;
+        }
+        
+        return vec2(x,y);
     }
 
     @property TextSettings settings() const
@@ -143,6 +191,12 @@ class Text : Renderable
         regenerate();
         return _settings;
     }
+
+    @property uint nLines() const
+    {
+        return _lines.length;
+    }
+    
 protected:
     //does what the name says with the text. regenerates the quads for the text rendering. Dont run near companion.
     void regenerate()  
@@ -167,17 +221,22 @@ protected:
                                         _settings.height, _settings.maxwidth, !_settings.linebreak, _settings.linebreak,
                                         _settings.scroll };
             do {
-                string res = stripTextOnLength(textLeft,splitSettings);
                 Line line;
+                string res = stripTextOnLength(textLeft,splitSettings, line.cutoff);
+                
                 line.pos = vec2(0.0,0.0-cast(float)_lines.length*(_settings.height+_settings.lineOffset*_settings.height));
                 
                 if(res.length==0) {
                     line.text = removechars(textLeft.idup,"\n\r");
-                    _lines ~= line;
+                    if (line.text.length > 0) {
+                        _lines ~= line;
+                    }
                     break;
                 }
                 line.text = res;
-                _lines ~= line;
+                if (line.text.length > 0) {
+                    _lines ~= line;
+                }
             } while(textLeft.length!=0 && _settings.linebreak);
         }
 
@@ -236,12 +295,17 @@ private:
     Line[] _lines;    
     /// The text settings. See The TextSettings struct
     TextSettings _settings;
+
+    /// for the rendering
+    vec2 _uvpos = vec2(0.0f,0.0f);
+    vec2 _uvsize = vec2(1.0f,1.0f);
 }
 
 // sets str to the stuff thats left of the input string and returns the string that matches or is smaller then the max length
 // It tries NOT to break words
-private string stripTextOnLength(ref char[] str, TextSplitSettings settings)
+private string stripTextOnLength(ref char[] str, TextSplitSettings settings, ref int cutoff)
 {
+    cutoff = 0;
     int w,h;
     TTF_SizeUTF8(settings.font,toStringz(str),&w,&h);
     if(settings.height * cast(float)w/cast(float)h <= settings.maxwidth || settings.maxwidth <= 0.0f || str.length < 2) {
@@ -255,48 +319,53 @@ private string stripTextOnLength(ref char[] str, TextSplitSettings settings)
     size_t p = 1;
     string result = str.idup;
 
-    while(p<=str.length) {
-        auto a = str[0..p];
-        auto b = str[p..str.length];
+    while(p<=count!char(str)) {
+        size_t pPoint = toUTFindex(str,p);
+        size_t prePPoint = toUTFindex(str,p-1);
+        auto a = str[0..pPoint];
+        auto b = str[pPoint..$];
         TTF_SizeUTF8(settings.font,toStringz(a),&w,&h);
         float lena = settings.height * cast(float)w/cast(float)h;
         TTF_SizeUTF8(settings.font,toStringz(b),&w,&h);
         float lenb = settings.height * cast(float)w/cast(float)h;
 
-        if(str[p-1]=='\n'&&settings.parseControl) {
-            result = str[0..p-1].idup;
-            str = str[p..str.length];
+        if(str[prePPoint]=='\n'&&settings.parseControl) {
+            result = str[0..prePPoint].idup;
+            str = str[pPoint..$];
             break;
         }
         else if(settings.overflow == Text.OverflowBehaviour.showBegin) {
             if(lena>settings.maxwidth) {
                 p = p-1;
-                size_t breakpos = p;
+                size_t breakIndex = p;
+                
                 //try to find whitespace
-                while(breakpos>0&&settings.breakWords == false) {
+                while(breakIndex>0&&settings.breakWords == false) {
+                    size_t breakpos = toUTFindex(str,breakIndex);
                     if(isWhite(str[breakpos])) {
                         result = str[0..breakpos].idup;
-                        str = str[breakpos..str.length];
+                        str = str[breakpos..$];
                         return removechars(result,"\n\r");
                     }
-                    breakpos--;
+                    breakIndex--;
                 }
-                
-                result = str[0..p].idup;
-                str = str[p..str.length];
+                pPoint = toUTFindex(str,p);
+                result = str[0..pPoint].idup;
+                str = str[pPoint..$];
                 break;
             }
         } else if (settings.overflow == Text.OverflowBehaviour.showEnd) {
             if(lenb<=settings.maxwidth) {
-                size_t breakpos = p;
+                size_t breakIndex = p;
                 //try to find whitespace
-                while(breakpos<str.length&&settings.breakWords == false) {
+                while(breakIndex<count!char(str)&&settings.breakWords == false) {
+                    size_t breakpos = toUTFindex(str,breakIndex);
                     if(isWhite(str[breakpos])) {
                         result = str[0..breakpos].idup;
-                        str = str[breakpos..str.length];
+                        str = str[breakpos..$];
                         return removechars(result,"\n\r");
                     }
-                    breakpos++;
+                    breakIndex++;
                 }
                 result = a.idup;
                 str = b;
@@ -307,9 +376,35 @@ private string stripTextOnLength(ref char[] str, TextSplitSettings settings)
             if(lena>settings.maxwidth) {
                 // p is the mount of letters that fits into maxwidth
                 // therefore (str.length-p)*scroll + 0 is our scroll offset
-                size_t offset = cast(size_t)(cast(float)(str.length-p)*settings.scroll); 
-                result = str[offset..p+offset].idup;
-                str = str[p+offset..$];
+                size_t offset = cast(size_t)(cast(float)(count!char(str)-p)*settings.scroll);
+                size_t lower = toUTFindex(str,offset);
+                size_t upper = toUTFindex(str,offset+p);
+                result = str[lower..upper].idup;
+                // aain make sure we fit. When scrollin we always cut of the lower chars
+                int scrollw,scrollh;
+                TTF_SizeUTF8(settings.font,toStringz(result),&scrollw,&scrollh);
+                float scrollLength = settings.height * cast(float)scrollw/cast(float)scrollh;
+                while (scrollLength < settings.maxwidth && offset > 0 && p < count!char(str)) { // ok this is annyoing. We need to max out first - not everything is a monofont
+                    offset--;
+                    p++;
+                    lower = toUTFindex(str,offset); // should move to the left
+                    upper = toUTFindex(str,offset+p); // should stay the same
+                    result = str[lower..upper].idup;
+                    TTF_SizeUTF8(settings.font,toStringz(result),&scrollw,&scrollh);
+                    scrollLength = settings.height * cast(float)scrollw/cast(float)scrollh;
+                }
+                while(scrollLength>settings.maxwidth && p > 0 && offset < count!char(str)) {
+                    offset++;
+                    p--;
+                    lower = toUTFindex(str,offset); // one char after the previous
+                    upper = toUTFindex(str,offset+p); // should stay the same
+                    result = str[lower..upper].idup;
+                    TTF_SizeUTF8(settings.font,toStringz(result),&scrollw,&scrollh);
+                    scrollLength = settings.height * cast(float)scrollw/cast(float)scrollh;
+                }
+
+                str = str[upper..$];
+                cutoff = offset;
                 return removechars(result,"\n\r");
             }
         }

@@ -39,6 +39,12 @@ abstract class KeyEvent : Event, IOEvent
     {
         return _sdlevent;
     }
+
+    @property SDL_Keycode key() const
+    {
+        return _key;
+    }
+
 private:
     /// the name of this event 
     string _name; 

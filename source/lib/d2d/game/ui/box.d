@@ -29,7 +29,7 @@ class Box : UIElement
         _quad.scale = vec3(viewSize.x,viewSize.y, 1.0f);
         _quad.pos = viewPos+vec2(viewSize.x*0.5,-viewSize.y*0.5);
         auto r = getService!Renderer("d2d.renderer");
-        r.pushObject(_quad);
+        r.pushObject(_quad);     
     }
 
     /// The color of the box

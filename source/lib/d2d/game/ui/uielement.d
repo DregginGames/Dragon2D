@@ -108,7 +108,9 @@ abstract class UIElement : Base, Serializeable
     /// Ditto
     @property vec2 pos(vec2 p)
     {
-        return _pos=p;
+        _pos = p;
+        _onPosSizeChange();
+        return _pos;
     }
 
     /// The size of a ui element
@@ -119,7 +121,9 @@ abstract class UIElement : Base, Serializeable
     /// Ditto
     @property vec2 size(vec2 s)
     {
-        return _size = s;
+        _size = s;
+        _onPosSizeChange();
+        return _size;
     }
 
     /// The absolute positoin of ui element - dependent from parent position and size
@@ -298,6 +302,13 @@ protected:
 
         return true;
     }
+
+    /// called if position or size is changed. overload for maximum usefullness.
+    void _onPosSizeChange()
+    {
+
+    }
+
 private:
     /// name of a ui element
     string _name;

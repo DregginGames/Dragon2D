@@ -34,10 +34,11 @@ bool onStartup(Base base)
     // ui
     auto ui = new UI("ui.menu");
     camera.addChild(ui);
-    Edit e = new Edit("font.Roboto-Medium","testtext");
+    Edit e = new Edit("font.Roboto-Medium","");
     e.pos = vec2(0.0,0.0);
     e.size = vec2(0.2,0.05);
     e.color(vec4(0.2,0.5,0.5,1.0));
+    e.placeholder = "Username";
     ui.addChild(e);
 
     // Text
@@ -47,9 +48,9 @@ bool onStartup(Base base)
     settings.height = 0.09;
     settings.maxwidth = 1.0;
     settings.overflow = t.text.OverflowBehaviour.scroll;
-    settings.positioning = t.text.Positioning.left;
+    settings.positioning = t.text.Positioning.right;
     settings.scroll = 0.0;
-    settings.maxheight = 0.1;
+    settings.maxheight = 0.5;
     settings.linebreak = true;
     t.text.settings = settings;
     base.addChild(t);

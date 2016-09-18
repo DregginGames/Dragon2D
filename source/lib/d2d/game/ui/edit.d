@@ -46,14 +46,21 @@ class Edit : Box
 		auto renderer = getService!Renderer("d2d.renderer");
         _text.pos = this.viewPos-vec2(0.0,_text.settings.height/2.0); // fix this in text?
 		renderer.pushObject(_text);
-        _cursorQuad.pos = _cursorPos;
-        _cursorQuad.scale = vec3(0.005,this.viewSize.y,1.0);
-        renderer.pushObject(_cursorQuad);
+        if (this.focus()) {
+            _cursorQuad.pos = _cursorPos;
+            _cursorQuad.scale = vec3(0.005,this.viewSize.y,1.0);
+            renderer.pushObject(_cursorQuad);
+        }
 	}
 
     /// update etc 
     override void preUpdate() 
     {
+        if (!this.focus()) {
+            super.preUpdate();
+            return;
+        }
+
         auto events = this.peekEvents();
         foreach(e; events) {
             // some things needed everywhere
@@ -209,6 +216,12 @@ protected:
     {
         _updateText();
     }
+
+    override void _onFocus() 
+    {
+        _updateText();
+    }
+    
 
 private:
     ColoredQuad _cursorQuad;

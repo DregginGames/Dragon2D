@@ -10,6 +10,7 @@ import gl3n.linalg;
 
 import d2d.core.base;
 import d2d.core.io;
+import d2d.system.env;
 import d2d.util.jsonutil;
 
 import d2d.game.ui.uievent;
@@ -164,13 +165,14 @@ abstract class UIElement : Base, Serializeable
     {
         // we, per definition, are not clicked anymore
         _clicked = false;
-
+        double aspect = this.getService!Env("d2d.env").aspectRatio();
         foreach(e; pollEvents()) {
             // check for hovering. hovering ignores children completly
             auto mm = cast(MouseMotionEvent)e;
             if(mm) {
                 import std.stdio;
                 auto mp = mm.npos;
+                mp.x = mp.x*aspect - (aspect-1.0)/2.0; // because screen space rendering. Noone lieks this but do i have a choce? no.          
                 auto p = absolutePos;
                 auto s = absoluteSize;
                 if((p.x <= mp.x && p.x+s.x >= mp.x && p.y <= mp.y && p.y+s.y >= mp.y) != _hoverd) {
@@ -265,6 +267,7 @@ protected:
         }
         _focus = true;
         _focusedElement = this;
+        _onFocus();
         fireEvent(new UiOnFocusEvent(this));
     }
 
@@ -309,6 +312,10 @@ protected:
 
     }
 
+    /// called if this element os focues. overload for maxiumum usefullness
+    void _onFocus()
+    {
+    }
 private:
     /// name of a ui element
     string _name;

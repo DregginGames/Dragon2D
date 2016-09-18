@@ -24,6 +24,14 @@
             "sourcePaths": ["source/uieditor/"],
             "importPaths": ["source/uieditor/"],
         },
+		{
+            "name": "mapeditor",
+            "targetType": "executable",
+            "targetPath": "engine",
+            "targetName": "mapeditor",           
+            "sourcePaths": ["source/mapeditor/"],
+            "importPaths": ["source/mapeditor/"],
+        },
         {
             "name": "docs",
             "targetType": "library",

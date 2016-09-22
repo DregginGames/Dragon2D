@@ -26,6 +26,7 @@ class Engine
             .addChild(new Env()
                 .addChild(new IOTransformer())
 				.addChild(new Scheduler())
+                .addChild(new World())
                 .addChild(gamecontainer))
 				.addChild(new Renderer());
         Logger.log("Engine started!");

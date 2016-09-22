@@ -36,13 +36,20 @@ private:
 
 class WorldTileLayer
 {
-    this(string tileset, long layerZ = 0) 
+    this(string tileset, int layerZ = 0) 
     {
         _id = _maxid;// id stuff
         _maxid++;
 
         _layerZ = layerZ;
         _tileset = tileset;
+
+        Resource.preload!Tileset(_tileset);
+    }
+
+    ~this()
+    {
+        Resource.free(_tileset);
     }
 
     /// adds a new tile to the layer
@@ -81,12 +88,12 @@ class WorldTileLayer
     }
 
     /// z index of this layer
-    @property long layerZ() const
+    @property int layerZ() const
     {
         return _layerZ;
     }
     /// Ditto
-    @property long layerZ(long i) 
+    @property int layerZ(int i) 
     {
         return _layerZ = i;
     }
@@ -104,7 +111,7 @@ class WorldTileLayer
     }
 
 private:
-    long _layerZ;
+    int _layerZ;
     string _tileset;
     Worldtile[] _tiles;
     ulong _id;

@@ -34,6 +34,7 @@ final class World : Base
     void addLayer(WorldTileLayer l)
     {
         _layers[l.id] = l;
+        regenerateBatches();
     }
 
     void removeLayer(WorldTileLayer l)
@@ -41,6 +42,11 @@ final class World : Base
         _layers.remove(l.id);
     }
     
+    /// forces batches to be rebuild. dont call to often. its slow.
+    void forceBatchRebuild()
+    {
+        regenerateBatches();
+    }
 
 private:
     void regenerateBatches()
@@ -57,7 +63,7 @@ private:
                     auto tdata = tset.getTileData(tile.id);
                     q.pos = tile.pos;
                     q.uvpos = tdata.uvpos;
-                    q.uvsize = tdata.uvpos;
+                    q.uvsize = tdata.uvsize;
                     q.size = tdata.size;
                     batch.addQuad(q);
                 }

@@ -178,18 +178,22 @@ protected:
 
 class TexturedQuad : RawTexturedQuad
 {
-    this(string texture, string program="shader.default")
+    this(string texture="", string program="shader.default")
     {
         _texture = texture;
-        Resource.preload!Texture(_texture);
+        if (_texture != "") {
+            Resource.preload!Texture(_texture);
+        }
         super(program);
     }
 
     override void render(in View view) 
     {
-        auto tex = Resource.create!Texture(_texture);
-        this.texture=tex.gpuTexture;
-        super.render(view);
+        if (_texture != "") {
+            auto tex = Resource.create!Texture(_texture);
+            this.texture=tex.gpuTexture;
+            super.render(view);
+        }
     }
 
     ~this()
@@ -208,7 +212,9 @@ class TexturedQuad : RawTexturedQuad
             return _texture;
         }
         Resource.free(_texture);
-        Resource.preload!Texture(name);
+        if (_texture != "") {
+            Resource.preload!Texture(name);
+        }
         return _texture = name;
     }
 
@@ -222,7 +228,7 @@ private:
 */
 class TexturedQuadBatch : TexturedQuad
 {
-    this(string texture, string program="shalder.default")
+    this(string texture, string program="shader.default")
     {
         _setupVAO(Renderable.VAOMode.objectScope);
         super(texture, program);
@@ -241,8 +247,10 @@ class TexturedQuadBatch : TexturedQuad
     {
         auto p = quad.id in _quads;
         if (null == p || quad.id == 0) { //quad.id can only be null if it has not beed added to a batch yet. 
-            _maxQuadId++;
+            _quads[_maxQuadId] = quad;
             quad.id = _maxQuadId;
+            _maxQuadId++;
+            
         } else {
             _quads[quad.id] = quad;
         }

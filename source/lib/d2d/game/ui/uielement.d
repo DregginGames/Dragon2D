@@ -5,6 +5,7 @@
 module d2d.game.ui.uielement;
 
 import std.json;
+import std.variant;
 
 import gl3n.linalg;
 
@@ -182,6 +183,15 @@ abstract class UIElement : Base, Serializeable
                     }
                 }
             }
+
+            // make sure to unfocus 
+            if (!_hoverd) {
+                auto mc = cast(MouseButtonDownEvent)e;
+                if(mc&&focus) {
+                    _unfocus();
+                }
+            }
+
             // if any of our children are hoverd we, btw, ignore any other events because they go directly to our children. hover is the exception.
             bool childIsHoverd = false;
             foreach(c; children) {
@@ -198,13 +208,18 @@ abstract class UIElement : Base, Serializeable
             else if (_hoverd) {
                 auto mc = cast(MouseButtonDownEvent)e;
                 if(mc) {
+                    auto absolute = mc.npos;
+                    absolute.x = absolute.x*aspect - (aspect-1.0)/2.0;
+                    vec2 relative;
+                    relative.x = (absolute.x-this.absolutePos.x)/this.absoluteSize.x;
+                    relative.y = (absolute.y-this.absolutePos.y)/this.absoluteSize.y;
                     switch (mc.button) {
                         case MouseButtonEvent.MouseButtonId.MouseLeft:
-                            fireEvent(new UiOnClickEvent(this));
+                            fireEvent(new UiOnLeftClickEvent(this,absolute,relative));
                             _clicked = true;
                             break;
                         case MouseButtonEvent.MouseButtonId.MouseRight:
-                            fireEvent(new UiOnRightClickEvent(this));
+                            fireEvent(new UiOnRightClickEvent(this,absolute,relative));
                             _clicked = true;
                             break;
                         default:
@@ -219,7 +234,22 @@ abstract class UIElement : Base, Serializeable
             }
         }
         
-        
+        _anythingHovered |= _hoverd;
+    }
+
+    UIElement[] getByName(string name)
+    {
+        UIElement[] res;
+        if(_name==name) {
+            res ~= this;
+        }
+        foreach(ref c; children) {
+            if (cast(UIElement)c) {
+                res ~= (cast(UIElement)c).getByName(name);
+            }
+        }
+
+        return res;
     }
 
     @property bool hovered() const
@@ -237,7 +267,10 @@ abstract class UIElement : Base, Serializeable
         return _focus;
     }
 
-    
+    @property ref Variant[string] userData()
+    {
+        return _userData;
+    }
     
     /**  
         Acts around Object.factory to make sure generated objects are UIElements
@@ -253,12 +286,27 @@ abstract class UIElement : Base, Serializeable
         return null;
     }
 
+    /// returns if any ui element is focused
+    static bool isAnythingFocused()
+    {
+        return _focusedElement !is null;
+    }
+
+    /// returns if any ui element is hovered
+    static bool isAnythingHovered()
+    {
+        return _anythingHovered;
+    }
+
     mixin createSerialize!(false,"_name","_pos","_size");
 
 protected:
     /// Sets the focus of a element and unfocuses the current one
     void _setFocus() 
     {
+        if (!_focusable()) {
+            return;
+        }
         if (_focusedElement==this) {
             return;
         }
@@ -282,28 +330,18 @@ protected:
 
     /// operates on relative postions. used to check if a ui element can be focused
     /// Override to return false if you want to make an object that cant be focused
-    bool _focusable(vec2 pos)
+    bool _focusable()
     {
-        if(children.length==0) {
-            return true;
-        }
-
         foreach(ref c; children) {
             auto p = cast(UIElement)c;
             if(p) {
-                if (
-                   p.pos.x <= pos.x 
-                   && p.pos.y <= pos.y 
-                   && p.pos.x+p.size.x>=p.pos.x 
-                   && p.pos.y+p.size.y>=p.pos.y
-                   )
-                   {
+                if (p._focusable()) {
                     return false;
                 }
             }
         }
 
-        return true;
+        return hovered();
     }
 
     /// called if position or size is changed. overload for maximum usefullness.
@@ -325,6 +363,8 @@ private:
     vec2 _size = 1.0f;
     /// if true the element can be dragged around with the mouse
     bool _dragable = false;
+    /// user data. variants are cool
+    Variant[string] _userData;
 
     // The floowing are interaction statuses of the element
     /// If the mouse is "hovering" above this object
@@ -335,5 +375,10 @@ private:
     bool _focus = false;
     /// If the object is being dragged around
     bool _dragged = false;
+    /// static thing that represents the focused element
     static UIElement _focusedElement;
+
+protected:
+    /// stores if anything in the current update cyclus is detected as hovered
+    static bool     _anythingHovered;
 }

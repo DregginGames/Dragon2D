@@ -3,6 +3,8 @@
 */
 module d2d.game.ui.uievent;
 
+import gl3n.linalg;
+
 import d2d.core.event;
 import d2d.game.ui.uielement;
 
@@ -31,15 +33,41 @@ private:
 */
 class UiOnClickEvent : UiEvent 
 {
-    this(UIElement element) { super(element); }
+    this(UIElement element,vec2 absolute, vec2 relative) 
+    { 
+        super(element); 
+        _absoluteClick = absolute;
+        _relativeClick = relative;
+    }
+    
+    @property vec2 absoluteClick()
+    {
+        return _absoluteClick;
+    }
+    @property vec2 relativeClick()
+    {
+        return _relativeClick;
+    }
+private:
+
+    vec2 _absoluteClick;
+    vec2 _relativeClick;
 }
 
 /** 
 Event that is fired if an ui element is right-clicked on
 */
-class UiOnRightClickEvent : UiEvent 
+class UiOnLeftClickEvent : UiOnClickEvent 
 {
-    this(UIElement element) { super(element); }
+    this(UIElement element,vec2 absolute, vec2 relative) { super(element,absolute,relative); }
+}
+
+/** 
+Event that is fired if an ui element is right-clicked on
+*/
+class UiOnRightClickEvent : UiOnClickEvent 
+{
+    this(UIElement element,vec2 absolute, vec2 relative) { super(element,absolute,relative); }
 }
 
 /** 

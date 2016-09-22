@@ -2,9 +2,14 @@
 module d2d.game.world.tileset;
 
 import std.json;
+import std.algorithm;
+
+
 import gl3n.linalg;
 import d2d.core;
 import d2d.util.jsonutil;
+
+
 
 class Tileset : Resource
 {
@@ -19,6 +24,7 @@ class Tileset : Resource
     ~this()
     {
         Resource.free(_name);
+        Resource.free(_texture);
     }
 
     /// first reload ever implemented. not that its the most usefull.
@@ -59,6 +65,16 @@ class Tileset : Resource
         d.uvpos = vec2(_uvsize.x*x,_uvsize.y*y);
         d.id = id;
         return d;
+    }
+
+    /// revovers a tileset id from a uv pos
+    ulong getTileId(vec2 pos)
+    {
+        long x = 0;
+        long y = 0;
+        x = cast(long)(pos.x/_uvsize.x);
+        y = cast(long)(pos.y/_uvsize.y);
+        return max(0,min(_xdim*_ydim,x + y*_xdim));
     }
 
     @property string texture()

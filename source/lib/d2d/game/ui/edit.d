@@ -19,17 +19,12 @@ alias std.algorithm.min min;
 
 class Edit : Box
 {
-    this() 
-    {
-        _textColor = vec4(1.0,1.0,1.0,1.0);
-        _cursorQuad = new ColoredQuad();
-    }
-
     /// constructor that allows font and string to be set
-    this(string font, string text="")
+    this(string text="", string font="font.default")
 	{
         _textColor = vec4(1.0,1.0,1.0,1.0);
         _cursorQuad = new ColoredQuad();
+        _cursorQuad.ignoreView = true;
         _cursorQuad.color = _textColor;
 		_text = new Text(text,font, 1.0f);
         _textStr = text;
@@ -159,9 +154,9 @@ class Edit : Box
 
     
     /// returns the text object of this placeholder text
-    @property Text text()
+    @property string text()
     {
-        return _text;
+        return _textStr;
     }   
 
     /// sets the paceholder text of this text edit
@@ -173,6 +168,20 @@ class Edit : Box
     @property string placeholder(string s) 
     {
         return _placeholder = s;
+    }
+
+    /// gets/sets the color of the text
+    @property vec4 textColor()
+    {
+        return _textColor;
+    }
+    /// ditto
+    @property vec4 textColor(vec4 c)
+    {
+        _textColor = c;
+        _cursorQuad.color = c;
+        _updateText();
+        return _textColor;
     }
 
 protected:
@@ -202,6 +211,7 @@ protected:
             settings.height = s.y;
             settings.overflow = Text.OverflowBehaviour.scroll;
             settings.positioning = Text.Positioning.left;
+            settings.color = _textColor;
             if (t.length == 0) {
                 settings.scroll = 0.0;
             } else {
@@ -233,4 +243,5 @@ private:
     vec4 _textColor;
     vec2 _cursorPos;
     uint _cursor;
+    uint _selectedLayer;
 }

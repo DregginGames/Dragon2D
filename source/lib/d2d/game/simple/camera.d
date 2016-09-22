@@ -27,6 +27,7 @@ class Camera : Entity
     /// Ditto
 	@property float height(float h)
 	{
+        _view.size = aspectRatioRectangleRange(h);
 		return _height = h;
 	}
 

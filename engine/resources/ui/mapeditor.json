@@ -1,0 +1,50 @@
+{
+    "_name": "ui.mapeditor",
+    "_pos": [
+        0,
+        0
+    ],
+    "_size": [
+        1,
+        1
+    ],
+    "children": [
+        {
+            "_name": "layerbox",
+            "_pos": [
+                "edgeL",
+                0
+            ],
+            "_quad.color": [
+                0.95,
+                0.95,
+                0.95,
+                0.8
+            ],
+            "_size": [
+                0.2,
+                0.5
+            ],
+            "typename": "d2d.game.ui.box.Box"
+        },
+		{
+            "_name": "tilesetbox",
+            "_pos": [
+                "edgeL",
+                0.6
+            ],
+            "_quad.color": [
+                0.95,
+                0.95,
+                0.95,
+                0.8
+            ],
+            "_size": [
+                0.4,
+                0.4
+            ],
+            "typename": "d2d.game.ui.box.Box"
+        }
+    ],
+    "typename": "d2d.game.ui.ui.UI"
+}

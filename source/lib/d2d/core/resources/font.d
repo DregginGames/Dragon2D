@@ -7,6 +7,7 @@ module d2d.core.resources.font;
 import d2d.core.resource;
 import d2d.util.fileio;
 import d2d.util.logger;
+import d2d.util.settings;
 
 import derelict.sdl2.sdl;
 import derelict.sdl2.ttf;
@@ -26,6 +27,9 @@ class Font : Resource
 
     this (string name) 
     {
+        if (name == "font.default") {
+            name = Settings["defaultFont"].str;
+        }
         auto fresource = FileResource.getFileResource(name);
         if (!fresource.invalid) {
             import std.string; // for toStringz

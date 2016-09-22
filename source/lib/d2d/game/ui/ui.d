@@ -52,7 +52,7 @@ class UI : UIElement
     /// root dosnt annoy. amen.
     override void preUpdate()
     {
-
+        _anythingHovered = false;
     }
 private:
 }

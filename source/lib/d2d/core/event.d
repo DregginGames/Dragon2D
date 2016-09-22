@@ -6,6 +6,7 @@ module d2d.core.event;
 import derelict.sdl2.sdl;
 
 import d2d.core.base;
+import d2d.util.logger;
 
 /// Events are well.. Events that are fired by casses derived form Base. They have a owner (the firing base). Derive events from this class.
 class Event
@@ -33,6 +34,26 @@ class Event
     @property void source(Base s)
     {
         eventSource = source;
+    }
+
+    /// (helper) function to automate check, cast and filter
+    void on(T, string filter="")(void delegate(T event) callback) 
+    {
+        try{
+            T e = cast(T)this;
+            if(e) {
+                static if(filter == "") {
+                    callback(e);
+                }
+                else {
+                    mixin("if(" ~ filter ~ "){callback(e);}");
+                }
+            }
+        }
+        catch(Exception e) {
+            Logger.log("CRITICAL: exception caught in event filter");
+            Logger.log(e.msg);
+        }
     }
 
 private:

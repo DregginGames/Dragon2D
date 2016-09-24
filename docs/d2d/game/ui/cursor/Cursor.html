@@ -341,19 +341,19 @@ $('#symbolSearchPane').show();
 							<tr>
 								<td>
 									<a href="../../../../d2d/core/base/Base.parent.html" class="public inherited property"><code>parent</code></a>
-									<span class="tableEntryAnnotation">[set]</span>
+									<span class="tableEntryAnnotation">[get]</span>
 								</td>
 								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html"><span class="typ">Base</span></a></code></td>
-								<td>sets the parent object of this object
+								<td>gets the parent object of this object
 </td>
 							</tr>
 							<tr>
 								<td>
 									<a href="../../../../d2d/core/base/Base.parent.html" class="public inherited property"><code>parent</code></a>
-									<span class="tableEntryAnnotation">[get]</span>
+									<span class="tableEntryAnnotation">[set]</span>
 								</td>
 								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html"><span class="typ">Base</span></a></code></td>
-								<td>gets the parent object of this object
+								<td>sets the parent object of this object
 </td>
 							</tr>
 							<tr>
@@ -385,11 +385,38 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
+									<a href="../../../../d2d/game/entity/Entity.radius.html" class="public inherited property"><code>radius</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">double</span></code></td>
+								<td>Gets/Sets the radius of this entity. Used if sizeMode == SizeMode.radius
+</td>
+							</tr>
+							<tr>
+								<td>
 									<a href="../../../../d2d/core/base/Base.root.html" class="public inherited property"><code>root</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
 								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/core/base/Base.html"><span class="typ">Base</span></a></code></td>
 								<td>the "root" is the root of the element tree wich this object is a member
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/entity/Entity.size.html" class="public inherited property"><code>size</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2)</code></td>
+								<td>Gets/Sets the size of this entity. Used if sizeMode == SizeMode.rect
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/entity/Entity.sizeMode.html" class="public inherited property"><code>sizeMode</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../d2d/game/entity/Entity.SizeMode.html"><span class="typ">Entity<wbr/></span><span class="pun">.<wbr/></span><span class="typ">SizeMode</span></a></code></td>
+								<td>gets/sets the size-mode of this entity
 </td>
 							</tr>
 						</table>
@@ -413,6 +440,33 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
+									<a href="../../../../d2d/game/entity/Entity.findAll.html" class="public inherited">
+										<code>findAll</code>
+									</a>
+								</td>
+								<td>finds all entites at or around point p (rect)
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/entity/Entity.findAll.html" class="public inherited">
+										<code>findAll</code>
+									</a>
+								</td>
+								<td>finds all entites at or around point p (radius)
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/entity/Entity.findAll.html" class="public inherited">
+										<code>findAll</code>
+									</a>
+								</td>
+								<td>finds all entities at position p
+</td>
+							</tr>
+							<tr>
+								<td>
 									<a href="../../../../d2d/core/base/Base.fireEvent.html" class="public inherited">
 										<code>fireEvent</code>
 									</a>
@@ -427,6 +481,51 @@ $('#symbolSearchPane').show();
 									</a>
 								</td>
 								<td>Gets a service by its name. Syntax is getService!ServiceClass(name)
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/entity/Entity.intersect.html" class="public inherited">
+										<code>intersect</code>
+									</a>
+								</td>
+								<td>Tests if this entity intersects with position p or is in the rect around p
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/entity/Entity.intersect.html" class="public inherited">
+										<code>intersect</code>
+									</a>
+								</td>
+								<td>Tests if this entity intersects with position p or is in the radius around p
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/entity/Entity.intersect.html" class="public inherited">
+										<code>intersect</code>
+									</a>
+								</td>
+								<td>Tests if this entity intersects with another
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/entity/Entity.intersect.html" class="public inherited">
+										<code>intersect</code>
+									</a>
+								</td>
+								<td>Thests if this entity intersects with position p
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/entity/Entity.intersectAny.html" class="public inherited">
+										<code>intersectAny</code>
+									</a>
+								</td>
+								<td>Returns all entities this one intersects with
 </td>
 							</tr>
 							<tr>
@@ -523,6 +622,17 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
+									<a href="../../../../d2d/game/entity/Entity.doFullIntersectionTest.html" class="protected inherited">
+										<code>doFullIntersectionTest</code>
+									</a>
+								</td>
+								<td>does the full intersection test between all entities
+        dont ever call manually - it fires collision events.
+        placed here because of some vars; called once from the object instanced by the world
+</td>
+							</tr>
+							<tr>
+								<td>
 									<a href="../../../../d2d/core/base/Base.enableEventHandling.html" class="protected inherited">
 										<code>enableEventHandling</code>
 									</a>
@@ -564,6 +674,15 @@ $('#symbolSearchPane').show();
 									</a>
 								</td>
 								<td>Called if a parent is added to this object. overload to add usefullness
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/entity/Entity.onPosSizeChange.html" class="protected inherited">
+										<code>onPosSizeChange</code>
+									</a>
+								</td>
+								<td>called when position or size of this entity is changed. overload to make usefull
 </td>
 							</tr>
 							<tr>
@@ -628,6 +747,15 @@ $('#symbolSearchPane').show();
 									</a>
 								</td>
 								<td>the position modes for Entities
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/entity/Entity.SizeMode.html" class="public inherited">
+										<code>SizeMode</code>
+									</a>
+								</td>
+								<td>the size mode. Used for collisions and sometimes even for rendering
 </td>
 							</tr>
 						</table>

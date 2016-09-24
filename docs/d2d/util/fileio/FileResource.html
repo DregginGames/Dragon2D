@@ -186,7 +186,7 @@
 								<a href="../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
-								<a href="../../../d2d/game/ui/text.html" class=" module">text</a>
+								<a href="../../../d2d/game/ui/label.html" class=" module">label</a>
 							</li>
 							<li>
 								<a href="../../../d2d/game/ui/ui.html" class=" module">ui</a>
@@ -202,6 +202,14 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">world</a>
 						<ul class="tree-view">
+							<li class="collapsed tree-view">
+								<a href="#" class="package">map</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../d2d/game/world/map/map.html" class=" module">map</a>
+							</li>
+						</ul>
+							</li>
 							<li>
 								<a href="../../../d2d/game/world/worldtile.html" class=" module">worldtile</a>
 							</li>
@@ -342,6 +350,15 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
+									<a href="../../../d2d/util/fileio/FileResource.createGameResource.html" class="public">
+										<code>createGameResource</code>
+									</a>
+								</td>
+								<td>creates a new (read as: never exsisted) resource in game path
+</td>
+							</tr>
+							<tr>
+								<td>
 									<a href="../../../d2d/util/fileio/FileResource.flush.html" class="public">
 										<code>flush</code>
 									</a>
@@ -385,6 +402,15 @@ $('#symbolSearchPane').show();
 								<td>returns a FileResource for the given resource stirng
         resource strings have the format resourcetype.name or resourcetype.subtpe.name or foo.bar.x.y.z - importand is that this is transformed into a path without file extension (foo/bar/x/y/z.*).
         THAT MEANS THAT FILENAMES WITHOUT EXTENSION MUST BE UNIQUE IN A DIRECTORY! THE FUNCTION WILL IGNORE ALL BUT THE FIRST ENTRY FOUND!
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../d2d/util/fileio/FileResource.nameToPath.html" class="public">
+										<code>nameToPath</code>
+									</a>
+								</td>
+								<td>returns string[2], [0] is the basename, [1] is the path
 </td>
 							</tr>
 							<tr>

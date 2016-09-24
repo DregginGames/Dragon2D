@@ -186,7 +186,7 @@
 								<a href="../../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
-								<a href="../../../../d2d/game/ui/text.html" class=" module">text</a>
+								<a href="../../../../d2d/game/ui/label.html" class=" module">label</a>
 							</li>
 							<li>
 								<a href="../../../../d2d/game/ui/ui.html" class=" module">ui</a>
@@ -202,6 +202,14 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">world</a>
 						<ul class="tree-view">
+							<li class="collapsed tree-view">
+								<a href="#" class="package">map</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/game/world/map/map.html" class=" module">map</a>
+							</li>
+						</ul>
+							</li>
 							<li>
 								<a href="../../../../d2d/game/world/worldtile.html" class=" module">worldtile</a>
 							</li>
@@ -587,6 +595,51 @@ $('#symbolSearchPane').show();
 									</a>
 								</td>
 								<td>Enables event reciving for this object. Should be called in the constructor of classes that want it.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.onChildAdded.html" class="protected inherited">
+										<code>onChildAdded</code>
+									</a>
+								</td>
+								<td>Called if a child is added to this object. overload to add usefullness
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.onChildRemoved.html" class="protected inherited">
+										<code>onChildRemoved</code>
+									</a>
+								</td>
+								<td>Called if a child is removed from this object
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.onParentRemoved.html" class="protected inherited">
+										<code>onParentRemoved</code>
+									</a>
+								</td>
+								<td>Called if this object has lost its parent
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.onParentSet.html" class="protected inherited">
+										<code>onParentSet</code>
+									</a>
+								</td>
+								<td>Called if a parent is added to this object. overload to add usefullness
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.peekEvents.html" class="protected inherited">
+										<code>peekEvents</code>
+									</a>
+								</td>
+								<td>returns the pending events and does NOT clean them
 </td>
 							</tr>
 							<tr>

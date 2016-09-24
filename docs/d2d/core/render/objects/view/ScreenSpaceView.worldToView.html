@@ -186,7 +186,7 @@
 								<a href="../../../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
-								<a href="../../../../../d2d/game/ui/text.html" class=" module">text</a>
+								<a href="../../../../../d2d/game/ui/label.html" class=" module">label</a>
 							</li>
 							<li>
 								<a href="../../../../../d2d/game/ui/ui.html" class=" module">ui</a>
@@ -202,6 +202,14 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">world</a>
 						<ul class="tree-view">
+							<li class="collapsed tree-view">
+								<a href="#" class="package">map</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/game/world/map/map.html" class=" module">map</a>
+							</li>
+						</ul>
+							</li>
 							<li>
 								<a href="../../../../../d2d/game/world/worldtile.html" class=" module">worldtile</a>
 							</li>
@@ -264,8 +272,11 @@ $('#symbolSearchPane').show();
 		<div id="main-contents">
 			<h1>Function ScreenSpaceView.worldToView</h1>
 			<section>
-				<p>Returns mat4.identity so the ScreenSpace view causes no side effects but, well, the viewport
+				<p>Returns mat4.identity so the ScreenSpace view causes no side effects
 </p>
+<section><p>The aspect ratio however is kept, so -1,-1 is not a corner but the furthest point in a square on the screen!
+</p>
+</section>
 
 					<section>
 						<h3>Prototype</h3>

@@ -186,7 +186,7 @@
 								<a href="../../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
-								<a href="../../../../d2d/game/ui/text.html" class=" module">text</a>
+								<a href="../../../../d2d/game/ui/label.html" class=" module">label</a>
 							</li>
 							<li>
 								<a href="../../../../d2d/game/ui/ui.html" class=" module">ui</a>
@@ -202,6 +202,14 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">world</a>
 						<ul class="tree-view">
+							<li class="collapsed tree-view">
+								<a href="#" class="package">map</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../d2d/game/world/map/map.html" class=" module">map</a>
+							</li>
+						</ul>
+							</li>
 							<li>
 								<a href="../../../../d2d/game/world/worldtile.html" class=" module">worldtile</a>
 							</li>
@@ -271,7 +279,7 @@ $('#symbolSearchPane').show();
 						<h3>Inherits from</h3>
 						<ul>
 							<li>
-								<code class="prettyprint lang-d"><a href="../../../../d2d/game/ui/uielement/UIElement.html"><span class="typ">UIElement</span></a></code>
+								<code class="prettyprint lang-d"><a href="../../../../d2d/game/ui/uielement/UiElement.html"><span class="typ">UiElement</span></a></code>
  (base class)
 							</li>
 						</ul>
@@ -296,6 +304,25 @@ $('#symbolSearchPane').show();
 						</table>
 					</section>
 					<section>
+						<h3>Fields</h3>
+						<table>
+							<col class="caption"/>
+							<tr>
+								<th>Name</th>
+								<th>Type</th>
+								<th>Description</th>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/ui/uielement/UiElement._anythingHovered.html" class="protected inherited"><code>_anythingHovered</code></a>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td>
+								<td>stores if anything in the current update cyclus is detected as hovered
+</td>
+							</tr>
+						</table>
+					</section>
+					<section>
 						<h3>Properties</h3>
 						<table>
 							<col class="caption"/>
@@ -306,16 +333,7 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../../d2d/game/ui/box/Box.color.html" class="public property"><code>color</code></a>
-									<span class="tableEntryAnnotation">[get, set]</span>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,4)</code></td>
-								<td>The color of the box
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/game/ui/uielement/UIElement.absolutePos.html" class="public inherited property"><code>absolutePos</code></a>
+									<a href="../../../../d2d/game/ui/uielement/UiElement.absolutePos.html" class="public inherited property"><code>absolutePos</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
 								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2)</code></td>
@@ -324,7 +342,7 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../../d2d/game/ui/uielement/UIElement.absoluteSize.html" class="public inherited property"><code>absoluteSize</code></a>
+									<a href="../../../../d2d/game/ui/uielement/UiElement.absoluteSize.html" class="public inherited property"><code>absoluteSize</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
 								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2)</code></td>
@@ -351,6 +369,15 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
+									<a href="../../../../d2d/game/ui/uielement/UiElement.color.html" class="public inherited property"><code>color</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">d2d<wbr/></span><span class="pun">.</span><span class="pln">game<wbr/></span><span class="pun">.</span><span class="pln">ui<wbr/></span><span class="pun">.</span><span class="pln">uicolor<wbr/></span><span class="pun">.</span><span class="typ">UiColor</span></code></td>
+								<td>The color of this ui element. Setting might redraw things
+</td>
+							</tr>
+							<tr>
+								<td>
 									<a href="../../../../d2d/core/base/Base.deleted.html" class="public inherited property"><code>deleted</code></a>
 									<span class="tableEntryAnnotation">[get]</span>
 								</td>
@@ -369,7 +396,7 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../../d2d/game/ui/uielement/UIElement.name.html" class="public inherited property"><code>name</code></a>
+									<a href="../../../../d2d/game/ui/uielement/UiElement.name.html" class="public inherited property"><code>name</code></a>
 									<span class="tableEntryAnnotation">[get, set]</span>
 								</td>
 								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">string</span></code></td>
@@ -405,7 +432,7 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../../d2d/game/ui/uielement/UIElement.pos.html" class="public inherited property"><code>pos</code></a>
+									<a href="../../../../d2d/game/ui/uielement/UiElement.pos.html" class="public inherited property"><code>pos</code></a>
 									<span class="tableEntryAnnotation">[get, set]</span>
 								</td>
 								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2)</code></td>
@@ -423,7 +450,7 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../../d2d/game/ui/uielement/UIElement.size.html" class="public inherited property"><code>size</code></a>
+									<a href="../../../../d2d/game/ui/uielement/UiElement.size.html" class="public inherited property"><code>size</code></a>
 									<span class="tableEntryAnnotation">[get, set]</span>
 								</td>
 								<td class="typecol"><code class="prettyprint lang-d"><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2)</code></td>
@@ -469,11 +496,11 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../../d2d/game/ui/uielement/UIElement.fromClassname.html" class="public inherited">
+									<a href="../../../../d2d/game/ui/uielement/UiElement.fromClassname.html" class="public inherited">
 										<code>fromClassname</code>
 									</a>
 								</td>
-								<td>Acts around Object.factory to make sure generated objects are UIElements
+								<td>Acts around Object.factory to make sure generated objects are UiElements
 </td>
 							</tr>
 							<tr>
@@ -487,7 +514,25 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../../d2d/game/ui/uielement/UIElement.load.html" class="public inherited">
+									<a href="../../../../d2d/game/ui/uielement/UiElement.isAnythingFocused.html" class="public inherited">
+										<code>isAnythingFocused</code>
+									</a>
+								</td>
+								<td>returns if any ui element is focused
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/ui/uielement/UiElement.isAnythingHovered.html" class="public inherited">
+										<code>isAnythingHovered</code>
+									</a>
+								</td>
+								<td>returns if any ui element is hovered
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/ui/uielement/UiElement.load.html" class="public inherited">
 										<code>load</code>
 									</a>
 								</td>
@@ -570,7 +615,7 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../../d2d/game/ui/uielement/UIElement.store.html" class="public inherited">
+									<a href="../../../../d2d/game/ui/uielement/UiElement.store.html" class="public inherited">
 										<code>store</code>
 									</a>
 								</td>
@@ -595,6 +640,69 @@ $('#symbolSearchPane').show();
 									</a>
 								</td>
 								<td>Enables event reciving for this object. Should be called in the constructor of classes that want it.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.onChildAdded.html" class="protected inherited">
+										<code>onChildAdded</code>
+									</a>
+								</td>
+								<td>Called if a child is added to this object. overload to add usefullness
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.onChildRemoved.html" class="protected inherited">
+										<code>onChildRemoved</code>
+									</a>
+								</td>
+								<td>Called if a child is removed from this object
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/ui/uielement/UiElement.onColorChange.html" class="protected inherited">
+										<code>onColorChange</code>
+									</a>
+								</td>
+								<td>called if the color of this element was changed. overload for maximum usefullness
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.onParentRemoved.html" class="protected inherited">
+										<code>onParentRemoved</code>
+									</a>
+								</td>
+								<td>Called if this object has lost its parent
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.onParentSet.html" class="protected inherited">
+										<code>onParentSet</code>
+									</a>
+								</td>
+								<td>Called if a parent is added to this object. overload to add usefullness
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/ui/uielement/UiElement.onPosSizeChange.html" class="protected inherited">
+										<code>onPosSizeChange</code>
+									</a>
+								</td>
+								<td>called if position or size is changed. overload for maximum usefullness.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/core/base/Base.peekEvents.html" class="protected inherited">
+										<code>peekEvents</code>
+									</a>
+								</td>
+								<td>returns the pending events and does NOT clean them
 </td>
 							</tr>
 							<tr>
@@ -635,7 +743,7 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../../d2d/game/ui/uielement/UIElement._focusable.html" class="protected inherited">
+									<a href="../../../../d2d/game/ui/uielement/UiElement._focusable.html" class="protected inherited">
 										<code>_focusable</code>
 									</a>
 								</td>
@@ -644,7 +752,25 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../../d2d/game/ui/uielement/UIElement._setFocus.html" class="protected inherited">
+									<a href="../../../../d2d/game/ui/uielement/UiElement._forceUnfocus.html" class="protected inherited">
+										<code>_forceUnfocus</code>
+									</a>
+								</td>
+								<td>forces unfocus over everything
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/ui/uielement/UiElement._onFocus.html" class="protected inherited">
+										<code>_onFocus</code>
+									</a>
+								</td>
+								<td>called if this element os focues. overload for maxiumum usefullness
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../../d2d/game/ui/uielement/UiElement._setFocus.html" class="protected inherited">
 										<code>_setFocus</code>
 									</a>
 								</td>
@@ -653,7 +779,7 @@ $('#symbolSearchPane').show();
 							</tr>
 							<tr>
 								<td>
-									<a href="../../../../d2d/game/ui/uielement/UIElement._unfocus.html" class="protected inherited">
+									<a href="../../../../d2d/game/ui/uielement/UiElement._unfocus.html" class="protected inherited">
 										<code>_unfocus</code>
 									</a>
 								</td>

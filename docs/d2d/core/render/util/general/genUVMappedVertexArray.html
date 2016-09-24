@@ -186,7 +186,7 @@
 								<a href="../../../../../d2d/game/ui/image.html" class=" module">image</a>
 							</li>
 							<li>
-								<a href="../../../../../d2d/game/ui/text.html" class=" module">text</a>
+								<a href="../../../../../d2d/game/ui/label.html" class=" module">label</a>
 							</li>
 							<li>
 								<a href="../../../../../d2d/game/ui/ui.html" class=" module">ui</a>
@@ -202,6 +202,14 @@
 							<li class="collapsed tree-view">
 								<a href="#" class="package">world</a>
 						<ul class="tree-view">
+							<li class="collapsed tree-view">
+								<a href="#" class="package">map</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../../../../d2d/game/world/map/map.html" class=" module">map</a>
+							</li>
+						</ul>
+							</li>
 							<li>
 								<a href="../../../../../d2d/game/world/worldtile.html" class=" module">worldtile</a>
 							</li>
@@ -274,9 +282,9 @@ $('#symbolSearchPane').show();
 							<code class="lang-d">
 <span class="typ">void</span> <span class="pln">genUVMappedVertexArray</span><span class="pun">(</span>
 								<br/>
-&nbsp;&nbsp;<span class="kwd">out </span><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,4)<span class="pun">[]</span> <span class="pln">vertices</span><span class="pun">,</span>
+&nbsp;&nbsp;<span class="kwd">ref </span><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,4)<span class="pun">[]</span> <span class="pln">vertices</span><span class="pun">,</span>
 								<br/>
-&nbsp;&nbsp;<span class="kwd">out </span><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2)<span class="pun">[]</span> <span class="pln">uvs</span><span class="pun">,</span>
+&nbsp;&nbsp;<span class="kwd">ref </span><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2)<span class="pun">[]</span> <span class="pln">uvs</span><span class="pun">,</span>
 								<br/>
 &nbsp;&nbsp;<span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2) <span class="pln">pos</span> <span class="pun">=</span> <span class="typ">Vector</span><span class="pun">(</span><span class="pln">nanF</span><span class="pun">)<wbr/>.</span><span class="kwd">this</span><span class="pun">(</span><span class="lit">0.00000F</span><span class="pun">)</span><span class="pun">,</span>
 								<br/>

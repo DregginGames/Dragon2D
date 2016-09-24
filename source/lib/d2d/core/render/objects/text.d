@@ -161,7 +161,7 @@ class Text : Renderable
         // apply cutoff
         pos -= _lines[line].cutoff;
         if (pos > count!char(_lines[line].text)) { // count is the utf point length and not the length in bytes
-            pos = count!char(_lines[line].text);
+            pos = cast(int)count!char(_lines[line].text);
         }
         else if (pos <= 0) {
             return this.pos;
@@ -192,7 +192,7 @@ class Text : Renderable
         return _settings;
     }
 
-    @property uint nLines() const
+    @property size_t nLines() const
     {
         return _lines.length;
     }
@@ -404,7 +404,7 @@ private string stripTextOnLength(ref char[] str, TextSplitSettings settings, ref
                 }
 
                 str = str[upper..$];
-                cutoff = offset;
+                cutoff = cast(int)offset;
                 return removechars(result,"\n\r");
             }
         }

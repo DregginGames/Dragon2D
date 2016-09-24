@@ -4,7 +4,7 @@ d:
   
 script: 
   - dub build -c game
-  - dub build -c uieditor
+  - dub build -c mapeditor
   - dub build -b ddox -c docs
   
 after_success: 

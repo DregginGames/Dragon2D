@@ -18,17 +18,16 @@ int main(char[][] args)
 bool onStartup(Base base)
 {
 	import std.stdio;
-    auto camera = new Camera(1.0f);
+    auto camera = new Camera(5.0f);
     
     //base.addChild(new Grid(vec4(0.2f,0.0f,1.0f,.5f)));
 
-    auto ui = new UI("ui.menu");
+    auto map = new Map("map.testmap");
     //auto box = new Box();
     //box.color;
     //ui.addChild(box);
-    camera.addChild(ui);
-    ui.store();
-
+    camera.addChild(map);
+    map.addToWorld();
     base.addChild(camera);
 
 	return true;

@@ -66,7 +66,7 @@ class Edit : Box
         auto events = this.peekEvents();
         foreach(e; events) {
             // some things needed everywhere
-            uint len = count!char(_textStr);
+            size_t len = count!char(_textStr);
 
             // we want text edit events
             auto sdle = cast(SDLEvent)e;
@@ -86,7 +86,7 @@ class Edit : Box
                     } else if(_cursor == 0) {
                         result = instr ~ _textStr;
                     } else {
-                        uint pos = toUTFindex!char(_textStr,_cursor);
+                        size_t pos = toUTFindex!char(_textStr,_cursor);
                         result = _textStr[0..pos] ~ instr ~ _textStr[pos..$];                        
                     }
 
@@ -108,15 +108,15 @@ class Edit : Box
                             break;
                         }
                         if(_cursor == len) {
-                            uint pos = toUTFindex!char(_textStr,_cursor-1);
+                            size_t pos = toUTFindex!char(_textStr,_cursor-1);
                             _textStr = _textStr[0..pos];
                         } 
                         else if (_cursor == 1) {
                             _textStr = _textStr[1..$];
                         }
                         else {
-                            uint pos1 = toUTFindex!char(_textStr,_cursor-1);
-                            uint pos2 = toUTFindex!char(_textStr,_cursor);
+                            size_t pos1 = toUTFindex!char(_textStr,_cursor-1);
+                            size_t pos2 = toUTFindex!char(_textStr,_cursor);
                             _textStr = _textStr[0..pos1] ~ _textStr[pos2..$];
                         }
                         _cursor--;
@@ -129,15 +129,15 @@ class Edit : Box
                             break;
                         }
                         if(_cursor == len-1) {
-                            uint pos = toUTFindex!char(_textStr,_cursor);
+                            size_t pos = toUTFindex!char(_textStr,_cursor);
                             _textStr = _textStr[0..pos];
                         }
                         else if (_cursor == 0) {
                             _textStr = _textStr[1..$];
                         }
                         else {
-                            uint pos1 = toUTFindex!char(_textStr,_cursor);
-                            uint pos2 = toUTFindex!char(_textStr,_cursor+1);
+                            size_t pos1 = toUTFindex!char(_textStr,_cursor);
+                            size_t pos2 = toUTFindex!char(_textStr,_cursor+1);
                             _textStr = _textStr[0..pos1] ~ _textStr[pos2..$];
                         }
                         updateText();
@@ -288,7 +288,7 @@ private:
     string _textStr;
     string _placeholder;
     vec2 _cursorPos;
-    uint _cursor;
+    size_t _cursor;
     uint _selectedLayer;
     Regex!char _inputFilter;
 }

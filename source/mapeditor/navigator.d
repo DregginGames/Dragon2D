@@ -24,7 +24,7 @@ class Navigator : Base
 
         _mapname = Settings["mapname"].str;
         _cam = new Camera(4.0);
-        _map = new Map(_mapname);
+        _map = new Map(_mapname, false);
         
         _cursor = new WorldCursor();
         _cam.addChild(_cursor);

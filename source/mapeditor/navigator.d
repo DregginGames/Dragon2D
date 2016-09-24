@@ -80,6 +80,25 @@ class Navigator : Base
                 _layerUpdate();
             });
 
+            event.on!(UiOnChangeEvent,"e.element.name == \"layerZEdit\"")(delegate(UiOnChangeEvent e) {
+                auto elem = cast(Edit)e.element;
+                if (elem.text.length>0) {
+                    _map.layers[_activeLayer].layerZ = cast(int)elem.integer;
+                    auto world = this.getService!World("d2d.world");
+                    world.forceBatchRebuild();
+                }
+            });
+
+            event.on!(UiOnChangeEvent,"e.element.name == \"displayNameEdit\"")(delegate(UiOnChangeEvent e) {
+                auto elem = cast(Edit)e.element;
+                    _map.displayName = elem.text;
+            });
+
+            event.on!(UiOnChangeEvent,"e.element.name == \"controllerNameEdit\"")(delegate(UiOnChangeEvent e) {
+                auto elem = cast(Edit)e.element;
+                _map.controllerName = elem.text;
+            });
+
             if(!Ui.isAnythingFocused()&&!Ui.isAnythingHovered()) {
                 event.on!(MouseButtonDownEvent,"e.button == T.MouseButtonId.MouseLeft")(delegate(MouseButtonDownEvent e) {
                     _isDrawing = true;
@@ -97,6 +116,9 @@ class Navigator : Base
             event.on!(MouseButtonUpEvent,"e.button == T.MouseButtonId.MouseRight")(delegate(MouseButtonUpEvent e) {
                 _isDeleting = false;
             });
+
+            
+
         }
 
         if (_isDrawing) {
@@ -162,8 +184,7 @@ protected:
         }
         yoffset++;
         
-        UiColor color = defaultUiColorScheme(UiColorSchemeSelect.INTERACTION);
-
+        UiColor color = defaultUiColorScheme(UiColorSchemeSelect.INTERACTION);        
         auto addEdit = new Edit();
         addEdit.pos = vec2(0.05,0.1+0.05*yoffset);
         addEdit.size = vec2(0.7,0.05);
@@ -176,11 +197,20 @@ protected:
         addButton.size = vec2(0.2,0.05);
         addButton.pos = vec2(0.8,0.1+0.05*yoffset);
         
-        
-
-
         box.addChild(addEdit);
         box.addChild(addButton);
+
+        if(_map.layers.length > 0) {
+            import std.regex,std.conv;
+            yoffset+=2;
+            double y = 0.1+0.05*yoffset;
+            auto zEdit = mkeditpair(box,color,y,"layerZEdit","Z index",toImpl!string(_map.layers[_activeLayer].layerZ),"Z Index");
+            zEdit.filter = ctRegex!("^\\d*$");
+            yoffset++;
+            auto levelEdit = mkeditpair(box,color,0.1+y,"layerZEdit","Detail Level","0","level");
+        }
+
+        
         
     }
 
@@ -223,23 +253,12 @@ protected:
 
         UiColor color = defaultUiColorScheme(UiColorSchemeSelect.INTERACTION);
 
-        void mkeditpair(float y, string name, string labelStr, string editDefault="", string placeholder="") {
-            auto label = new Label(labelStr);
-            label.pos = vec2(0.0,y);
-            label.size = vec2(0.5,0.05);
-            auto edit = new Edit(editDefault);
-            edit.placeholder = placeholder;
-            edit.pos = vec2(0.0,y+0.05);
-            edit.size = vec2(1.0,0.05);
-            edit.color = color;
-            edit.name = name;
-            box.addChild(label);
-            box.addChild(edit);
-        }
+        
 
         // display name
-        mkeditpair(0.1,"displayNameEdit","Display Name",_map.displayName,"Display Name");
         
+        mkeditpair(box,color,0.1,"displayNameEdit","Display Name",_map.displayName,"Display Name");
+        mkeditpair(box,color,0.2,"controllerNameEdit","Map Controller",_map.controllerName,"fully.qualified.name");
 
         auto saveButton = new Button("Save");
         saveButton.name = "saveMapButton";
@@ -273,4 +292,22 @@ private:
 
     bool _isDrawing;
     bool _isDeleting;
+}
+
+
+/// helper used in manual drawing of ui. Returns the created edit
+Edit mkeditpair(UiElement target, UiColor color,double y, string name, string labelStr, string editDefault="", string placeholder="") {
+    auto label = new Label(labelStr);
+    label.pos = vec2(0.0,y);
+    label.size = vec2(0.5,0.05);
+    auto edit = new Edit(editDefault);
+    edit.placeholder = placeholder;
+    edit.pos = vec2(0.0,y+0.05);
+    edit.size = vec2(1.0,0.05);
+    edit.color = color;
+    edit.name = name;
+    target.addChild(label);
+    target.addChild(edit);
+
+    return edit;
 }

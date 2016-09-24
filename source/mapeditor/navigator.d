@@ -2,6 +2,7 @@
 module navigator;
 
 import std.math;
+import std.regex;
 
 import gl3n.linalg;
 
@@ -29,17 +30,18 @@ class Navigator : Base
         _cam.addChild(_cursor);
         this.addChild(_cam);
 
-        _ui = new UI("ui.mapeditor");
+        _ui = new Ui("ui.mapeditor");
         this.addChild(_ui);
         _cam.addChild(_map);
         _map.addToWorld();
 
-        _layerUpdate();
+        _redrawUi();
     }
 
     override void update() 
     {
         auto events = this.pollEvents();
+
         foreach(ref event; events) {
             if(cast(MouseWheelEvent)event) {
                 auto e = cast(MouseWheelEvent) event;
@@ -49,15 +51,21 @@ class Navigator : Base
             }
 
             /// parse ui interaction
-            event.on!(UiOnRightClickEvent,"e.element.name == \"addLayerButton\"")(delegate(UiOnRightClickEvent e) {
+            event.on!(UiOnClickEvent,"e.element.name == \"addLayerButton\"")(delegate(UiOnClickEvent e) {
                 auto edit = cast(Edit)_ui.getByName("addLayerEdit")[0];
                 WorldTileLayer l = new WorldTileLayer(edit.text);
                 _map.addLayer(l);
+                _map.removeFromWorld();
+                _map.addToWorld();
                 _activeLayer = _map.layers.length-1;
-                _buildLayerList();
+                _layerUpdate();
             });
             
-            event.on!(UiOnRightClickEvent,"e.element.name == \"setLayerText\"")(delegate(UiOnRightClickEvent e) {
+            event.on!(UiOnClickEvent,"e.element.name == \"saveMapButton\"")(delegate(UiOnClickEvent e) {
+                _map.saveMap();
+            });
+
+            event.on!(UiOnClickEvent,"e.element.name == \"setLayerText\"")(delegate(UiOnClickEvent e) {
                 int layerId = *e.element.userData["layer"].peek!(int);
                 if (layerId >= 0 && layerId < _map.layers.length) {
                     _activeLayer = layerId;
@@ -72,27 +80,55 @@ class Navigator : Base
                 _layerUpdate();
             });
 
-            if(!UI.isAnythingFocused()&&!UI.isAnythingHovered()) {
-                event.on!(MouseButtonDownEvent)(delegate(MouseButtonDownEvent e) {
-                    import d2d.util.logger;
-                    Logger.log("Adding tile at around " ~ to!string(_cursor.absolutePos));
-                    // map click to raster size (size property of TsetData)
-                    auto setname = _map.layers[_activeLayer].tileset;
-                    auto set = Resource.create!Tileset(setname);
-                    auto tileData = set.getTileData(_activeTile);
-                    auto size = tileData.size;
-                    vec2 p;
-                    p.x = floor(size.x+_cursor.absolutePos.x/size.x)*size.x;
-                    p.y = floor(size.y+_cursor.absolutePos.y/size.y)*size.y;
-                    Worldtile tile = new Worldtile(_activeTile,p);
-                    _map.layers[_activeLayer].addTile(tile);
-                    auto world = this.getService!World("d2d.world");
-                    world.forceBatchRebuild();
+            if(!Ui.isAnythingFocused()&&!Ui.isAnythingHovered()) {
+                event.on!(MouseButtonDownEvent,"e.button == T.MouseButtonId.MouseLeft")(delegate(MouseButtonDownEvent e) {
+                    _isDrawing = true;
+                    _isDeleting = false;
+                });
+                event.on!(MouseButtonDownEvent,"e.button == T.MouseButtonId.MouseRight")(delegate(MouseButtonDownEvent e) {
+                    _isDeleting = true;
+                    _isDrawing = false;
                 });
             }
+
+            event.on!(MouseButtonUpEvent,"e.button == T.MouseButtonId.MouseLeft")(delegate(MouseButtonUpEvent e) {
+                _isDrawing = false;
+            });
+            event.on!(MouseButtonUpEvent,"e.button == T.MouseButtonId.MouseRight")(delegate(MouseButtonUpEvent e) {
+                _isDeleting = false;
+            });
         }
 
-        
+        if (_isDrawing) {
+            import d2d.util.logger;
+            Logger.log("Adding tile at around " ~ to!string(_cursor.absolutePos));
+            // check if there is a tile already
+            auto tileList = _map.layers[_activeLayer].tilesAt(_cursor.absolutePos);
+            if (tileList.length > 0) {
+                foreach(ref t; tileList) {
+                    t.id = _activeTile;
+                }
+            }
+            else {
+                // map click to raster size (size property of TsetData)
+                auto setname = _map.layers[_activeLayer].tileset;
+                auto set = Resource.create!Tileset(setname);
+                auto tileData = set.getTileData(_activeTile);
+                auto size = tileData.size;
+                vec2 p;
+                p.x = floor(size.x+_cursor.absolutePos.x/size.x)*size.x;
+                p.y = floor(size.y+_cursor.absolutePos.y/size.y)*size.y;
+                Worldtile tile = new Worldtile(_activeTile,p);
+                _map.layers[_activeLayer].addTile(tile);
+            }
+            auto world = this.getService!World("d2d.world");
+            world.forceBatchRebuild();
+        }
+        else if (_isDeleting) {
+            _map.layers[_activeLayer].removeTilesAt(_cursor.absolutePos);
+            auto world = this.getService!World("d2d.world");
+            world.forceBatchRebuild();
+        }
 
     }
 
@@ -105,12 +141,19 @@ protected:
         auto box = _ui.getByName("layerbox")[0];
         box.children.clear();
         
+        auto boxlabel = new Label("Layers");
+        boxlabel.pos = vec2(0.0,0.0);
+        boxlabel.size = vec2(.5,0.05);
+        box.addChild(boxlabel);
+
         int yoffset = 0;
         foreach(ref layer; _map.layers) {            
             auto t = new Button(layer.tileset);
-            t.color = _activeLayer == yoffset ? vec4(1.0,0.0,0.0,1.0) : vec4(1.0,1.0,1.0,1.0);   
-            t.textColor = vec4(0.0,0.0,0.0,1.0);           
-            t.pos = vec2(0.1,0.05+0.05*yoffset);
+            auto c = t.color;
+            c.background  = _activeLayer == yoffset ? vec4(1.0,0.0,0.0,1.0) : vec4(1.0,1.0,1.0,1.0);  
+            c.foreground = vec4(0.0,0.0,0.0,1.0);  
+            t.color = c;        
+            t.pos = vec2(0.1,0.1+0.05*yoffset);
             t.size = vec2(0.9,0.05);
             t.name = "setLayerText";
             t.userData["layer"] = yoffset;
@@ -118,19 +161,27 @@ protected:
             yoffset++;
         }
         yoffset++;
+        
+        UiColor color = defaultUiColorScheme(UiColorSchemeSelect.INTERACTION);
+
         auto addEdit = new Edit();
-        addEdit.pos = vec2(0.05,0.05+0.05*yoffset);
+        addEdit.pos = vec2(0.05,0.1+0.05*yoffset);
         addEdit.size = vec2(0.7,0.05);
-        addEdit.color = vec4(1.0,1.0,1.0,1.0);
-        addEdit.textColor = vec4(1.0,0.0,1.0,1.0);
+        addEdit.color = color;
         addEdit.name = "addLayerEdit";
+
         auto addButton = new Button("Add");
         addButton.name = "addLayerButton";
-        addButton.color = vec4(0.1,0.8,0.5,1.0);
+        addButton.color = color;
         addButton.size = vec2(0.2,0.05);
-        addButton.pos = vec2(0.8,0.05+0.05*yoffset);
+        addButton.pos = vec2(0.8,0.1+0.05*yoffset);
+        
+        
+
+
         box.addChild(addEdit);
         box.addChild(addButton);
+        
     }
 
     /// redraws the layer-tileset area
@@ -151,10 +202,57 @@ protected:
         auto tileData = set.getTileData(_activeTile);
         selectBox.pos = tileData.uvpos;
         selectBox.size = tileData.uvsize;
-        selectBox.color = vec4(1.0,0.0,0.0,0.5);
+        UiColor selectBoxColor;
+        selectBoxColor.background = vec4(1.0,0.0,0.0,0.5);
+        selectBox.color = selectBoxColor;
         i.addChild(selectBox);
         box.addChild(i);
 
+    }
+
+    /// redraws the map-properties-blob
+    void _buildMapProperties()
+    {
+        auto box = _ui.getByName("mapbox")[0];
+        box.children.clear();
+
+        auto boxlabel = new Label("Map Config");
+        boxlabel.pos = vec2(0.0,0.0);
+        boxlabel.size = vec2(.5,0.05);
+        box.addChild(boxlabel);
+
+        UiColor color = defaultUiColorScheme(UiColorSchemeSelect.INTERACTION);
+
+        void mkeditpair(float y, string name, string labelStr, string editDefault="", string placeholder="") {
+            auto label = new Label(labelStr);
+            label.pos = vec2(0.0,y);
+            label.size = vec2(0.5,0.05);
+            auto edit = new Edit(editDefault);
+            edit.placeholder = placeholder;
+            edit.pos = vec2(0.0,y+0.05);
+            edit.size = vec2(1.0,0.05);
+            edit.color = color;
+            edit.name = name;
+            box.addChild(label);
+            box.addChild(edit);
+        }
+
+        // display name
+        mkeditpair(0.1,"displayNameEdit","Display Name",_map.displayName,"Display Name");
+        
+
+        auto saveButton = new Button("Save");
+        saveButton.name = "saveMapButton";
+        saveButton.color = color;
+        saveButton.size = vec2(0.5,0.05);
+        saveButton.pos = vec2(0.01,0.94);
+        box.addChild(saveButton);
+    }
+    
+    void _redrawUi() 
+    {
+        _layerUpdate();
+        _buildMapProperties();
     }
 
     void _layerUpdate()
@@ -168,8 +266,11 @@ private:
     Map    _map;
     Camera _cam;
     WorldCursor _cursor;
-    UI          _ui;
+    Ui          _ui;
 
     int _activeLayer;
     int _activeTile;
+
+    bool _isDrawing;
+    bool _isDeleting;
 }

@@ -11,5 +11,5 @@
     "children": [
         
     ],
-    "typename": "d2d.game.ui.ui.UI"
+    "typename": "d2d.game.ui.ui.Ui"
 }

@@ -150,7 +150,7 @@ class Text : Renderable
         returns the position of possible cursor relative to the text
         Relatively calculation heavy. maybe bake this?
     */
-    vec2 getCursorPos(int line, int pos) 
+    vec2 getCursorPos(size_t line, size_t pos) 
     {
         if (nLines == 0) {
             return this.pos;
@@ -161,7 +161,7 @@ class Text : Renderable
         // apply cutoff
         pos -= _lines[line].cutoff;
         if (pos > count!char(_lines[line].text)) { // count is the utf point length and not the length in bytes
-            pos = cast(int)count!char(_lines[line].text);
+            pos = count!char(_lines[line].text);
         }
         else if (pos <= 0) {
             return this.pos;

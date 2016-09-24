@@ -22,13 +22,14 @@ class Engine
 
         Logger.log("Engine startup...");
         auto gamecontainer = new GameContainer();
-        root = new Root()
-            .addChild(new Env()
-                .addChild(new IOTransformer())
-				.addChild(new Scheduler())
-                .addChild(new World())
-                .addChild(gamecontainer))
-				.addChild(new Renderer());
+        root = new Root() // container. engine is not root - this is intended.
+            .addChild(new Env() // env - we need to live some where
+                .addChild(new IOTransformer()) // sld->d2d events
+				.addChild(new Scheduler()) // anyone use this
+                .addChild(new World()) // world rendering (maps etc) 
+                .addChild(new EntityCollisionTester()) // collision tests 
+                .addChild(gamecontainer)) // game below here 
+				.addChild(new Renderer()); // rendering
         Logger.log("Engine started!");
 
 		if (!startupCallback(gamecontainer)) {

@@ -53,7 +53,7 @@ class Map : Base, Serializeable
         // the controller controlls
         if(_controllerEnabled) {
             try {
-                _controller = cast(Mapcontroller)Object.factory(_controllerName);
+                _controller = cast(MapController)Object.factory(_controllerName);
                 if(_controller) {
                     auto c = cast(Base)_controller;
                     if(c) {
@@ -62,7 +62,6 @@ class Map : Base, Serializeable
                         Logger.log("Map Controller " ~ _controllerName ~ " cannot be added as child to " ~ _name);
                     }
                     _controller.setMap(this);
-                    _controller.onMapload();
                 } else {
                     Logger.log("Map Controller " ~ _controllerName ~ " does not exsist");
                 }
@@ -90,6 +89,10 @@ class Map : Base, Serializeable
         foreach(ref l; _layers) {
             world.addLayer(l);
         }
+
+        if(_controller) {
+            _controller.onMapload();
+        }
     }
 
     /// removes a map from the world
@@ -98,6 +101,10 @@ class Map : Base, Serializeable
         auto world = this.getService!World("d2d.world");
         foreach(ref l; _layers) {
             world.removeLayer(l);
+        }
+
+        if(_controller) {
+            _controller.onMapUnload();
         }
     }
 
@@ -213,6 +220,6 @@ private:
     string _controllerName;
     WorldTileLayer[] _layers;
         
-    Mapcontroller _controller;
+    MapController _controller;
     bool _controllerEnabled;
 }

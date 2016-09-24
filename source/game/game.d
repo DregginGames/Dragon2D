@@ -18,17 +18,9 @@ int main(char[][] args)
 bool onStartup(Base base)
 {
 	import std.stdio;
-    auto camera = new Camera(5.0f);
-    
-    //base.addChild(new Grid(vec4(0.2f,0.0f,1.0f,.5f)));
-
     auto map = new Map("map.testmap");
-    //auto box = new Box();
-    //box.color;
-    //ui.addChild(box);
-    camera.addChild(map);
+    base.addChild(map); // the order of addChild and addToWorld is importand
     map.addToWorld();
-    base.addChild(camera);
 
 	return true;
 }

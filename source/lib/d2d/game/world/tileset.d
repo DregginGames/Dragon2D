@@ -16,7 +16,7 @@ class Tileset : Resource
     this (string name) 
     {
         _name = name;
-        Resource.preload!JSONData(_name);
+        Resource.preload!JsonData(_name);
         load();
         super(name);
     }
@@ -36,7 +36,7 @@ class Tileset : Resource
 
     void load()
     {
-        auto d = Resource.create!JSONData(_name).data;
+        auto d = Resource.create!JsonData(_name).data;
         try {
             _texture = d["texture"].str;
             _xdim = d["xdim"].integer;

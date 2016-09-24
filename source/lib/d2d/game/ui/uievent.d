@@ -14,18 +14,18 @@ import d2d.game.ui.uielement;
 abstract class UiEvent : Event
 {
     /// Creates a new UI event. Always attached to a ui element
-    this(UIElement element) 
+    this(UiElement element) 
     {
         _element = element;
     }
 
-    final @property UIElement element()
+    final @property UiElement element()
     {
         return _element;
     }
 private:
     /// The UI element wich emmits this event
-    UIElement _element;
+    UiElement _element;
 }
 
 /** 
@@ -33,7 +33,7 @@ private:
 */
 class UiOnClickEvent : UiEvent 
 {
-    this(UIElement element,vec2 absolute, vec2 relative) 
+    this(UiElement element,vec2 absolute, vec2 relative) 
     { 
         super(element); 
         _absoluteClick = absolute;
@@ -59,7 +59,7 @@ Event that is fired if an ui element is right-clicked on
 */
 class UiOnLeftClickEvent : UiOnClickEvent 
 {
-    this(UIElement element,vec2 absolute, vec2 relative) { super(element,absolute,relative); }
+    this(UiElement element,vec2 absolute, vec2 relative) { super(element,absolute,relative); }
 }
 
 /** 
@@ -67,7 +67,7 @@ Event that is fired if an ui element is right-clicked on
 */
 class UiOnRightClickEvent : UiOnClickEvent 
 {
-    this(UIElement element,vec2 absolute, vec2 relative) { super(element,absolute,relative); }
+    this(UiElement element,vec2 absolute, vec2 relative) { super(element,absolute,relative); }
 }
 
 /** 
@@ -75,7 +75,7 @@ Event that is fired if an ui element is focused on
 */
 class UiOnFocusEvent : UiEvent 
 {
-    this(UIElement element) { super(element); }
+    this(UiElement element) { super(element); }
 }
 
 /** 
@@ -83,5 +83,5 @@ Event that is fired if an ui element is hoverd on
 */
 class UiOnHoverEvent : UiEvent 
 {
-    this(UIElement element) { super(element); }
+    this(UiElement element) { super(element); }
 }

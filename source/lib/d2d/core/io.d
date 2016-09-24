@@ -122,11 +122,11 @@ private:
 abstract class MouseButtonEvent : MouseEvent
 {
     enum MouseButtonId {
-        MouseLeft = 0,
-        MouseRight = 1,
-        MouseWheelButton = 2,
-        MouseThumb1 = 3,
-        MOuseThumb2 = 4
+        MouseLeft = SDL_BUTTON_LEFT,
+        MouseRight = SDL_BUTTON_RIGHT,
+        MouseWheelButton = SDL_BUTTON_MIDDLE,
+        MouseThumb1 = SDL_BUTTON_X1,
+        MOuseThumb2 = SDL_BUTTON_X2
     };
 
     /// ctor takes name and pos and the button that changed

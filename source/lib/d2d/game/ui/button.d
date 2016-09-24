@@ -20,8 +20,9 @@ class Button : Box
     {
         _text = new Text(text,font,1.0);
         _text.ignoreView = true;
+        _text.detailLevel = 100;
         _label = text;
-        _updateText();
+        updateText();
     }
 
     /// Gets/Sets the label of this button
@@ -35,21 +36,6 @@ class Button : Box
         return _label = l;
     }
 
-    /// Gets/Sets the text color
-    @property vec4 textColor() const
-    {
-        return _text.settings.color;
-    }
-    /// Ditto
-    @property vec4 textColor(vec4 c) 
-    {
-        auto s = _text.settings;
-        s.color = c;
-        _text.settings = s;
-        return c;
-    }
-
-
     override void render()
     {
         super.render();
@@ -59,22 +45,29 @@ class Button : Box
     }
 
 protected:
-    void _updateText()
+    void updateText()
     {
         auto s = _text.settings;
         s.height = this.absoluteSize.y;
         s.maxwidth = this.absoluteSize.x;
         s.positioning = Text.Positioning.centered;
         s.overflow = Text.OverflowBehaviour.showBegin;
-        
+        s.color = color.foreground;
         s.text = _label;
         _text.settings = s;
     }
 
-    override void _onPosSizeChange()  
+    override void onPosSizeChange()  
     {
-        _updateText();
+        updateText();
     }
+
+    override void onColorChange()
+    {
+        updateText();
+        super.onColorChange();
+    }
+    
 private:
     Text _text;
     string _label;

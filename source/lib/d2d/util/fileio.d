@@ -79,6 +79,24 @@ class FileResource
         }   
     }
 
+    /// returns string[2], [0] is the basename, [1] is the path
+    static string[2] nameToPath(string resourceString)
+    {
+        string[2] result;
+        result[0] = "";
+        result[1] = "";
+        auto lastSeperator = lastIndexOf(resourceString, '.');
+        if (lastSeperator == -1) {
+            result[0] = resourceString;
+        }
+        else {
+            result[0] = resourceString[lastSeperator+1..$];
+            result[1] = translate(resourceString[0..lastSeperator], ['.' : '/' ]);
+        }
+
+        return result;
+    }
+
     /** returns a FileResource for the given resource stirng
         resource strings have the format resourcetype.name or resourcetype.subtpe.name or foo.bar.x.y.z - importand is that this is transformed into a path without file extension (foo/bar/x/y/z.*). 
         THAT MEANS THAT FILENAMES WITHOUT EXTENSION MUST BE UNIQUE IN A DIRECTORY! THE FUNCTION WILL IGNORE ALL BUT THE FIRST ENTRY FOUND!
@@ -96,16 +114,10 @@ class FileResource
         newResource._name = resourceString;
 
         // we need to transfor the string into a path. 
-        string basename = "";
-        string pathExtension = "";
-        auto lastSeperator = lastIndexOf(resourceString, '.');
-        if (lastSeperator == -1) {
-            basename = resourceString;
-        }
-        else {
-            basename = resourceString[lastSeperator+1..$];
-            pathExtension = translate(resourceString[0..lastSeperator], ['.' : '/' ]);
-        }
+        string[2] convRes = nameToPath(resourceString);
+        string basename = convRes[0];
+        string pathExtension = convRes[1];
+        
 
         // resources can be searched for in 3 places: the engine resource directory, the game resource directory and in the run directory (wich should be the root for engine and game but whatsoever) 
         string filePath;
@@ -129,6 +141,46 @@ class FileResource
             newResource._file = filePath;
         }
         return resources[newResource.name] = newResource;
+    }
+
+    /// creates a new (read as: never exsisted) resource in game path
+    static bool createGameResource(string resourceString, string resourceExtension)
+    {
+        import d2d.util.logger;
+        auto p = (resourceString in resources);
+        if( p !is null) {
+            if (!p.invalid) {
+                return true;
+            }            
+        }
+
+        auto newResource = new FileResource;
+        newResource._invalid = true;
+
+        try {
+            auto path = nameToPath(resourceString);
+            string fileDir = Settings.get("gameDir").str ~ Settings.get("gameResourceDir").str ~ path[1] ~ "/";
+            if(!exists(fileDir)) {
+                Logger.log("Dir to create " ~ resourceString ~ " in does not exsist. - " ~ fileDir);
+                return false;
+            }
+            string fullFile = fileDir ~ path[0] ~ "." ~ resourceExtension;
+            
+            newResource._name = resourceString;
+            newResource._file = fullFile;
+            newResource._invalid = false;
+            newResource._modified = true;
+            newResource.flush();
+            resources[newResource.name] = 
+            resources[newResource.name] = newResource;
+            return true;
+        }
+        catch(Exception e)
+        {
+            Logger.log("Cannot create new filesystem resource " ~ resourceString);
+        }
+
+        return false;
     }
 
     /// gets the name of the file resource

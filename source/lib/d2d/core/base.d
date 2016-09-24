@@ -110,6 +110,9 @@ class Base
         _children[child.id] = child;
         child.parent = this;
 
+        this.onChildAdded(child);
+        child.onParentSet();
+
         return cast(T) this;
     }
 
@@ -133,7 +136,10 @@ class Base
     final void removeChild(Base child)
     {
         child.parent = null;
-        _children.remove(child.id);
+        if(_children.remove(child.id)) {
+            this.onChildRemoved(child);
+            child.onParentRemoved();
+        }
     }
 
 	/** marks an object for deletion. It immediatly removes the service (if existant) and also marks all children for deletion!
@@ -299,6 +305,26 @@ protected:
 			throw new ObjectLogicException("Cannot un-service an object that never was a service!");
 		}
 	}
+
+    /// Called if a child is added to this object. overload to add usefullness
+    void onChildAdded(Base c)
+    {
+    }
+    /// Called if a child is removed from this object
+    void onChildRemoved(Base c)
+    {
+    }
+
+    /// Called if a parent is added to this object. overload to add usefullness
+    void onParentSet()
+    {
+    }
+    /// Called if this object has lost its parent
+    void onParentRemoved()
+    {
+    }
+    
+
 private:
     /// every engine object has an object id, this is the current maximum
     static size_t maxId = 0;

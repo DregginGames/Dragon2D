@@ -61,7 +61,7 @@ private:
                 foreach (ref tile; layer.tiles) {
                     BatchQuad q;
                     auto tdata = tset.getTileData(tile.id);
-                    q.pos = tile.pos;
+                    q.pos = tile.pos+layer.pos;
                     q.uvpos = tdata.uvpos;
                     q.uvsize = tdata.uvsize;
                     q.size = tdata.size;

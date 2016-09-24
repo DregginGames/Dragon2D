@@ -14,13 +14,14 @@ import d2d.game.ui.uielement;
 /**
 A box is a simple colored box renderd to the screen
 */
-class Image : UIElement
+class Image : UiElement
 {
     /// Constructor
     this(string texture="")
     {
         _quad = new TexturedQuad(texture);
         _quad.ignoreView = true;
+        _quad.detailLevel = 100;
     }
 
     /// Renders a box
@@ -45,6 +46,15 @@ class Image : UIElement
 
     mixin createSerialize!(true,"_quad.texname");
 
+
+protected:
+
+    /// images cannot be focused
+    override bool _focusable() 
+    {
+        return false;
+    }
+    
 private:
     /// The ColoredQuad used to draw this ui box
     TexturedQuad _quad;

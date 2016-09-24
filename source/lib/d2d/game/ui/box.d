@@ -14,13 +14,15 @@ import d2d.game.ui.uielement;
 /**
     A box is a simple colored box renderd to the screen
 */
-class Box : UIElement
+class Box : UiElement
 {
     /// Constructor
     this()
     {
         _quad = new ColoredQuad();
         _quad.ignoreView = true;
+        _quad.detailLevel = 100;
+        _quad.color = this.color.background;
     }
 
     /// Renders a box
@@ -32,18 +34,12 @@ class Box : UIElement
         r.pushObject(_quad);     
     }
 
-    /// The color of the box
-    @property vec4 color()
-    {
-        return _quad.color;
-    }
-    /// Ditto
-    @property vec4 color(vec4 c)
-    {
-        return _quad.color=c;
-    }
     
-    mixin createSerialize!(true,"_quad.color");
+protected:
+    override void onColorChange()
+    {
+        _quad.color = this.color.background;
+    }
 
 private:
     /// The ColoredQuad used to draw this ui box
@@ -60,6 +56,7 @@ class BorderBox : Box
     {
         _borderQuad = new ColoredQuad();
         _borderQuad.ignoreView = true;
+        _borderQuad.detailLevel = 100;
     }
 
     /// Renders a borderd box
@@ -94,7 +91,14 @@ class BorderBox : Box
         return _borderWidth = b;
     }
 
-    mixin createSerialize!(true,"_borderWidth","_borderQuad.color");
+    mixin createSerialize!(true,"_borderWidth");
+
+protected:
+    override void onColorChange()
+    {
+        _borderQuad.color = color.border;
+        super.onColorChange();
+    }
 
 private: 
     ColoredQuad _borderQuad;

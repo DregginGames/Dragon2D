@@ -15,6 +15,7 @@ import d2d.system.env;
 import d2d.util.jsonutil;
 
 import d2d.game.ui.uievent;
+import d2d.game.ui.uicolor;
 import d2d.util.logger;
 import d2d.util.serialize;
 
@@ -30,11 +31,12 @@ import d2d.util.serialize;
         Child lays on top of parent
         Absolute position ans size is relative to parents position and size
 */
-abstract class UIElement : Base, Serializeable
+abstract class UiElement : Base, Serializeable
 {
     this() 
     {
         enableEventHandling();
+        _color = defaultUiColorScheme(UiColorSchemeSelect.BASE);
     }
 
     ~this()
@@ -58,6 +60,12 @@ abstract class UIElement : Base, Serializeable
         } catch (Exception e) {
             Logger.log("WARNING: Could not load a UI element - " ~ e.msg);
         }
+
+        // afterwards we can assume that everything changeed, so do this 
+        onPosSizeChange();
+        onColorChange();
+
+        // now for the children
         auto p = "children" in data.object;
         if (!p) {
             return;
@@ -69,6 +77,7 @@ abstract class UIElement : Base, Serializeable
                 newelem.load(c);
             }
         }
+
     }
 
     /** 
@@ -76,7 +85,7 @@ abstract class UIElement : Base, Serializeable
         Overload for custom ui elements to store additional data. Make sure to call super.store(store) afterwards!
         Dont call by hand, insted let UI do that for you. 
         Params:
-            data = the JSONData struct that will be written into
+            data = the JsonData struct that will be written into
     */
     void store(ref JSONValue dst)
     {
@@ -84,8 +93,8 @@ abstract class UIElement : Base, Serializeable
         JSONValue[] iHateArrays;
         dst["children"] = iHateArrays;
         foreach(ref c; children) {
-            if(cast(UIElement)c) {
-                JSONValue childData = (cast(UIElement)c).serialize();
+            if(cast(UiElement)c) {
+                JSONValue childData = (cast(UiElement)c).serialize();
                 dst["children"].array ~= childData;
             }
         }
@@ -111,7 +120,7 @@ abstract class UIElement : Base, Serializeable
     @property vec2 pos(vec2 p)
     {
         _pos = p;
-        _onPosSizeChange();
+        onPosSizeChange();
         return _pos;
     }
 
@@ -124,15 +133,15 @@ abstract class UIElement : Base, Serializeable
     @property vec2 size(vec2 s)
     {
         _size = s;
-        _onPosSizeChange();
+        onPosSizeChange();
         return _size;
     }
 
     /// The absolute positoin of ui element - dependent from parent position and size
     @property vec2 absolutePos()
     {
-        if (this.parent && cast(UIElement)this.parent) {
-            auto p = cast(UIElement)this.parent;
+        if (this.parent && cast(UiElement)this.parent) {
+            auto p = cast(UiElement)this.parent;
             return p.absolutePos + vec2(p.absoluteSize.x*_pos.x,p.absoluteSize.y*_pos.y);
         }
 
@@ -142,8 +151,8 @@ abstract class UIElement : Base, Serializeable
     /// The absolute size of a ui element - depends on the parent objects size
     @property vec2 absoluteSize()
     {
-        if (this.parent && cast(UIElement)this.parent) {
-            auto p = cast(UIElement)this.parent;
+        if (this.parent && cast(UiElement)this.parent) {
+            auto p = cast(UiElement)this.parent;
             return vec2(p.absoluteSize.x*_size.x,p.absoluteSize.y*_size.y);
         }
         
@@ -160,6 +169,20 @@ abstract class UIElement : Base, Serializeable
     @property vec2 viewSize()
     {
         return absoluteSize*2.0;
+    }
+
+
+    /// The color of this ui element. Setting might redraw things
+    @property UiColor color()
+    {
+        return _color;
+    }
+    /// Ditto
+    @property UiColor color(UiColor c)
+    {
+        _color = c;
+        onColorChange();
+        return _color;
     }
 
     override void preUpdate()
@@ -187,15 +210,17 @@ abstract class UIElement : Base, Serializeable
             // make sure to unfocus 
             if (!_hoverd) {
                 auto mc = cast(MouseButtonDownEvent)e;
-                if(mc&&focus) {
-                    _unfocus();
+                if(mc) {
+                    if (focus) {
+                        _unfocus();
+                    }
                 }
             }
 
             // if any of our children are hoverd we, btw, ignore any other events because they go directly to our children. hover is the exception.
             bool childIsHoverd = false;
             foreach(c; children) {
-                auto e = cast(UIElement)c;
+                auto e = cast(UiElement)c;
                 if(e && e.hovered) {
                     childIsHoverd = true;
                     break;
@@ -237,15 +262,15 @@ abstract class UIElement : Base, Serializeable
         _anythingHovered |= _hoverd;
     }
 
-    UIElement[] getByName(string name)
+    UiElement[] getByName(string name)
     {
-        UIElement[] res;
+        UiElement[] res;
         if(_name==name) {
             res ~= this;
         }
         foreach(ref c; children) {
-            if (cast(UIElement)c) {
-                res ~= (cast(UIElement)c).getByName(name);
+            if (cast(UiElement)c) {
+                res ~= (cast(UiElement)c).getByName(name);
             }
         }
 
@@ -264,7 +289,7 @@ abstract class UIElement : Base, Serializeable
 
     @property bool focus() const
     {
-        return _focus;
+        return _focusedElement==this;
     }
 
     @property ref Variant[string] userData()
@@ -273,14 +298,14 @@ abstract class UIElement : Base, Serializeable
     }
     
     /**  
-        Acts around Object.factory to make sure generated objects are UIElements
-        Return: New UIElement of type named in s, null if not successfull.
+        Acts around Object.factory to make sure generated objects are UiElements
+        Return: New UiElement of type named in s, null if not successfull.
     */
-    static UIElement fromClassname(string s)
+    static UiElement fromClassname(string s)
     {
         auto newelem = Object.factory(s);
-        if(newelem && cast(UIElement)newelem) {
-            return cast(UIElement)newelem;
+        if(newelem && cast(UiElement)newelem) {
+            return cast(UiElement)newelem;
         }
 
         return null;
@@ -298,7 +323,7 @@ abstract class UIElement : Base, Serializeable
         return _anythingHovered;
     }
 
-    mixin createSerialize!(false,"_name","_pos","_size");
+    mixin createSerialize!(false,"_name","_pos","_size","_color");
 
 protected:
     /// Sets the focus of a element and unfocuses the current one
@@ -313,7 +338,6 @@ protected:
         else if(_focusedElement) {
             _focusedElement._unfocus();
         }
-        _focus = true;
         _focusedElement = this;
         _onFocus();
         fireEvent(new UiOnFocusEvent(this));
@@ -322,9 +346,16 @@ protected:
     /// Unfocuses this element if it is focused
     void _unfocus()
     {
-        if(_focus) {
-            _focus = false;
+        if(_focusedElement==this) {
             _focusedElement = null;
+        }
+    }
+
+    /// forces unfocus over everything
+    void _forceUnfocus()
+    {
+        if(_focusedElement !is null) {
+            _focusedElement._unfocus();
         }
     }
 
@@ -333,7 +364,7 @@ protected:
     bool _focusable()
     {
         foreach(ref c; children) {
-            auto p = cast(UIElement)c;
+            auto p = cast(UiElement)c;
             if(p) {
                 if (p._focusable()) {
                     return false;
@@ -345,7 +376,7 @@ protected:
     }
 
     /// called if position or size is changed. overload for maximum usefullness.
-    void _onPosSizeChange()
+    void onPosSizeChange()
     {
 
     }
@@ -354,6 +385,12 @@ protected:
     void _onFocus()
     {
     }
+
+    /// called if the color of this element was changed. overload for maximum usefullness
+    void onColorChange()
+    {
+    }
+
 private:
     /// name of a ui element
     string _name;
@@ -361,6 +398,8 @@ private:
     vec2 _pos = 0.0f;
     /// size of a ui element
     vec2 _size = 1.0f;
+    /// color of a ui element
+    UiColor _color;
     /// if true the element can be dragged around with the mouse
     bool _dragable = false;
     /// user data. variants are cool
@@ -376,7 +415,7 @@ private:
     /// If the object is being dragged around
     bool _dragged = false;
     /// static thing that represents the focused element
-    static UIElement _focusedElement;
+    static UiElement _focusedElement;
 
 protected:
     /// stores if anything in the current update cyclus is detected as hovered

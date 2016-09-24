@@ -2,7 +2,7 @@
     Holds the map class. And stuff
 */
 
-module d2d.game.world.map;
+module d2d.game.world.map.map;
 
 import gl3n.linalg;
 
@@ -15,14 +15,18 @@ import d2d.core.resource;
 import d2d.core.resources.jsondata;
 
 import d2d.game.world;
+import d2d.game.world.map.mapcontroller;
 import d2d.util.serialize;
 import d2d.util.logger;
 
+
+
 class Map : Base, Serializeable
 {
-    this(string name)
+    this(string name, bool controllerEnabled=true)
     {
         _name = name;
+        _controllerEnabled = controllerEnabled;
         loadMap(); 
     }
 
@@ -34,14 +38,43 @@ class Map : Base, Serializeable
     /// loads the map (not mapdata or anythign)
     void loadMap() 
     {
-        auto data = Resource.create!JSONData(_name);
+        import d2d.util.logger,std.datetime;
+        auto beforeLoad = Clock.currTime();
+        Logger.log("Loading map " ~ _name ~ "...");
+        // the laod
+        debug {
+            auto data = JsonData.createNew(_name,serialize());
+        }
+        else {
+            auto data = Resource.create!JsonData(_name);
+        }
+        
         deserialize(data.data);
+        // the controller controlls
+        try {
+            _controller = cast(Mapcontroller)Object.factory(_controllerName);
+            if(_controller) {
+                auto c = cast(Base)_controller;
+                if(c) {
+                    this.addChild(c);
+                } else {
+                    Logger.log("Map Controller " ~ _controllerName ~ " cannot be added as child to " ~ _name);
+                }
+                _controller.setMap(this);
+                _controller.onMapload();
+            }
+        } catch(Exception e) {
+            Logger.log("Map Controller " ~ _controllerName ~ " causes problems");
+        }
+        // performance stats iu guess
+        auto dur = Clock.currTime()-beforeLoad;
+        Logger.log("Success, in " ~ dur.toString());
     }
 
     /// saves the map (not mapdata or anything)
     void saveMap()
     {
-        auto data = Resource.create!JSONData(_name);
+        auto data = Resource.create!JsonData(_name);
         data.data = serialize();
         data.save();
     }
@@ -69,6 +102,7 @@ class Map : Base, Serializeable
     {
         JSONValue res = [ "typename" : to!string(typeid(this))];
         res["_displayName"] = toJson(_displayName);
+        res["_controllerName"] = toJson(_controllerName);
         JSONValue[] arr;
         res["_layers"] = arr;
         foreach(ref l; _layers) {
@@ -95,6 +129,7 @@ class Map : Base, Serializeable
     {
         try {
             fromJson(v["_displayName"], _displayName);
+            fromJson(v["_controllerName"],_controllerName);
             try {
                 foreach (ref l; v["_layers"].array()) {
                     
@@ -162,6 +197,9 @@ class Map : Base, Serializeable
 private:
     string _name;
     string _displayName;
+    string _controllerName;
     WorldTileLayer[] _layers;
         
+    Mapcontroller _controller;
+    bool _controllerEnabled;
 }

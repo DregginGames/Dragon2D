@@ -1,7 +1,9 @@
 module d2d.game.ui.edit;
 
+import std.conv;
 import std.utf;
 import std.string;
+import std.regex;
 
 import gl3n.linalg;
 import derelict.sdl2.sdl;
@@ -11,6 +13,7 @@ import d2d.core.render.objects.quad;
 import d2d.core.render.objects.text;
 import d2d.core.render.renderer;
 import d2d.game.ui.box;
+import d2d.game.ui.uielement;
 import d2d.core.event;
 import d2d.core.io;
 
@@ -22,16 +25,19 @@ class Edit : Box
     /// constructor that allows font and string to be set
     this(string text="", string font="font.default")
 	{
-        _textColor = vec4(1.0,1.0,1.0,1.0);
+        _inputFilter = regex(".*");
         _cursorQuad = new ColoredQuad();
         _cursorQuad.ignoreView = true;
-        _cursorQuad.color = _textColor;
+        _cursorQuad.detailLevel = 100;
+        _cursorQuad.color = color.foreground;
 		_text = new Text(text,font, 1.0f);
+        _text.ignoreView = true;
+        _text.detailLevel = 100;
         _textStr = text;
         _placeholder = "";
         _font = font;
         _cursor = count!char(_textStr);
-        _updateText();
+        updateText();
 	}
 
     /// renders the text
@@ -82,9 +88,14 @@ class Edit : Box
                         uint pos = toUTFindex!char(_textStr,_cursor);
                         result = _textStr[0..pos] ~ instr ~ _textStr[pos..$];                        
                     }
-                    _cursor += count!char(instr);
-                    _textStr = result.idup;
-                    _updateText();
+
+                    // input filter to apply
+                    auto valid = matchAll(result,_inputFilter);
+                    if(!valid.empty()) {
+                        _cursor += count!char(instr);
+                        _textStr = result.idup;
+                        updateText();
+                    }
                 }
             }
             else if(keye) {
@@ -107,7 +118,7 @@ class Edit : Box
                             _textStr = _textStr[0..pos1] ~ _textStr[pos2..$];
                         }
                         _cursor--;
-                        _updateText();
+                        updateText();
                         break;
                     
                     case SDLK_DELETE: // same as above, but char right of the curser is dropped
@@ -126,13 +137,13 @@ class Edit : Box
                             uint pos2 = toUTFindex!char(_textStr,_cursor+1);
                             _textStr = _textStr[0..pos1] ~ _textStr[pos2..$];
                         }
-                        _updateText();
+                        updateText();
                         break;
 
                     case SDLK_RIGHT:
                         _cursor++;
                         _cursor = max(0,min(len,_cursor));
-                        _updateText();
+                        updateText();
                         break;
                     case SDLK_LEFT:
                         if (_cursor == 0) {
@@ -140,7 +151,7 @@ class Edit : Box
                         }
                         _cursor--;
                         _cursor = max(0,min(len,_cursor));
-                        _updateText();
+                        updateText();
                         break;
                     default:
                         break;
@@ -153,11 +164,35 @@ class Edit : Box
     
 
     
-    /// returns the text object of this placeholder text
+    /// returns the text
     @property string text()
     {
         return _textStr;
     }   
+
+    /// returns the text converted to double, or nan if not possible
+    @property double floating()
+    {
+        try {
+            return toImpl!double(_textStr);
+        }
+        catch(Exception e) 
+        {
+            return float.nan;
+        }
+    }
+
+    /// returns the text converted to long, or 0 if not possible
+    @property long integer()
+    {
+        try {
+            return toImpl!long(_textStr);
+        }
+        catch(Exception e) 
+        {
+            return 0;
+        }
+    }
 
     /// sets the paceholder text of this text edit
     @property string placeholder() 
@@ -167,36 +202,32 @@ class Edit : Box
     /// ditto
     @property string placeholder(string s) 
     {
-        return _placeholder = s;
+        _placeholder = s;
+        updateText();
+
+        return _placeholder;
     }
 
-    /// gets/sets the color of the text
-    @property vec4 textColor()
+    /// sets/gets the input filter.
+    /// the input filter limmits what can be put into the edit. Default is ".*" 
+    @property Regex!char filter()
     {
-        return _textColor;
+        return _inputFilter;
     }
-    /// ditto
-    @property vec4 textColor(vec4 c)
+    @property Regex!char filter(Regex!char f) 
     {
-        _textColor = c;
-        _cursorQuad.color = c;
-        _updateText();
-        return _textColor;
+        return _inputFilter = f;
     }
 
 protected:
-    void _updateText()
+    void updateText()
     {
-        _text.ignoreView = true;
         string t = _textStr;
         string f = _font;
         if (t == "") {
             t = _placeholder;
         }
         if (f != "") {
-            if (_text is null) {
-                _text = new Text(t,f, 1.0f);
-            }
             // fix cursor - just in case
             _cursor = max(0,min(count!char(t),_cursor));
 
@@ -211,7 +242,7 @@ protected:
             settings.height = s.y;
             settings.overflow = Text.OverflowBehaviour.scroll;
             settings.positioning = Text.Positioning.left;
-            settings.color = _textColor;
+            settings.color = color.foreground;
             if (t.length == 0) {
                 settings.scroll = 0.0;
             } else {
@@ -222,16 +253,28 @@ protected:
         }
     }
 
-    override void _onPosSizeChange()  
+    override void onPosSizeChange()  
     {
-        _updateText();
+        updateText();
     }
 
     override void _onFocus() 
     {
-        _updateText();
+        updateText();
     }
     
+
+    override void onColorChange()
+    {
+        _cursorQuad.color = color.foreground;
+        updateText();
+        super.onColorChange();
+    }
+
+    override void onParentSet()
+    {
+        updateText();
+    }
 
 private:
     ColoredQuad _cursorQuad;
@@ -240,8 +283,8 @@ private:
     string _font;
     string _textStr;
     string _placeholder;
-    vec4 _textColor;
     vec2 _cursorPos;
     uint _cursor;
     uint _selectedLayer;
+    Regex!char _inputFilter;
 }

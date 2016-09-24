@@ -13,7 +13,7 @@ import d2d.util.fileio;
 import d2d.util.logger;
 
 /// A GLProgram that loads uniform bindings automaically
-class GLSLProgram : Resource
+class GlslProgram : Resource
 {
     ///Loads a shader from a shader source file 
     this(string name) 

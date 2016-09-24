@@ -34,11 +34,29 @@ template createSerialize(bool hasParent, T...)
         }
         foreach(t; T) {
             mixin("pragma(msg, \"Building deserialize for " ~ t ~ " - \", typeof(" ~ t ~ "));");
-            // needed because properties are f****
-            mixin(" auto x = " ~ t ~ ";\n
-                    fromJson(v.object[\"" ~ t ~ "\"], x );\n
-                    " ~ t ~ " = x;
-            ");
+            try {
+                // needed because properties are f****
+                mixin(" auto x = " ~ t ~ ";\n
+                        fromJson(v.object[\"" ~ t ~ "\"], x );\n
+                        " ~ t ~ " = x;
+                ");
+            } catch(Exception e) {
+                // if it fails we should give everything so it doesnt die.
+                mixin("
+                    static if(__traits(compiles," ~ t ~ " = 0)) {
+                        " ~ t ~ " = 0;
+                    }
+                    else static if(__traits(compiles," ~ t ~ " = 0.0)) {
+                        " ~ t ~ " = 0.0;
+                    }
+                    else static if(__traits(compiles," ~ t ~ " = \"\")) {
+                        " ~ t ~ " = \"\";
+                    }
+                    else {
+                        throw e;
+                    }
+                ");
+            }   
         }
     }
 }

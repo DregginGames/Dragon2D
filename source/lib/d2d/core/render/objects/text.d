@@ -109,7 +109,7 @@ class Text : Renderable
         _program = program;
         _settings.font = font;
         Resource.preload!Font(font);
-        Resource.preload!GLSLProgram(program);
+        Resource.preload!GlslProgram(program);
     }
 
     this(string text,  string font, float height, Font.FontSize size=Font.FontSize.medium, string shader="shader.default")
@@ -129,7 +129,7 @@ class Text : Renderable
         if (strip(_settings.text)=="") {
             return;
         }
-        auto prg = Resource.create!GLSLProgram(_program).program;
+        auto prg = Resource.create!GlslProgram(_program).program;
 		prg.bind();
         vao.bind();		
         int texPos = 0;
@@ -153,7 +153,7 @@ class Text : Renderable
     vec2 getCursorPos(int line, int pos) 
     {
         if (nLines == 0) {
-            return vec2(0.0,0.0);
+            return this.pos;
         }
         if (line >= nLines) {
             line = nLines-1;

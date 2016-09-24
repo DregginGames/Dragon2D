@@ -17,7 +17,7 @@ abstract class Quad : Renderable
     {
         _setupVAO(Renderable.VAOMode.classScope);
         _program = program;
-        Resource.preload!GLSLProgram(_program); 
+        Resource.preload!GlslProgram(_program); 
     }
 
     ~this()
@@ -26,9 +26,9 @@ abstract class Quad : Renderable
     }
 
     /// The program of this quad
-    @property GLSLProgram program()
+    @property GlslProgram program()
     {
-        return Resource.create!GLSLProgram(_program);
+        return Resource.create!GlslProgram(_program);
     }
 
 protected:
@@ -255,6 +255,15 @@ class TexturedQuadBatch : TexturedQuad
             _quads[quad.id] = quad;
         }
     }
+    
+    override void render(in View view) 
+    {
+        if (_quads.length > 0) {
+            super.render(view);
+        }
+    }
+    
+
 
     /// removes a quad. Changes made here need to be flusehed with flush().
     void removeQuad(ref BatchQuad quad)

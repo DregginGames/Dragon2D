@@ -4,6 +4,7 @@
 module d2d.util.jsonutil;
 
 import std.json;
+import std.regex;
 
 import gl3n.linalg;
 import gl3n.util;
@@ -31,16 +32,34 @@ T vectorFromJson(T)(JSONValue data)
                 break;
             case JSON_TYPE.STRING:
                 double off = (Base.getService!Env("d2d.env").aspectRatio - 1.0)/2.0;
-                switch(data.array[i].str) {
-                    case "edgeL":
-                        vec.vector[i] = cast(vec.vt)(0.0-off);
-                        break;
+                auto r = ctRegex!("^(edge[LR])([-+]*\\d*[\\.]*[\\d]*)$"); // edge[L|R][[+|-]number] - examples: edgeL, edgeL+0.1,edgeR-0.2,...
+                auto c = matchFirst(data.array[i].str,r);
+                if(c.empty) {
+                    vec.vector[i] = 0;
+                }
+                else {
+                    string edgeName = c[1];
+                    string edgeOffsetStr = c[2];
+                    double edgeOffset = 0.0;
+                    if (edgeOffsetStr!="") {
+                        try {
+                            import std.conv;
+                            edgeOffset = toImpl!double(edgeOffsetStr);
+                        } catch (Exception e){
+                        }
+                    }
+                    off += edgeOffset;
+                    switch(edgeName) {
+                        case "edgeL":
+                            vec.vector[i] = cast(vec.vt)(0.0-off);
+                            break;
 
-                    case "edgeR":
-                        vec.vector[i] = cast(vec.vt)(1.0+off);
-                        break;
-                    default:
-                        vec.vector[i] = 0;
+                        case "edgeR":
+                            vec.vector[i] = cast(vec.vt)(1.0+off);
+                            break;
+                        default:
+                            vec.vector[i] = 0;
+                    }
                 }
                 break;
             default:

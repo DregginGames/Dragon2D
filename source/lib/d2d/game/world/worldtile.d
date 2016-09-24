@@ -18,14 +18,29 @@ class Worldtile
         _collision = false; //for now
     }
 
-    @property long id()
+    @property long id() const
     {
         return _id;
     }
 
-    @property vec2 pos()
+    @property long id(long i)
+    {
+        return _id=i;
+    }
+
+    @property vec2 pos() const
     {
         return _pos;
+    }
+
+    @property bool collision() const
+    {
+        return _collision;
+    }   
+
+    @property bool collision(bool b) 
+    {
+        return _collision = b;
     }
 
 private:
@@ -40,7 +55,7 @@ class WorldTileLayer
     {
         _id = _maxid;// id stuff
         _maxid++;
-
+        _pos = vec2(0.0,0.0);
         _layerZ = layerZ;
         _tileset = tileset;
 
@@ -62,10 +77,11 @@ class WorldTileLayer
     Worldtile[] tilesAt(vec2 inpos)
     {
         Worldtile[] result;
+        inpos = inpos-_pos; // layers, internally, dont have the offset of the layer
         Tileset tset = Resource.create!Tileset(_tileset);
         foreach (ref t; _tiles) {
             vec2 size = tset.getTileData(t.id).size; 
-            vec2 pos = t.pos;
+            vec2 pos = t.pos-0.5*size; // tiles are still centered
             if (inpos.x >= pos.x && inpos.x <= pos.x+size.x) {
                 if (inpos.y >= pos.y && inpos.y <= pos.y+size.y) {
                     result ~= t;
@@ -76,6 +92,40 @@ class WorldTileLayer
         return result;
     }
 
+    void removeTilesAt(vec2 inpos) 
+    {
+        int[] toDelete;
+        inpos = inpos-_pos;
+        Tileset tset = Resource.create!Tileset(_tileset);
+        for (int i = 0; i < _tiles.length; i++) {
+            auto t = _tiles[i];
+            vec2 size = tset.getTileData(t.id).size; 
+            vec2 pos = t.pos-0.5*size; // tiles are still centered
+            if (inpos.x >= pos.x && inpos.x <= pos.x+size.x) {
+                if (inpos.y >= pos.y && inpos.y <= pos.y+size.y) {
+                    toDelete ~= i;
+                }
+            }
+        }
+
+        foreach(i; toDelete) {
+            if (_tiles.length == 0) {
+                break;
+            }
+            if (_tiles.length-1 == 0) {
+                _tiles.length = 0;
+            }
+            else if (i==0) {
+                _tiles = _tiles[1..$];
+            }
+            else if (i == _tiles.length) {
+                _tiles = _tiles[0..$-1];
+            }
+            else {
+                _tiles = _tiles[0..i] ~ _tiles[i+1..$];
+            }
+        }
+    }
     /// tileset used by this layer
     @property string tileset() const
     {
@@ -98,6 +148,18 @@ class WorldTileLayer
         return _layerZ = i;
     }
 
+    /// position of this layer
+    @property vec2 pos() const 
+    {
+        return _pos;
+    }
+    /// Ditto
+    @property vec2 pos(vec2 p) 
+    {
+        return _pos = p;
+    }
+
+
     /// Raw access to the tiles
     @property ref Worldtile[] tiles()
     {
@@ -111,10 +173,16 @@ class WorldTileLayer
     }
 
 private:
+    /// z index of this layer
     int _layerZ;
+    /// the position of this layer
+    vec2 _pos;
+    /// tileset of this layer
     string _tileset;
+    /// tiles in this layer
     Worldtile[] _tiles;
+    /// id of this layer
     ulong _id;
-
+    /// static thing to select the ids of layers
     static ulong _maxid = 0;
 }

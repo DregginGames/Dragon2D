@@ -22,6 +22,8 @@ import d2d.core;
         40..59: Map-detail-level - advaned stuff like Buildings, details, flowers, ... 
         60..79: Actor-level - everything that actually does things like NPCs, players, ...
         80+: UI-Level - the user interface. Above that... whatever 
+    
+    Detail levels also function as z offsets - higher level means rendered later-> on top
  
 */
 abstract class Renderable

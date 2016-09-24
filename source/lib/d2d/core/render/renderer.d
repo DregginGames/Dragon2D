@@ -40,6 +40,7 @@ class Renderer : Base
         //glClearColor(1.0f,1.0f,0.0f,1.0f);
 		// sort views by z-index: higer index means later rendering
 		sort!("a.zindex < b.zindex")(_views);
+        sort!("a.detailLevel < b.detailLevel")(_objects);
 
 		// Render everything
 		foreach(ref v; _views) {

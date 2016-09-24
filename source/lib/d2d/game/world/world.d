@@ -58,6 +58,7 @@ private:
             try {
                 auto tset = Resource.create!Tileset(tsetname);
                 auto batch = new TexturedQuadBatch(tset.texture);
+                batch.detailLevel = layer.layerZ; // yes
                 foreach (ref tile; layer.tiles) {
                     BatchQuad q;
                     auto tdata = tset.getTileData(tile.id);

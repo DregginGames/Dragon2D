@@ -14,6 +14,7 @@ import d2d.core.render.objects.text;
 import d2d.core.render.renderer;
 import d2d.game.ui.box;
 import d2d.game.ui.uielement;
+import d2d.game.ui.uievent;
 import d2d.core.event;
 import d2d.core.io;
 
@@ -95,6 +96,7 @@ class Edit : Box
                         _cursor += count!char(instr);
                         _textStr = result.idup;
                         updateText();
+                        fireEvent(new UiOnChangeEvent(this));
                     }
                 }
             }
@@ -119,6 +121,7 @@ class Edit : Box
                         }
                         _cursor--;
                         updateText();
+                        fireEvent(new UiOnChangeEvent(this));
                         break;
                     
                     case SDLK_DELETE: // same as above, but char right of the curser is dropped
@@ -138,6 +141,7 @@ class Edit : Box
                             _textStr = _textStr[0..pos1] ~ _textStr[pos2..$];
                         }
                         updateText();
+                        fireEvent(new UiOnChangeEvent(this));
                         break;
 
                     case SDLK_RIGHT:

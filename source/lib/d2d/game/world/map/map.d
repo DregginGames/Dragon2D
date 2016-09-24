@@ -51,20 +51,24 @@ class Map : Base, Serializeable
         
         deserialize(data.data);
         // the controller controlls
-        try {
-            _controller = cast(Mapcontroller)Object.factory(_controllerName);
-            if(_controller) {
-                auto c = cast(Base)_controller;
-                if(c) {
-                    this.addChild(c);
+        if(_controllerEnabled) {
+            try {
+                _controller = cast(Mapcontroller)Object.factory(_controllerName);
+                if(_controller) {
+                    auto c = cast(Base)_controller;
+                    if(c) {
+                        this.addChild(c);
+                    } else {
+                        Logger.log("Map Controller " ~ _controllerName ~ " cannot be added as child to " ~ _name);
+                    }
+                    _controller.setMap(this);
+                    _controller.onMapload();
                 } else {
-                    Logger.log("Map Controller " ~ _controllerName ~ " cannot be added as child to " ~ _name);
+                    Logger.log("Map Controller " ~ _controllerName ~ " does not exsist");
                 }
-                _controller.setMap(this);
-                _controller.onMapload();
+            } catch(Exception e) {
+                Logger.log("Map Controller " ~ _controllerName ~ " causes problems");
             }
-        } catch(Exception e) {
-            Logger.log("Map Controller " ~ _controllerName ~ " causes problems");
         }
         // performance stats iu guess
         auto dur = Clock.currTime()-beforeLoad;
@@ -192,7 +196,16 @@ class Map : Base, Serializeable
         return _displayName = name;
     }
 
-
+    /// Gets/Sets the controller name of this map. Changes here dont take affect normally. Dont use, use a map editor :3
+    @property string controllerName() const
+    {
+        return _controllerName;
+    }
+    /// Ditto
+    @property string controllerName(string name)
+    {
+        return _controllerName = name;
+    }
 
 private:
     string _name;

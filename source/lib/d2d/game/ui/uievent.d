@@ -85,3 +85,19 @@ class UiOnHoverEvent : UiEvent
 {
     this(UiElement element) { super(element); }
 }
+
+/** 
+Event that is fired if an ui element is changed (text edits use this)
+*/
+class UiOnChangeEvent : UiEvent 
+{
+    this(UiElement element) { super(element); }
+}
+
+/** 
+Event that is fired if an ui element is sumbitted (text edits use this)
+*/
+class UiOnSubmitEvent : UiEvent 
+{
+    this(UiElement element) { super(element); }
+}

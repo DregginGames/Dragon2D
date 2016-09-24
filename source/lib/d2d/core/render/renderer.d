@@ -39,8 +39,8 @@ class Renderer : Base
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         //glClearColor(1.0f,1.0f,0.0f,1.0f);
 		// sort views by z-index: higer index means later rendering
-		sort!("a.zindex < b.zindex")(_views);
-        sort!("a.detailLevel < b.detailLevel")(_objects);
+		sort!("a.zindex < b.zindex",SwapStrategy.stable)(_views);
+        sort!("a.detailLevel < b.detailLevel",SwapStrategy.stable)(_objects);
 
 		// Render everything
 		foreach(ref v; _views) {

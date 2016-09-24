@@ -57,7 +57,7 @@ class Navigator : Base
                 _map.addLayer(l);
                 _map.removeFromWorld();
                 _map.addToWorld();
-                _activeLayer = _map.layers.length-1;
+                _activeLayer = cast(int)(_map.layers.length-1); //dont ask
                 _layerUpdate();
             });
             

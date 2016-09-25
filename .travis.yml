@@ -3,7 +3,7 @@ d:
   - dmd
   
 before_script:
-  - git clone https://github.com/DregginGames/Draon2Dgame.git game
+  - git clone https://github.com/DregginGames/Dragon2Dgame.git game
   
 script: 
   - dub build -c game

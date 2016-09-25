@@ -68,7 +68,7 @@ class Trigger(filterClass, string filterCompare="") : AbstractTrigger
     {
         enableEventHandling();
         _triggerMode = mode;
-        _triggered = true;
+        _triggered = false;
     }
 
     override void preUpdate() 

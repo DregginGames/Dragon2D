@@ -26,6 +26,7 @@ class Map : Base, Serializeable
     this(string name, bool controllerEnabled=true)
     {
         _name = name;
+        _isAddedToWorld = false;
         _controllerEnabled = controllerEnabled;
         loadMap(); 
     }
@@ -90,9 +91,11 @@ class Map : Base, Serializeable
             world.addLayer(l);
         }
 
+        _isAddedToWorld = true;
+
         if(_controller) {
             _controller.onMapload();
-        }
+        }   
     }
 
     /// removes a map from the world
@@ -102,6 +105,8 @@ class Map : Base, Serializeable
         foreach(ref l; _layers) {
             world.removeLayer(l);
         }
+
+        _isAddedToWorld = false;
 
         if(_controller) {
             _controller.onMapUnload();
@@ -180,6 +185,19 @@ class Map : Base, Serializeable
         _layers ~= l;
     }
 
+    /// transforms a position from map-relative to absolute
+    vec2 toWorldPos(vec2 p) const 
+    {
+        return p+_offsetPos;
+    }
+
+    /// transforms a position from absolute to map-relative
+    vec2 toMapPos(vec2 p) const
+    {
+        return p-_offsetPos;
+    }
+
+
     /// Gets a reference to all the maps layers
     @property ref WorldTileLayer[] layers()
     {
@@ -214,6 +232,27 @@ class Map : Base, Serializeable
         return _controllerName = name;
     }
 
+    /// Gets/Sets the offset position of the map
+    @property vec2 offset() const
+    {
+        return _offsetPos;
+    }
+    /// Ditto
+    @property vec2 offset(vec2 o) 
+    {
+        _offsetPos = o;
+        foreach(ref l; _layers) {
+            l.pos = _offsetPos;
+        }
+        
+        if(_isAddedToWorld) {
+            auto world = this.getService!World("d2d.world");
+            world.forceBatchRebuild();
+        }
+
+        return _offsetPos;
+    }
+
 private:
     string _name;
     string _displayName;
@@ -222,4 +261,6 @@ private:
         
     MapController _controller;
     bool _controllerEnabled;
+    bool _isAddedToWorld;
+    vec2 _offsetPos = 0;
 }

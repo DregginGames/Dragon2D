@@ -13,8 +13,8 @@
             "targetType": "executable",
             "targetPath": "engine",
             "targetName": "Dragon2D",           
-            "sourcePaths": ["source/game/"],
-            "importPaths": ["source/game/"],
+            "sourcePaths": ["game/source"],
+            "importPaths": ["game/source"],
         },
         {
             "name": "uieditor",
@@ -35,8 +35,8 @@
         {
             "name": "docs",
             "targetType": "library",
-            "sourcePaths": ["source/"],
-            "importPaths": ["source/"],
+            "sourcePaths": ["source/","game/source"],
+            "importPaths": ["source/","game/source"],
         }
     ],
 	

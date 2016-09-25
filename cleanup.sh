@@ -8,3 +8,5 @@ rm -rf engine/*.lib
 rm -rf engine/*.so 
 rm -rf engine/Dragon2D
 rm -rf engine/uieditor 
+rm -rf engine/mapeditor
+rm -rf engine/log.txt

@@ -6,7 +6,8 @@ del engine\*.exe /Q
 del engine\*.pdb /Q
 del engine\*.lib /Q
 del engine\*.so /Q
-rmdir releasePackage /S /Q
+del engine\log.txt /Q
+rmdir deployPackage /S /Q
 
 REM just in case we have linux fragments, might throw errors but who cares
 del engine\Dragon2D /Q

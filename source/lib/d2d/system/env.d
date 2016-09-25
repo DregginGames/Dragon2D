@@ -119,7 +119,7 @@ class Env : Base
 
         //if we survived until here, its time for audio, font and image! (the sdl media stuff)
         //audio 
-        uint flags = MIX_INIT_OGG | MIX_INIT_MP3;
+        uint flags = MIX_INIT_OGG | MIX_INIT_MP3 | MIX_INIT_FLAC;
         uint actualFlags = Mix_Init(flags);
         if (actualFlags != flags) {
             //meh we messed up 

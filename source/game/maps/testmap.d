@@ -2,6 +2,9 @@ module maps.testmap;
 
 import gl3n.linalg;
 
+import derelict.sdl2.sdl;
+import derelict.sdl2.mixer;
+
 import d2d.core.base;
 import d2d.core.dbg.eventdebug;
 import d2d.game;
@@ -15,10 +18,10 @@ class Testmap : Base, MapController
             auto camera = new Camera(5.0f);
             addTarget.addChild(camera);
 
-            auto s = new Sprite("texture.test");
-            s.sizeMode = Entity.SizeMode.rect;
-            s.size = vec2(1.0,1.0);
-            addTarget.addChild(s);
+            auto trigg = new Trigger!Sprite();
+            trigg.sizeMode = Entity.SizeMode.rect;
+            trigg.size = vec2(1.0,1.0);
+            addTarget.addChild(trigg);
 
             auto cursor = new WorldCursor();
             auto s2 = new Sprite("texture.test");
@@ -31,7 +34,7 @@ class Testmap : Base, MapController
             auto m = new Music("music.intoTheMenu");
             addTarget.addChild(m);
             addTarget.addChild(new NoSDLEventDebugger());
-            //m.play();
+            m.play();
         }
     }
     

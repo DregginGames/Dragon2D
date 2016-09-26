@@ -3,6 +3,7 @@
   */
 module d2d.core.base;
 
+import std.json;
 import d2d.core.event;
 
 /// exception thrown when something unlogical is done with the base class or its child objects, services, ...
@@ -187,6 +188,103 @@ class Base
 		throw new ObjectLogicException("Cannot get an unknown service (" ~ name ~ ")!");
 	}
 
+    /// Sets a value into the saveable data storage
+    final static void storeSaveValue(T)(string key, T data)
+    {
+        import std.conv;
+        try {   
+            string s = toImpl!string(data);
+            _saveData[key] = s;
+        } catch(Exception e) {
+            import d2d.util.logger;
+            Logger.log ("Could not convert " ~ key ~ " to string for the storage action");
+        }
+    }
+    
+    /// Gets a value from the savable data storage
+    final static T restoreSaveValue(T)(string key)
+    {
+        T t;
+        try {
+            t = toImpl!T(_saveData[key]);    
+        } catch(Exception e) {
+            import d2d.util.logger;
+            Logger.log ("Could not convert " ~ key ~ " fromg string for the restore action");
+        }
+
+        return t;
+    }
+
+    /// Adds a SaveRestore handler 
+    final static void addSaveRestoreHandler(SaveRestoreHandlerInterface h)
+    {
+        import std.conv;
+        auto key = to!string(typeid(h));
+        auto p = key in _saveRestoreHandlers;
+        if(!p) {
+            _saveRestoreHandlers[key] = h;
+        }
+    }
+
+    /// Removes a SaveRestore handler 
+    final static bool removeSaveRestoreHandler(T)()
+    {
+        import std.traits;
+        return _saveRestoreHandlers.remove(fullyQualifiedName(T));
+    }
+
+    /// Saves stuff
+    final static JSONValue save(Base root)
+    {
+        import std.conv;
+        // execute save handlers
+        JSONValue   result;
+        JSONValue[] handlers;
+        JSONValue dataStorage;
+        foreach(h; _saveRestoreHandlers.values) {
+            h.onSave(root);
+            handlers ~= JSONValue(to!string(typeid(h)));
+        }
+        
+        root.propagate((b) { b.onSave(); });
+        
+        foreach(key; _saveData.keys) {
+            dataStorage[key] = _saveData[key];
+        }
+
+        result["_saveRestoreHandlers"] = handlers;
+        result["_saveData"] = dataStorage;
+        return result;
+    }
+
+    /// Restores stuff
+    final static void restoreSave(JSONValue v, Base root)
+    {
+        import std.conv;
+        auto dataStorage = v["_saveData"];
+        auto handlers = v["_saveRestoreHandlers"];
+
+        _saveData.clear();
+        foreach(key; dataStorage.object.keys) {
+            _saveData[key] = dataStorage[key].str;
+        }
+
+        _saveRestoreHandlers.clear();
+        foreach(h; handlers.array) {
+            auto name = h.str;
+            auto handler = cast(SaveRestoreHandlerInterface)Object.factory(name);
+            if (handler) {
+                addSaveRestoreHandler(handler);
+                handler.onRestore(root);
+            } else {
+                import d2d.util.logger;
+                Logger.log("Cannot init save/restore handler " ~ name);
+            }
+        }
+        
+        root.propagate((b) { b.onSaveRestore(); });
+    }
+
     /// fixed obj id of this object
     final @property size_t id() const
     {
@@ -356,6 +454,15 @@ protected:
     {
     }
     
+    /// Called if save is called
+    void onSave()
+    {
+    }
+
+    /// Called if the tree just was restored from a save
+    void onSaveRestore()
+    {
+    }
 
 private:
     /// every engine object has an object id, this is the current maximum
@@ -396,4 +503,22 @@ private:
     static long _curticks = 0;
     /// The current time since object creation; not updated in paused objects
     long _objCurtime = 0;
+
+    /// The saveable data storage
+    static string[string] _saveData; 
+    /// All save/restore handlers 
+    static SaveRestoreHandlerInterface[string] _saveRestoreHandlers;
+}
+
+/**
+    A save restore handler is 
+        *called before a save is performed
+        *saved into a save
+        *an instance is created before a restore is performend
+        *after that all handlers are called
+*/
+interface SaveRestoreHandlerInterface
+{
+    void onRestore(Base root);
+    void onSave(Base root);
 }

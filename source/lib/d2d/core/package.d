@@ -5,6 +5,7 @@ public import d2d.core.callback;
 public import d2d.core.event;
 public import d2d.core.io;
 public import d2d.core.resource;
+public import d2d.core.save;
 
 public import d2d.core.container;
 public import d2d.core.dbg;

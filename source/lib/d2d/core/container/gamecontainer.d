@@ -7,5 +7,9 @@ import d2d.core.base;
 
 class GameContainer : Base 
 {
+    this()
+    {
+        registerAsService("d2d.gameroot");
+    }
     /// nothing to do here - were just a helper class
 }

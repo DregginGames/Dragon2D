@@ -70,10 +70,11 @@ class Base
 	}
 
     /// Propagates an update thru the object hirarchy
-    final void propagateUpdate()
+    final void propagateUpdate(long tickTime)
     {
+        _curtime+=tickTime; // time doesnt start at 0; its absolute
         propagate(
-            (b) { b.preUpdate(); },
+            (b) { b._objCurtime+=tickTime; b.preUpdate(); }, // this one updates the object time before the preUpdate
             (b) => !b._paused
         );
         propagate(
@@ -84,6 +85,8 @@ class Base
             (b) { b.postUpdate(); },
             (b) => !b._paused
         );
+
+        _curticks++; // ticks start at 0. 
     }
 
     /// Propagates the rendering through the object hirarchy
@@ -242,6 +245,35 @@ class Base
         return this.parent.root;
     }
 
+    /// return the time since object creation (clipped to ticks)
+    final @property long objCurtime() const
+    {
+        return _objCurtime;
+    }
+    /// return the time since object creation, in seconds (clipped to ticks)
+    final @property double objCurtimeS() const 
+    {
+        return (cast(float)_objCurtime)/(cast(float)10000000);
+    }
+
+    /// returns the time since engine/root creation (clipped to ticks)
+    final static @property long curtime()
+    {
+        return _curtime;
+    }
+    /// returns the time since engine/root creation in seconds (clipped to ticks)
+    final static @property double curtimeS()
+    {
+        return (cast(float)_curtime)/(cast(float)10000000);
+    }
+
+    /// returns the ticks since engine creation.
+    final static @property long curticks()
+    {
+        return _curticks;
+    }
+
+
 protected:
 
     /// Enables event reciving for this object. Should be called in the constructor of classes that want it.
@@ -357,4 +389,11 @@ private:
 
     /// the current pending events
     Event[] pendingEvents;
+
+    /// The current time since engine startup; 
+    static long _curtime = 0;
+    /// the current ticks since engine startup
+    static long _curticks = 0;
+    /// The current time since object creation; not updated in paused objects
+    long _objCurtime = 0;
 }

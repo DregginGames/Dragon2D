@@ -15,15 +15,14 @@ class Tileset : Resource
 {
     this (string name) 
     {
-        _name = name;
-        Resource.preload!JsonData(_name);
-        load();
         super(name);
+        Resource.preload!JsonData(name);
+        reload();
     }
 
     ~this()
     {
-        Resource.free(_name);
+        Resource.free(name);
         Resource.free(_texture);
     }
 
@@ -31,12 +30,15 @@ class Tileset : Resource
     override void reload()
     {
         Resource.free(_texture);
+        auto json = Resource.create!JsonData(name);
+        json.reload();
+
         load();
     }
 
     void load()
     {
-        auto d = Resource.create!JsonData(_name).data;
+        auto d = Resource.create!JsonData(name).data;
         try {
             _texture = d["texture"].str;
             _xdim = d["xdim"].integer;
@@ -58,7 +60,7 @@ class Tileset : Resource
         }
         
         long x = id % _xdim;
-        long y = id / _ydim;
+        long y = min(id / _xdim,_ydim);
         TileData d;
         d.size = _tilesize;
         d.uvsize = _uvsize;
@@ -93,7 +95,6 @@ class Tileset : Resource
     }
 
 private:
-    string _name;
     string _texture;
     long _xdim;
     long _ydim;

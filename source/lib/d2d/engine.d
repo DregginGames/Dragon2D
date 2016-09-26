@@ -62,7 +62,7 @@ class Engine
             //only update every tick
             while ( Clock.currStdTime() - curtime >= ticksize) {
 				root.preTickDelete();
-                root.propagateUpdate();
+                root.propagateUpdate(ticksize);
                 curtime += ticksize;
 
                 // force garbage collection after every tick

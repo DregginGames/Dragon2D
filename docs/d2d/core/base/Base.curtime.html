@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Base.parent - multiple declarations</title>
+		<title>Function Base.curtime</title>
 		<link rel="stylesheet" type="text/css" href="../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../scripts/jquery.js">/**/</script>
@@ -270,40 +270,16 @@ $('#symbolSearchPane').show();
 				</div>
 		</nav>
 		<div id="main-contents">
-			<h1>Base.parent - multiple declarations</h1>
-			<ul>
-				<li>Function Base.parent</li>
-				<li>Function Base.parent</li>
-			</ul>
+			<h1>Function Base.curtime</h1>
 			<section>
-				<h2>Function Base.parent</h2>
-				<p>gets the parent object of this object
+				<p>returns the time since engine/root creation (clipped to ticks)
 </p>
 
 					<section>
 						<h3>Prototype</h3>
 						<div class="prototype">
 							<code class="lang-d">
-<span class="kwd">final </span><a href="../../../d2d/core/base/Base.html"><span class="typ">Base</span></a> <span class="pln">parent<span class="pun">()</span><span class="pln"> </span><span class="kwd">@property</span><span class="pun">;</span>
-							</code>
-						</div>
-					</section>
-
-			</section>
-			<section>
-				<h2>Function Base.parent</h2>
-				<p>sets the parent object of this object
-</p>
-
-					<section>
-						<h3>Prototype</h3>
-						<div class="prototype">
-							<code class="lang-d">
-<span class="kwd">final </span><a href="../../../d2d/core/base/Base.html"><span class="typ">Base</span></a> <span class="pln">parent</span><span class="pun">(</span>
-								<br/>
-&nbsp;&nbsp;<a href="../../../d2d/core/base/Base.html"><span class="typ">Base</span></a> <span class="pln">newParent</span>
-								<br/>
-<span class="pun">)</span><span class="pln"> </span><span class="kwd">@property</span><span class="pun">;</span>
+<span class="kwd">static final </span><span class="typ">long</span> <span class="pln">curtime<span class="pun">()</span><span class="pln"> </span><span class="kwd">@property</span><span class="pun">;</span>
 							</code>
 						</div>
 					</section>

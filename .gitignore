@@ -5,7 +5,7 @@
 engine/Dragon2D*
 engine/uieditor*
 
-game/
+/game/
 
 *.exe_cv
 *.exe

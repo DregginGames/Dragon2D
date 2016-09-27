@@ -58,13 +58,15 @@ class Tileset : Resource
         if (id > _xdim*_ydim) {
             throw new Exception("Invalid tileset id. To big!");
         }
-        
+        auto tex = Resource.create!Texture(_texture);
+
         long x = id % _xdim;
         long y = min(id / _xdim,_ydim);
         TileData d;
         d.size = _tilesize;
         d.uvsize = _uvsize;
         d.uvpos = vec2(_uvsize.x*x,_uvsize.y*y);
+        tex.toPixelCenter(d.uvpos,d.uvsize); //importand, removes tearing
         d.id = id;
         return d;
     }

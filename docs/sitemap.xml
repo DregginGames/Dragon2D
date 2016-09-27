@@ -391,6 +391,7 @@
 <url><loc>http://127.0.0.1/d2d/core/resources/texture.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/resources/texture/Texture.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/resources/texture/Texture.this.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/core/resources/texture/Texture.toPixelCenter.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/resource/Resource.deleted.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/resource/Resource.deletetime.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/resource/Resource.deletewait.html</loc></url>

@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Class Texture</title>
+		<title>Function Texture.toPixelCenter</title>
 		<link rel="stylesheet" type="text/css" href="../../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../../scripts/jquery.js">/**/</script>
@@ -270,153 +270,31 @@ $('#symbolSearchPane').show();
 				</div>
 		</nav>
 		<div id="main-contents">
-			<h1>Class Texture</h1>
+			<h1>Function Texture.toPixelCenter</h1>
 			<section>
-				<p>A simple opengl texture loaded from a file
-</p>
-
-					<section>
-						<h3>Inherits from</h3>
-						<ul>
-							<li>
-								<code class="prettyprint lang-d"><a href="../../../../d2d/core/resource/Resource.html"><span class="typ">Resource</span></a></code>
- (base class)
-							</li>
-						</ul>
-					</section>
-					<section>
-						<h3>Constructors</h3>
-						<table>
-							<col class="caption"/>
-							<tr>
-								<th>Name</th>
-								<th>Description</th>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/core/resources/texture/Texture.this.html" class="public">
-										<code>this</code>
-									</a>
-								</td>
-								<td>Loads the texture from a file system resource with sdl_image
-</td>
-							</tr>
-						</table>
-					</section>
-					<section>
-						<h3>Properties</h3>
-						<table>
-							<col class="caption"/>
-							<tr>
-								<th>Name</th>
-								<th>Type</th>
-								<th>Description</th>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/core/resource/Resource.deleted.html" class="public inherited property"><code>deleted</code></a>
-									<span class="tableEntryAnnotation">[get]</span>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td>
-								<td>returns if this object was deleted.
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/core/resource/Resource.deletetime.html" class="public inherited property"><code>deletetime</code></a>
-									<span class="tableEntryAnnotation">[get]</span>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">long</span></code></td>
-								<td>gets the time when this obj was deleted
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/core/resource/Resource.deletewait.html" class="public inherited property"><code>deletewait</code></a>
-									<span class="tableEntryAnnotation">[set]</span>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">long</span></code></td>
-								<td>sets the delteTime
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/core/resource/Resource.deletewait.html" class="public inherited property"><code>deletewait</code></a>
-									<span class="tableEntryAnnotation">[get]</span>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">long</span></code></td>
-								<td>gets the time how long this object will survive a deletion
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/core/resource/Resource.name.html" class="public inherited property"><code>name</code></a>
-									<span class="tableEntryAnnotation">[get]</span>
-								</td>
-								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">string</span></code></td>
-								<td>gets the name of this resource
-</td>
-							</tr>
-						</table>
-					</section>
-					<section>
-						<h3>Methods</h3>
-						<table>
-							<col class="caption"/>
-							<tr>
-								<th>Name</th>
-								<th>Description</th>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/core/resources/texture/Texture.toPixelCenter.html" class="public">
-										<code>toPixelCenter</code>
-									</a>
-								</td>
-								<td>Maps an input positoin and size to be a square wichs
+				<p>Maps an input positoin and size to be a square wichs
        edges will not sample outside of the uv bounds that
        were given by the input.
        This is achieved by mapping the edge positions to the
        center of the pixels that they include.
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/core/resource/Resource.free.html" class="public inherited">
-										<code>free</code>
-									</a>
-								</td>
-								<td>frees a resource. note that it isnt freed until curtime - delteTime is &gt; deleteWaitTime (all in seconds)
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/core/resource/Resource.preload.html" class="public inherited">
-										<code>preload</code>
-									</a>
-								</td>
-								<td>preloads a resource. usefull for bigger stuff that isnt needed to often
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/core/resource/Resource.reload.html" class="public inherited">
-										<code>reload</code>
-									</a>
-								</td>
-								<td>reloads a resource. can be overloaded by a resource if it wants to be reloadable.
-</td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../../../d2d/core/resource/Resource.reloadAll.html" class="public inherited">
-										<code>reloadAll</code>
-									</a>
-								</td>
-								<td>reloads all exsisting resources
-</td>
-							</tr>
-						</table>
+</p>
+<section><p>Usefull for texture atlases in tilesets etc.
+</p>
+</section>
+
+					<section>
+						<h3>Prototype</h3>
+						<div class="prototype">
+							<code class="lang-d">
+<span class="typ">void</span> <span class="pln">toPixelCenter</span><span class="pun">(</span>
+								<br/>
+&nbsp;&nbsp;<span class="kwd">ref </span><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2) <span class="pln">pos</span><span class="pun">,</span>
+								<br/>
+&nbsp;&nbsp;<span class="kwd">ref </span><span class="pln">gl3n<wbr/></span><span class="pun">.</span><span class="pln">linalg<wbr/></span><span class="pun">.</span><span class="typ">Vector</span>!(float,2) <span class="pln">size</span>
+								<br/>
+<span class="pun">)</span><span class="pun">;</span>
+							</code>
+						</div>
 					</section>
 
 			</section>

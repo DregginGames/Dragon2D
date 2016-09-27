@@ -175,6 +175,7 @@ var symbols = [
 {name: 'd2d.core.resources.texture', kind: "module", path: './d2d/core/resources/texture.html', attributes: []},
 {name: 'd2d.core.resources.texture.Texture', kind: "classdeclaration", path: './d2d/core/resources/texture/Texture.html', attributes: []},
 {name: 'd2d.core.resources.texture.Texture.this', kind: "functiondeclaration", path: './d2d/core/resources/texture/Texture.this.html', attributes: []},
+{name: 'd2d.core.resources.texture.Texture.toPixelCenter', kind: "functiondeclaration", path: './d2d/core/resources/texture/Texture.toPixelCenter.html', attributes: []},
 {name: 'd2d.core.services.scheduler', kind: "module", path: './d2d/core/services/scheduler.html', attributes: []},
 {name: 'd2d.core.services.scheduler.Scheduler', kind: "classdeclaration", path: './d2d/core/services/scheduler/Scheduler.html', attributes: []},
 {name: 'd2d.core.services.scheduler.Scheduler.setTimeout', kind: "functiondeclaration", path: './d2d/core/services/scheduler/Scheduler.setTimeout.html', attributes: []},

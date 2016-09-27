@@ -4,6 +4,7 @@
 
 engine/Dragon2D*
 engine/uieditor*
+engine/mapeditor*
 
 /game/
 
@@ -12,6 +13,7 @@ engine/uieditor*
 *.a
 *.obj
 *.selections.json
+*.swp
 
 docs/
 docs.json

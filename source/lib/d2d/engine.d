@@ -49,6 +49,7 @@ class Engine
     /// Holds the mainloop. Renders every frame, updates every tick. 
     void run()
     {   
+        import core.memory; // for gc
         Logger.log("Reached mainloop!");
         
         // this... clock will be used for the gameloops ticking. 
@@ -65,8 +66,7 @@ class Engine
                 root.propagateUpdate(ticksize);
                 curtime += ticksize;
 
-                // force garbage collection after every tick
-                import core.memory;
+                // force garbage collection after every tick                
                 GC.collect();
             }
 
@@ -77,7 +77,11 @@ class Engine
 		// propagate the deletion event becase then the exit is cleaner: all services are removed
 		root.setDeleted();
 
-        Logger.log("Exitted mainloop!");  
+        Logger.log("Exitted mainloop!"); 
+
+        // force early cleanup
+        root.children.clear();
+        GC.collect();
     }
 
 private:

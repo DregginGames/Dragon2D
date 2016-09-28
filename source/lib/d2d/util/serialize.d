@@ -69,21 +69,48 @@ template ConverterPair(T, const string from, const string to)
         mixin(from ~ ";");
     }
 
-    void fromJson(JSONValue v, void delegate(T) property) {
-        T res;
-        mixin(from ~ ";");
-        property(res);
-    }
     JSONValue toJson(T v) {
         JSONValue res;
         mixin(to ~ ";");
         return res;
     }
+
 }
 
+template ConverterPairNoConflict(string t, string from, string to)
+{
+    const char[] ConverterPairNoConflict = "mixin ConverterPair!("~t~",\""~from~"\",\""~to~"\") "~t~"Pair;"
+                ~ "alias fromJson = "~t~"Pair.fromJson;"
+                ~ "alias toJson = "~t~"Pair.toJson;";
+}
+
+// basic types
+mixin(ConverterPairNoConflict!("byte","res = cast(byte)v.integer", "res = v"));
+mixin(ConverterPairNoConflict!("ubyte","res = cast(ubyte)v.integer", "res = v"));
+mixin(ConverterPairNoConflict!("short","res = cast(short)v.integer", "res = v"));
+mixin(ConverterPairNoConflict!("ushort","res = cast(ushort)v.integer", "res = v"));
+mixin(ConverterPairNoConflict!("int","res = cast(int)v.integer", "res = v"));
+mixin(ConverterPairNoConflict!("uint","res = cast(uint)v.integer", "res = v"));
+mixin(ConverterPairNoConflict!("long","res = cast(long)v.integer", "res = v"));
+mixin(ConverterPairNoConflict!("ulong","res = cast(ulong)v.integer", "res = v"));
+
+mixin(ConverterPairNoConflict!("float","res = cast(float)v.integer", "res = v"));
+mixin(ConverterPairNoConflict!("double","res = cast(double)v.integer", "res = v"));
+
+mixin(ConverterPairNoConflict!("string","res = v.str", "res = v"));
+
+// json
+mixin(ConverterPairNoConflict!("JSONValue","res = v", "res = v"));
+
+// vectors i guess
+mixin(ConverterPairNoConflict!("vec2","res = vectorFromJson!(vec2)(v)", "res = vectorToJson(v)"));
+mixin(ConverterPairNoConflict!("vec3","res = vectorFromJson!(vec3)(v)", "res = vectorToJson(v)"));
+mixin(ConverterPairNoConflict!("vec4","res = vectorFromJson!(vec4)(v)", "res = vectorToJson(v)"));
+/*
 mixin ConverterPair!(int, "res = cast(int)v.integer", "res = v");
 mixin ConverterPair!(float, "res = cast(float)v.floating", "res = v");
 mixin ConverterPair!(string, "res = v.str", "res = v");
 mixin ConverterPair!(vec2, "res = vectorFromJson!(vec2)(v)", "res = vectorToJson(v)");
 mixin ConverterPair!(vec3, "res = vectorFromJson!(vec3)(v)", "res = vectorToJson(v)");
 mixin ConverterPair!(vec4, "res =  vectorFromJson!(vec4)(v)", "res = vectorToJson(v)");
+*/

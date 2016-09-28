@@ -35,7 +35,7 @@ class Label : UiElement
     override void render()
     {
         super.render();
-        _text.pos = this.viewPos+0.5*vec2(this.viewSize.x,-this.viewSize.y);
+        _text.pos = this.viewPos+0.5*vec2(0,-this.viewSize.y);
         auto r = getService!Renderer("d2d.renderer");
         r.pushObject(_text);     
     }

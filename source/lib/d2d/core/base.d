@@ -5,6 +5,7 @@ module d2d.core.base;
 
 import std.json;
 import d2d.core.event;
+import d2d.util.serialize;
 
 /// exception thrown when something unlogical is done with the base class or its child objects, services, ...
 class ObjectLogicException : Exception
@@ -193,8 +194,7 @@ class Base
     {
         import std.conv;
         try {   
-            string s = toImpl!string(data);
-            _saveData[key] = s;
+            _saveData[key] = toJson(data);
         } catch(Exception e) {
             import d2d.util.logger;
             Logger.log ("Could not convert " ~ key ~ " to string for the storage action");
@@ -206,7 +206,7 @@ class Base
     {
         T t;
         try {
-            t = toImpl!T(_saveData[key]);    
+            fromJson(_saveData[key],t);    
         } catch(Exception e) {
             import d2d.util.logger;
             Logger.log ("Could not convert " ~ key ~ " fromg string for the restore action");
@@ -240,20 +240,16 @@ class Base
         // execute save handlers
         JSONValue   result;
         JSONValue[] handlers;
-        JSONValue dataStorage;
+
         foreach(h; _saveRestoreHandlers.values) {
             h.onSave(root);
             handlers ~= JSONValue(to!string(typeid(h)));
         }
         
         root.propagate((b) { b.onSave(); });
-        
-        foreach(key; _saveData.keys) {
-            dataStorage[key] = _saveData[key];
-        }
 
         result["_saveRestoreHandlers"] = handlers;
-        result["_saveData"] = dataStorage;
+        result["_saveData"] = _saveData;
         return result;
     }
 
@@ -261,13 +257,9 @@ class Base
     final static void restoreSave(JSONValue v, Base root)
     {
         import std.conv;
-        auto dataStorage = v["_saveData"];
+        _saveData = JSONValue();
+        _saveData = v["_saveData"];
         auto handlers = v["_saveRestoreHandlers"];
-
-        _saveData.clear();
-        foreach(key; dataStorage.object.keys) {
-            _saveData[key] = dataStorage[key].str;
-        }
 
         _saveRestoreHandlers.clear();
         foreach(h; handlers.array) {
@@ -505,7 +497,7 @@ private:
     long _objCurtime = 0;
 
     /// The saveable data storage
-    static string[string] _saveData; 
+    static JSONValue _saveData; 
     /// All save/restore handlers 
     static SaveRestoreHandlerInterface[string] _saveRestoreHandlers;
 }

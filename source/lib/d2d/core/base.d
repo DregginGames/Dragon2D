@@ -74,6 +74,7 @@ class Base
     /// Propagates an update thru the object hirarchy
     final void propagateUpdate(long tickTime)
     {
+        _ticktime = tickTime;
         _curtime+=tickTime; // time doesnt start at 0; its absolute
         propagate(
             (b) { b._objCurtime+=tickTime; b.preUpdate(); }, // this one updates the object time before the preUpdate
@@ -363,6 +364,17 @@ class Base
         return _curticks;
     }
 
+    /// returns the length of the last tick
+    final static @property long ticktime()
+    {
+        return _ticktime;
+    }
+
+    /// returns the length of the last tick in seconds
+    final static @property double ticktimeS()
+    {
+        return (cast(float)_ticktime)/(cast(float)10000000);    
+    }
 
 protected:
 
@@ -493,6 +505,9 @@ private:
     static long _curtime = 0;
     /// the current ticks since engine startup
     static long _curticks = 0;
+    /// the current ticktime. should not change but hey 
+    static long _ticktime = 0;
+
     /// The current time since object creation; not updated in paused objects
     long _objCurtime = 0;
 

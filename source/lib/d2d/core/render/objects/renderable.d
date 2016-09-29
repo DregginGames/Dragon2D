@@ -17,11 +17,12 @@ import d2d.core;
     
     An importand concept of Renderables is the detail level. The higher this level is, the higher the level of the View needs to be to be able to see this object. 
     Here is a reccomendation for the detail levels:
-        00..19: Application-level - always-visible things: Debug information, Alerts, ....
+        00..19: Application-level - always-visible-background things. Probably covered by everything.
         20..39: Map-level - map-baisc stuff like terrain
         40..59: Map-detail-level - advaned stuff like Buildings, details, flowers, ... 
         60..79: Actor-level - everything that actually does things like NPCs, players, ...
-        80+: UI-Level - the user interface. Above that... whatever 
+        80..89: Overlay-level: everything that should over. Effects, treetips, stuff like that, ...
+        90+: UI-Level - the user interface. Above that... whatever 
     
     Detail levels also function as z offsets - higher level means rendered later-> on top
  

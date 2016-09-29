@@ -136,8 +136,12 @@ abstract class AnimatedPlayer(PlayerStatsClass) : AbstractPlayer, Serializeable
         if(_isMoving) {
             auto world = getService!World("d2d.world");
             auto newpos = this.pos + min(_stats.movementSpeed,_stats.maxMovementSpeed)*ticktimeS*directionVector;
-            if(world.isWalkable(newpos)) {
-                this.pos = newpos;
+
+            if(world.isWalkable(newpos+_mapCollisionOffset)) {
+                auto castpos = newpos + _mapCollisionOffset+vec2(directionVector.x*_mapCollisionSize.x,directionVector.y*_mapCollisionSize.y)*0.5;
+                if(world.isWalkable(castpos)) {
+                    this.pos = newpos; 
+                }
             }
         }
     }
@@ -167,7 +171,7 @@ abstract class AnimatedPlayer(PlayerStatsClass) : AbstractPlayer, Serializeable
 
     
 
-    mixin createSerialize!(false,"displayName","_tileset","_animationName","_animationOffset");
+    mixin createSerialize!(false,"displayName","_tileset","_animationName","_animationOffset","_mapCollisionOffset","_mapCollisionSize");
 protected:
     override void onDirectionChange()
     {
@@ -195,5 +199,9 @@ private:
     AnimatedSprite  _animation;
     /// the offset of the animated sprite to the player
     vec2            _animationOffset = 0.0;
+    /// the offset of the collision rect (for map collisions!)
+    vec2            _mapCollisionOffset = 0.0;
+    /// the size of the collsision rect
+    vec2            _mapCollisionSize = 0.0;
 
 }

@@ -279,7 +279,7 @@ $('#symbolSearchPane').show();
 <section><p>An importand concept of Renderables is the detail level. The higher this level is, the higher the level of the View needs to be to be able to see this object.
     Here is a reccomendation for the detail levels:
 </p>
-<p>        00..19: Application-level - always-visible things: Debug information, Alerts, ....
+<p>        00..19: Application-level - always-visible-background things. Probably covered by everything.
 </p>
 <p>        20..39: Map-level - map-baisc stuff like terrain
 </p>
@@ -287,7 +287,9 @@ $('#symbolSearchPane').show();
 </p>
 <p>        60..79: Actor-level - everything that actually does things like NPCs, players, ...
 </p>
-<p>        80+: UI-Level - the user interface. Above that... whatever
+<p>        80..89: Overlay-level: everything that should over. Effects, treetips, stuff like that, ...
+</p>
+<p>        90+: UI-Level - the user interface. Above that... whatever
 </p>
 
 <p>    Detail levels also function as z offsets - higher level means rendered later-&gt; on top

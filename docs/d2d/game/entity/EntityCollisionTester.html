@@ -464,6 +464,24 @@ $('#symbolSearchPane').show();
 								<td>gets/sets the size-mode of this entity
 </td>
 							</tr>
+							<tr>
+								<td>
+									<a href="../../../d2d/core/base/Base.ticktime.html" class="public inherited property"><code>ticktime</code></a>
+									<span class="tableEntryAnnotation">[get]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">long</span></code></td>
+								<td>returns the length of the last tick
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../../d2d/core/base/Base.ticktimeS.html" class="public inherited property"><code>ticktimeS</code></a>
+									<span class="tableEntryAnnotation">[get]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><span class="typ">double</span></code></td>
+								<td>returns the length of the last tick in seconds
+</td>
+							</tr>
 						</table>
 					</section>
 					<section>
@@ -498,7 +516,7 @@ $('#symbolSearchPane').show();
 										<code>findAll</code>
 									</a>
 								</td>
-								<td>finds all entities at position p
+								<td>finds all entites at or around point p (rect)
 </td>
 							</tr>
 							<tr>
@@ -516,7 +534,7 @@ $('#symbolSearchPane').show();
 										<code>findAll</code>
 									</a>
 								</td>
-								<td>finds all entites at or around point p (rect)
+								<td>finds all entities at position p
 </td>
 							</tr>
 							<tr>
@@ -543,7 +561,7 @@ $('#symbolSearchPane').show();
 										<code>intersect</code>
 									</a>
 								</td>
-								<td>Tests if this entity intersects with another
+								<td>Tests if this entity intersects with position p or is in the rect around p
 </td>
 							</tr>
 							<tr>
@@ -561,7 +579,7 @@ $('#symbolSearchPane').show();
 										<code>intersect</code>
 									</a>
 								</td>
-								<td>Tests if this entity intersects with position p or is in the radius around p
+								<td>Tests if this entity intersects with another
 </td>
 							</tr>
 							<tr>
@@ -570,7 +588,7 @@ $('#symbolSearchPane').show();
 										<code>intersect</code>
 									</a>
 								</td>
-								<td>Tests if this entity intersects with position p or is in the rect around p
+								<td>Tests if this entity intersects with position p or is in the radius around p
 </td>
 							</tr>
 							<tr>

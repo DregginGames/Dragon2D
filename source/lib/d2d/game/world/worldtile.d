@@ -15,7 +15,6 @@ class Worldtile
     {
         _id = id;
         _pos = pos;
-        _collision = false; //for now
     }
 
     @property long id() const
@@ -33,20 +32,9 @@ class Worldtile
         return _pos;
     }
 
-    @property bool collision() const
-    {
-        return _collision;
-    }   
-
-    @property bool collision(bool b) 
-    {
-        return _collision = b;
-    }
-
 private:
     vec2 _pos;
     long _id;
-    bool _collision;
 };
 
 class WorldTileLayer

@@ -17,6 +17,7 @@ class Sprite : Entity
     this(string texture)
 	{
 		_quad = new TexturedQuad(texture);
+        _quad.detailLevel = 70; // sprites start of high i guess
 	}
 
 	override void render()

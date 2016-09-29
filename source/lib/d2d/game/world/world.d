@@ -3,6 +3,8 @@ module d2d.game.world.world;
 
 import std.algorithm;
 
+import gl3n.linalg;
+
 import d2d.core;
 import d2d.game.world;
 import d2d.util.logger;
@@ -31,12 +33,14 @@ final class World : Base
         }
     }
 
+    /// adds a layer
     void addLayer(WorldTileLayer l)
     {
         _layers[l.id] = l;
         regenerateBatches();
     }
 
+    /// removes a layer
     void removeLayer(WorldTileLayer l)
     {
         _layers.remove(l.id);
@@ -46,6 +50,49 @@ final class World : Base
     void forceBatchRebuild()
     {
         regenerateBatches();
+    }
+
+    /// returns if a tile is walkable
+    bool isWalkable(vec2 p) 
+    {
+        bool result = true;
+        bool anyTiles = false;
+
+        foreach(ref l; _layers) {
+            auto tset = Resource.create!Tileset(l.tileset);
+            foreach(ref t; l.tilesAt(p)) {
+                anyTiles = true;
+                if(!tset.getTileData(t.id).walkable) {
+                    result = false;
+                    break;
+                }
+            }
+            if (!result) {
+                break;
+            }
+        }
+        return result && anyTiles;
+    }
+
+    /// returns if a tile is collideable
+    bool isCollideable(vec2 p)
+    {
+        bool result = false;
+        bool anyTiles = false;
+        foreach(ref l; _layers) {
+            auto tset = Resource.create!Tileset(l.tileset);
+            foreach(ref t; l.tilesAt(p)) {
+                anyTiles = true;
+                if(tset.getTileData(t.id).collideable) {
+                    result = true;
+                    break;
+                }
+            }
+            if (result) {
+                break;
+            }
+        }
+        return result && anyTiles;
     }
 
 private:

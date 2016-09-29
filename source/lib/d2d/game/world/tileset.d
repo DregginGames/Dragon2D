@@ -44,6 +44,12 @@ class Tileset : Resource
             _xdim = d["xdim"].integer;
             _ydim = d["ydim"].integer;
             _tilesize = vectorFromJson!(vec2)(d["tilesize"]);
+            foreach(i; d["collide"].array) {
+                _collide ~= i.integer;
+            }
+            foreach(i; d["nowalk"].array) {
+                _nowalk ~= i.integer;
+            }
         }
         catch {
             // meh
@@ -68,6 +74,8 @@ class Tileset : Resource
         d.uvpos = vec2(_uvsize.x*x,_uvsize.y*y);
         tex.toPixelCenter(d.uvpos,d.uvsize); //importand, removes tearing
         d.id = id;
+        d.walkable = !_nowalk.canFind(id);
+        d.collideable = _collide.canFind(id);
         return d;
     }
 
@@ -102,6 +110,8 @@ private:
     long _ydim;
     vec2 _tilesize;
     vec2 _uvsize;
+    long[] _nowalk;
+    long[] _collide;
 }
 
 struct TileData
@@ -109,5 +119,7 @@ struct TileData
     vec2 size;
     vec2 uvpos;
     vec2 uvsize;
+    bool collideable;
+    bool walkable;
     ulong id;
 }

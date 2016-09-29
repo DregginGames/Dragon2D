@@ -1,6 +1,7 @@
 module d2d.util.serialize;
 
-import std.traits;
+public import std.traits; // sadly needed - typeid conversion etc
+public import std.conv; // ditto
 import gl3n.linalg;
 import std.json;
 import d2d.util.jsonutil;
@@ -94,8 +95,8 @@ mixin(ConverterPairNoConflict!("uint","res = cast(uint)v.integer", "res = v"));
 mixin(ConverterPairNoConflict!("long","res = cast(long)v.integer", "res = v"));
 mixin(ConverterPairNoConflict!("ulong","res = cast(ulong)v.integer", "res = v"));
 
-mixin(ConverterPairNoConflict!("float","res = cast(float)v.integer", "res = v"));
-mixin(ConverterPairNoConflict!("double","res = cast(double)v.integer", "res = v"));
+mixin(ConverterPairNoConflict!("float","res = cast(float)v.floating", "res = v"));
+mixin(ConverterPairNoConflict!("double","res = cast(double)v.floating", "res = v"));
 
 mixin(ConverterPairNoConflict!("string","res = v.str", "res = v"));
 

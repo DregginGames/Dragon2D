@@ -211,9 +211,12 @@
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.getCursorPos.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.nLines.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.OverflowBehaviour.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.Positioning.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.render.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.settings.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.settings.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.TextSettings.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.TextSettings.color.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.TextSettings.font.html</loc></url>
@@ -227,6 +230,8 @@
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.TextSettings.scroll.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.TextSettings.scrollUnit.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.TextSettings.size.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.this.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.this.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable.detailLevel.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable.detailLevel.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable.ignoreView.html</loc></url>
@@ -241,10 +246,11 @@
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable.VAOMode.classScope.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable.VAOMode.none.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable.VAOMode.unspecified.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text.regenerate.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/core/render/objects/text/Text._vboInitClassScope.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable._setupVAO.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable._standardModelToWorld.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable._vboInit.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/core/render/objects/renderable/Renderable._vboInitClassScope.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/view.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/view/ScreenSpaceView.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/render/objects/view/ScreenSpaceView.this.html</loc></url>

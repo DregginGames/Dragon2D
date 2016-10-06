@@ -102,7 +102,13 @@ class Text : Renderable
         left,
         right
     }
-
+    
+    /** 
+        Constructor for text objects
+        Parameters:
+            font = the font to use for the text. can be "font.default"
+            program = the glsl program. default ("shader.default") is probably fine
+      */
     this(string font, string program="shader.default") 
     {
         _setupVAO(VAOMode.classScope);
@@ -112,9 +118,17 @@ class Text : Renderable
         Resource.preload!GlslProgram(program);
     }
 
-    this(string text,  string font, float height, Font.FontSize size=Font.FontSize.medium, string shader="shader.default")
+    /** Constructs a new text object with default settings
+        Parameters:
+            text = default string 
+            string = font. can be "font.default"
+            height = height of the text in relative units
+            size = fontSize to pick. Reccomend Font.FontSize.medium
+            program = the glsl program. default is probably fine
+    */
+    this(string text,  string font, float height, Font.FontSize size=Font.FontSize.medium, string program="shader.default")
     {
-        this(font, shader);
+        this(font, program);
         _settings.text = text;
         _settings.size = size;
         _settings.height = height;
@@ -180,25 +194,28 @@ class Text : Renderable
         
         return vec2(x,y);
     }
-
+    
+    /// Gets/Sets TextSettings for this text object
     @property TextSettings settings() const
     {
         return _settings;
     }
+    /// Ditto
     @property TextSettings settings(TextSettings s)
     {
         _settings = s;
         regenerate();
         return _settings;
     }
-
+    
+    /// Return the number of lines in this text object
     @property size_t nLines() const
     {
         return _lines.length;
     }
     
 protected:
-    //does what the name says with the text. regenerates the quads for the text rendering. Dont run near companion.
+    /// does what the name says with the text. regenerates the quads for the text rendering. Dont run near companion.
     void regenerate()  
     {
         if (strip(_settings.text)=="") {
@@ -274,6 +291,7 @@ protected:
         }
     }
 
+    /// init the vbo in class scope
     override void _vboInitClassScope()
     {
         vec4[] vertices;
@@ -301,8 +319,8 @@ private:
     vec2 _uvsize = vec2(1.0f,1.0f);
 }
 
-// sets str to the stuff thats left of the input string and returns the string that matches or is smaller then the max length
-// It tries NOT to break words
+/// sets str to the stuff thats left of the input string and returns the string that matches or is smaller then the max length
+/// It tries NOT to break words
 private string stripTextOnLength(ref char[] str, TextSplitSettings settings, ref int cutoff)
 {
     cutoff = 0;

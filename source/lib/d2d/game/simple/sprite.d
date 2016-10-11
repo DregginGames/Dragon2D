@@ -27,7 +27,6 @@ class Sprite : Entity
 		renderer.pushObject(_quad);
 	}
 
-protected:
     @property TexturedQuad quad()
     {
         return _quad;

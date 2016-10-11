@@ -6,6 +6,8 @@ engine/Dragon2D*
 engine/uieditor*
 engine/mapeditor*
 
+/deployPackage/
+
 /game/
 
 *.exe_cv

@@ -2,7 +2,7 @@ rm -rf .dub
 rm -rf docs 
 rm -rf *.html
 rm -rf docs.json 
-rm -rf releasePackage 
+rm -rf deployPackage 
 rm -rf engine/*.exe 
 rm -rf engine/*.lib 
 rm -rf engine/*.so 

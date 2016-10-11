@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Module d2d.game.ui.uielement</title>
+		<title>Module d2d.game.simple.loadingscreen</title>
 		<link rel="stylesheet" type="text/css" href="../../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../../scripts/jquery.js">/**/</script>
@@ -159,21 +159,21 @@
 							</li>
 						</ul>
 							</li>
-							<li class="collapsed tree-view">
+							<li class="tree-view">
 								<a href="#" class="package">simple</a>
 						<ul class="tree-view">
 							<li>
 								<a href="../../../d2d/game/simple/camera.html" class=" module">camera</a>
 							</li>
 							<li>
-								<a href="../../../d2d/game/simple/loadingscreen.html" class=" module">loadingscreen</a>
+								<a href="../../../d2d/game/simple/loadingscreen.html" class="selected module">loadingscreen</a>
 							</li>
 							<li>
 								<a href="../../../d2d/game/simple/sprite.html" class=" module">sprite</a>
 							</li>
 						</ul>
 							</li>
-							<li class="tree-view">
+							<li class="collapsed tree-view">
 								<a href="#" class="package">ui</a>
 						<ul class="tree-view">
 							<li>
@@ -195,7 +195,7 @@
 								<a href="../../../d2d/game/ui/ui.html" class=" module">ui</a>
 							</li>
 							<li>
-								<a href="../../../d2d/game/ui/uielement.html" class="selected module">uielement</a>
+								<a href="../../../d2d/game/ui/uielement.html" class=" module">uielement</a>
 							</li>
 							<li>
 								<a href="../../../d2d/game/ui/uievent.html" class=" module">uievent</a>
@@ -273,38 +273,12 @@ $('#symbolSearchPane').show();
 				</div>
 		</nav>
 		<div id="main-contents">
-			<h1>Module d2d.game.ui.uielement</h1>
-			<p>Abstract base for all ui elements.
+			<h1>Module d2d.game.simple.loadingscreen</h1>
+			<p>Holds implementation for a simple loading screen
 </p>
+<section></section>
 
 			<section></section>
-			<section>
-				<h2>Classes</h2>
-				<table>
-					<col class="caption"/>
-					<tr>
-						<th>Name</th>
-						<th>Description</th>
-					</tr>
-					<tr>
-						<td>
-							<a id="UiElement" class="public" href="../../../d2d/game/ui/uielement/UiElement.html">
-								<code>UiElement</code>
-							</a>
-						</td>
-						<td>A UI Element is a non-entity visual class that is part of the user interface.
-    Ui elemnts always life inside the -1..1 position space.
-    The hirarchy that makes a ui element is ALWAYS on - positions and sizes are always relative to the parent ui element
-    That means that if the "colored box 7" is at position [0.5,0.5] and is [0.5,0.5] in size and on that you put another box [0.0,0.0,0.5,0.5] on there,
-        its absolute coordinates are [0.5,0.5] and size [0.25,0.25]!
-    This is very similar, but not eqal to, the Entities ParentRelative mode. The major difference is the -1..1 position space and the size.
-    To remember:
-        Child lays on top of parent
-        Absolute position ans size is relative to parents position and size
-</td>
-					</tr>
-				</table>
-			</section>
 			<section>
 				<h2>Authors</h2>
 

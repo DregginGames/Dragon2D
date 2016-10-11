@@ -283,6 +283,7 @@ var symbols = [
 {name: 'd2d.game.entity.Entity.SizeMode', kind: "enumdeclaration", path: './d2d/game/entity/Entity.SizeMode.html', attributes: []},
 {name: 'd2d.game.entity.Entity.doFullIntersectionTest', kind: "functiondeclaration", path: './d2d/game/entity/Entity.doFullIntersectionTest.html', attributes: []},
 {name: 'd2d.game.entity.Entity.onPosSizeChange', kind: "functiondeclaration", path: './d2d/game/entity/Entity.onPosSizeChange.html', attributes: []},
+{name: 'd2d.game.simple.loadingscreen', kind: "module", path: './d2d/game/simple/loadingscreen.html', attributes: []},
 {name: 'd2d.game.simple.sprite', kind: "module", path: './d2d/game/simple/sprite.html', attributes: []},
 {name: 'd2d.game.simple.sprite.AnimatedSprite', kind: "classdeclaration", path: './d2d/game/simple/sprite/AnimatedSprite.html', attributes: []},
 {name: 'd2d.game.simple.sprite.AnimatedSprite.isPlaying', kind: "functiondeclaration", path: './d2d/game/simple/sprite/AnimatedSprite.isPlaying.html', attributes: ["property"]},

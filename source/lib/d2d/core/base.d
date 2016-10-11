@@ -78,15 +78,15 @@ class Base
         _curtime+=tickTime; // time doesnt start at 0; its absolute
         propagate(
             (b) { b._objCurtime+=tickTime; b.preUpdate(); }, // this one updates the object time before the preUpdate
-            (b) => !b._paused
+            (b) => !b._paused&&!b.deleted
         );
         propagate(
             (b) { b.update(); },
-            (b) => !b._paused
+            (b) => !b._paused&&!b.deleted
         );
         propagate(
             (b) { b.postUpdate(); },
-            (b) => !b._paused
+            (b) => !b._paused&&!b.deleted
         );
 
         _curticks++; // ticks start at 0. 
@@ -96,6 +96,9 @@ class Base
 	// cant use the propagate because render has additional pre- and post functions.
     final void propagateRender()
     {
+        if (this.deleted) {
+            return;
+        }
 		this.preRender();
 
 		this.render();
@@ -134,7 +137,7 @@ class Base
     {
         propagate(
             (b) { if(b.canReciveEvents && e.source != b) b.pendingEvents ~= e; },
-            (b) => !b._paused
+            (b) => !b._paused&&!b.deleted
         );
     }
 

@@ -826,11 +826,11 @@
 <url><loc>http://127.0.0.1/d2d/core/base/Base.parent.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.paused.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.pos.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/game/entity/Entity.positionMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.PositionMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.PositionMode.absolute.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.PositionMode.parentBound.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.PositionMode.relative.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/entity/Entity.positionMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.postRender.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.postUpdate.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.preTickDelete.html</loc></url>
@@ -849,9 +849,9 @@
 <url><loc>http://127.0.0.1/d2d/core/base/Base.setDeleted.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.size.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.size.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.SizeMode.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.storeSaveValue.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.ticktime.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.ticktimeS.html</loc></url>
@@ -1149,8 +1149,8 @@
 <url><loc>http://127.0.0.1/d2d/core/base/Base.setDeleted.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.size.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.size.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.SizeMode.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.storeSaveValue.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.ticktime.html</loc></url>
@@ -1221,8 +1221,8 @@
 <url><loc>http://127.0.0.1/d2d/core/base/Base.setDeleted.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.size.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.size.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.SizeMode.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.storeSaveValue.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.ticktime.html</loc></url>
@@ -1528,9 +1528,9 @@
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.radius.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.size.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.size.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.SizeMode.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.acceptsEvents.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.addChild.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.addSaveRestoreHandler.html</loc></url>
@@ -1637,8 +1637,8 @@
 <url><loc>http://127.0.0.1/d2d/core/base/Base.setDeleted.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.size.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.size.html</loc></url>
-<url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.SizeMode.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.sizeMode.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.storeSaveValue.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.ticktime.html</loc></url>

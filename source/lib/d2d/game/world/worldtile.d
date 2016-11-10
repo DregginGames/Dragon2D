@@ -4,6 +4,7 @@
 
 module d2d.game.world.worldtile;
 
+import std.math;
 
 import gl3n.linalg;
 import d2d.game.world.tileset;
@@ -58,22 +59,23 @@ class WorldTileLayer
     /// adds a new tile to the layer
     void addTile( Worldtile t)
     {
-        _tiles ~= t;
+        auto pos = toArrayPos(t.pos);
+        _tiles[pos.x][pos.y] = t;
     }
 
     /// returns all tiles in this layer that can be found at the given position
+    /// usually should only return one or none tiles. 
     Worldtile[] tilesAt(vec2 inpos)
     {
         Worldtile[] result;
         inpos = inpos-_pos; // layers, internally, dont have the offset of the layer
-        Tileset tset = Resource.create!Tileset(_tileset);
-        foreach (ref t; _tiles) {
-            vec2 size = tset.getTileData(t.id).size; 
-            vec2 pos = t.pos-0.5*size; // tiles are still centered
-            if (inpos.x >= pos.x && inpos.x <= pos.x+size.x) {
-                if (inpos.y >= pos.y && inpos.y <= pos.y+size.y) {
-                    result ~= t;
-                }
+        
+        auto arrayPos = toArrayPos(inpos);
+        auto x = arrayPos.x in _tiles;
+        if (x !is null) {
+            auto y = arrayPos.y in *x;
+            if (y !is null) {
+                result ~= *y;
             }
         }
 
@@ -82,35 +84,13 @@ class WorldTileLayer
 
     void removeTilesAt(vec2 inpos) 
     {
-        int[] toDelete;
         inpos = inpos-_pos;
-        Tileset tset = Resource.create!Tileset(_tileset);
-        for (int i = 0; i < _tiles.length; i++) {
-            auto t = _tiles[i];
-            vec2 size = tset.getTileData(t.id).size; 
-            vec2 pos = t.pos-0.5*size; // tiles are still centered
-            if (inpos.x >= pos.x && inpos.x <= pos.x+size.x) {
-                if (inpos.y >= pos.y && inpos.y <= pos.y+size.y) {
-                    toDelete ~= i;
-                }
-            }
-        }
-
-        foreach(i; toDelete) {
-            if (_tiles.length == 0) {
-                break;
-            }
-            if (_tiles.length-1 == 0) {
-                _tiles.length = 0;
-            }
-            else if (i==0) {
-                _tiles = _tiles[1..$];
-            }
-            else if (i == _tiles.length) {
-                _tiles = _tiles[0..$-1];
-            }
-            else {
-                _tiles = _tiles[0..i] ~ _tiles[i+1..$];
+        auto arrayPos = toArrayPos(inpos);
+        auto x = arrayPos.x in _tiles;
+        if (x !is null) {
+            auto y = arrayPos.y in *x;
+            if (y !is null) {
+                _tiles[arrayPos.x].remove(arrayPos.y);
             }
         }
     }
@@ -149,15 +129,41 @@ class WorldTileLayer
 
 
     /// Raw access to the tiles
-    @property ref Worldtile[] tiles()
+    @property ref Worldtile[int][int] tiles()
     {
         return _tiles;
+    }
+
+    /// returns a Worldtile[] list that can be used for different things
+    @property Worldtile[] tileList()  
+    {
+        Worldtile[] res;
+        foreach (row; _tiles) {
+            foreach(tile; row) {
+                res ~= tile;
+            }
+        }
+
+        return res;
     }
 
     /// id used for fast access inside the world
     ulong id() const
     {
         return _id;
+    }
+
+protected:
+    
+    /// Converts the given input position to a position in the tile array
+    /// Tiles are seen as being centered around a position, so i.e. (-0.1,-0.1) still could evaluate to (0,0)
+    /// To do that, 0.5 is added in the flooring
+    vec2i toArrayPos(vec2 pos)
+    {
+        Tileset tset = Resource.create!Tileset(_tileset);
+        int xpos = cast(int)floor(pos.x/tset.tilesize.x+0.5);
+        int ypos = cast(int)floor(pos.y/tset.tilesize.y+0.5);
+        return vec2i(xpos,ypos);
     }
 
 private:
@@ -168,7 +174,7 @@ private:
     /// tileset of this layer
     string _tileset;
     /// tiles in this layer
-    Worldtile[] _tiles;
+    Worldtile[int][int] _tiles;
     /// id of this layer
     ulong _id;
     /// static thing to select the ids of layers

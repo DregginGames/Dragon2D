@@ -80,7 +80,7 @@ class Tileset : Resource
     }
 
     /// revovers a tileset id from a uv pos
-    ulong getTileId(vec2 pos)
+    ulong getTileId(vec2 pos) const
     {
         long x = 0;
         long y = 0;
@@ -89,19 +89,24 @@ class Tileset : Resource
         return max(0,min(_xdim*_ydim,x + y*_xdim));
     }
 
-    @property string texture()
+    @property string texture() const
     {
         return _texture;
     }
 
-    @property long xdim()
+    @property long xdim() const
     {
         return _xdim;
     }
 
-    @property long ydim()
+    @property long ydim() const
     {
         return _ydim;
+    }
+
+    @property vec2 tilesize() const
+    {
+        return _tilesize;
     }
 
 private:

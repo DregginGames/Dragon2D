@@ -128,7 +128,7 @@ class Map : Base, Serializeable
             layer["layerZ"] = JSONValue(layerZ);
             JSONValue[] arr2;
             layer["tiles"] = arr2;
-            foreach(ref t; l.tiles) {
+            foreach(ref t; l.tileList) {
                 JSONValue tile;
                 tile["pos"] = toJson(t.pos);
                 tile["id"] = toJson(t.id);

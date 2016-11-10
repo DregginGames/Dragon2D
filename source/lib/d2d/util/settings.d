@@ -81,7 +81,7 @@ class Settings
         loadFile(jsonBody["cmd"].object["gameDir"].str~jsonBody["cmd"].object["gameCfgDir"].str~jsonBody["cmd"].object["gameCfg"].str);
         loadFile(jsonBody["cmd"].object["gameDir"].str~"game.init");
 
-        auto foo = toJSON(&jsonBody, true);
+        auto foo = toJSON(jsonBody, true);
         foo = foo;
     }
 
@@ -141,7 +141,7 @@ class Settings
     {
         foreach (string key, ref o; jsonBody.object) {
             if ("cmd" != key) {
-                file.write(key, toJSON(&o,true));
+                file.write(key, toJSON(o,true));
             }
         }
     } 

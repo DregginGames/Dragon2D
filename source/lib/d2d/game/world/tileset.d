@@ -51,7 +51,7 @@ class Tileset : Resource
                 _nowalk ~= i.integer;
             }
         }
-        catch {
+        catch (Throwable) {
             // meh
         }
         

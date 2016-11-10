@@ -267,14 +267,14 @@ class IOTransformer : Base
                         auto buttonId = mbevent.button;
                         auto pos = vec2i(mbevent.x, mbevent.y);
                         auto npos = vec2(cast(float)(pos.x)/width, cast(float)(pos.y)/height);
-                        string eventname = _eventName("mouse" ~ toImpl!string(buttonId));
+                        string eventname = _eventName("mouse" ~ to!string(buttonId));
                         fireEvent(new MouseButtonDownEvent(eventname, sdlevent, pos, npos, buttonId));
                         break;
                     case SDL_MOUSEBUTTONUP:
                         auto buttonId = mbevent.button;
                         auto pos = vec2i(mbevent.x, mbevent.y);
                         auto npos = vec2(cast(float)(pos.x)/width, cast(float)(pos.y)/height);
-                        string eventname = _eventName("mouse" ~ toImpl!string(buttonId));
+                        string eventname = _eventName("mouse" ~ to!string(buttonId));
                         fireEvent(new MouseButtonUpEvent(eventname, sdlevent, pos, npos, buttonId));
                         break;
                     case SDL_MOUSEWHEEL:

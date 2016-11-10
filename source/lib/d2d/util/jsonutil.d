@@ -44,7 +44,7 @@ T vectorFromJson(T)(JSONValue data)
                     if (edgeOffsetStr!="") {
                         try {
                             import std.conv;
-                            edgeOffset = toImpl!double(edgeOffsetStr);
+                            edgeOffset = to!double(edgeOffsetStr);
                         } catch (Exception e){
                         }
                     }

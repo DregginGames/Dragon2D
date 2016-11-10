@@ -123,7 +123,7 @@ class Navigator : Base
 
         if (_isDrawing) {
             import d2d.util.logger;
-            Logger.log("Adding tile at around " ~ to!string(_cursor.absolutePos));
+            Logger.log("Adding tile at around " ~ _cursor.absolutePos.toString());
             // check if there is a tile already
             auto tileList = _map.layers[_activeLayer].tilesAt(_cursor.absolutePos);
             if (tileList.length > 0) {
@@ -204,7 +204,7 @@ protected:
             import std.regex,std.conv;
             yoffset+=2;
             double y = 0.1+0.05*yoffset;
-            auto zEdit = mkeditpair(box,color,y,"layerZEdit","Z index",toImpl!string(_map.layers[_activeLayer].layerZ),"Z Index");
+            auto zEdit = mkeditpair(box,color,y,"layerZEdit","Z index",to!string(_map.layers[_activeLayer].layerZ),"Z Index");
             zEdit.filter = ctRegex!("^\\d*$");
             yoffset++;
             auto levelEdit = mkeditpair(box,color,0.1+y,"layerZEdit","Detail Level","0","level");

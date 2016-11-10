@@ -178,7 +178,7 @@ class Edit : Box
     @property double floating()
     {
         try {
-            return toImpl!double(_textStr);
+            return to!double(_textStr);
         }
         catch(Exception e) 
         {
@@ -190,7 +190,7 @@ class Edit : Box
     @property long integer()
     {
         try {
-            return toImpl!long(_textStr);
+            return to!long(_textStr);
         }
         catch(Exception e) 
         {

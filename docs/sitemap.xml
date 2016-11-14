@@ -797,9 +797,12 @@
 <url><loc>http://127.0.0.1/d2d/game/dbg/grid.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/simple/camera.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/simple/camera/Camera.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/simple/camera/Camera.cursor.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/simple/camera/Camera.height.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/simple/camera/Camera.height.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/simple/camera/Camera.this.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/simple/camera/Camera.view.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/simple/camera/Camera.worldCursor.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.absolutePos.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.acceptsEvents.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/base/Base.addChild.html</loc></url>
@@ -1607,6 +1610,13 @@
 <url><loc>http://127.0.0.1/d2d/core/event/Event.source.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/core/event/Event.source.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/world/map/map.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/world/navigator.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/world/navigator/Navigator.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/world/navigator/Navigator.getRoute.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/world/navigator/Navigator.getRoute.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/world/navigator/Navigator.getRoute.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/world/navigator/Navigator.getRoute.html</loc></url>
+<url><loc>http://127.0.0.1/d2d/game/world/navigator/Navigator.this.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/world/worldtile.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity.html</loc></url>
 <url><loc>http://127.0.0.1/d2d/game/entity/Entity.html</loc></url>

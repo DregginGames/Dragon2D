@@ -3,7 +3,7 @@
 import d2d.engine;
 import d2d.core.base;
 
-import navigator;
+import editor;
 
 int main(char[][] args)
 {
@@ -14,7 +14,7 @@ int main(char[][] args)
 
 bool onStartup(Base base)
 {
-    base.addChild(new Navigator());
+    base.addChild(new Editor());
     base.addChild(new NoSDLEventDebugger());
     return true;
 }

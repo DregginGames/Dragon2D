@@ -1,5 +1,5 @@
 
-module navigator;
+module editor;
 
 import std.math;
 import std.regex;
@@ -16,7 +16,7 @@ import d2d.game.simple.camera;
 
 import d2d.util.settings;
 
-class Navigator : Base
+class Editor : Base
 {
     this() 
     {

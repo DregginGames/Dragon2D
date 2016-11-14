@@ -84,6 +84,11 @@ private:
         NavNode start = nodeFromPos(orig);
         NavNode end = nodeFromPos(target);
 
+        // make sure the route is possible at all
+        if (!nodeWalkable(end)) {
+            return result;
+        }
+
         double[size_t] gScore;
         gScore[toHash(start)] = 0.0;
         double[size_t] fScore;

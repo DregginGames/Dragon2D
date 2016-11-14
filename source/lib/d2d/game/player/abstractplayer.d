@@ -65,19 +65,17 @@ abstract class AbstractPlayer : Entity
     {
         super.update();
         if (_isNavActive && !_isNavPaused && _navNodes.length > 0) {
-            vec2 currTarget = _navTarget;
-            if (_navNodes.length > 1) {  // more nodes to move towards to
-                if ((this.pos-_navNodes[0]).magnitude < _navEpsilon) {
+            vec2 currTarget = _navNodes[0];
+            if ((this.pos-_navNodes[0]).magnitude < _navEpsilon) {
+                if (_navNodes.length > 1) {  // more nodes to move towards to
                     _navNodes = _navNodes[1..$];
+                    currTarget = _navNodes[0];
                 }
-                currTarget = _navNodes[0];
-            } else { // already at target last node: target. So use the fixed target just in case.
-                if ((this.pos-_navTarget).magnitude < _navEpsilon) { // You have reached you final destination
+                else {
                     disengageNav();
                     return;
                 }
             }
-            
             turnTowards(currTarget);
         }
     }
@@ -87,14 +85,22 @@ abstract class AbstractPlayer : Entity
     /// So you can enable or disable movent (start/stop walking) while nav is enabled.
     /// Navigation can also be paused via the navPaused property
     /// Navigation can be stopped with disengageNav
-    void engageNav(vec2 target, double navEpsilon = 0.5, vec2 grid=vec2(0.5,0.5)) 
+    void engageNav(vec2 target, double navEpsilon = 0.1, vec2 grid=vec2(0.5,0.5)) 
     {
+        // dont throw nano movements into the navigator 
+        if ((target-this.pos).magnitude<navEpsilon) {
+            return;
+        }
+        // get route. route.length = 1 means we already are at the target node.
         vec2[] route = Navigator.getRoute(this,target,grid);
-        if (route.length > 0) {
+        if (route.length > 1) {
             _isNavActive = true;
             _navTarget = target;
-            _navNodes = route;
+            _navNodes = route[1..$]; // drop first node because thats were we are!
             _navEpsilon = navEpsilon;
+            if (_navControlsMovement) {
+                isMoving(true);
+            }
         }
     }
 
@@ -103,7 +109,7 @@ abstract class AbstractPlayer : Entity
     {
         _isNavActive = _isNavPaused = false;
         _navNodes.length = 0;
-        if (_navCancelMovement) {
+        if (_navControlsMovement) {
             isMoving(false);
         }
     }
@@ -197,13 +203,13 @@ abstract class AbstractPlayer : Entity
     }
 
     /// Gets/Sets if the navigation cancels movement when done 
-    @property bool navCancelMovement() const 
+    @property bool navControlsMovement() const 
     {
-        return _navCancelMovement;
+        return _navControlsMovement;
     }
     /// Ditto
-    @property bool navCancelMovement(bool b) {
-        return _navCancelMovement = b;
+    @property bool navControlsMovement(bool b) {
+        return _navControlsMovement = b;
     }
 protected:
 
@@ -234,7 +240,7 @@ private:
     /// navigation nodes 
     vec2[]          _navNodes;
     /// if being done with a navigation cancels movement
-    bool            _navCancelMovement = true;
+    bool            _navControlsMovement = true;
 }
 
 abstract class AnimatedPlayer(PlayerStatsClass) : AbstractPlayer, Serializeable

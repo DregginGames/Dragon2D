@@ -23,6 +23,17 @@ abstract class AbstractPlayerStatsClass : Serializeable
 
 abstract class AbstractPlayer : Entity
 {
+    this()
+    {
+        auto world = getService!World("d2d.world");
+        _footprint = new Footprint;
+        _footprint.pos = this.pos;
+        _footprint.r = 0;
+        _footprint.collideable = false;
+        _footprint.walkable = false;
+        world.addFootprint(_footprint);
+    }
+
     /// movement directions. Also used for animation names
     enum Direction
     {
@@ -39,7 +50,7 @@ abstract class AbstractPlayer : Entity
     /// sets the proper direction towards a target
     void turnTowards(vec2 target) 
     {
-        vec2 rawDir = (target-pos).normalized;
+        vec2 rawDir = (target-footprint.pos).normalized;
         if (abs(rawDir.y) < 0.5) {
             this.direction = rawDir.x > 0 ? Direction.right : Direction.left;
         }
@@ -66,7 +77,7 @@ abstract class AbstractPlayer : Entity
         super.update();
         if (_isNavActive && !_isNavPaused && _navNodes.length > 0) {
             vec2 currTarget = _navNodes[0];
-            if ((this.pos-_navNodes[0]).magnitude < _navEpsilon) {
+            if ((footprint.pos-_navNodes[0]).magnitude < _navEpsilon) {
                 if (_navNodes.length > 1) {  // more nodes to move towards to
                     _navNodes = _navNodes[1..$];
                     currTarget = _navNodes[0];
@@ -92,7 +103,9 @@ abstract class AbstractPlayer : Entity
             return;
         }
         // get route. route.length = 1 means we already are at the target node.
-        vec2[] route = Navigator.getRoute(this,target,grid);
+        footprint.ignored = true;
+        vec2[] route = Navigator.getRoute(footprint.pos,target,grid);
+        footprint.ignored = false;
         if (route.length > 1) {
             _isNavActive = true;
             _navTarget = target;
@@ -212,6 +225,11 @@ abstract class AbstractPlayer : Entity
         return _navControlsMovement = b;
     }
 protected:
+    override void onPosSizeChange() 
+    {
+        footprint.pos = this.pos;
+    }
+
 
     void onDirectionChange()
     {
@@ -219,6 +237,11 @@ protected:
 
     void onMovementChange()
     {
+    }
+
+    @property ref Footprint footprint()
+    {
+        return _footprint;
     }
 
 private:
@@ -241,6 +264,8 @@ private:
     vec2[]          _navNodes;
     /// if being done with a navigation cancels movement
     bool            _navControlsMovement = true;
+    /// Footprint of this player
+    Footprint       _footprint;
 }
 
 abstract class AnimatedPlayer(PlayerStatsClass) : AbstractPlayer, Serializeable
@@ -259,6 +284,15 @@ abstract class AnimatedPlayer(PlayerStatsClass) : AbstractPlayer, Serializeable
         _animation.pos = _animationOffset;
         onAnimationUpdate();
         this.addChild(_animation);
+
+        // bit meh but is a compomise between the radius (to big) and only one side (not big enough)
+        footprint.r = (_mapCollisionOffset.x+_mapCollisionOffset.y)/4.1; 
+    }
+
+    ~this()
+    {
+        auto world = getService!World("d2d.world");
+        world.removeFootprint(_footprint);
     }
 
     override void update()
@@ -267,13 +301,15 @@ abstract class AnimatedPlayer(PlayerStatsClass) : AbstractPlayer, Serializeable
         if(_isMoving) {
             auto world = getService!World("d2d.world");
             auto newpos = this.pos + min(_stats.movementSpeed,_stats.maxMovementSpeed)*ticktimeS*directionVector;
-
+            
+            footprint.ignored = true;
             if(world.isWalkable(newpos+_mapCollisionOffset)) {
                 auto castpos = newpos + _mapCollisionOffset+vec2(directionVector.x*_mapCollisionSize.x,directionVector.y*_mapCollisionSize.y)*0.5;
                 if(world.isWalkable(castpos)) {
                     this.pos = newpos; 
                 }
             }
+            footprint.ignored = true;
         }
     }
 
@@ -304,6 +340,12 @@ abstract class AnimatedPlayer(PlayerStatsClass) : AbstractPlayer, Serializeable
 
     mixin createSerialize!(false,"displayName","_tileset","_animationName","_animationOffset","_mapCollisionOffset","_mapCollisionSize");
 protected:
+
+    override void onPosSizeChange() 
+    {
+        footprint.pos = this.pos+_mapCollisionOffset;
+    }
+
     override void onDirectionChange()
     {
         onAnimationUpdate();
@@ -334,5 +376,4 @@ private:
     vec2            _mapCollisionOffset = 0.0;
     /// the size of the collsision rect
     vec2            _mapCollisionSize = 0.0;
-
 }

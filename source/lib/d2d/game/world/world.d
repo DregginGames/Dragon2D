@@ -9,6 +9,24 @@ import d2d.core;
 import d2d.game.world;
 import d2d.util.logger;
 
+/// A footprint is part of the world
+/// Its mainly used for players (at thier collision offset) and by the navigator
+/// Footprints allow specific areas in the world to be marked as "collideable" or "unwalkable"
+class Footprint 
+{
+    this() {
+        id = max_id;
+        max_id++;
+    }
+    size_t id;
+    vec2 pos=vec2(0);
+    double r = 0.0;
+    bool walkable = false;
+    bool collideable = false;
+    bool ignored = false;
+    static size_t max_id = 0;
+}
+
 /**
     The world service. Manages the rendering of the ingame world.
     This means it provides information about the loaded world-objects, manages the tile based rendering, ...
@@ -57,6 +75,7 @@ final class World : Base
     {
         bool result = true;
         bool anyTiles = false;
+        bool footprintRes = true;
 
         foreach(ref l; _layers) {
             auto tset = Resource.create!Tileset(l.tileset);
@@ -71,7 +90,12 @@ final class World : Base
                 break;
             }
         }
-        return result && anyTiles;
+
+        foreach(print; getFootprints(p)) {
+            footprintRes &= print.walkable;
+        }
+
+        return result && anyTiles && footprintRes;
     }
 
     /// returns if a tile is collideable
@@ -79,6 +103,8 @@ final class World : Base
     {
         bool result = false;
         bool anyTiles = false;
+        bool footprintRes = false;
+
         foreach(ref l; _layers) {
             auto tset = Resource.create!Tileset(l.tileset);
             foreach(ref t; l.tilesAt(p)) {
@@ -92,7 +118,38 @@ final class World : Base
                 break;
             }
         }
-        return result && anyTiles;
+
+        foreach(print; getFootprints(p)) {
+            footprintRes |= print.collideable;
+        }
+
+        return (result && anyTiles) || footprintRes;
+    }
+
+    // returns all footprints at a specific point
+    Footprint[] getFootprints(vec2 p) 
+    {
+        Footprint[] res;
+            foreach(footprint; _footprints) {
+                if (!footprint.ignored && footprint.r*footprint.r >= (footprint.pos-p).magnitude_squared) {
+                    res ~= footprint;
+                }
+            }
+        return res;
+    }
+
+    /// adds a footprint to the world
+    void addFootprint(ref Footprint p) 
+    {
+        if((p.id in _footprints) is null) {
+            _footprints[p.id] = p;
+        }
+    }
+
+    /// removes a footprint from the world
+    void removeFootprint(ref Footprint p)
+    {
+        _footprints.remove(p.id);
     }
 
 private:
@@ -125,5 +182,6 @@ private:
 
 private:
     WorldTileLayer[ulong] _layers; // layers of tiles, stored first by layer and then by tileset. 
+    Footprint[size_t] _footprints; // footprints on the map
     TexturedQuadBatch[] _renderBatches;
 }

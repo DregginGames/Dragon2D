@@ -72,6 +72,9 @@ private:
             NavNode[] neigh;
             for (short x = -1; x <= 1; x++) {
                 for( short y = -1; y <= 1; y++) {
+                    if (abs(x)+abs(y)>1) { // FIXME: no diorgonals for now
+                        continue;
+                    }
                     NavNode newNode = NavNode((n.x+x),(n.y+y));
                     if (newNode != n && nodeWalkable(newNode)) {
                         neigh ~= newNode;

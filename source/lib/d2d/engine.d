@@ -63,11 +63,19 @@ class Engine
             //only update every tick
             while ( Clock.currStdTime() - curtime >= ticksize) {
 				root.preTickDelete();
+                long preUpdate = Clock.currStdTime();
                 root.propagateUpdate(ticksize);
+                double updateTime = cast(double)(Clock.currStdTime()-preUpdate)/10000000.00;
                 curtime += ticksize;
 
-                // force garbage collection after every tick                
+                // force garbage collection after every tick   
+                long preGC = Clock.currStdTime();
                 GC.collect();
+                double gcTime = cast(double)(Clock.currStdTime()-preGC)/10000000.00;
+                
+                if ((gcTime+updateTime) >= 0.8*(ticksize/10000000.00)) {
+                    Logger.log("LONG TICK WARNING: GC(" ~ to!string(gcTime) ~ ") - UPDATE(" ~ to!string(updateTime) ~ ")");
+                }
             }
 
             //render always (frame rate limits this). Basically allocates the time for the ticks.

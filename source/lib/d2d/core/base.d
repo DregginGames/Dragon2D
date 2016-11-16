@@ -172,15 +172,34 @@ class Base
 	*/
 	final void preTickDelete()
 	{
-		propagate(
-			(b) {
-				foreach(ref c; b.children) {
-					if (c.deleted) {
-						b.removeChild(c);
-					}
-				}
-			});
+        if (this.deleted) {
+            executeDelete();
+            return;
+        }
+        Base[] toDelete;
+        foreach(ref c; this.children) {
+            if (c.deleted) {
+                toDelete ~= c;
+            } else {
+                c.preTickDelete();
+            }
+        }
+        foreach(c; toDelete) {
+            this.removeChild(c);
+            c.executeDelete();
+        }
 	}
+
+    /** 
+        Executes a delete on a object and its children. 
+    */
+    private final void executeDelete()
+    {
+        foreach(ref c; this.children) {
+            c.executeDelete();
+        }
+        destroy(this);
+    }
 
 	/// Gets a service by its name. Syntax is getService!ServiceClass(name)
 	final static T getService (T) (string name)

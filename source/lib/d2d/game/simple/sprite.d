@@ -20,6 +20,11 @@ class Sprite : Entity
         _quad.detailLevel = 70; // sprites start of high i guess
 	}
 
+    ~this()
+    {
+        destroy(_quad);
+    }
+
 	override void render()
 	{
 		auto renderer = getService!Renderer("d2d.renderer");
@@ -31,6 +36,13 @@ class Sprite : Entity
     {
         return _quad;
     }
+
+protected:
+    override void onPosSizeChange() 
+    { 
+        _quad.scale = vec3(this.size,1.0);
+    }
+    
 
 private:
 	TexturedQuad _quad;
@@ -103,6 +115,13 @@ class AnimatedSprite : Sprite
     {
         return _playing;
     }
+
+protected:
+    // scale goes the way over update here
+    override void onPosSizeChange() 
+    {
+    }
+
 private:
     /// resource names
     string _animation;

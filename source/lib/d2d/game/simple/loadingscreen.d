@@ -11,7 +11,7 @@ import d2d.game.simple.camera;
 
 class LoadingScreen : Sprite 
 {
-    alias LoadingScreenCallback = void function(GameContainer); /// Callback type for loading screen callbacks 
+    alias LoadingScreenCallback = void delegate(GameContainer); /// Callback type for loading screen callbacks 
     static enum tickWait = 5; /// fixed number of ticks to wait before loading begins
 
     this(string texture, LoadingScreenCallback callback)

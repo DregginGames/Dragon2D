@@ -123,7 +123,7 @@ final class World : Base
             footprintRes |= print.collideable;
         }
 
-        return (result && anyTiles) || footprintRes;
+        return result || !anyTiles || footprintRes;
     }
 
     // returns all footprints at a specific point

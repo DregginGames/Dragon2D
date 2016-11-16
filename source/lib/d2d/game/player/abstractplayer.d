@@ -69,6 +69,8 @@ abstract class AbstractPlayer : Entity
                 }
             }
         }
+
+        _actualDirection = rawDir;
     }
 
     /// Update them player
@@ -140,11 +142,18 @@ abstract class AbstractPlayer : Entity
         }
 
         _direction = d;
+        _actualDirection = directionVector;
         onDirectionChange();
         return _direction;
     }
 
-    /// Gets the direction vector
+    /// Gets the actual direction vector
+    @property vec2 actualDirectionVector()
+    {
+        return _actualDirection;
+    }
+
+    /// Gets the direction vector for the 8-way movement direction
     @property vec2 directionVector()
     {
         final switch(_direction) {
@@ -157,13 +166,13 @@ abstract class AbstractPlayer : Entity
             case Direction.right:
                 return vec2(1.0,0.0);
             case Direction.upLeft:
-                return vec2(-1.0,1.0);
+                return vec2(-1.0,1.0).normalized;
             case Direction.upRight:
-                return vec2(1.0,1.0);
+                return vec2(1.0,1.0).normalized;
             case Direction.downLeft:
-                return vec2(-1.0,-1.0);
+                return vec2(-1.0,-1.0).normalized;
             case Direction.downRight:
-                return vec2(1.0,-1.0);
+                return vec2(1.0,-1.0).normalized;
         }
 
         assert(0);
@@ -177,6 +186,9 @@ abstract class AbstractPlayer : Entity
     /// Ditto
     @property bool isMoving(bool b) 
     {
+        if (_isMoving == b) {
+            return _isMoving;
+        }
         _isMoving = b;
         onMovementChange();
         return _isMoving;
@@ -249,6 +261,8 @@ private:
     string          _displayName = "";
     /// the movement/look direction. 
     Direction            _direction = Direction.down;
+    /// the actual movement direction (movement vector)
+    vec2            _actualDirection = vec2(0,0);
     /// if the player is moving
     bool            _isMoving = false;
     // navitation variables below
@@ -300,7 +314,7 @@ abstract class AnimatedPlayer(PlayerStatsClass) : AbstractPlayer, Serializeable
         super.update();
         if(_isMoving) {
             auto world = getService!World("d2d.world");
-            auto newpos = this.pos + min(_stats.movementSpeed,_stats.maxMovementSpeed)*ticktimeS*directionVector;
+            auto newpos = this.pos + min(_stats.movementSpeed,_stats.maxMovementSpeed)*ticktimeS*actualDirectionVector;
             
             footprint.ignored = true;
             if(world.isWalkable(newpos+_mapCollisionOffset)) {

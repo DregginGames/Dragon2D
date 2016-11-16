@@ -158,7 +158,6 @@ class Base
 	final void setDeleted()
 	{
 		_deleted = true;
-
 		if (_isService) {
 			removeService();
 		}
@@ -198,7 +197,7 @@ class Base
         foreach(ref c; this.children) {
             c.executeDelete();
         }
-        destroy(this);
+        this.onDelete();
     }
 
 	/// Gets a service by its name. Syntax is getService!ServiceClass(name)
@@ -488,6 +487,12 @@ protected:
     /// Called if the tree just was restored from a save
     void onSaveRestore()
     {
+    }
+
+    /// Called in the preTick delete phase if set as deleted
+    void onDelete()
+    {
+        destroy(this);
     }
 
 private:

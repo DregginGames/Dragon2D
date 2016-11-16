@@ -96,7 +96,7 @@ class Base
 	// cant use the propagate because render has additional pre- and post functions.
     final void propagateRender()
     {
-        if (this.deleted) {
+        if (this.deleted|this.hidden) {
             return;
         }
 		this.preRender();
@@ -334,10 +334,21 @@ class Base
     {
         return _paused;
     }
-
+    /// Ditto
     final @property bool paused(bool paused)
     {   
         return _paused = paused;
+    }
+
+    /// hides/unhides the object
+    final @property bool hidden() const 
+    {
+        return _hidden;
+    }
+    /// Ditto 
+    final @property bool hidden(bool h)
+    {
+        return _hidden = h;
     }
 
 	/// returns if the object will be deleted before the next tick
@@ -516,6 +527,9 @@ private:
 
     /// if true the object is paused; no child objects or the object is updated or renderd, can recive any events or anything.
     bool    _paused = false;
+
+    /// true means the object is hidden - not rendered 
+    bool    _hidden = false;
 
 	/// if the object is a service
 	bool	_isService = false;

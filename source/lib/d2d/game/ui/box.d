@@ -10,6 +10,7 @@ import d2d.util.serialize;
 import d2d.core.render.objects.quad;
 import d2d.core.render.renderer;
 import d2d.game.ui.uielement;
+public import d2d.core.render.objects.text;
 
 /**
     A box is a simple colored box renderd to the screen
@@ -44,6 +45,107 @@ protected:
 private:
     /// The ColoredQuad used to draw this ui box
     ColoredQuad _quad;
+}
+
+/**
+    A box that can be filled with text. 
+*/
+class TextBox : Box 
+{
+    this()
+    {
+        this("","font.default");
+    }
+
+    this(string text, string font="font.default")
+    {
+        _text = new Text(text,font,0.05);
+        _text.ignoreView = true;
+        _text.detailLevel = 100;
+        auto s = _text.settings; 
+        s.positioning = Text.Positioning.left;
+        _text.settings = s;
+        updateText();
+        super();
+    }
+
+    override void render()
+    {
+        super.render();
+        auto r = getService!Renderer("d2d.renderer");
+        _text.pos = this.viewPos+0.7*vec2(0.02,-textHeight);
+        r.pushObject(_text); 
+
+    }
+
+    /// Gets/sets the text positioning
+    @property Text.Positioning textPosition()
+    {
+        return _text.settings.positioning;
+    }
+    /// Ditto
+    @property Text.Positioning textPosition(Text.Positioning p)
+    {
+        auto s = _text.settings;
+        s.positioning = p;
+        _text.settings = s;
+        return p;
+    }
+
+    /// Gets/sets the text string
+    @property string text()
+    {
+        return _text.settings.text;
+    }
+    /// Ditto
+    @property string text(string str)
+    {
+        auto s = _text.settings;
+        s.text = str;
+        _text.settings = s;
+        return str;
+    }
+
+    /// Gets/sets the text height 
+    @property double textHeight()
+    {
+        return _text.settings.height;
+    }
+    /// Ditto
+    @property double textHeight(double h)
+    {
+        auto s = _text.settings;
+        s.height = h;
+        _text.settings = s;
+        return h;
+    }
+
+protected:
+
+    void updateText()
+    {
+        auto s = _text.settings;
+        s.maxwidth = this.absoluteSize.x;
+        s.maxheight = this.absoluteSize.y;
+        s.overflow = Text.OverflowBehaviour.scroll;
+        s.color = color.foreground;
+        s.linebreak = true;
+        _text.settings = s;
+    }
+
+    override void onPosSizeChange()  
+    {
+        updateText();
+    }
+
+    override void onColorChange()
+    {
+        updateText();
+        super.onColorChange();
+    }
+
+private:
+    Text _text;
 }
 
 /**

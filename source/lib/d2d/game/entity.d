@@ -69,12 +69,6 @@ abstract class Entity : Base
     {
         _allEntities[this.id] = this;
     }
-
-    ~this()
-    {
-        _allEntities.remove(this.id);
-    }
-
 	
 	/**
 		The position of this object. 
@@ -313,6 +307,11 @@ protected:
                 }
             }
         }
+    }
+
+    override void onDelete()
+    {
+        _allEntities.remove(this.id);
     }
 
 private:

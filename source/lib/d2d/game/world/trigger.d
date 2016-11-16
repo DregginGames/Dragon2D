@@ -88,7 +88,7 @@ class Trigger(filterClass, string filterCompare="") : AbstractTrigger
             event.on!(EntityCollisionEvent)(delegate(EntityCollisionEvent e) {
                 auto entThis = e.ent1 == this ? e.ent1 : e.ent2;
                 auto ent = e.ent1 == this ? e.ent2 : e.ent1;
-                if (entThis == this) {
+                if (entThis == this && !ent.deleted) {
                     if (cast(filterClass)ent) { // classes match
                         static if (filterCompare != "") { // filter out
                             mixin("if (!(filterCompare)) { return; }");

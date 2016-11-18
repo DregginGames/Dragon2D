@@ -125,8 +125,8 @@ protected:
     void updateText()
     {
         auto s = _text.settings;
-        s.maxwidth = this.absoluteSize.x;
-        s.maxheight = this.absoluteSize.y;
+        s.maxwidth = this.viewSize.x;
+        s.maxheight = this.viewSize.y;
         s.overflow = Text.OverflowBehaviour.scroll;
         s.color = color.foreground;
         s.linebreak = true;

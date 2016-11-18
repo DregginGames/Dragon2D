@@ -89,8 +89,12 @@ class Projectile : Entity
             event.on!(EntityCollisionEvent)( delegate(EntityCollisionEvent e) {
                 if (e.ent1 == this || e.ent2 == this) {
                     auto ent = e.ent1 == this ? e.ent2 : e.ent1;
-                    onCollision(ent);
-                    fireEvent(new ProjectileCollisionEvent(this,ent));
+                    // special case for triggers
+                    auto trigg = cast(AbstractTrigger)ent;
+                    if ((trigg is null ) || trigg.triggersOn(this)) {
+                        onCollision(ent);
+                        fireEvent(new ProjectileCollisionEvent(this,ent));
+                    }    
                 }
             });
         }

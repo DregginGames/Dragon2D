@@ -6,12 +6,48 @@ import std.math;
 
 import gl3n.linalg;
 
+import d2d.core.event;
 import d2d.core.resource;
 import d2d.core.resources.jsondata;
 import d2d.game.entity;
 import d2d.game.world;
 import d2d.game.simple;
 import d2d.util.serialize;
+
+struct DialogLine
+{
+    AbstractPlayer src = null;
+    string line = "";
+    bool blocking = false;
+    bool isAnswerSuggestion = false;
+    int answerId = 0;
+}
+
+class DialogEvent : Event
+{
+    this(DialogLine l) {
+        _line = l;
+    }
+    @property DialogLine line() 
+    {
+        return _line;
+    }
+private:
+    DialogLine _line;
+}
+
+class DialogAnswerEvent : Event 
+{
+    this(DialogLine l) {
+        _line = l;
+    }
+    @property DialogLine line() 
+    {
+        return _line;
+    }
+private:
+    DialogLine _line;
+}
 
 abstract class AbstractPlayerStatsClass : Serializeable
 {
@@ -127,6 +163,31 @@ abstract class AbstractPlayer : Entity
         if (_navControlsMovement) {
             isMoving(false);
         }
+    }
+
+    /// Say a dialog line
+    void sayDialogLine(DialogLine l)
+    {
+        fireEvent(new DialogEvent(l));
+    }
+
+    /// Say multiple dialog lines
+    void sayDialogLine(string[] lines, bool blocking=false, bool isAnswerSuggestion = false)
+    {
+        foreach(line; lines) {
+            sayDialogLine(line,blocking, isAnswerSuggestion);
+        }
+    }
+
+    /// Say a dialog line
+    void sayDialogLine(string line, bool blocking=false, bool isAnswerSuggestion = false)
+    {
+        DialogLine l;
+        l.line = line;
+        l.blocking = blocking;
+        l.src = this;
+        l.isAnswerSuggestion = isAnswerSuggestion;
+        sayDialogLine(l);
     }
 
     /// gets/sets the look/walking direction
@@ -301,12 +362,14 @@ abstract class AnimatedPlayer(PlayerStatsClass) : AbstractPlayer, Serializeable
 
         // bit meh but is a compomise between the radius (to big) and only one side (not big enough)
         footprint.r = (_mapCollisionOffset.x+_mapCollisionOffset.y)/4.1; 
+        this.sizeMode = Entity.SizeMode.rect;
     }
 
-    ~this()
+    override void onDelete()
     {
         auto world = getService!World("d2d.world");
         world.removeFootprint(_footprint);
+        super.onDelete();
     }
 
     override void update()
@@ -352,7 +415,7 @@ abstract class AnimatedPlayer(PlayerStatsClass) : AbstractPlayer, Serializeable
 
     
 
-    mixin createSerialize!(false,"displayName","_tileset","_animationName","_animationOffset","_mapCollisionOffset","_mapCollisionSize");
+    mixin createSerialize!(false,"displayName","_tileset","_animationName","_animationOffset","_mapCollisionOffset","_mapCollisionSize","size");
 protected:
 
     override void onPosSizeChange() 

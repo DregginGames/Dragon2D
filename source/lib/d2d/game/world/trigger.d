@@ -49,6 +49,11 @@ abstract class AbstractTrigger : Entity
         continuus,
     }
 
+    bool triggersOn(Entity e)
+    {
+        return false;
+    }
+
     abstract @property TriggerMode triggerMode() const;
     abstract @property TriggerMode triggerMode(TriggerMode m);
     abstract @property bool triggered() const;
@@ -89,7 +94,7 @@ class Trigger(filterClass, string filterCompare="") : AbstractTrigger
                 auto entThis = e.ent1 == this ? e.ent1 : e.ent2;
                 auto ent = e.ent1 == this ? e.ent2 : e.ent1;
                 if (entThis == this && !ent.deleted) {
-                    if (cast(filterClass)ent) { // classes match
+                    if (triggersOn(ent)) { // classes match
                         static if (filterCompare != "") { // filter out
                             mixin("if (!(filterCompare)) { return; }");
                         }       
@@ -118,6 +123,11 @@ class Trigger(filterClass, string filterCompare="") : AbstractTrigger
             });
         }
 
+    }
+
+    override bool triggersOn(Entity e)
+    {
+        return (cast(filterClass)e !is null);
     }
 
     override @property TriggerMode triggerMode() const

@@ -82,14 +82,12 @@ class Engine
             root.propagateRender();
         }
 
-		// propagate the deletion event becase then the exit is cleaner: all services are removed
-		root.setDeleted();
+        // and enforce cleanup
+        root = null;
+        Resource.freeAll();
+        GC.collect();
 
         Logger.log("Exitted mainloop!"); 
-
-        // force early cleanup
-        root.children.clear();
-        GC.collect();
     }
 
 private:

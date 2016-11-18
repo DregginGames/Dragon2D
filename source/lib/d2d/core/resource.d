@@ -117,6 +117,12 @@ class Resource
         }
     }
 
+    /// frees ALL resources. Dont call unsless cleanup
+    final static void freeAll()
+    {
+        resources.clear();
+    }
+
     /// reloads a resource. can be overloaded by a resource if it wants to be reloadable.
     /// useful fo textures and similar things that might change on disk. 
     void reload()

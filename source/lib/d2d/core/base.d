@@ -238,10 +238,11 @@ class Base
     }
 
     /// Adds a SaveRestore handler 
-    final static void addSaveRestoreHandler(SaveRestoreHandlerInterface h)
+    final static void addSaveRestoreHandler(T)(T h)
+        if(isImplicitlyConvertible!(T,SaveRestoreHandlerInterface))
     {
         import std.conv;
-        auto key = to!string(typeid(h));
+        auto key = fullyQualifiedName!(T);
         auto p = key in _saveRestoreHandlers;
         if(!p) {
             _saveRestoreHandlers[key] = h;
@@ -263,15 +264,20 @@ class Base
         JSONValue   result;
         JSONValue[] handlers;
 
-        foreach(h; _saveRestoreHandlers.values) {
+        foreach(key,h; _saveRestoreHandlers) {
             h.onSave(root);
-            handlers ~= JSONValue(to!string(typeid(h)));
+            handlers ~= JSONValue(key);
         }
         
         root.propagate((b) { b.onSave(); });
 
         result["_saveRestoreHandlers"] = handlers;
         result["_saveData"] = _saveData;
+
+        // kind of specific stuff
+        result["_curticks"] = toJson(_curticks);
+        result["_curtime"] = toJson(_curtime);
+
         return result;
     }
 
@@ -282,6 +288,8 @@ class Base
         _saveData = JSONValue();
         _saveData = v["_saveData"];
         auto handlers = v["_saveRestoreHandlers"];
+        fromJson(v["_curtime"],_curtime);
+        fromJson(v["_curticks"],_curticks);
 
         _saveRestoreHandlers.clear();
         foreach(h; handlers.array) {
@@ -295,7 +303,7 @@ class Base
                 Logger.log("Cannot init save/restore handler " ~ name);
             }
         }
-        
+
         root.propagate((b) { b.onSaveRestore(); });
     }
 

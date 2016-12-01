@@ -70,9 +70,27 @@ template ConverterPair(T, const string from, const string to)
         mixin(from ~ ";");
     }
 
+    void fromJson(JSONValue v, ref T[] res) {
+        foreach(i; v.array) {
+            T x;
+            fromJson(i,x);
+            res ~= x;
+        }
+    }
+
     JSONValue toJson(T v) {
         JSONValue res;
         mixin(to ~ ";");
+        return res;
+    }
+
+    JSONValue toJson(T[] v) {
+        JSONValue res;
+        JSONValue[] arr;
+        foreach(i; v) {
+            arr ~= toJson(i);
+        }
+        res.array = arr;
         return res;
     }
 
@@ -95,8 +113,8 @@ mixin(ConverterPairNoConflict!("uint","res = cast(uint)v.integer", "res = v"));
 mixin(ConverterPairNoConflict!("long","res = cast(long)v.integer", "res = v"));
 mixin(ConverterPairNoConflict!("ulong","res = cast(ulong)v.integer", "res = v"));
 
-mixin(ConverterPairNoConflict!("float","res = cast(float)v.floating", "res = v"));
-mixin(ConverterPairNoConflict!("double","res = cast(double)v.floating", "res = v"));
+mixin(ConverterPairNoConflict!("float","res = cast(float)(v.type == JSON_TYPE.FLOAT ? v.floating : v.integer)", "res = v"));
+mixin(ConverterPairNoConflict!("double","res = cast(double)(v.type == JSON_TYPE.FLOAT ? v.floating : v.integer)", "res = v"));
 
 mixin(ConverterPairNoConflict!("string","res = v.str", "res = v"));
 

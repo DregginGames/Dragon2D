@@ -19,8 +19,6 @@ import d2d.game.world.map.mapcontroller;
 import d2d.util.serialize;
 import d2d.util.logger;
 
-
-
 class Map : Base, Serializeable
 {
     this(string name, bool controllerEnabled=true)
@@ -29,6 +27,7 @@ class Map : Base, Serializeable
         _isAddedToWorld = false;
         _controllerEnabled = controllerEnabled;
         loadMap(); 
+        addSaveRestoreHandler(new MapSaveRestoreHandler());
     }
 
     ~this() 
@@ -96,6 +95,8 @@ class Map : Base, Serializeable
         if(_controller) {
             _controller.onMapload();
         }   
+
+        _activeMaps[this.id] = this;
     }
 
     /// removes a map from the world
@@ -111,6 +112,8 @@ class Map : Base, Serializeable
         if(_controller) {
             _controller.onMapUnload();
         }
+
+        _activeMaps.remove(this.id);
     }
 
     /// manual implementation of a serializeable 
@@ -253,6 +256,11 @@ class Map : Base, Serializeable
         return _offsetPos;
     }
 
+    /// Returns all active maps (as in: maps that are currently displayed)
+    static @property Map[] activeMaps() 
+    {
+        return _activeMaps.values;
+    }
 private:
     string _name;
     string _displayName;
@@ -263,4 +271,40 @@ private:
     bool _controllerEnabled;
     bool _isAddedToWorld;
     vec2 _offsetPos = 0;
+
+    static Map[int] _activeMaps;
+}
+
+/// Saves/Restores all unloaded maps from save data
+class MapSaveRestoreHandler : SaveRestoreHandlerInterface
+{
+    override void onSave(Base root) 
+    {
+        JSONValue[] maps;
+        foreach (map; Map.activeMaps) {
+            JSONValue mapJson;
+            mapJson["offset"] = toJson(map.offset);
+            mapJson["name"] = toJson(map.name);
+            maps ~= mapJson;
+        }
+        Base.storeSaveValue("loadedMaps",maps);
+    }
+
+    override void onRestore(Base root) 
+    {
+        import d2d.core.container.gamecontainer;
+        auto gameroot = Base.getService!GameContainer("d2d.gameroot");
+
+        JSONValue[] maps = Base.restoreSaveValue!(JSONValue[])("loadedMaps");
+        foreach(m; maps) {
+            string name;
+            fromJson(m["name"],name);
+            auto map = new Map(name);
+            gameroot.addChild(map);
+            vec2 offset;
+            fromJson(m["offset"],offset);
+            map.offset = offset;
+            map.addToWorld();
+        }
+    }
 }

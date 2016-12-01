@@ -347,6 +347,7 @@ abstract class AnimatedPlayer(PlayerStatsClass) : AbstractPlayer, Serializeable
 {
     this(string name)
     {
+        _name = name;
         enableEventHandling();
 
         auto d = Resource.create!JsonData(name).data;
@@ -413,7 +414,11 @@ abstract class AnimatedPlayer(PlayerStatsClass) : AbstractPlayer, Serializeable
         return _animation;
     }
 
-    
+    /// Gets the players name (resource that is loaded)
+    @property string name() const
+    {
+        return _name;
+    }
 
     mixin createSerialize!(false,"displayName","_tileset","_animationName","_animationOffset","_mapCollisionOffset","_mapCollisionSize","size");
 protected:
@@ -438,6 +443,8 @@ protected:
         _animation.play(getMovementSequenceName());
     }
 private:
+    /// name of this player
+    string          _name;
     /// name of the tileset 
     string          _tileset;
     /// name of the animation 

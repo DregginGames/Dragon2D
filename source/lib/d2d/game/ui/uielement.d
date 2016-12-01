@@ -189,6 +189,11 @@ abstract class UiElement : Base, Serializeable
     {
         // we, per definition, are not clicked anymore
         _clicked = false;
+        if (this.hidden) {
+            _hoverd = false;
+            pollEvents();
+            return;
+        }
         double aspect = this.getService!Env("d2d.env").aspectRatio();
         foreach(e; pollEvents()) {
             // check for hovering. hovering ignores children completly

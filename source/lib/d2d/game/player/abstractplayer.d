@@ -382,8 +382,10 @@ abstract class AnimatedPlayer(PlayerStatsClass) : AbstractPlayer, Serializeable
             
             footprint.ignored = true;
             if(world.isWalkable(newpos+_mapCollisionOffset)) {
-                auto castpos = newpos + _mapCollisionOffset+vec2(directionVector.x*_mapCollisionSize.x,directionVector.y*_mapCollisionSize.y)*0.5;
-                if(world.isWalkable(castpos)) {
+                auto castpos = newpos + _mapCollisionOffset + vec2(directionVector.x*_mapCollisionSize.x,directionVector.y*_mapCollisionSize.y)*0.5;
+                auto castpos1 = castpos + vec2(-directionVector.y*_mapCollisionSize.y,directionVector.x*_mapCollisionSize.x)*0.5;
+                auto castpos2 = castpos + vec2(directionVector.y*_mapCollisionSize.y,-directionVector.x*_mapCollisionSize.x)*0.5;
+                if(world.isWalkable(castpos)&&world.isWalkable(castpos1)&&world.isWalkable(castpos2)) {
                     this.pos = newpos; 
                 }
             }

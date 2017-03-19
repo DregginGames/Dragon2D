@@ -272,7 +272,7 @@ private:
     bool _isAddedToWorld;
     vec2 _offsetPos = 0;
 
-    static Map[int] _activeMaps;
+    static Map[ulong] _activeMaps;
 }
 
 /// Saves/Restores all unloaded maps from save data

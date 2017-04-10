@@ -140,6 +140,15 @@ class Map : Base, Serializeable
             res["_layers"].array ~= layer;
         }
 
+        JSONValue[] posArr;
+        res["_positions"] = posArr;
+        foreach(key, val; _positions) {
+            JSONValue position;
+            position["name"] = toJson(key);
+            position["pos"] = toJson(val);
+            res["_positions"].array ~= position;
+        }
+
         return res;
     }
 
@@ -175,6 +184,17 @@ class Map : Base, Serializeable
             } 
             catch (Exception e) {
                 Logger.log("Map " ~ _name ~ " has no layers!");
+            }
+            
+            auto pPositions = "_positions" in v;
+            if (pPositions) {
+                foreach(pRaw; pPositions.array) {
+                    string name;
+                    vec2 p;
+                    fromJson(pRaw["name"],name);
+                    fromJson(pRaw["pos"],p);
+                    _positions[name] = p;
+                }
             }
         } 
         catch (Exception e) {
@@ -271,6 +291,7 @@ private:
     bool _controllerEnabled;
     bool _isAddedToWorld;
     vec2 _offsetPos = 0;
+    vec2[string] _positions;
 
     static Map[int] _activeMaps;
 }

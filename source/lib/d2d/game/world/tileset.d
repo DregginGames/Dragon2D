@@ -50,9 +50,17 @@ class Tileset : Resource
             foreach(i; d["nowalk"].array) {
                 _nowalk ~= i.integer;
             }
+            // for pixel art tilesets this is relevant
+            auto pFilter = "filter" in d;
+            if (pFilter && pFilter.integer == 0) {
+                import derelict.opengl3.gl;
+                auto tex = Resource.create!Texture(_texture);
+                tex.gpuTexture.filter = GL_NEAREST;
+            }
         }
         catch (Throwable) {
-            // meh
+            import d2d.util.logger;
+            Logger.log("Error loading tileset");
         }
         
         Resource.preload!Texture(_texture);    

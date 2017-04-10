@@ -382,6 +382,7 @@ abstract class AnimatedPlayer(PlayerStatsClass) : AbstractPlayer, Serializeable
             
             footprint.ignored = true;
             if(world.isWalkable(newpos+_mapCollisionOffset)) {
+                // this casts a T at the destination position of the walk.
                 auto castpos = newpos + _mapCollisionOffset + vec2(directionVector.x*_mapCollisionSize.x,directionVector.y*_mapCollisionSize.y)*0.5;
                 auto castpos1 = castpos + vec2(-directionVector.y*_mapCollisionSize.y,directionVector.x*_mapCollisionSize.x)*0.5;
                 auto castpos2 = castpos + vec2(directionVector.y*_mapCollisionSize.y,-directionVector.x*_mapCollisionSize.x)*0.5;

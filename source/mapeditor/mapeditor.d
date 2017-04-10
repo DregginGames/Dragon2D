@@ -117,6 +117,14 @@ class Mapeditor : Base
                 _isDeleting = false;
             });
 
+            event.on!(KeyDownEvent, "e.key == SDLK_s")(delegate(KeyDownEvent e) {
+                    _isSubtileing = true;
+            });
+            event.on!(KeyUpEvent, "e.key == SDLK_s")(delegate(KeyUpEvent e) {
+                    _isSubtileing = false;
+            });
+
+
             
 
         }
@@ -137,6 +145,9 @@ class Mapeditor : Base
                 auto set = Resource.create!Tileset(setname);
                 auto tileData = set.getTileData(_activeTile);
                 auto size = tileData.size;
+                if (_isSubtileing) { // for sub-tile positions.
+                    size *= 0.5;
+                }
                 vec2 p;
                 p.x = floor(size.x+_cursor.absolutePos.x/size.x)*size.x;
                 p.y = floor(size.y+_cursor.absolutePos.y/size.y)*size.y;
@@ -292,6 +303,8 @@ private:
 
     bool _isDrawing;
     bool _isDeleting;
+
+    bool _isSubtileing;
 }
 
 

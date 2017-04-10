@@ -10,7 +10,7 @@ import derelict.sdl2.image;
 import d2d.util.logger;
 
 /// Helper function to create a  Opengl Texture from an SDL_Surface 
-private GLuint SurfaceToTexture(SDL_Surface* surface)
+private GLuint SurfaceToTexture(SDL_Surface* surface, GLenum filterMode = GL_LINEAR)
 {
     ///juuust to make shure
     if (surface is null) {
@@ -59,8 +59,8 @@ private GLuint SurfaceToTexture(SDL_Surface* surface)
         return 0;
     }
     glBindTexture(GL_TEXTURE_2D, texId);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMode);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMode);
     glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, surface.w, surface.h, 0, textureFormat, GL_UNSIGNED_BYTE, copy.ptr);
     return texId;
 }
@@ -125,6 +125,21 @@ class GPUTexture
         return _texId;
     }
 
+    /// Gets/Sets the filter mode of this texture
+    GLenum filter() const 
+    {
+        return _filter;
+    }
+    /// Ditto
+    GLenum filter(GLenum filter)
+    {
+        _filter = filter;
+        bind();
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _filter);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _filter);
+        return _filter;
+    }
+
     /// Binds texture if not already bound.
     void bind(uint unit = 0)
     {
@@ -150,4 +165,5 @@ class GPUTexture
         TextureTarget _target;
         static uint _currTextureUnit = 0;
         static GLuint[TextureTarget] _currTexBinding;
+        GLenum _filter = GL_LINEAR;
     }

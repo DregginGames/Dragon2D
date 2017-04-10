@@ -293,7 +293,7 @@ private:
     vec2 _offsetPos = 0;
     vec2[string] _positions;
 
-    static Map[int] _activeMaps;
+    static Map[ulong] _activeMaps;
 }
 
 /// Saves/Restores all unloaded maps from save data
